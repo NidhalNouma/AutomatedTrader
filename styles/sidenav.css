@@ -1,0 +1,13 @@
+.sidenav {
+  width: 300px;
+  /* display: flex; */
+  flex-direction: column;
+  background-color: rgb(52, 54, 59);
+  height: 100%;
+  border-right: 2px solid rgb(32, 34, 35);
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  /* bottom: 0; */
+}

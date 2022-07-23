@@ -1,0 +1,26 @@
+import Sidenav from "../Features/SideNav";
+import Header from "../Features/Header";
+
+import Pricing from "../Features/Pricing";
+import { H1 } from "../Components/H";
+
+export default function membership() {
+  return (
+    <>
+      <Sidenav cpath="membership" />
+      <div className="w-full flex flex-col">
+        <Header />
+        <div className="px-10 py-8">
+          <H1>Membership</H1>
+          <div className="mt-6">
+            <section className="container mx-auto flex flex-wrap">
+              <Pricing title="Standard" />
+              <Pricing title="Pro" />
+              <Pricing title="Primium" />
+            </section>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
