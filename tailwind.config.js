@@ -15,6 +15,7 @@ module.exports = {
       bg: "rgb(32, 34, 35)",
       bga: "rgb(52, 54, 59)",
       bgai: "rgb(66, 70, 79)",
+      bgl: "rgb(0, 0, 50)",
       "text-h": "rgb(255, 255, 255)",
       "text-p": "rgb(101, 105, 114)",
     },

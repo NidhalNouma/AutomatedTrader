@@ -4,7 +4,7 @@ import { CheckCircleIcon } from "@heroicons/react/solid";
 function Index({ title }) {
   return (
     <div className="lg:w-1/3 md:w-1/2 w-full p-4 ">
-      <div className="p-8 rounded-xl border border-gray-200 bg-bg">
+      <div className="p-8 rounded-xl border border-gray-20">
         <h4> {title} </h4>
         <h5 className="text-5xl font-bold py-2 text-gray-500">
           {" "}
