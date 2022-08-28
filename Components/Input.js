@@ -2,9 +2,15 @@ import { Fragment } from "react";
 import { Input, Dropdown, Button, Toggle, Select } from "react-daisyui";
 import { H6 } from "./H";
 
-export const Input1 = ({ placeholder, name, helper }) => {
+export const Input1 = ({
+  placeholder,
+  name,
+  helper,
+  className,
+  classNameInput,
+}) => {
   return (
-    <div className="form-control w-full max-w-xs">
+    <div className={className + " form-control w-full max-w-xs"}>
       <label className="label">
         <span className="label-text text-text-h">{name}</span>
         <Helper message={helper} />
@@ -12,7 +18,7 @@ export const Input1 = ({ placeholder, name, helper }) => {
       </label>
       <Input
         size="sm"
-        className="bg-accenti border-primaryi focus:outline-primaryi"
+        className={classNameInput + " border-primaryi focus:outline-primaryi"}
         placeholder={placeholder}
       />
       {/* <label className="label">

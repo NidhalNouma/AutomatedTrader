@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import Image from "next/image";
 
 export default function Header() {
@@ -62,12 +63,16 @@ export default function Header() {
               Testimonials
             </a>
           </div>
-          <button className="mr-4 py-1 px-4 rounded-full text-text-h bg-primaryi border-2 border-primaryi">
-            Sign in
-          </button>
-          <button className="py-1 px-4 rounded-full border-2 text-text-h border-primaryi">
-            Sign up
-          </button>
+          <Link href="/signin">
+            <span className="cursor-pointer mr-4 py-1 px-4 rounded-full text-text-h bg-primaryi border-2 border-primaryi">
+              Sign in
+            </span>
+          </Link>
+          <Link href="/signup">
+            <span className="cursor-pointer py-1 px-4 rounded-full border-2 text-text-h border-primaryi">
+              Sign up
+            </span>
+          </Link>
         </div>
       </div>
     </header>

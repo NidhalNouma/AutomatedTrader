@@ -96,7 +96,7 @@ function index({ cpath }) {
           <span className="capitalize ml-2 text-base">Help & FAQ</span>
         </Linksn>
 
-        <div className="mx-4 flex items-center my-4">
+        {/* <div className="mx-4 flex items-center my-4">
           <MoonIcon className="h-5 w-5 text-text-p" />
           <span className="capitalize ml-2 text-base font-semibold text-text-p">
             Dark mode
@@ -105,7 +105,7 @@ function index({ cpath }) {
             size="sm"
             className="ml-auto bg-text-h text-text-p border-text-p"
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );
