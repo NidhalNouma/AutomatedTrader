@@ -4,10 +4,28 @@ import { H1 } from "../../Components/H";
 import { Input1 } from "../../Components/Input";
 import { ButtonP } from "../../Components/Button";
 
-import { Divider, Button } from "react-daisyui";
+import { Divider, Button, Alert } from "react-daisyui";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { SignUpHook, ContinueWithGoogle } from "../../hooks/SignHook";
 
 function SignUp() {
+  const {
+    email,
+    username,
+    password,
+    cpassword,
+    error,
+    setEmail,
+    setUsername,
+    setPassword,
+    setCPassword,
+    submit,
+  } = SignUpHook();
+  const { continueWithGoogleClick } = ContinueWithGoogle();
+  const router = useRouter();
+
   return (
     <div className="p-7 flex flex-col items-center justify-center">
       <H1 className="mb-8">Sign Up</H1>
@@ -17,31 +35,83 @@ function SignUp() {
           classNameInput="bg-bgl "
           placeholder="Email"
           name="Email"
+          type="email"
+          value={email}
+          setValue={setEmail}
         />
         <Input1
           className="mx-auto mb-3"
           classNameInput="bg-bgl "
           placeholder="Username"
           name="Username"
+          type="username"
+          value={username}
+          setValue={setUsername}
         />
         <Input1
           className="mx-auto mb-3"
           classNameInput="bg-bgl "
           placeholder="Password"
           name="Password"
+          type="password"
+          value={password}
+          setValue={setPassword}
         />
         <Input1
           className="mx-auto"
           classNameInput="bg-bgl "
           placeholder="Confirm password"
           name="Confirm password"
+          type="password"
+          value={cpassword}
+          setValue={setCPassword}
         />
       </div>
+      {error && (
+        <div className="mb-4 w-full">
+          <Alert
+            className="p-2 rounded-lg text-sm"
+            status="error"
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="w-5 h-5 mr-1 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
+                ></path>
+              </svg>
+            }
+          >
+            {error}
+          </Alert>
+        </div>
+      )}
       <div className="flex item-center justify-between w-full max-w-xs">
-        <ButtonP className="mx-auto">Sign Up</ButtonP>
+        <ButtonP
+          onClick={async () => {
+            const r = await submit();
+            if (r === true) router.push("/profile");
+          }}
+          className="mx-auto"
+        >
+          Sign Up
+        </ButtonP>
       </div>
       <Divider>Or</Divider>
-      <Button size="sm" className="w-full bg-bgai">
+      <Button
+        size="sm"
+        className="w-full bg-bgai"
+        onClick={async () => {
+          const r = await continueWithGoogleClick();
+          if (r === true) router.push("/profile");
+        }}
+      >
         <svg
           className="mr-2"
           fill="#fff"

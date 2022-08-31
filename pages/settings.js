@@ -2,8 +2,10 @@ import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
 import { H1, H3, Hi4 } from "../Components/H";
+import { GetUserContext } from "../hooks/UserHook";
 
 export default function Settings() {
+  const user = GetUserContext();
   return (
     <>
       <Sidenav cpath="settings" />
@@ -21,8 +23,8 @@ export default function Settings() {
                     className="rounded-full w-20 h-20 border-4 border-text-h object-cover"
                   />
                   <div className="">
-                    <Hi4 className="mt-3">User Name</Hi4>
-                    <Hi4 className="mt-3">Email</Hi4>
+                    <Hi4 className="mt-3">{user?.displayName || "NA"}</Hi4>
+                    <Hi4 className="mt-3">{user?.email || "NA"}</Hi4>
                   </div>
                 </div>
               </div>

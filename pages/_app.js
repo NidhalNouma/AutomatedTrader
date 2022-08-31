@@ -2,8 +2,43 @@ import "../styles/globals.css";
 import "../styles/sidenav.css";
 import "../styles/landing.css";
 
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import { checkUser } from "../db/sign";
+
+import { UserCC } from "../hooks/UserHook";
+import { WebHookCC, GetWebhook } from "../hooks/WebHook";
+
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  const router = useRouter();
+  const [user, setUser] = useState(null);
+  const { webhooks, getAllWebhooks } = GetWebhook();
+
+  useEffect(() => {
+    checkUser(setUser);
+  }, []);
+
+  useEffect(() => {
+    const { pathname } = router;
+    if (user) {
+      if (pathname === "/") router.push("/profile");
+    } else if (!user) {
+      if (pathname === "/profile") router.push("/");
+      else if (pathname === "/settings") router.push("/");
+    }
+
+    if (user) {
+      getAllWebhooks(user?.uid);
+    }
+  }, [user]);
+
+  return (
+    <UserCC value={user}>
+      <WebHookCC value={{ webhooks, getAllWebhooks }}>
+        <Component {...pageProps} />
+      </WebHookCC>
+    </UserCC>
+  );
 }
 
 export default MyApp;

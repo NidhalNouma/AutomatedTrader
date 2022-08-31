@@ -21,7 +21,7 @@ function AddMessage({ close }) {
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center w-full mt-2">
-        <WebhookData />
+        <WebhookData close={close} type="AddMessage" />
       </div>
     </div>
   );

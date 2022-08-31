@@ -23,10 +23,10 @@ function index({ cpath }) {
         className=""
         layout="responsive"
       />
-      <div className="pl-4">
+      {/* <div className="pl-4">
         <H5>YOUR WEBHOOKS</H5>
         <div className="h-24 bg-bgai my-2 mr-4 rounded-xl"></div>
-      </div>
+      </div> */}
       <div className="pl-4">
         <Linksn
           href="/profile"

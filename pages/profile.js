@@ -1,11 +1,15 @@
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
+import { GetUserContext } from "../hooks/UserHook";
+
 import { H1, H4, H6, Hi6 } from "../Components/H";
 // import { ButtonP } from "../Components/Button";
 import WebhooksItem from "../Features/WebhooksItem";
 
 export default function Home() {
+  const user = GetUserContext();
+
   return (
     <>
       <Sidenav cpath="profile" />
@@ -15,11 +19,14 @@ export default function Home() {
           <div className="flex items-start">
             <div className="w-20 h-20 mr-4">
               <img
-                src="https://api.lorem.space/image/face?hash=33791"
+                src={
+                  // user?.photoURL ||
+                  "https://api.lorem.space/image/face?hash=33791"
+                }
                 className="rounded-full w-full h-full border-4 border-text-h object-cover"
               />
             </div>
-            <H1>Nikki-Trader</H1>
+            <H1>{user?.displayName || "NA"}</H1>
           </div>
 
           <div className="mt-6">

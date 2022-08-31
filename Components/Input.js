@@ -8,6 +8,9 @@ export const Input1 = ({
   helper,
   className,
   classNameInput,
+  value,
+  setValue,
+  type,
 }) => {
   return (
     <div className={className + " form-control w-full max-w-xs"}>
@@ -20,6 +23,9 @@ export const Input1 = ({
         size="sm"
         className={classNameInput + " border-primaryi focus:outline-primaryi"}
         placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
       />
       {/* <label className="label">
           <span className="label-text-alt">Alt label</span>
@@ -29,7 +35,15 @@ export const Input1 = ({
   );
 };
 
-export const Input1Inline = ({ placeholder, name, helper }) => {
+export const Input1Inline = ({
+  placeholder,
+  name,
+  helper,
+  disabled,
+  type,
+  value,
+  setValue,
+}) => {
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
@@ -39,6 +53,10 @@ export const Input1Inline = ({ placeholder, name, helper }) => {
             size="sm"
             className="bg-accenti border-primaryi focus:outline-primaryi mx-2 w-24"
             placeholder={placeholder}
+            disabled={disabled}
+            type={type}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
 
           <Helper message={helper} />
@@ -80,13 +98,19 @@ export const Helper = ({ message }) => {
   );
 };
 
-export const Toggle1 = ({ className, name, helper }) => {
+export const Toggle1 = ({ className, name, helper, value, setValue }) => {
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
         <span className="label-text text-text-h flex items-center">{name}</span>
         <div>
-          <Toggle className="mx-2" color="accent" size="sm" />
+          <Toggle
+            className="mx-2"
+            color="accent"
+            size="sm"
+            checked={value}
+            onChange={setValue}
+          />
           <Helper message={helper} />
         </div>
         {/* <span className="label-text-alt">Alt label</span> */}
@@ -95,12 +119,24 @@ export const Toggle1 = ({ className, name, helper }) => {
   );
 };
 
-export const Select1 = ({ className, name, helper, options }) => {
+export const Select1 = ({
+  className,
+  name,
+  helper,
+  options,
+  value,
+  setValue,
+}) => {
   return (
     <div className="p-1 w-full max-w-xs flex items-center justify-between">
       <span className="label-text text-text-h flex items-center">{name}</span>
       <div>
-        <Select size="sm" className="bg-accenti mx-2 w-24">
+        <Select
+          size="sm"
+          className="bg-accenti mx-2 w-24"
+          value={value}
+          onChange={(e) => setValue(e)}
+        >
           {options?.map((v, i) => (
             <option key={i} value={v}>
               {v}

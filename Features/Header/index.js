@@ -14,6 +14,8 @@ import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { Modal1 } from "../../Components/Modal";
 import ManageWebhook from "../ManageWebhook";
 
+import { SignOut } from "../../hooks/SignHook";
+
 function Index() {
   const [open, setOpen] = useState(false);
 
@@ -73,7 +75,9 @@ function Index() {
                     <a className="justify-between">Profile</a>
                   </li>
                   <Dropdown.Item>Settings</Dropdown.Item>
-                  <Dropdown.Item>Logout</Dropdown.Item>
+                  <Dropdown.Item onClick={() => SignOut()}>
+                    Logout
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </div>
