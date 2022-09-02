@@ -3,16 +3,21 @@ import "../styles/sidenav.css";
 import "../styles/landing.css";
 
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { checkUser } from "../db/sign";
 
 import { UserCC } from "../hooks/UserHook";
 import { WebHookCC, GetWebhook } from "../hooks/WebHook";
+import { ToastCC, ToastHook } from "../hooks/ToastHook";
+
+import Toasti from "../Features/Toast";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const { webhooks, getAllWebhooks } = GetWebhook();
+
+  const { alerts, setAlerts, newAlert } = ToastHook();
 
   useEffect(() => {
     checkUser(setUser);
@@ -33,11 +38,17 @@ function MyApp({ Component, pageProps }) {
   }, [user]);
 
   return (
-    <UserCC value={user}>
-      <WebHookCC value={{ webhooks, getAllWebhooks }}>
-        <Component {...pageProps} />
-      </WebHookCC>
-    </UserCC>
+    <Fragment>
+      <ToastCC value={{}}>
+        <UserCC value={user}>
+          <WebHookCC value={{ webhooks, getAllWebhooks }}>
+            <Component {...pageProps} />
+          </WebHookCC>
+        </UserCC>
+      </ToastCC>
+
+      {/* <Toasti alerts={alerts} setAlerts={setAlerts} /> */}
+    </Fragment>
   );
 }
 

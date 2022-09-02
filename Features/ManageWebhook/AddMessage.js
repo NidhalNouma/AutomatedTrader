@@ -4,7 +4,7 @@ import { Button } from "react-daisyui";
 import { H3 } from "../../Components/H";
 import WebhookData from "./WebhookData";
 
-function AddMessage({ close }) {
+function AddMessage({ close, webhook }) {
   return (
     <div className="">
       <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
@@ -21,7 +21,7 @@ function AddMessage({ close }) {
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center w-full mt-2">
-        <WebhookData close={close} type="AddMessage" />
+        <WebhookData close={close} type="AddMessage" webhook={webhook} />
       </div>
     </div>
   );

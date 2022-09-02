@@ -10,6 +10,7 @@ import {
   setDoc,
   addDoc,
   getDoc,
+  updateDoc,
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
@@ -74,6 +75,7 @@ export async function getWebhook(id) {
 }
 
 export async function addMessage(id, message) {
+  console.log("Adding new message ... ", id);
   const msgDoc = doc(db, collName, id);
 
   await updateDoc(msgDoc, {
@@ -85,6 +87,7 @@ export async function addMessage(id, message) {
 }
 
 export async function deleteMessage(id, message) {
+  console.log("Deleeting new message ... ", id);
   const msgDoc = doc(db, collName, id);
 
   await updateDoc(msgDoc, {

@@ -138,7 +138,7 @@ export const Select1 = ({
           onChange={(e) => setValue(e)}
         >
           {options?.map((v, i) => (
-            <option key={i} value={v}>
+            <option key={v + i} value={i} selected={v === value}>
               {v}
             </option>
           ))}

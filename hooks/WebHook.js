@@ -1,5 +1,10 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { addWebhook, getWebhooksByUserId } from "../db/webhooks";
+import {
+  addWebhook,
+  addMessage,
+  deleteMessage,
+  getWebhooksByUserId,
+} from "../db/webhooks";
 
 export const WebHook = (userId) => {
   const [error, setError] = useState("");
@@ -66,12 +71,17 @@ export const WebHook = (userId) => {
   }
 
   function getData(str) {
-    const data = str.split(" ");
-    const dataLength = data.length;
-
-    data.forEach(function (v, i) {
+    // console.log("getData", dataLength, str);
+    const datai = str.split(" ");
+    const dataLength = datai.length;
+    const tsi = TS;
+    const bei = BE;
+    const timei = time;
+    const hedgingi = hedging;
+    const maxSSi = maxSS;
+    datai.forEach(function (v, i) {
       if (i + 1 < dataLength) {
-        const data = data[i + 1];
+        const data = datai[i + 1];
         switch (v) {
           case "-P":
             setPair(data);
@@ -91,9 +101,68 @@ export const WebHook = (userId) => {
           case "-TP":
             setTakeProfit(data);
             break;
+
+          case "-TS":
+            tsi = { ...tsi, use: true };
+            break;
+          case "-TSs":
+            tsi = { ...tsi, start: data };
+            break;
+          case "-TSo":
+            tsi = { ...tsi, stop: data };
+            break;
+          case "-TSe":
+            tsi = { ...tsi, step: data };
+            break;
+
+          case "-BE":
+            bei = { ...bei, use: true };
+            break;
+          case "-SP":
+            bei = { ...bei, stop: data };
+            break;
+          case "-PP":
+            bei = { ...bei, partiel: data };
+            break;
+
+          case "-TF":
+            timei = { ...timei, use: true };
+            break;
+          case "-TIS":
+            timei = { ...timei, start: data };
+            break;
+          case "-TIE":
+            timei = { ...timei, end: data };
+            break;
+
+          case "-HE":
+            hedgingi = { ...hedgingi, use: true };
+            break;
+          case "-POD":
+            hedgingi = { ...hedgingi, pending: data };
+            break;
+          case "-MT":
+            hedgingi = { ...hedgingi, max: data };
+            break;
+
+          case "-MXSS":
+            maxSSi = { ...maxSSi, use: true };
+            break;
+          case "-MXp":
+            maxSSi = { ...maxSSi, spread: data };
+            break;
+          case "-MXl":
+            maxSSi = { ...maxSSi, slippage: data };
+            break;
         }
       }
     });
+
+    setTS(tsi);
+    setBE(bei);
+    setTime(timei);
+    setHedging(hedgingi);
+    setMaxSS(maxSSi);
   }
 
   async function add() {
@@ -115,6 +184,45 @@ export const WebHook = (userId) => {
     const msg = formatMsg();
     console.log(msg);
     const r = await addWebhook(name, msg, "/api/", userId);
+    return r;
+  }
+
+  async function addMsg(id) {
+    if (!pair) {
+      setError("Pair must be provided!");
+      return;
+    }
+
+    if (!userId) {
+      setError("User ID must be provided!");
+      return;
+    }
+
+    setError("");
+    const msg = formatMsg();
+    // console.log(msg);
+
+    const r = await addMessage(id, msg);
+    return r;
+  }
+
+  async function editMsg(id, oldmsg) {
+    if (!pair) {
+      setError("Pair must be provided!");
+      return;
+    }
+
+    if (!userId) {
+      setError("User ID must be provided!");
+      return;
+    }
+
+    setError("");
+    await deleteMessage(id, oldmsg);
+    const msg = formatMsg();
+    // console.log(msg);
+
+    const r = await addMessage(id, msg);
     return r;
   }
 
@@ -143,8 +251,34 @@ export const WebHook = (userId) => {
     setMaxSS,
     error,
     add,
+    addMsg,
+    editMsg,
+    getData,
   };
 };
+
+export function getMessages(webhook) {
+  const messages = webhook.messages;
+  if (!messages) return [];
+
+  let r = [];
+
+  messages.forEach(function (str) {
+    const msg = str?.split(" ");
+    const msgLength = msg.length;
+
+    msg.forEach(function (v, i) {
+      if (i + 1 < msgLength) {
+        const data = msg[i + 1];
+        if (v === "-P") {
+          r.push({ msg: str, pair: data });
+        }
+      }
+    });
+  });
+
+  return r;
+}
 
 export const GetWebhook = () => {
   const [webhooks, setWebhooks] = useState([]);

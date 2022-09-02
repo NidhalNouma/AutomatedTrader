@@ -1,12 +1,13 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Alert } from "react-daisyui";
 import { Input1, Toggle1, Input1Inline, Select1 } from "../../Components/Input";
 import { ButtonP } from "../../Components/Button";
 import { WebHook } from "../../hooks/WebHook";
 
 import { GetUserContext } from "../../hooks/UserHook";
+import { GetWebhookContext } from "../../hooks/WebHook";
 
-function WebhookData({ includeName, close }) {
+function WebhookData({ includeName, close, webhook, type, msg }) {
   const user = GetUserContext();
   const {
     name,
@@ -33,7 +34,16 @@ function WebhookData({ includeName, close }) {
     setMaxSS,
     error,
     add,
+    addMsg,
+    getData,
+    editMsg,
   } = WebHook(user?.uid);
+
+  const { getAllWebhooks } = GetWebhookContext();
+
+  useEffect(() => {
+    if (type === "EditMessage") getData(msg.msg);
+  }, [msg]);
 
   return (
     <div className="w-11/12 mx-auto flex flex-col items-center">
@@ -67,6 +77,7 @@ function WebhookData({ includeName, close }) {
         name="Position size value"
         placeholder=""
         helper="Information about this input"
+        type="number"
         value={positionValue}
         setValue={setPositionValue}
       />
@@ -226,7 +237,7 @@ function WebhookData({ includeName, close }) {
             type="number"
             disabled={!maxSS.use}
             value={maxSS.spread}
-            setValue={(v) => setTS({ ...maxSS, spread: v })}
+            setValue={(v) => setMaxSS({ ...maxSS, spread: v })}
           />
           <Input1Inline
             name="Max slippage"
@@ -271,8 +282,13 @@ function WebhookData({ includeName, close }) {
       <div className="mt-1 mb-4 w-full px-20">
         <ButtonP
           onClick={async () => {
-            const r = await add();
+            let r;
+            if (type === "index") r = await add();
+            else if (type === "AddMessage") r = await addMsg(webhook?.id);
+            else if (type === "EditMessage")
+              r = await editMsg(webhook?.id, msg.msg);
             if (r) {
+              const ga = await getAllWebhooks(user?.uid);
               close();
             }
           }}

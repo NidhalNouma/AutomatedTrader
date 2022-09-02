@@ -14,9 +14,14 @@ import { Modal1 } from "../../Components/Modal";
 import AddMessage from "../ManageWebhook/AddMessage";
 import EditMessage from "../ManageWebhook/EditMessage";
 
-function Index() {
+import { getMessages } from "../../hooks/WebHook";
+
+function Index({ webhook }) {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const messages = getMessages(webhook);
+  const [msg, setMsg] = useState(messages[0]);
+
   return (
     <Fragment>
       <Modal1
@@ -25,7 +30,7 @@ function Index() {
           setOpen(false);
         }}
       >
-        <AddMessage close={() => setOpen(false)} />
+        <AddMessage close={() => setOpen(false)} webhook={webhook} />
       </Modal1>
       <Modal1
         open={openEdit}
@@ -33,18 +38,29 @@ function Index() {
           setOpenEdit(false);
         }}
       >
-        <EditMessage close={() => setOpenEdit(false)} />
+        <EditMessage
+          close={() => setOpenEdit(false)}
+          webhook={webhook}
+          msg={msg}
+          setMsg={setMsg}
+          messages={messages}
+        />
       </Modal1>
       <div className="bg-bga p-3 rounded-b-xl">
         <div className="flex items-center justify-between">
-          <H6>Webhooks name</H6>
+          <H6>{webhook.name}</H6>
           <ButtonInfo helper="Copy webhooks URL">
             <ClipboardIcon className="h-5 w-5 text-secondaryi" />
           </ButtonInfo>
         </div>
         <div className="mt-2 flex">
           <H6 className="mr-4">Active</H6>
-          <Toggle size="sm" color="accent" className="" />
+          <Toggle
+            size="sm"
+            color="accent"
+            className=""
+            checked={webhook.active}
+          />
         </div>
         <div className="mt-2">
           <div className="flex items-center justify-between">
@@ -71,12 +87,20 @@ function Index() {
           </div>
           <div className="mt-2">
             <Select
+              value={msg.pair}
+              onChange={(v) => setMsg(messages[v])}
               size="sm"
               className="bg-bga w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
             >
-              <option value={"Homer"}>BTCUSD</option>
-              <option value={"Marge"}>EURUSD</option>
-              <option value={"Bart"}>GBPJPY</option>
+              {messages.map((v, i) => (
+                <option
+                  key={v.pair + i}
+                  value={i}
+                  selected={v.pair === msg.pair}
+                >
+                  {v.pair}
+                </option>
+              ))}
             </Select>
           </div>
         </div>
