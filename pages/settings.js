@@ -19,7 +19,10 @@ export default function Settings() {
                 <H3 className="mb-4">Profile</H3>
                 <div className="flex flex-col w-full items-center ">
                   <img
-                    src="https://api.lorem.space/image/face?hash=33791"
+                    src={
+                      // user?.photoURL ||
+                      "Images/profile.png"
+                    }
                     className="rounded-full w-20 h-20 border-4 border-text-h object-cover"
                   />
                   <div className="">

@@ -4,6 +4,7 @@ import {
   addMessage,
   deleteMessage,
   getWebhooksByUserId,
+  activeWebhook,
 } from "../db/webhooks";
 
 export const WebHook = (userId) => {
@@ -257,6 +258,11 @@ export const WebHook = (userId) => {
   };
 };
 
+export async function setActiveWebhook(id, active) {
+  const r = activeWebhook(id, active);
+  return r;
+}
+
 export function getMessages(webhook) {
   const messages = webhook.messages;
   if (!messages) return [];
@@ -289,7 +295,7 @@ export const GetWebhook = () => {
     setWebhooks(r);
   };
 
-  return { webhooks, getAllWebhooks };
+  return { webhooks, getAllWebhooks, setWebhooks };
 };
 
 export const WebHooksC = createContext(null);

@@ -9,6 +9,8 @@ import {
   Swap,
   Drawer,
 } from "react-daisyui";
+
+import Link from "next/link";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 import { Modal1 } from "../../Components/Modal";
@@ -16,8 +18,11 @@ import ManageWebhook from "../ManageWebhook";
 
 import { SignOut } from "../../hooks/SignHook";
 
+import { GetUserContext } from "../../hooks/UserHook";
+
 function Index() {
   const [open, setOpen] = useState(false);
+  const user = GetUserContext();
 
   return (
     <Fragment>
@@ -67,14 +72,26 @@ function Index() {
               <Dropdown vertical="end">
                 <Button color="ghost" className="avatar" shape="circle">
                   <div className="w-10 rounded-full">
-                    <img src="https://api.lorem.space/image/face?hash=33791" />
+                    <img
+                      className=""
+                      src={
+                        // user?.photoURL ||
+                        "Images/profile.png"
+                      }
+                    />
                   </div>
                 </Button>
                 <Dropdown.Menu className="w-52 menu-compact bg-bga">
                   <li>
-                    <a className="justify-between">Profile</a>
+                    <Link className="justify-between" href="/profile">
+                      Profile
+                    </Link>
                   </li>
-                  <Dropdown.Item>Settings</Dropdown.Item>
+                  <li>
+                    <Link className="justify-between" href="/settings">
+                      Settings
+                    </Link>
+                  </li>
                   <Dropdown.Item onClick={() => SignOut()}>
                     Logout
                   </Dropdown.Item>

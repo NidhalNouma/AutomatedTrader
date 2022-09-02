@@ -8,7 +8,7 @@ function Toasti({ alerts, setAlerts }) {
   return (
     <Toast horizontal="end" vertical="bottom">
       {alerts?.map((alert, index) => (
-        <Alert key={index} status={alert.status}>
+        <Alert key={index} status={alert.status} className="py-1">
           <div className="w-full flex-row justify-between gap-2">
             <h3>{alert.text}</h3>
           </div>

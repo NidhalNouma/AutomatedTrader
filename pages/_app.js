@@ -15,7 +15,7 @@ import Toasti from "../Features/Toast";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
-  const { webhooks, getAllWebhooks } = GetWebhook();
+  const { webhooks, getAllWebhooks, setWebhooks } = GetWebhook();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
 
@@ -39,15 +39,15 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
-      <ToastCC value={{}}>
+      <ToastCC value={{ newAlert }}>
         <UserCC value={user}>
-          <WebHookCC value={{ webhooks, getAllWebhooks }}>
+          <WebHookCC value={{ webhooks, getAllWebhooks, setWebhooks }}>
             <Component {...pageProps} />
           </WebHookCC>
         </UserCC>
       </ToastCC>
 
-      {/* <Toasti alerts={alerts} setAlerts={setAlerts} /> */}
+      <Toasti alerts={alerts} setAlerts={setAlerts} />
     </Fragment>
   );
 }

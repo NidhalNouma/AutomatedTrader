@@ -103,5 +103,6 @@ export async function activeWebhook(id, active) {
   });
 
   const nwh = await getWebhook(id);
+  nwh["id"] = id;
   return nwh;
 }

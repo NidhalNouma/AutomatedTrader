@@ -14,13 +14,25 @@ import { Modal1 } from "../../Components/Modal";
 import AddMessage from "../ManageWebhook/AddMessage";
 import EditMessage from "../ManageWebhook/EditMessage";
 
-import { getMessages } from "../../hooks/WebHook";
+import {
+  getMessages,
+  setActiveWebhook,
+  GetWebhookContext,
+} from "../../hooks/WebHook";
+import { GetToastContext } from "../../hooks/ToastHook";
 
-function Index({ webhook }) {
+import { copyTextToClipboard } from "../../utils/functions";
+
+function Index({ webhook: wh }) {
+  const [webhook, setWebhook] = useState(wh);
+
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const messages = getMessages(webhook);
   const [msg, setMsg] = useState(messages[0]);
+
+  // const { setWebhooks } = GetWebhookContext();
+  const { newAlert } = GetToastContext();
 
   return (
     <Fragment>
@@ -49,7 +61,16 @@ function Index({ webhook }) {
       <div className="bg-bga p-3 rounded-b-xl">
         <div className="flex items-center justify-between">
           <H6>{webhook.name}</H6>
-          <ButtonInfo helper="Copy webhooks URL">
+          <ButtonInfo
+            helper="Copy webhooks URL"
+            onClick={() =>
+              copyTextToClipboard(
+                webhook.name,
+                () => newAlert("Webhooks URL copied", "success"),
+                () => newAlert("Webhooks URL copied", "error")
+              )
+            }
+          >
             <ClipboardIcon className="h-5 w-5 text-secondaryi" />
           </ButtonInfo>
         </div>
@@ -60,6 +81,16 @@ function Index({ webhook }) {
             color="accent"
             className=""
             checked={webhook.active}
+            onChange={async () => {
+              let is = "on";
+              if (webhook.active) is = "off";
+              const r = await setActiveWebhook(webhook.id, !webhook.active);
+              // const r1 = await getAllWebhooks();
+              if (r) {
+                setWebhook(r);
+                newAlert(webhook.name + " webhook is " + is, "success");
+              }
+            }}
           />
         </div>
         <div className="mt-2">
@@ -80,7 +111,17 @@ function Index({ webhook }) {
               >
                 <PencilAltIcon className="h-5 w-5 text-secondaryi" />
               </ButtonInfo>
-              <ButtonInfo helper="Copy message" className="ml-2">
+              <ButtonInfo
+                helper="Copy message"
+                className="ml-2"
+                onClick={() =>
+                  copyTextToClipboard(
+                    msg.msg,
+                    () => newAlert("Message copied", "success"),
+                    () => newAlert("Message copied", "error")
+                  )
+                }
+              >
                 <ClipboardCopyIcon className="h-5 w-5 text-secondaryi" />
               </ButtonInfo>
             </div>

@@ -17,13 +17,13 @@ export default function Home() {
       <Sidenav cpath="profile" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8">
+        <div className="px-10 py-8 overflow-x-hidden">
           <div className="flex items-start">
             <div className="w-20 h-20 mr-4">
               <img
                 src={
                   // user?.photoURL ||
-                  "https://api.lorem.space/image/face?hash=33791"
+                  "Images/profile.png"
                 }
                 className="rounded-full w-full h-full border-4 border-text-h object-cover"
               />
@@ -34,7 +34,7 @@ export default function Home() {
           <div className="mt-6">
             <H4 className="">Webhooks Url&apos;s</H4>
             {webhooks?.length > 0 ? (
-              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3">
                 {webhooks
                   .map((v, i) => <WebhooksItem key={v.id} webhook={v} />)
                   .reverse()}

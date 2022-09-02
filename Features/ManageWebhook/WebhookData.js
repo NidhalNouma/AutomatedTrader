@@ -6,8 +6,10 @@ import { WebHook } from "../../hooks/WebHook";
 
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetWebhookContext } from "../../hooks/WebHook";
+import { GetToastContext } from "../../hooks/ToastHook";
 
 function WebhookData({ includeName, close, webhook, type, msg }) {
+  const { newAlert } = GetToastContext();
   const user = GetUserContext();
   const {
     name,
@@ -289,6 +291,12 @@ function WebhookData({ includeName, close, webhook, type, msg }) {
               r = await editMsg(webhook?.id, msg.msg);
             if (r) {
               const ga = await getAllWebhooks(user?.uid);
+
+              if (type === "index") newAlert("New webhook added", "success");
+              else if (type === "AddMessage")
+                newAlert("New message added", "success");
+              else if (type === "EditMessage")
+                newAlert("Message updated", "success");
               close();
             }
           }}

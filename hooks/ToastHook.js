@@ -4,14 +4,20 @@ export const ToastHook = () => {
   const [alerts, setAlerts] = useState([]);
 
   function newAlert(text, status) {
+    let i = alerts.length;
     setAlerts((alerts) => [
       ...alerts,
       {
+        i,
         text,
         status,
       },
     ]);
   }
+
+  //   setTimeout(() => {
+  //     setAlerts((a) => a.filter((v) => v.i !== alerts.length));
+  //   }, 3000);
 
   return { alerts, setAlerts, newAlert };
 };
