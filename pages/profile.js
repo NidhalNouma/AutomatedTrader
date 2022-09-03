@@ -9,7 +9,7 @@ import { H1, H4, H6, Hi6 } from "../Components/H";
 import WebhooksItem from "../Features/WebhooksItem";
 
 export default function Home() {
-  const user = GetUserContext();
+  const { user } = GetUserContext();
   const { webhooks } = GetWebhookContext();
 
   return (
@@ -21,10 +21,7 @@ export default function Home() {
           <div className="flex items-start">
             <div className="w-20 h-20 mr-4">
               <img
-                src={
-                  // user?.photoURL ||
-                  "Images/profile.png"
-                }
+                src={user?.photoURL || "Images/profile.png"}
                 className="rounded-full w-full h-full border-4 border-text-h object-cover"
               />
             </div>

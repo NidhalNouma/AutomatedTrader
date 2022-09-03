@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <ToastCC value={{ newAlert }}>
-        <UserCC value={user}>
+        <UserCC value={{ user, setUser }}>
           <WebHookCC value={{ webhooks, getAllWebhooks, setWebhooks }}>
             <Component {...pageProps} />
           </WebHookCC>

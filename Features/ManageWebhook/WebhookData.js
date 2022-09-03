@@ -10,7 +10,7 @@ import { GetToastContext } from "../../hooks/ToastHook";
 
 function WebhookData({ includeName, close, webhook, type, msg }) {
   const { newAlert } = GetToastContext();
-  const user = GetUserContext();
+  const { user } = GetUserContext();
   const {
     name,
     setName,

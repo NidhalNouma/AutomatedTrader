@@ -1,3 +1,4 @@
+import { Fragment, useRef, useState } from "react";
 import { Button, Dropdown } from "react-daisyui";
 import { H6 } from "./H";
 
@@ -40,5 +41,48 @@ export const ButtonInfo = ({ className, onClick, children, helper }) => {
         </div>
       </Dropdown.Menu>
     </Dropdown>
+  );
+};
+
+export const ButtonFile = ({
+  className,
+  children,
+  uploadChildren,
+  onSelect,
+  icon,
+  ...props
+}) => {
+  const ref = useRef(null);
+  const [upload, setUpload] = useState(false);
+
+  return (
+    <Fragment>
+      <input
+        className="hidden"
+        type="file"
+        ref={ref}
+        accept="image/png, image/jpeg, image/jpg, image/gif"
+        onChange={async (e) => {
+          if (!upload) {
+            setUpload(true);
+            await onSelect(e);
+            setUpload(false);
+          }
+        }}
+      />
+
+      <Button
+        onClick={() => ref.current.click()}
+        variant="link"
+        startIcon={icon}
+        animation={true}
+        size="sm"
+        responds={true}
+        className={`${className} capitalize text-text-h`}
+        {...props}
+      >
+        {upload ? uploadChildren : children}
+      </Button>
+    </Fragment>
   );
 };

@@ -1,11 +1,15 @@
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
+import { ButtonFile } from "../Components/Button";
 import { H1, H3, Hi4 } from "../Components/H";
 import { GetUserContext } from "../hooks/UserHook";
 
+import { uploadImg } from "../db/storage";
+import { updateProfilePicture } from "../db/user";
+
 export default function Settings() {
-  const user = GetUserContext();
+  const { user, setUser } = GetUserContext();
   return (
     <>
       <Sidenav cpath="settings" />
@@ -18,13 +22,24 @@ export default function Settings() {
               <div className="p-4 bg-bga rounded-xl">
                 <H3 className="mb-4">Profile</H3>
                 <div className="flex flex-col w-full items-center ">
-                  <img
-                    src={
-                      // user?.photoURL ||
-                      "Images/profile.png"
-                    }
-                    className="rounded-full w-20 h-20 border-4 border-text-h object-cover"
-                  />
+                  <div className="flex flex-col items-center">
+                    <img
+                      src={user?.photoURL || "Images/profile.png"}
+                      className="rounded-full w-20 h-20 border-4 border-text-h object-cover"
+                    />
+                    <ButtonFile
+                      onSelect={async (e) => {
+                        const r = await uploadImg(user?.uid, e.target.files[0]);
+                        if (r) {
+                          const nu = await updateProfilePicture(r);
+                          setUser({ ...user, photoURL: r });
+                        }
+                      }}
+                      uploadChildren={<div>Uploading ...</div>}
+                    >
+                      Update picture
+                    </ButtonFile>
+                  </div>
                   <div className="">
                     <Hi4 className="mt-3">{user?.displayName || "NA"}</Hi4>
                     <Hi4 className="mt-3">{user?.email || "NA"}</Hi4>

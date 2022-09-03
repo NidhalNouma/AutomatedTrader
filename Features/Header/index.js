@@ -22,7 +22,7 @@ import { GetUserContext } from "../../hooks/UserHook";
 
 function Index() {
   const [open, setOpen] = useState(false);
-  const user = GetUserContext();
+  const { user } = GetUserContext();
 
   return (
     <Fragment>
@@ -74,10 +74,7 @@ function Index() {
                   <div className="w-10 rounded-full">
                     <img
                       className=""
-                      src={
-                        // user?.photoURL ||
-                        "Images/profile.png"
-                      }
+                      src={user?.photoURL || "Images/profile.png"}
                     />
                   </div>
                 </Button>
