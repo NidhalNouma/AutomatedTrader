@@ -23,6 +23,8 @@ import { GetToastContext } from "../../hooks/ToastHook";
 
 import { copyTextToClipboard } from "../../utils/functions";
 
+import { WebhhokURL } from "../../utils/constant";
+
 function Index({ webhook: wh }) {
   const [webhook, setWebhook] = useState(wh);
 
@@ -65,7 +67,7 @@ function Index({ webhook: wh }) {
             helper="Copy webhooks URL"
             onClick={() =>
               copyTextToClipboard(
-                webhook.name,
+                WebhhokURL() + webhook.id,
                 () => newAlert("Webhooks URL copied", "success"),
                 () => newAlert("Webhooks URL copied", "error")
               )

@@ -305,3 +305,103 @@ export const WebHookCC = ({ children, value }) => {
 };
 
 export const GetWebhookContext = () => useContext(WebHooksC);
+
+export function getMessageData(message) {
+  const datai = message.split(" ");
+  const dataLength = datai.length;
+
+  let r = {};
+
+  let tsi = {};
+  let bei = {};
+  let timei = {};
+  let hedgingi = {};
+  let maxSSi = {};
+
+  datai.forEach(function (v, i) {
+    if (i + 1 < dataLength) {
+      const data = datai[i + 1];
+      switch (v) {
+        case "-P":
+          r.pair = data;
+          break;
+
+        case "-PO":
+          r.positionType = data;
+          break;
+
+        case "-POV":
+          r.positionValue = data;
+          break;
+
+        case "-SL":
+          r.stopLoss = data;
+          break;
+        case "-TP":
+          r.takeProfit = data;
+          break;
+
+        case "-TS":
+          tsi = { ...tsi, use: true };
+          break;
+        case "-TSs":
+          tsi = { ...tsi, start: data };
+          break;
+        case "-TSo":
+          tsi = { ...tsi, stop: data };
+          break;
+        case "-TSe":
+          tsi = { ...tsi, step: data };
+          break;
+
+        case "-BE":
+          bei = { ...bei, use: true };
+          break;
+        case "-SP":
+          bei = { ...bei, stop: data };
+          break;
+        case "-PP":
+          bei = { ...bei, partiel: data };
+          break;
+
+        case "-TF":
+          timei = { ...timei, use: true };
+          break;
+        case "-TIS":
+          timei = { ...timei, start: data };
+          break;
+        case "-TIE":
+          timei = { ...timei, end: data };
+          break;
+
+        case "-HE":
+          hedgingi = { ...hedgingi, use: true };
+          break;
+        case "-POD":
+          hedgingi = { ...hedgingi, pending: data };
+          break;
+        case "-MT":
+          hedgingi = { ...hedgingi, max: data };
+          break;
+
+        case "-MXSS":
+          maxSSi = { ...maxSSi, use: true };
+          break;
+        case "-MXp":
+          maxSSi = { ...maxSSi, spread: data };
+          break;
+        case "-MXl":
+          maxSSi = { ...maxSSi, slippage: data };
+          break;
+      }
+    }
+  });
+
+  r.TS = tsi;
+  r.BE = bei;
+  r.time = timei;
+  r.hedging = hedgingi;
+  r.maxSS = maxSSi;
+
+  return r;
+}

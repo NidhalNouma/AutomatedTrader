@@ -8,11 +8,19 @@ function Toasti({ alerts, setAlerts }) {
   return (
     <Toast horizontal="end" vertical="bottom">
       {alerts?.map((alert, index) => (
-        <Alert key={index} status={alert.status} className="py-1">
+        <Alert
+          key={index}
+          status={alert.status}
+          className="py-1 w-full toastDiv"
+        >
           <div className="w-full flex-row justify-between gap-2">
             <h3>{alert.text}</h3>
           </div>
-          <Button color="ghost" onClick={() => handleRemoveToast(index)}>
+          <Button
+            className="ml-auto"
+            color="ghost"
+            onClick={() => handleRemoveToast(index)}
+          >
             X
           </Button>
         </Alert>

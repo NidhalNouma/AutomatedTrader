@@ -8,6 +8,7 @@ import { checkUser } from "../db/sign";
 
 import { UserCC } from "../hooks/UserHook";
 import { WebHookCC, GetWebhook } from "../hooks/WebHook";
+import { AlertsCC, GetAlerts } from "../hooks/AlertsHook";
 import { ToastCC, ToastHook } from "../hooks/ToastHook";
 
 import Toasti from "../Features/Toast";
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const { webhooks, getAllWebhooks, setWebhooks } = GetWebhook();
+  const { getAllAlertsHook, alertsHook } = GetAlerts();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
 
@@ -34,6 +36,9 @@ function MyApp({ Component, pageProps }) {
 
     if (user) {
       getAllWebhooks(user?.uid);
+      getAllAlertsHook(user?.uid);
+    } else {
+      setAlerts([]);
     }
   }, [user]);
 
@@ -42,7 +47,9 @@ function MyApp({ Component, pageProps }) {
       <ToastCC value={{ newAlert }}>
         <UserCC value={{ user, setUser }}>
           <WebHookCC value={{ webhooks, getAllWebhooks, setWebhooks }}>
-            <Component {...pageProps} />
+            <AlertsCC value={{ alertsHook }}>
+              <Component {...pageProps} />
+            </AlertsCC>
           </WebHookCC>
         </UserCC>
       </ToastCC>

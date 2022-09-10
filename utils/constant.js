@@ -1,3 +1,4 @@
+// import { useRouter } from "next/router";
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "automated-trader-fd733.firebaseapp.com",
@@ -7,3 +8,7 @@ export const firebaseConfig = {
   appId: "1:1097394175779:web:5b307b63f15c80f73bd696",
   measurementId: "G-N59NRR3N6T",
 };
+
+export function WebhhokURL() {
+  return window.location.protocol + "//" + window.location.host + "/api/wh/";
+}

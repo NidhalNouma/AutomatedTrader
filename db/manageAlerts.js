@@ -1,0 +1,46 @@
+let alerts = [];
+
+export function newAlert(id, data) {
+  let n = { id, data: [data] };
+
+  const f = alerts.find(function (v, i) {
+    return v.id === id;
+  });
+
+  console.log(f);
+
+  if (f) {
+    alerts = alerts.filter(function (v, i) {
+      return v.id !== id;
+    });
+    n = { id, data: [data, ...f.data] };
+    alerts.push(n);
+    removeAfterXs(id);
+  } else {
+    alerts.push(n);
+  }
+}
+
+export function getAlert(id) {
+  removeAfterXs(id);
+  const f = alerts.find(function (v, i) {
+    return v.id === id;
+  });
+
+  return f;
+}
+
+function removeAfterXs(id, sec = 30) {
+  const i = alerts.findIndex((obj) => obj.id === id);
+  let t = new Date();
+  t = new Date(t.getTime() - 1000 * sec);
+
+  //   console.log(i, t, new Date());
+  if (i >= 0) {
+    const nd = alerts[i].data.filter(function (v) {
+      return v.time > t;
+    });
+
+    alerts[i].data = nd;
+  }
+}
