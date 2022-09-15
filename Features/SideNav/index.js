@@ -49,9 +49,10 @@ function index({ cpath }) {
       </div>
 
       <Collapse
-        className="rounded-box text-text-p px-4"
+        className="text-text-p pl-4"
         icon="arrow"
         checkbox={true}
+        open={true}
       >
         <Collapse.Title className="flex items-center">
           <span
@@ -64,7 +65,16 @@ function index({ cpath }) {
           </span>
           <span className="text-base font-semibold">Apps</span>
         </Collapse.Title>
-        <Collapse.Content>List of apps will be here</Collapse.Content>
+        <Collapse.Content className="pr-0 pb-0">
+          <Linksn
+            // icon={<UserGroupIcon className="h-5 w-5" />}
+            href="/apps/mt4"
+            isActive={cpath === "mt4"}
+            className="my-0"
+          >
+            <span className="capitalize ml-2 text-base">MT4</span>
+          </Linksn>
+        </Collapse.Content>
       </Collapse>
 
       <div className="my-1 px-4 /mt-auto">

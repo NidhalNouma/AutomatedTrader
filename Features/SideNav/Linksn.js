@@ -1,10 +1,10 @@
 import { Button } from "react-daisyui";
 import Link from "next/link";
 
-function Linksn({ icon, children, isActive, href = "/" }) {
+function Linksn({ icon, children, isActive, className, href = "/" }) {
   return (
     <div
-      className={`pr-3 border-r-4 my-1 rounded ${
+      className={`${className} pr-3 border-r-4 my-1 rounded ${
         isActive ? "border-r-secondaryi" : "border-r-bga"
       }`}
     >

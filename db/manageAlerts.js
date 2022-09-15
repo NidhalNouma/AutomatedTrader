@@ -21,6 +21,20 @@ export function newAlert(id, data) {
   }
 }
 
+export function getAlertByUserId(id) {
+  // removeAfterXs(id);
+  const r = [];
+  alerts.forEach(function (v, i) {
+    const s = v.data.length;
+    for (let j = 0; j < s; j++) {
+      const d = v.data[j];
+      if (d.userId === id) r.push(d);
+    }
+  });
+
+  return r;
+}
+
 export function getAlert(id) {
   removeAfterXs(id);
   const f = alerts.find(function (v, i) {

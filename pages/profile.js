@@ -50,7 +50,7 @@ export default function Home() {
           {alertsHook?.length > 0 && (
             <div className="mt-6">
               <H4 className="">Recent alerts</H4>
-              <div className="bg-bga w-1/2 min-h-16 mt-2 rounded-xl">
+              <div className="bg-bga w-1/2 mt-2 rounded-xl">
                 {alertsHook.map((v, i) =>
                   i < 10 ? (
                     <Fragment key={i}>

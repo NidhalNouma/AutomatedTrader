@@ -23,6 +23,20 @@ export const ButtonP = ({ className, icon, ...props }) => {
   );
 };
 
+export const ButtonText = ({ className, icon, ...props }) => {
+  return (
+    <Button
+      startIcon={icon}
+      animation={true}
+      variant="link"
+      size="sm"
+      responds={true}
+      className={`${className} px-0 py-0 h-7 capitalize text-secondaryi !text-sm rounded-lg border-0`}
+      {...props}
+    />
+  );
+};
+
 export const ButtonInfo = ({ className, onClick, children, helper }) => {
   return (
     <Dropdown hover={true} horizontal="right" vertical="top">

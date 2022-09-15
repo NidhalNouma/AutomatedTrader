@@ -295,7 +295,15 @@ export const GetWebhook = () => {
     setWebhooks(r);
   };
 
-  return { webhooks, getAllWebhooks, setWebhooks };
+  function changeWebhookData(data) {
+    const i = webhooks.indexOf(webhooks.find((wh) => wh.id === data.id));
+    if (i === -1) return;
+    const r = webhooks;
+    r[i] = data;
+    setWebhooks([...r]);
+  }
+
+  return { webhooks, getAllWebhooks, setWebhooks, changeWebhookData };
 };
 
 export const WebHooksC = createContext(null);

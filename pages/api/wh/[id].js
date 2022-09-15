@@ -3,7 +3,7 @@
 import { getWebhook } from "../../../db/webhooks";
 import { addAlert } from "../../../db/alerts";
 
-import { newAlert, getAlert } from "../../../db/manageAlerts";
+import { newAlert, getAlert, getAlertByUserId } from "../../../db/manageAlerts";
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       }
     }
   } else if (req.method === "GET") {
-    const r = getAlert(id);
+    const r = getAlertByUserId(id);
     return res.status(200).json(r);
   }
 

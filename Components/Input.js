@@ -103,7 +103,7 @@ export const Toggle1 = ({ className, name, helper, value, setValue }) => {
     <div className="form-control w-full max-w-xs">
       <label className="label">
         <span className="label-text text-text-h flex items-center">{name}</span>
-        <div>
+        <div className="flex justify-center item-center">
           <Toggle
             className="mx-2"
             color="accent"

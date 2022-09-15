@@ -67,7 +67,7 @@ export async function getWebhook(id) {
 
   if (docSnap.exists()) {
     const wh = docSnap.data();
-    return wh;
+    return { id, ...wh };
   } else {
     console.log("No such document!");
     return null;
@@ -104,5 +104,29 @@ export async function activeWebhook(id, active) {
 
   const nwh = await getWebhook(id);
   nwh["id"] = id;
+  return nwh;
+}
+
+export async function addMT4Account(id, accountId) {
+  console.log("Adding new MT4 account ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    MT4: arrayUnion(accountId),
+  });
+
+  const nwh = await getWebhook(id);
+  return nwh;
+}
+
+export async function deleteMT4Account(id, accountId) {
+  console.log("Deleeting new MT4 account ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    MT4: arrayRemove(accountId),
+  });
+
+  const nwh = await getWebhook(id);
   return nwh;
 }
