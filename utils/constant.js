@@ -12,3 +12,5 @@ export const firebaseConfig = {
 export function WebhhokURL() {
   return window.location.protocol + "//" + window.location.host + "/api/wh/";
 }
+
+export const MT4EAPath = process.env.NEXT_PUBLIC_MT4_EA;

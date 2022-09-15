@@ -1,10 +1,13 @@
 import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
 import { H1, H4 } from "../../Components/H";
+import { ButtonText } from "../../Components/Button";
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext } from "../../hooks/MTAccounts";
 
 import Mt4 from "../../Features/MTAccount/Mt4";
+
+import { MT4EAPath } from "../../utils/constant";
 
 export default function help() {
   const { user } = GetUserContext();
@@ -15,7 +18,17 @@ export default function help() {
       <div className="w-full flex flex-col">
         <Header />
         <div className="px-10 py-8">
-          <H1>Metatrader 4</H1>
+          <div className="flex justify-between">
+            <H1>Metatrader 4</H1>
+            <ButtonText
+              onClick={(e) => {
+                e.preventDefault();
+                window.location = MT4EAPath;
+              }}
+            >
+              download EA
+            </ButtonText>
+          </div>
           <div className="my-4">
             <span className="">Your Id: {user?.uid}</span>
           </div>

@@ -19,6 +19,7 @@ export default async function handler(req, res) {
             userId: r.userId,
             name: r.name,
             time: new Date(),
+            MT4: r.MT4,
           });
           return res.status(200).json({ done: true });
         }

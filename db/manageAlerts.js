@@ -25,6 +25,7 @@ export function getAlertByUserId(id) {
   // removeAfterXs(id);
   const r = [];
   alerts.forEach(function (v, i) {
+    removeAfterXs(v.id);
     const s = v.data.length;
     for (let j = 0; j < s; j++) {
       const d = v.data[j];

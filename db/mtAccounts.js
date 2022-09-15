@@ -15,6 +15,7 @@ import {
   arrayRemove,
   onSnapshot,
 } from "firebase/firestore";
+
 import { firebaseConfig } from "../utils/constant";
 
 const collName = "mtaccounts";
