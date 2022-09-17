@@ -31,7 +31,7 @@ function EditMessage({ close, webhook, msg, setMsg, messages }) {
       <div className="flex flex-col justify-center items-center w-full mt-2">
         <WebhookData
           close={close}
-          type="EditMessage"
+          typeWh="EditMessage"
           webhook={webhook}
           msg={msg}
         />

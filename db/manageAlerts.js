@@ -7,8 +7,6 @@ export function newAlert(id, data) {
     return v.id === id;
   });
 
-  console.log(f);
-
   if (f) {
     alerts = alerts.filter(function (v, i) {
       return v.id !== id;
@@ -29,7 +27,7 @@ export function getAlertByUserId(id) {
     const s = v.data.length;
     for (let j = 0; j < s; j++) {
       const d = v.data[j];
-      if (d.userId === id) r.push(d);
+      if (d.userId === id) r.push({ ...d, id: v.id });
     }
   });
 

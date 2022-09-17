@@ -11,7 +11,9 @@ export const WebHook = (userId) => {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
-  const [positionType, setPositionType] = useState("Percentage");
+  const [type, setType] = useState(0);
+  const [pendingDistance, setPendingDistance] = useState("");
+  const [positionType, setPositionType] = useState(0);
   const [positionValue, setPositionValue] = useState("");
   const [stopLoss, setStopLoss] = useState("");
   const [takeProfit, setTakeProfit] = useState("");
@@ -32,6 +34,10 @@ export const WebHook = (userId) => {
 
   function formatMsg() {
     let msg = "-P " + pair + " ";
+
+    msg += "-TY " + type + " ";
+    if (pendingDistance) msg += "-PD " + pendingDistance + " ";
+
     msg += "-PO " + positionType + " ";
     msg += "-POV " + positionValue + " ";
     msg += "-SL " + stopLoss + " ";
@@ -86,6 +92,14 @@ export const WebHook = (userId) => {
         switch (v) {
           case "-P":
             setPair(data);
+            break;
+
+          case "-TY":
+            setType(data);
+            break;
+
+          case "-PD":
+            setPendingDistance(data);
             break;
 
           case "-PO":
@@ -232,6 +246,10 @@ export const WebHook = (userId) => {
     setName,
     pair,
     setPair,
+    type,
+    setType,
+    pendingDistance,
+    setPendingDistance,
     positionType,
     setPositionType,
     positionValue,
@@ -336,6 +354,14 @@ export function getMessageData(message) {
 
         case "-PO":
           r.positionType = data;
+          break;
+
+        case "-TY":
+          r.type = data;
+          break;
+
+        case "-PD":
+          r.pendingDistance = data;
           break;
 
         case "-POV":

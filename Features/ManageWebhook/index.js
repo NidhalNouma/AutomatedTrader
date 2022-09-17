@@ -21,7 +21,7 @@ function Index({ close }) {
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center w-full mt-2">
-        <WebhookData includeName={true} close={close} type="index" />
+        <WebhookData includeName={true} close={close} typeWh="index" />
       </div>
     </div>
   );

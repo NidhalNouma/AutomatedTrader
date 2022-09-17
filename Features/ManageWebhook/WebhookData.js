@@ -8,7 +8,7 @@ import { GetUserContext } from "../../hooks/UserHook";
 import { GetWebhookContext } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
 
-function WebhookData({ includeName, close, webhook, type, msg }) {
+function WebhookData({ includeName, close, webhook, typeWh, msg }) {
   const { newAlert } = GetToastContext();
   const { user } = GetUserContext();
   const {
@@ -16,6 +16,10 @@ function WebhookData({ includeName, close, webhook, type, msg }) {
     setName,
     pair,
     setPair,
+    type,
+    setType,
+    pendingDistance,
+    setPendingDistance,
     positionType,
     setPositionType,
     positionValue,
@@ -44,7 +48,7 @@ function WebhookData({ includeName, close, webhook, type, msg }) {
   const { getAllWebhooks } = GetWebhookContext();
 
   useEffect(() => {
-    if (type === "EditMessage") getData(msg.msg);
+    if (typeWh === "EditMessage") getData(msg.msg);
   }, [msg]);
 
   return (
@@ -68,6 +72,33 @@ function WebhookData({ includeName, close, webhook, type, msg }) {
         setValue={setPair}
       />
       <div className="my-1"></div>
+
+      <Select1
+        name="Order type"
+        helper="Information about this input"
+        options={[
+          "Buy",
+          "Sell",
+          "Buy stop",
+          "Sell stop",
+          "Buy limit",
+          "Sell limit",
+        ]}
+        value={type}
+        setValue={setType}
+      />
+
+      {type > 1 && (
+        <Input1Inline
+          name="Pending distqnce"
+          placeholder=""
+          helper="Information about this input"
+          type="number"
+          value={pendingDistance}
+          setValue={setPendingDistance}
+        />
+      )}
+
       <Select1
         name="Position size type"
         helper="Information about this input"
@@ -285,17 +316,17 @@ function WebhookData({ includeName, close, webhook, type, msg }) {
         <ButtonP
           onClick={async () => {
             let r;
-            if (type === "index") r = await add();
-            else if (type === "AddMessage") r = await addMsg(webhook?.id);
-            else if (type === "EditMessage")
+            if (typeWh === "index") r = await add();
+            else if (typeWh === "AddMessage") r = await addMsg(webhook?.id);
+            else if (typeWh === "EditMessage")
               r = await editMsg(webhook?.id, msg.msg);
             if (r) {
               const ga = await getAllWebhooks(user?.uid);
 
-              if (type === "index") newAlert("New webhook added", "success");
-              else if (type === "AddMessage")
+              if (typeWh === "index") newAlert("New webhook added", "success");
+              else if (typeWh === "AddMessage")
                 newAlert("New message added", "success");
-              else if (type === "EditMessage")
+              else if (typeWh === "EditMessage")
                 newAlert("Message updated", "success");
               close();
             }

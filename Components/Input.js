@@ -127,6 +127,7 @@ export const Select1 = ({
   value,
   setValue,
 }) => {
+  // console.log(value);
   return (
     <div className="p-1 w-full max-w-xs flex items-center justify-between">
       <span className="label-text text-text-h flex items-center">{name}</span>
@@ -134,11 +135,11 @@ export const Select1 = ({
         <Select
           size="sm"
           className="bg-accenti mx-2 w-24"
-          value={value}
+          // value={value}
           onChange={(e) => setValue(e)}
         >
           {options?.map((v, i) => (
-            <option key={v + i} value={i} selected={v === value}>
+            <option key={v + i} value={i} selected={i === value}>
               {v}
             </option>
           ))}
