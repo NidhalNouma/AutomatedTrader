@@ -130,18 +130,18 @@ function Index({ webhook: wh }) {
           </div>
           <div className="mt-2">
             <Select
-              value={msg.pair}
-              onChange={(v) => setMsg(messages[v])}
+              value={msg.msg}
+              onChange={(v) => {
+                setMsg(messages[v]);
+              }}
               size="sm"
               className="bg-bga w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
             >
               {messages.map((v, i) => (
-                <option
-                  key={v.pair + i}
-                  value={i}
-                  selected={v.pair === msg.pair}
-                >
-                  {v.pair}
+                <option key={i} value={i} selected={v.msg === msg.msg}>
+                  {v.data.pair}
+                  {" - "}
+                  {v.data.type}
                 </option>
               ))}
             </Select>

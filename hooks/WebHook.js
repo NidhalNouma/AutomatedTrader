@@ -295,7 +295,9 @@ export function getMessages(webhook) {
       if (i + 1 < msgLength) {
         const data = msg[i + 1];
         if (v === "-P") {
-          r.push({ msg: str, pair: data });
+          const d = getMessageData(str);
+          d.type = typeToStr(d.type);
+          r.push({ msg: str, data: d });
         }
       }
     });
@@ -304,21 +306,42 @@ export function getMessages(webhook) {
   return r;
 }
 
+function typeToStr(type) {
+  switch (type) {
+    case "0":
+      return "Buy";
+    case "1":
+      return "Sell";
+    case "2":
+      return "Buy stop";
+    case "3":
+      return "Sell stop";
+    case "4":
+      return "Buy limit";
+    case "5":
+      return "Sell limit";
+  }
+
+  return type;
+}
+
 export const GetWebhook = () => {
   const [webhooks, setWebhooks] = useState([]);
 
   const getAllWebhooks = async (userId) => {
     if (!userId) return;
     const r = await getWebhooksByUserId(userId);
-    setWebhooks(r);
+    setWebhooks([...r]);
   };
 
   function changeWebhookData(data) {
     const i = webhooks.indexOf(webhooks.find((wh) => wh.id === data.id));
     if (i === -1) return;
-    const r = webhooks;
-    r[i] = data;
-    setWebhooks([...r]);
+    setWebhooks((whs) => {
+      const r = whs;
+      r[i] = data;
+      return r;
+    });
   }
 
   return { webhooks, getAllWebhooks, setWebhooks, changeWebhookData };

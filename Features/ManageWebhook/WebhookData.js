@@ -45,7 +45,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
     editMsg,
   } = WebHook(user?.uid);
 
-  const { getAllWebhooks } = GetWebhookContext();
+  const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
 
   useEffect(() => {
     if (typeWh === "EditMessage") getData(msg.msg);
@@ -321,7 +321,9 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             else if (typeWh === "EditMessage")
               r = await editMsg(webhook?.id, msg.msg);
             if (r) {
-              const ga = await getAllWebhooks(user?.uid);
+              // if (typeWh !== "index") changeWebhookData(r);
+              // else
+              await getAllWebhooks(user?.uid);
 
               if (typeWh === "index") newAlert("New webhook added", "success");
               else if (typeWh === "AddMessage")

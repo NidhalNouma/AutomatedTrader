@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "react-daisyui";
+import { Button, Select } from "react-daisyui";
 
 import { H3 } from "../../Components/H";
 import WebhookData from "./WebhookData";
@@ -11,11 +11,21 @@ function EditMessage({ close, webhook, msg, setMsg, messages }) {
       <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
         <div className="flex items-center">
           <H3 className="block whitespace-nowrap">Edit message</H3>
-          <Select1
-            options={messages.map((v) => v.pair)}
-            value={msg.pair}
-            setValue={(v) => setMsg(messages[v])}
-          />
+
+          <Select
+            // value={msg.msg}
+            onChange={(v) => setMsg(messages[v])}
+            size="sm"
+            className="bg-accenti border focus:outline-none rounded-lg font-normal text-text-p ml-2"
+          >
+            {messages.map((v, i) => (
+              <option key={i} value={i} selected={v.msg === msg.msg}>
+                {v.data.pair}
+                {" - "}
+                {v.data.type}
+              </option>
+            ))}
+          </Select>
         </div>
         <Button
           size="sm"
