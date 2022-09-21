@@ -16,9 +16,6 @@ export default async function handler(req, res) {
       const r = await getWebhook(id);
       if (r && r.active === true) {
         const user = await getUser(r.userId);
-        if (user?.telegram) {
-          sendMessage(user.telegram, message);
-        }
         const alert = addAlert(id, message, r.userId, r.name);
         if (alert) {
           const time = new Date();
@@ -30,6 +27,10 @@ export default async function handler(req, res) {
             mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
             MT4: r.MT4,
           });
+
+          if (user && user.telegram) {
+            await sendMessage(user.telegram, message);
+          }
           return res.status(200).json({ done: true });
         }
       }
