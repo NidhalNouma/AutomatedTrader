@@ -74,6 +74,15 @@ function index({ cpath }) {
           >
             <span className="capitalize ml-2 text-base">MT4</span>
           </Linksn>
+
+          <Linksn
+            // icon={<UserGroupIcon className="h-5 w-5" />}
+            href="/apps/telegram"
+            isActive={cpath === "telegram"}
+            className="my-0"
+          >
+            <span className="capitalize ml-2 text-base">Telegram</span>
+          </Linksn>
         </Collapse.Content>
       </Collapse>
 

@@ -2,6 +2,8 @@
 
 import { getWebhook } from "../../../db/webhooks";
 import { addAlert } from "../../../db/alerts";
+import { getUser } from "../../../db/user";
+import { sendMessage } from "../../../db/telegram";
 
 import { newAlert, getAlert, getAlertByUserId } from "../../../db/manageAlerts";
 import moment from "moment";
@@ -13,6 +15,10 @@ export default async function handler(req, res) {
     if (id && message) {
       const r = await getWebhook(id);
       if (r && r.active === true) {
+        const user = await getUser(r.userId);
+        if (user?.telegram) {
+          sendMessage(user.telegram, message);
+        }
         const alert = addAlert(id, message, r.userId, r.name);
         if (alert) {
           const time = new Date();

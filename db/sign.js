@@ -14,6 +14,8 @@ import {
 } from "firebase/auth";
 import { firebaseConfig } from "../utils/constant";
 
+import { addNewUser, getUser } from "./user";
+
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
@@ -52,8 +54,13 @@ export async function signUp(email, password, username) {
     });
     console.log("usr", user);
 
+    let userf = null;
+    if (user) {
+      userf = await addNewUser(user.uid);
+    }
+
     // await sendEmailVerification(auth.currentUser);
-    return { user, error: null };
+    return { user, error: null, userf };
   } catch (error) {
     console.log("SignUp error => . ", error.message);
     return {
@@ -75,7 +82,12 @@ export async function signIn(email, password) {
     );
     const user = userCredential.user;
     console.log("usr", user);
-    return { user, error: null };
+    let userf = null;
+    if (user) {
+      userf = await getUser(user.uid);
+      if (!userf) userf = await addNewUser(user.uid);
+    }
+    return { user, error: null, userf };
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -96,7 +108,12 @@ export async function continueWithGoogle() {
     const token = credential.accessToken;
     const user = result.user;
 
-    return { user, error: null };
+    let userf = null;
+    if (user) {
+      userf = await addNewUser(user.uid);
+    }
+
+    return { user, error: null, userf };
   } catch (error) {
     // Handle Errors here.
     const errorCode = error.code;

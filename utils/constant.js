@@ -1,4 +1,6 @@
 // import { useRouter } from "next/router";
+import axios from "axios";
+
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "automated-trader-fd733.firebaseapp.com",
@@ -14,3 +16,20 @@ export function WebhhokURL() {
 }
 
 export const MT4EAPath = process.env.NEXT_PUBLIC_MT4_EA;
+
+export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;
+const urlForTelegram = () =>
+  // window.location.protocol +
+  // "//" +
+  // window.location.host +
+  process.env.NEXT_PUBLIC_URL +
+  "/api/telegram/webhook/" +
+  process.env.NEXT_PUBLIC_TELEGRAM_API;
+export async function telegramInit() {
+  const res = await axios.get(
+    `$(telegramWebhookAPI}/setWebhook?url=${urlForTelegram()}`
+  );
+  console.log(res);
+}
+
+// telegramInit();
