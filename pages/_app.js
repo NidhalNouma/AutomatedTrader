@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, Fragment } from "react";
 import { checkUser } from "../db/sign";
 
-import { UserCC } from "../hooks/UserHook";
+import { UserCC, FullUserCC, GetFullUser } from "../hooks/UserHook";
 import { WebHookCC, GetWebhook } from "../hooks/WebHook";
 import { AlertsCC, GetAlerts } from "../hooks/AlertsHook";
 import { MTAccountsCC, GetMTAccounts } from "../hooks/MTAccounts";
@@ -17,6 +17,7 @@ import Toasti from "../Features/Toast";
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const { fullUser, getFullUser, setFullUser } = GetFullUser();
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
   const { getAllAlertsHook, alertsHook } = GetAlerts();
@@ -35,9 +36,11 @@ function MyApp({ Component, pageProps }) {
     } else if (!user) {
       if (pathname === "/profile") router.push("/");
       else if (pathname === "/settings") router.push("/");
+      else if (pathname !== "/") router.push("/");
     }
 
     if (user) {
+      getFullUser(user?.uid);
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
       getAllMTAccounts(user?.uid);
@@ -50,15 +53,22 @@ function MyApp({ Component, pageProps }) {
     <Fragment>
       <ToastCC value={{ newAlert }}>
         <UserCC value={{ user, setUser }}>
-          <WebHookCC
-            value={{ webhooks, getAllWebhooks, setWebhooks, changeWebhookData }}
-          >
-            <AlertsCC value={{ alertsHook }}>
-              <MTAccountsCC value={{ mtAccounts }}>
-                <Component {...pageProps} />
-              </MTAccountsCC>
-            </AlertsCC>
-          </WebHookCC>
+          <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>
+            <WebHookCC
+              value={{
+                webhooks,
+                getAllWebhooks,
+                setWebhooks,
+                changeWebhookData,
+              }}
+            >
+              <AlertsCC value={{ alertsHook }}>
+                <MTAccountsCC value={{ mtAccounts }}>
+                  <Component {...pageProps} />
+                </MTAccountsCC>
+              </AlertsCC>
+            </WebHookCC>
+          </FullUserCC>
         </UserCC>
       </ToastCC>
 

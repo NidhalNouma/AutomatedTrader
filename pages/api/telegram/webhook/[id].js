@@ -3,8 +3,8 @@ import { sendMessage } from "../../../../db/telegram";
 export default async function handler(req, res) {
   const { id } = req.query;
   if (req.method === "POST") {
-    const chatId = req.body.message.chat.id;
-    const message = req.body.message.text;
+    const chatId = req.body.message?.chat?.id;
+    const message = req.body.message?.text;
 
     console.log(chatId, message, id);
     if (message === "/start") {

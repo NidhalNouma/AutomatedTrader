@@ -31,13 +31,14 @@ export const updateProfilePicture = async (photoURL) => {
   return auth.currentUser;
 };
 
-export async function addNewUser(userId) {
+export async function addNewUser(userId, email) {
   console.log("Adding new user ...");
 
   try {
     const docRef = await setDoc(doc(db, collName, userId), {
       telegram: "",
       active: true,
+      email,
       created_at: serverTimestamp(),
     });
 

@@ -2,18 +2,17 @@ import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
 import { H1, H4 } from "../../Components/H";
 import { ButtonText } from "../../Components/Button";
-import { GetUserContext } from "../../hooks/UserHook";
+import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 import { TelegramSteps } from "../../hooks/Telegram";
 import { Input1 } from "../../Components/Input";
-import Link from "next/link";
-
-import { MT4EAPath } from "../../utils/constant";
 
 import { Steps } from "react-daisyui";
 
 export default function help() {
   const { user } = GetUserContext();
-  const { step, nextStep, setStep, chatId, setChatId } = TelegramSteps(user);
+  const { fullUser } = GetFullUserContext();
+  const { step, nextStep, setStep, chatId, setChatId } =
+    TelegramSteps(fullUser);
 
   return (
     <>

@@ -56,7 +56,7 @@ export async function signUp(email, password, username) {
 
     let userf = null;
     if (user) {
-      userf = await addNewUser(user.uid);
+      userf = await addNewUser(user.uid, user.email);
     }
 
     // await sendEmailVerification(auth.currentUser);
@@ -85,7 +85,7 @@ export async function signIn(email, password) {
     let userf = null;
     if (user) {
       userf = await getUser(user.uid);
-      if (!userf) userf = await addNewUser(user.uid);
+      if (!userf) userf = await addNewUser(user.uid, user.email);
     }
     return { user, error: null, userf };
   } catch (error) {
@@ -110,7 +110,7 @@ export async function continueWithGoogle() {
 
     let userf = null;
     if (user) {
-      userf = await addNewUser(user.uid);
+      userf = await addNewUser(user.uid, user.email);
     }
 
     return { user, error: null, userf };
