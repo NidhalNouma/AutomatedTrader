@@ -11,7 +11,7 @@ export default function Header() {
         <div className="flex flex-row items-center justify-between p-3 md:p-1">
           <a
             // href="/"
-            className="flex text-3xl text-white font-medium mb-4 md:mb-0 w-52"
+            className="flex text-3xl text-white font-medium mb-4 md:mb-0 w-52 p-5"
           >
             <img
               src="/Logo/dark-logo.png"

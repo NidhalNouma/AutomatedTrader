@@ -9,10 +9,10 @@ module.exports = {
   theme: {
     extend: {},
     colors: {
-      primaryi: "rgb(50, 0, 250)",
+      primaryi: "rgb(39, 69, 235)",
       secondaryi: "rgb(174, 168, 216)",
-      accenti: "rgb(32, 15, 45)",
-      bg: "rgb(32, 34, 35)",
+      accenti: "rgb(28, 28, 31)",
+      bg: "rgb(0, 0, 0)",
       bga: "rgb(52, 54, 59)",
       bgai: "rgb(66, 70, 79)",
       bgl: "rgb(0, 0, 50)",

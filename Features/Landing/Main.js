@@ -6,7 +6,7 @@ export default function Main() {
       <div className="max-w-5xl pt-24 pb-24 mx-auto">
         <div className="container flex flex-col items-center justify-center mx-auto">
           <img
-            className="object-cover object-center w-3/4 mb-10 g327"
+            className="object-cover object-center w-3/4 mb-10 g327 m-4"
             alt="Placeholder Image"
             src="/Logo/dark-logo.png"
           ></img>

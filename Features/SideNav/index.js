@@ -15,14 +15,16 @@ import {
 function index({ cpath }) {
   return (
     <div className="sidenav md:flex hidden">
-      <Image
-        src="/Logo/dark-logo.png"
-        alt=""
-        width="3w"
-        height="1h"
-        className=""
-        layout="responsive"
-      />
+      <div className="p-5 m-3">
+        <Image
+          src="/Logo/dark-logo.png"
+          alt=""
+          width="6w"
+          height="1h"
+          className=""
+          layout="responsive"
+        />
+      </div>
       {/* <div className="pl-4">
         <H5>YOUR WEBHOOKS</H5>
         <div className="h-24 bg-bgai my-2 mr-4 rounded-xl"></div>
@@ -72,6 +74,16 @@ function index({ cpath }) {
             isActive={cpath === "mt4"}
             className="my-0"
           >
+            <div className="w-5 h-5">
+              <Image
+                className=""
+                src="/Images/mt4-icon.png"
+                alt=""
+                width="1w"
+                height="1h"
+                layout="responsive"
+              />
+            </div>
             <span className="capitalize ml-2 text-base">MT4</span>
           </Linksn>
 
@@ -81,6 +93,16 @@ function index({ cpath }) {
             isActive={cpath === "telegram"}
             className="my-0"
           >
+            <div className="w-5 h-5">
+              <Image
+                className=""
+                src="/Images/telegram-icon.png"
+                alt=""
+                width="1w"
+                height="1h"
+                layout="responsive"
+              />
+            </div>
             <span className="capitalize ml-2 text-base">Telegram</span>
           </Linksn>
         </Collapse.Content>
