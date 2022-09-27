@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Input, Dropdown, Button, Toggle, Select } from "react-daisyui";
+import { Input, Dropdown, Button, Toggle, Select, Range } from "react-daisyui";
 import { H6 } from "./H";
 
 export const Input1 = ({
@@ -47,7 +47,7 @@ export const Input1Inline = ({
   return (
     <div className="form-control w-full max-w-xs">
       <label className="label">
-        <span className="label-text text-text-h">{name}</span>
+        <span className="label-text text-text-h flex items-center">{name}</span>
         <div>
           <Input
             size="sm"
@@ -105,8 +105,8 @@ export const Toggle1 = ({ className, name, helper, value, setValue }) => {
         <span className="label-text text-text-h flex items-center">{name}</span>
         <div className="flex justify-center item-center">
           <Toggle
-            className="mx-2"
-            color="accent"
+            className="mx-2 "
+            color="primary"
             size="sm"
             checked={value}
             onChange={setValue}
@@ -132,6 +132,7 @@ export const Select1 = ({
       <span className="label-text text-text-h flex items-center">{name}</span>
       <div>
         <Select
+          color="primary"
           size="sm"
           className="bg-accenti mx-2 w-24"
           value={options[value]}
@@ -152,3 +153,41 @@ export const Select1 = ({
     </div>
   );
 };
+
+export function Range1({ name }) {
+  return (
+    <div className="p-1 w-full max-w-xs">
+      <span className="label-text text-text-h flex items-center mb-2 mt-1">
+        {name}
+      </span>
+      <div className="w-full max-w-xs">
+        {/* <input
+        color="primary"
+        type="range"
+        min="0"
+        max="100"
+        // value="25"
+        className="range"
+        step="25"
+      />
+      <div className="w-full flex justify-between text-xs px-2">
+        <span>1%</span>
+        <span>2%</span>
+        <span>5%</span>
+        <span>|</span>
+        <span>|</span>
+      </div> */}
+
+        <Range color="primary" size="xs" />
+        <div className="w-full flex justify-between text-xs px-2 my-1">
+          <span>1%</span>
+          <span>2%</span>
+          <span>5%</span>
+          <span>7.5%</span>
+          <span>10%</span>
+          <span>20%</span>
+        </div>
+      </div>
+    </div>
+  );
+}

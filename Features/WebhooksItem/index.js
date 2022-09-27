@@ -81,7 +81,7 @@ function Index({ webhook: wh }) {
             <H6 className="mr-4">Active</H6>
             <Toggle
               size="sm"
-              color="accent"
+              color="secondary"
               className=""
               checked={webhook.active}
               onChange={async () => {

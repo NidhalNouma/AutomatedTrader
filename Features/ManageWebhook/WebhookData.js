@@ -1,6 +1,12 @@
 import React, { Fragment, useEffect } from "react";
-import { Alert } from "react-daisyui";
-import { Input1, Toggle1, Input1Inline, Select1 } from "../../Components/Input";
+import { Alert, Checkbox, ButtonGroup, Button } from "react-daisyui";
+import {
+  Input1,
+  Toggle1,
+  Input1Inline,
+  Select1,
+  Range1,
+} from "../../Components/Input";
 import { ButtonP } from "../../Components/Button";
 import { WebHook } from "../../hooks/WebHook";
 
@@ -99,24 +105,60 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         />
       )}
 
-      <Select1
-        name="Position size type"
-        helper="Information about this input"
-        options={["Percentage", "Fixed"]}
-        value={positionType}
-        setValue={setPositionType}
-      />
-      <Input1Inline
+      <span className="text-text-h w-full max-w-xs my-1">
+        Enty position size:
+      </span>
+      <div className="flex items-center max-w-xs w-full">
+        <Range1
+          name={
+            <Fragment>
+              <Checkbox
+                className="text-primaryi mr-2"
+                size="sm"
+                color="primary"
+              />
+              {"Percantage base %"}
+            </Fragment>
+          }
+        />
+        {/* <Select1
+          name="Position size type"
+          helper="Information about this input"
+          options={["Percentage", "Fixed"]}
+          value={positionType}
+          setValue={setPositionType}
+        /> */}
+      </div>
+
+      <div className="flex items-center max-w-xs w-full">
+        <Input1Inline
+          name={
+            <Fragment>
+              <Checkbox
+                className="text-primaryi mr-2"
+                size="sm"
+                color="primary"
+              />
+              {"Fixing position based"}
+            </Fragment>
+          }
+          helper="Information about this input"
+          // options={["Percentage", "Fixed"]}
+          // value={positionType}
+          // setValue={setPositionType}
+        />
+      </div>
+      {/* <Input1Inline
         name="Position size value"
         placeholder=""
         helper="Information about this input"
         type="number"
         value={positionValue}
         setValue={setPositionValue}
-      />
+      /> */}
 
       <Input1Inline
-        name="Stop loss"
+        name="Stop loss (Pips)"
         placeholder=""
         helper="Information about this input"
         type="number"
@@ -124,7 +166,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         setValue={setStopLoss}
       />
       <Input1Inline
-        name="Take profit"
+        name="Take profit (Pips)"
         placeholder=""
         helper="Information about this input"
         type="number"
@@ -133,7 +175,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       />
 
       <Toggle1
-        name="Trailing stop"
+        name="Trailing stop (Pips)"
         helper="Information about this input"
         value={TS.use}
         setValue={() => setTS({ ...TS, use: !TS.use })}
@@ -207,6 +249,29 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       />
       {time.use && (
         <Fragment>
+          <ButtonGroup className="my-2">
+            <Button size="xs" active={false}>
+              Mon
+            </Button>
+            <Button size="xs" active={true}>
+              Tue
+            </Button>
+            <Button size="xs" active={true}>
+              Wen
+            </Button>
+            <Button size="xs" active={false}>
+              Th
+            </Button>
+            <Button size="xs" active={true}>
+              Fri
+            </Button>
+            <Button size="xs" active={false}>
+              Sat
+            </Button>
+            <Button size="xs" active={false}>
+              Sun
+            </Button>
+          </ButtonGroup>
           <Input1Inline
             name="Time start"
             placeholder=""
@@ -243,7 +308,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             value={hedging.pending}
             setValue={(v) => setHedging({ ...hedging, pending: v })}
           />
-          <Input1Inline
+          {/* <Input1Inline
             name="Max open trade"
             placeholder=""
             helper="Information about this input"
@@ -251,7 +316,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             disabled={!hedging.use}
             value={hedging.max}
             setValue={(v) => setHedging({ ...hedging, max: v })}
-          />
+          /> */}
         </Fragment>
       )}
 
