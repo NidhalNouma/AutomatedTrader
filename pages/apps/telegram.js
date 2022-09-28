@@ -36,17 +36,17 @@ export default function help() {
             <Steps className="w-full">
               <Steps.Step
                 onClick={(e) => setStep(1)}
-                color={step >= 1 && "primary"}
+                color={step >= 1 && "secondary"}
               >
                 Adding bot
               </Steps.Step>
               <Steps.Step
-                color={step >= 2 && "primary"}
+                color={step >= 2 && "secondary"}
                 onClick={(e) => setStep(2)}
               >
                 Copy chat ID
               </Steps.Step>
-              <Steps.Step color={step >= 3 && "primary"}>All done</Steps.Step>
+              <Steps.Step color={step >= 3 && "secondary"}>All done</Steps.Step>
               {/* <Steps.Step>Receive Product</Steps.Step> */}
             </Steps>
           </div>

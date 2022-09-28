@@ -6,6 +6,7 @@ import { getUser } from "../../../db/user";
 import { sendMessage } from "../../../db/telegram";
 
 import { newAlert, getAlert, getAlertByUserId } from "../../../db/manageAlerts";
+import { getMessageData } from "../../../hooks/WebHook";
 import moment from "moment";
 
 export default async function handler(req, res) {
@@ -21,6 +22,7 @@ export default async function handler(req, res) {
           const time = new Date();
           newAlert(id, {
             message: message,
+            messageData: getMessageData(message),
             userId: r.userId,
             name: r.name,
             time: time,

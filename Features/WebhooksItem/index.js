@@ -131,7 +131,7 @@ function Index({ webhook: wh }) {
             </div>
             <div className="mt-2">
               <Select
-                value={msg.msg}
+                value={msg?.msg}
                 onChange={(v) => {
                   setMsg(messages[v]);
                 }}

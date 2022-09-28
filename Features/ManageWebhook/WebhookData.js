@@ -54,7 +54,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
 
   useEffect(() => {
-    if (typeWh === "EditMessage") getData(msg.msg);
+    if (typeWh === "EditMessage") getData(msg?.msg);
   }, [msg]);
 
   return (
@@ -116,10 +116,14 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
                 className="text-primaryi mr-2"
                 size="sm"
                 color="primary"
+                checked={positionType === 0}
+                onClick={() => setPositionType(0)}
               />
               {"Percantage base %"}
             </Fragment>
           }
+          value={positionType === 0 && positionValue}
+          setValue={setPositionValue}
         />
         {/* <Select1
           name="Position size type"
@@ -138,24 +142,18 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
                 className="text-primaryi mr-2"
                 size="sm"
                 color="primary"
+                checked={positionType === 1}
+                onClick={() => setPositionType(1)}
               />
               {"Fixing position based"}
             </Fragment>
           }
           helper="Information about this input"
-          // options={["Percentage", "Fixed"]}
-          // value={positionType}
-          // setValue={setPositionType}
+          type="number"
+          value={positionType === 1 && positionValue}
+          setValue={setPositionValue}
         />
       </div>
-      {/* <Input1Inline
-        name="Position size value"
-        placeholder=""
-        helper="Information about this input"
-        type="number"
-        value={positionValue}
-        setValue={setPositionValue}
-      /> */}
 
       <Input1Inline
         name="Stop loss (Pips)"
@@ -238,6 +236,15 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             value={BE.partiel}
             setValue={(v) => setBE({ ...BE, partiel: v })}
           />
+          <Input1Inline
+            name="Move SL"
+            placeholder=""
+            helper="Information about this input"
+            type="number"
+            disabled={!BE.use}
+            value={BE.move}
+            setValue={(v) => setBE({ ...BE, move: v })}
+          />
         </Fragment>
       )}
 
@@ -250,25 +257,102 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       {time.use && (
         <Fragment>
           <ButtonGroup className="my-2">
-            <Button size="xs" active={false}>
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "MON")}
+              onClick={() => {
+                const d = "MON";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
               Mon
             </Button>
-            <Button size="xs" active={true}>
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "TUE")}
+              onClick={() => {
+                const d = "TUE";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
               Tue
             </Button>
-            <Button size="xs" active={true}>
-              Wen
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "WED")}
+              onClick={() => {
+                const d = "WED";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
+              Wed
             </Button>
-            <Button size="xs" active={false}>
-              Th
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "THI")}
+              onClick={() => {
+                const d = "THI";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
+              Thi
             </Button>
-            <Button size="xs" active={true}>
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "FRI")}
+              onClick={() => {
+                const d = "FRI";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
               Fri
             </Button>
-            <Button size="xs" active={false}>
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "SAT")}
+              onClick={() => {
+                const d = "SAT";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
               Sat
             </Button>
-            <Button size="xs" active={false}>
+            <Button
+              size="xs"
+              active={time?.day.find((v) => v === "SUN")}
+              onClick={() => {
+                const d = "SUN";
+                const active = time?.day.find((v) => v === d);
+                let r = time?.day;
+                if (active) r = r.filter((v) => v !== d);
+                else r.push(d);
+                setTime({ ...time, day: r });
+              }}
+            >
               Sun
             </Button>
           </ButtonGroup>

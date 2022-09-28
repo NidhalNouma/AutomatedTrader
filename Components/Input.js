@@ -142,7 +142,7 @@ export const Select1 = ({
             <option
               key={i}
               value={i}
-              selected={i.toString() === value.toString()}
+              selected={i?.toString() === value?.toString()}
             >
               {v}
             </option>
@@ -154,7 +154,7 @@ export const Select1 = ({
   );
 };
 
-export function Range1({ name }) {
+export function Range1({ name, value, setValue }) {
   return (
     <div className="p-1 w-full max-w-xs">
       <span className="label-text text-text-h flex items-center mb-2 mt-1">
@@ -178,7 +178,14 @@ export function Range1({ name }) {
         <span>|</span>
       </div> */}
 
-        <Range color="primary" size="xs" />
+        <Range
+          color="primary"
+          size="xs"
+          max="20"
+          min="0"
+          value={value}
+          onChange={(v) => setValue(v.target.value)}
+        />
         <div className="w-full flex justify-between text-xs px-2 my-1">
           <span>1%</span>
           <span>2%</span>

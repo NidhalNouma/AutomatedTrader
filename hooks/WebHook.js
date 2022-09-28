@@ -14,170 +14,98 @@ export const WebHook = (userId) => {
   const [type, setType] = useState(0);
   const [pendingDistance, setPendingDistance] = useState("");
   const [positionType, setPositionType] = useState(0);
-  const [positionValue, setPositionValue] = useState("");
-  const [stopLoss, setStopLoss] = useState("");
-  const [takeProfit, setTakeProfit] = useState("");
-  //   const [useTrailingStop, setUseTrailingStop] = useState(false);
-  //   const [trailingStart, setTrailingStart] = useState("");
-  //   const [trailingStop, setTrailingStop] = useState("");
-  //   const [trailingStep, setTrailingStep] = useState("");
+  const [positionValue, setPositionValue] = useState("0.1");
+  const [stopLoss, setStopLoss] = useState("200.0");
+  const [takeProfit, setTakeProfit] = useState("200.0");
+
   const [TS, setTS] = useState({
     use: false,
     start: "",
     stop: "",
     step: "",
   });
-  const [BE, setBE] = useState({ use: false, stop: "", partiel: "" });
-  const [time, setTime] = useState({ use: false, start: "", end: "" });
+  const [BE, setBE] = useState({ use: false, stop: "", partiel: "", move: "" });
+  const [time, setTime] = useState({
+    use: false,
+    start: "",
+    end: "",
+    day: ["MON", "TUE", "WED"],
+  });
   const [hedging, setHedging] = useState({ use: false, pending: "", max: "" });
   const [maxSS, setMaxSS] = useState({ use: false, spread: "", slippage: "" });
 
   function formatMsg() {
-    let msg = "-P " + pair + " ";
+    let msg = typeToStr(type.toString()) + " " + pair + " ";
+    if (positionType === 1) {
+      msg += positionValue + " ";
+    } else {
+      msg += positionValue + "% ";
+    }
+    if (pendingDistance) msg += "pendingDistance=" + pendingDistance + " ";
 
-    msg += "-TY " + type + " ";
-    if (pendingDistance) msg += "-PD " + pendingDistance + " ";
-
-    msg += "-PO " + positionType + " ";
-    msg += "-POV " + positionValue + " ";
-    msg += "-SL " + stopLoss + " ";
-    msg += "-TP " + takeProfit + " ";
+    msg += "takeProfit=" + takeProfit + " ";
+    msg += "stopLoss=" + stopLoss + " ";
 
     if (TS.use) {
-      msg += "-TS " + TS.use + " ";
-      msg += "-TSs " + TS.start + " ";
-      msg += "-TSo " + TS.stop + " ";
-      msg += "-TSe " + TS.step + " ";
+      msg += "useTrailing=" + TS.use + " ";
+      msg += "trailingStart=" + TS.start + " ";
+      msg += "trailingStop=" + TS.stop + " ";
+      msg += "trailingStep=" + TS.step + " ";
     }
 
     if (BE.use) {
-      msg += "-BE " + BE.use + " ";
-      msg += "-SP " + BE.stop + " ";
-      msg += "-PP " + BE.partiel + " ";
-    }
-
-    if (time.use) {
-      msg += "-TF " + time.use + " ";
-      msg += "-TIS " + time.start + " ";
-      msg += "-TIE " + time.end + " ";
+      msg += "useBreakEven=" + BE.use + " ";
+      msg += "stopInProfit=" + BE.stop + " ";
+      msg += "partialProfit=" + BE.partiel + " ";
+      msg += "moveSL=" + BE.move + " ";
     }
 
     if (hedging.use) {
-      msg += "-HE " + hedging.use + " ";
-      msg += "-POD " + hedging.pending + " ";
-      msg += "-MT " + hedging.max + " ";
+      msg += "useHedging=" + hedging.use + " ";
+      msg += "pendingOrderDuration=" + hedging.pending + " ";
+      // msg += "-MT " + hedging.max + " ";
     }
 
     if (maxSS.use) {
-      msg += "-MXSS " + maxSS.use + " ";
-      msg += "-MXp " + maxSS.spread + " ";
-      msg += "-MXl " + maxSS.slippage + " ";
+      msg += "useMax=" + maxSS.use + " ";
+      msg += "maxSpread=" + maxSS.spread + " ";
+      msg += "maxSlippage=" + maxSS.slippage + " ";
+    }
+
+    if (time.use) {
+      msg += "useTime=" + time.use + " ";
+      let days = "";
+      time.day.forEach((d, i) => {
+        days += (i > 0 ? "," : "") + d;
+      });
+
+      msg += "days=" + days + " ";
+      msg += "startTime=" + time.start + " ";
+      msg += "endTime=" + time.end + " ";
     }
 
     return msg;
   }
 
   function getData(str) {
-    // console.log("getData", dataLength, str);
-    const datai = str.split(" ");
-    const dataLength = datai.length;
-    const tsi = TS;
-    const bei = BE;
-    const timei = time;
-    const hedgingi = hedging;
-    const maxSSi = maxSS;
-    datai.forEach(function (v, i) {
-      if (i + 1 < dataLength) {
-        const data = datai[i + 1];
-        switch (v) {
-          case "-P":
-            setPair(data);
-            break;
+    if (!str) return;
+    const r = getMessageData(str);
 
-          case "-TY":
-            setType(data);
-            break;
+    console.log(str, r);
 
-          case "-PD":
-            setPendingDistance(data);
-            break;
+    setPair(r.pair);
+    setType(r.type);
+    setPendingDistance(r.pendingDistance);
+    setPositionType(r.positionType);
+    setPositionValue(r.positionValue);
+    setStopLoss(r.stopLoss);
+    setTakeProfit(r.takeProfit);
 
-          case "-PO":
-            setPositionType(data);
-            break;
-
-          case "-POV":
-            setPositionValue(data);
-            break;
-
-          case "-SL":
-            setStopLoss(data);
-            break;
-          case "-TP":
-            setTakeProfit(data);
-            break;
-
-          case "-TS":
-            tsi = { ...tsi, use: true };
-            break;
-          case "-TSs":
-            tsi = { ...tsi, start: data };
-            break;
-          case "-TSo":
-            tsi = { ...tsi, stop: data };
-            break;
-          case "-TSe":
-            tsi = { ...tsi, step: data };
-            break;
-
-          case "-BE":
-            bei = { ...bei, use: true };
-            break;
-          case "-SP":
-            bei = { ...bei, stop: data };
-            break;
-          case "-PP":
-            bei = { ...bei, partiel: data };
-            break;
-
-          case "-TF":
-            timei = { ...timei, use: true };
-            break;
-          case "-TIS":
-            timei = { ...timei, start: data };
-            break;
-          case "-TIE":
-            timei = { ...timei, end: data };
-            break;
-
-          case "-HE":
-            hedgingi = { ...hedgingi, use: true };
-            break;
-          case "-POD":
-            hedgingi = { ...hedgingi, pending: data };
-            break;
-          case "-MT":
-            hedgingi = { ...hedgingi, max: data };
-            break;
-
-          case "-MXSS":
-            maxSSi = { ...maxSSi, use: true };
-            break;
-          case "-MXp":
-            maxSSi = { ...maxSSi, spread: data };
-            break;
-          case "-MXl":
-            maxSSi = { ...maxSSi, slippage: data };
-            break;
-        }
-      }
-    });
-
-    setTS(tsi);
-    setBE(bei);
-    setTime(timei);
-    setHedging(hedgingi);
-    setMaxSS(maxSSi);
+    setTS(r.TS);
+    setBE(r.BE);
+    setTime(r.time);
+    setHedging(r.hedging);
+    setMaxSS(r.maxSS);
   }
 
   async function add() {
@@ -288,19 +216,9 @@ export function getMessages(webhook) {
   let r = [];
 
   messages.forEach(function (str) {
-    const msg = str?.split(" ");
-    const msgLength = msg.length;
-
-    msg.forEach(function (v, i) {
-      if (i + 1 < msgLength) {
-        const data = msg[i + 1];
-        if (v === "-P") {
-          const d = getMessageData(str);
-          d.type = typeToStr(d.type);
-          r.push({ msg: str, data: d });
-        }
-      }
-    });
+    const d = getMessageData(str);
+    d.type = typeToStr(d.type?.toString());
+    r.push({ msg: str, data: d });
   });
 
   return r;
@@ -356,100 +274,105 @@ export const WebHookCC = ({ children, value }) => {
 export const GetWebhookContext = () => useContext(WebHooksC);
 
 export function getMessageData(message) {
+  if (!message) return;
   const datai = message.split(" ");
-  const dataLength = datai.length;
 
   let r = {};
 
-  let tsi = {};
-  let bei = {};
-  let timei = {};
-  let hedgingi = {};
-  let maxSSi = {};
+  let tsi = {
+    use: false,
+    start: "",
+    stop: "",
+    step: "",
+  };
+  let bei = { use: false, stop: "", partiel: "", move: "" };
+  let timei = {
+    use: false,
+    start: "",
+    end: "",
+    day: ["MON", "TUE", "WED"],
+  };
+  let hedgingi = {
+    use: false,
+    pending: "",
+    // max: "",
+  };
+  let maxSSi = { use: false, spread: "", slippage: "" };
 
   datai.forEach(function (v, i) {
-    if (i + 1 < dataLength) {
-      const data = datai[i + 1];
-      switch (v) {
-        case "-P":
-          r.pair = data;
-          break;
-
-        case "-PO":
-          r.positionType = data;
-          break;
-
-        case "-TY":
-          r.type = data;
-          break;
-
-        case "-PD":
-          r.pendingDistance = data;
-          break;
-
-        case "-POV":
-          r.positionValue = data;
-          break;
-
-        case "-SL":
-          r.stopLoss = data;
-          break;
-        case "-TP":
-          r.takeProfit = data;
-          break;
-
-        case "-TS":
-          tsi = { ...tsi, use: true };
-          break;
-        case "-TSs":
-          tsi = { ...tsi, start: data };
-          break;
-        case "-TSo":
-          tsi = { ...tsi, stop: data };
-          break;
-        case "-TSe":
-          tsi = { ...tsi, step: data };
-          break;
-
-        case "-BE":
-          bei = { ...bei, use: true };
-          break;
-        case "-SP":
-          bei = { ...bei, stop: data };
-          break;
-        case "-PP":
-          bei = { ...bei, partiel: data };
-          break;
-
-        case "-TF":
-          timei = { ...timei, use: true };
-          break;
-        case "-TIS":
-          timei = { ...timei, start: data };
-          break;
-        case "-TIE":
-          timei = { ...timei, end: data };
-          break;
-
-        case "-HE":
-          hedgingi = { ...hedgingi, use: true };
-          break;
-        case "-POD":
-          hedgingi = { ...hedgingi, pending: data };
-          break;
-        case "-MT":
-          hedgingi = { ...hedgingi, max: data };
-          break;
-
-        case "-MXSS":
-          maxSSi = { ...maxSSi, use: true };
-          break;
-        case "-MXp":
-          maxSSi = { ...maxSSi, spread: data };
-          break;
-        case "-MXl":
-          maxSSi = { ...maxSSi, slippage: data };
-          break;
+    if (i == 0) {
+      const t = v.toLowerCase();
+      if (t === "buy") r.type = 0;
+      else if (t === "sell") r.type = 1;
+    } else if (i === 1) {
+      const t = v.toLowerCase();
+      if (t === "limit") {
+        if (r.type === 0) r.type = 4;
+        else if (r.type === 1) r.type = 5;
+      } else if (t === "stop") {
+        if (r.type === 0) r.type = 2;
+        else if (r.type === 1) r.type = 3;
+      } else r.pair = v;
+    } else if (i === 2 && r.type > 1) {
+      r.pair = v;
+    } else if ((i === 2 && r.type <= 1) || (i === 3 && r.type > 1)) {
+      if (v.search("%") >= 0) {
+        r.positionType = 0;
+        r.positionValue = v.replace("%", "");
+      } else {
+        r.positionType = 1;
+        r.positionValue = v;
+      }
+    } else {
+      if (v.search("pendingDistance=") >= 0) {
+        r.pendingDistance = v.replace("pendingDistance=", "");
+      } else if (v.search("stopLoss=") >= 0) {
+        r.stopLoss = v.replace("stopLoss=", "");
+      } else if (v.search("takeProfit=") >= 0) {
+        r.takeProfit = v.replace("takeProfit=", "");
+      } else if (v.search("useTrailing=") >= 0) {
+        tsi = { ...tsi, use: Boolean(v.replace("useTrailing=", "")) };
+      } else if (v.search("trailingStart=") >= 0) {
+        tsi = { ...tsi, start: v.replace("trailingStart=", "") };
+      } else if (v.search("trailingStop=") >= 0) {
+        tsi = { ...tsi, stop: v.replace("trailingStop=", "") };
+      } else if (v.search("trailingStep=") >= 0) {
+        tsi = { ...tsi, step: v.replace("trailingStep=", "") };
+      } else if (v.search("useBreakEven=") >= 0) {
+        bei = { ...bei, use: Boolean(v.replace("useBreakEven=", "")) };
+      } else if (v.search("stopInProfit=") >= 0) {
+        bei = { ...bei, stop: v.replace("stopInProfit=", "") };
+      } else if (v.search("partialProfit=") >= 0) {
+        bei = { ...bei, partiel: v.replace("partialProfit=", "") };
+      } else if (v.search("moveSL=") >= 0) {
+        bei = { ...bei, move: v.replace("moveSL=", "") };
+      } else if (v.search("useHedging=") >= 0) {
+        hedgingi = { ...hedgingi, use: Boolean(v.replace("useHedging=", "")) };
+      } else if (v.search("pendingOrderDuration=") >= 0) {
+        hedgingi = {
+          ...hedgingi,
+          pending: v.replace("pendingOrderDuration=", ""),
+        };
+      } else if (v.search("useMax=") >= 0) {
+        maxSSi = { ...maxSSi, use: Boolean(v.replace("useMax=", "")) };
+      } else if (v.search("maxSpread=") >= 0) {
+        maxSSi = {
+          ...maxSSi,
+          spread: v.replace("maxSpread=", ""),
+        };
+      } else if (v.search("maxSlippage=") >= 0) {
+        maxSSi = {
+          ...maxSSi,
+          slippage: v.replace("maxSlippage=", ""),
+        };
+      } else if (v.search("useTime=") >= 0) {
+        timei = { ...timei, use: Boolean(v.replace("useTime=", "")) };
+      } else if (v.search("startTime=") >= 0) {
+        timei = { ...timei, start: v.replace("startTime=", "") };
+      } else if (v.search("endTime=") >= 0) {
+        timei = { ...timei, end: v.replace("endTime=", "") };
+      } else if (v.search("days=") >= 0) {
+        timei = { ...timei, day: v.replace("days=", "").split(",") };
       }
     }
   });
