@@ -14,7 +14,7 @@ import {
 
 function index({ cpath }) {
   return (
-    <div className="sidenav md:flex hidden">
+    <div className="sidenav md:flex hidden bg-accent">
       <div className="p-5 m-3">
         <Image
           src="/Logo/dark-logo.png"

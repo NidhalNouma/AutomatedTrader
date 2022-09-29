@@ -5,7 +5,7 @@ function Linksn({ icon, children, isActive, className, href = "/" }) {
   return (
     <div
       className={`${className} pr-3 border-r-4 my-1 rounded ${
-        isActive ? "border-r-secondaryi" : "border-r-bga"
+        isActive ? "border-r-secondaryi" : "border-r-accent"
       }`}
     >
       <Link href={href}>
@@ -16,7 +16,7 @@ function Linksn({ icon, children, isActive, className, href = "/" }) {
           className={`${
             isActive
               ? "bg-bgai hover:bg-bgai text-text-h"
-              : "bg-bga text-text-p"
+              : "bg-accent text-text-p"
           }   w-full rounded-xl flex justify-start decoration-transparent`}
         >
           {children}

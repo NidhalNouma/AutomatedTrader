@@ -30,10 +30,9 @@ function Index({ webhook: wh }) {
 
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const messages = getMessages(webhook);
+  const messages = getMessages(wh);
   const [msg, setMsg] = useState(messages[0]);
 
-  // const { setWebhooks } = GetWebhookContext();
   const { newAlert } = GetToastContext();
 
   return (
@@ -130,22 +129,24 @@ function Index({ webhook: wh }) {
               </div>
             </div>
             <div className="mt-2">
-              <Select
-                value={msg?.msg}
-                onChange={(v) => {
-                  setMsg(messages[v]);
-                }}
-                size="sm"
-                className="bg-bg w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
-              >
-                {messages.map((v, i) => (
-                  <option key={i} value={i} selected={v.msg === msg.msg}>
-                    {v.data.pair}
-                    {" - "}
-                    {v.data.type}
-                  </option>
-                ))}
-              </Select>
+              {messages && (
+                <Select
+                  value={msg?.msg}
+                  onChange={(v) => {
+                    setMsg(messages[v]);
+                  }}
+                  size="sm"
+                  className="bg-bg w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
+                >
+                  {messages.map((v, i) => (
+                    <option key={i} value={i} selected={v.msg === msg.msg}>
+                      {v.data.pair}
+                      {" - "}
+                      {v.data.type}
+                    </option>
+                  ))}
+                </Select>
+              )}
             </div>
           </div>
         </div>

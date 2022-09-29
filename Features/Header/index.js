@@ -34,7 +34,7 @@ function Index() {
       >
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
-      <div className="px-6 py-5 bg-bga w-full sticky top-0 z-30">
+      <div className="px-6 py-5 bg-accent w-full sticky top-0 z-30">
         {/* <DD /> */}
         <div className="flex justify-between items-center">
           <div className="w-6/12 flex item-center">
@@ -47,7 +47,7 @@ function Index() {
               />
             </div>
             <Input
-              className="w-11/12 rounded-2xl bg-bga border-bgai border-4 placeholder:text-text-p placeholder:opacity-100 focus:outline-0"
+              className="w-11/12 rounded-2xl bg-accent border-bgai border-4 placeholder:text-text-p placeholder:opacity-100 focus:outline-0"
               // bordered
               type="text"
               placeholder="Search for webhooks, profiles and more ..."
