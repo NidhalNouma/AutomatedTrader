@@ -91,7 +91,7 @@ export const WebHook = (userId) => {
     if (!str) return;
     const r = getMessageData(str);
 
-    console.log(str, r);
+    // console.log(str, r);
 
     setPair(r.pair);
     setType(r.type);

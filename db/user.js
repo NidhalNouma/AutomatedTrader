@@ -35,12 +35,19 @@ export async function addNewUser(userId, email) {
   console.log("Adding new user ...");
 
   try {
-    const docRef = await setDoc(doc(db, collName, userId), {
-      telegram: "",
-      active: true,
-      email,
-      created_at: serverTimestamp(),
-    });
+    const existUser = await getUser(userId);
+    if (existUser) return true;
+
+    const docRef = await setDoc(
+      doc(db, collName, userId),
+      {
+        telegram: "",
+        active: true,
+        email,
+        created_at: serverTimestamp(),
+      }
+      // { merge: true }
+    );
 
     console.log("Document written with: ", docRef);
     return true;
