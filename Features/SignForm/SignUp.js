@@ -32,7 +32,7 @@ function SignUp() {
       <div className="mb-8 w-full">
         <Input1
           className="mx-auto mb-3"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Email"
           name="Email"
           type="email"
@@ -41,7 +41,7 @@ function SignUp() {
         />
         <Input1
           className="mx-auto mb-3"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Username"
           name="Username"
           type="username"
@@ -50,7 +50,7 @@ function SignUp() {
         />
         <Input1
           className="mx-auto mb-3"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Password"
           name="Password"
           type="password"
@@ -59,7 +59,7 @@ function SignUp() {
         />
         <Input1
           className="mx-auto"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Confirm password"
           name="Confirm password"
           type="password"

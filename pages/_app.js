@@ -2,6 +2,7 @@ import "../styles/globals.css";
 import "../styles/sidenav.css";
 import "../styles/landing.css";
 
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState, useEffect, Fragment } from "react";
 import { checkUser } from "../db/sign";
@@ -52,6 +53,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
+      <Head>
+        <title>Automated trader</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
+
       <ToastCC value={{ newAlert }}>
         <UserCC value={{ user, setUser }}>
           <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>

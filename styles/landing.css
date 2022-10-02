@@ -32,7 +32,7 @@
 }
 
 .clearNav {
-  /* backdrop-filter: saturate(180%) blur(3px) !important; */
+  backdrop-filter: saturate(150%) blur(5px) !important;
   /* background-color: rgba(0, 0, 50, 0.9) !important; */
   background-color: transparent !important;
 }

@@ -5,7 +5,10 @@ import Link from "next/link";
 
 function Signin() {
   return (
-    <div className="text-black bg-bgl w-full h-screen flex justify-center items-center">
+    <div
+      className="text-black bg-scale w-full h-screen flex justify-center items-center"
+      style={{ backgroundImage: "url(/Images/bg-landing.png" }}
+    >
       <div className="w-11/12 max-w-xs border-2 rounded-xl relative mr-8">
         <div className="absolute right-4 top-4">
           <Link className="" href="/">

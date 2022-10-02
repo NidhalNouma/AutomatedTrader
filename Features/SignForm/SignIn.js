@@ -23,7 +23,7 @@ function SignIn() {
       <div className="mb-8 w-full">
         <Input1
           className="mx-auto mb-3"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Email"
           name="Email"
           type="email"
@@ -32,7 +32,7 @@ function SignIn() {
         />
         <Input1
           className="mx-auto"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Password"
           name="Password"
           type="password"

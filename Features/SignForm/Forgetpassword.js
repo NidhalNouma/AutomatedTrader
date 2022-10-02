@@ -16,7 +16,7 @@ function Forgetpassword() {
       <div className="mb-6 w-full">
         <Input1
           className="mx-auto mb-0"
-          classNameInput="bg-bgl "
+          classNameInput="bg-transparent "
           placeholder="Email"
           name="Email"
           type="email"
