@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full clearNav z-50 bg-bgl">
       <div className="max-w-5xl mx-auto flex flex-wrap px-5 flex-col md:flex-row">
-        <div className="flex flex-row items-center justify-between p-3 md:p-1">
+        <div className="flex flex-row items-center justify-between p-3 md:p-1 w-full">
           <a
             // href="/"
             className="flex text-3xl text-white font-medium mb-4 md:mb-0 w-52 p-5"
@@ -45,14 +45,14 @@ export default function Header() {
               <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
           </button>
-        </div>
-        <div
+          {/* </div> */}
+          {/* <div
           className={
             "md:flex flex-grow items-center" +
             (navbarOpen ? " flex" : " hidden")
           }
-        >
-          <div className="md:ml-auto md:mr-auto font-4 pt-1 flex flex-wrap items-center md:text-base text-1xl md:justify-center justify-items-start">
+        > */}
+          {/* <div className="md:ml-auto md:mr-auto font-4 pt-1 flex flex-wrap items-center md:text-base text-1xl md:justify-center justify-items-start">
             <a className="mr-12 pr-2 cursor-pointer text-gray-300 hover:text-white font-semibold tr04">
               Features
             </a>
@@ -62,17 +62,19 @@ export default function Header() {
             <a className="mr-0 pr-2 cursor-pointer text-gray-300 hover:text-white font-semibold tr04">
               Testimonials
             </a>
+          </div> */}
+          <div>
+            <Link href="/signin">
+              <span className="cursor-pointer mr-4 py-1 px-4 rounded-full text-text-h bg-primaryi border-2 border-primaryi">
+                Sign in
+              </span>
+            </Link>
+            <Link href="/signup">
+              <span className="cursor-pointer py-1 px-4 rounded-full border-2 text-text-h border-primaryi">
+                Sign up
+              </span>
+            </Link>
           </div>
-          <Link href="/signin">
-            <span className="cursor-pointer mr-4 py-1 px-4 rounded-full text-text-h bg-primaryi border-2 border-primaryi">
-              Sign in
-            </span>
-          </Link>
-          <Link href="/signup">
-            <span className="cursor-pointer py-1 px-4 rounded-full border-2 text-text-h border-primaryi">
-              Sign up
-            </span>
-          </Link>
         </div>
       </div>
     </header>

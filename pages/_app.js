@@ -32,7 +32,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const { pathname } = router;
     if (user) {
-      if (pathname === "/") router.push("/profile");
+      // if (pathname === "/") router.push("/profile");
+      if (pathname === "/") router.push("/waiting");
     } else if (!user) {
       if (pathname === "/profile") router.push("/");
       else if (pathname === "/settings") router.push("/");

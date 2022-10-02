@@ -181,7 +181,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       {TS.use && (
         <Fragment>
           <Input1Inline
-            name="Trailing start"
+            name="Trailing Stop Start"
             placeholder=""
             helper="Information about this input"
             type="number"
@@ -190,7 +190,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             setValue={(v) => setTS({ ...TS, start: v })}
           />
           <Input1Inline
-            name="Trailing stop"
+            name="Trailing Stop Distance"
             placeholder=""
             helper="Information about this input"
             type="number"
@@ -199,7 +199,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             setValue={(v) => setTS({ ...TS, stop: v })}
           />
           <Input1Inline
-            name="Trailing step"
+            name="Trailing Step"
             placeholder=""
             helper="Information about this input"
             type="number"
@@ -219,7 +219,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       {BE.use && (
         <Fragment>
           <Input1Inline
-            name="Stop in profit"
+            name="Partial Close Target (Pips)"
             placeholder=""
             helper="Information about this input"
             type="number"
@@ -228,7 +228,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             setValue={(v) => setBE({ ...BE, stop: v })}
           />
           <Input1Inline
-            name="Partial profit"
+            name="Partial Close %"
             placeholder=""
             helper="Information about this input"
             type="number"
@@ -237,7 +237,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             setValue={(v) => setBE({ ...BE, partiel: v })}
           />
           <Input1Inline
-            name="Move SL"
+            name="Activate Break Even (Pips)"
             placeholder=""
             helper="Information about this input"
             type="number"
