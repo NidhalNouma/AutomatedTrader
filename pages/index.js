@@ -12,7 +12,7 @@ export default function Home() {
       // style={{ backgroundImage: "url(/Images/bg-landing.png" }}
       style={{
         backgroundImage:
-          "linear-gradient(-45deg, black 0 70%, rgb(7, 9, 8) 95% 100%)",
+          "linear-gradient(-45deg, black 0 77%, rgb(5, 5, 5) 95% 100%)",
       }}
     >
       <Head>
@@ -69,13 +69,13 @@ export default function Home() {
               src="/Images/flow.png"
             /> */}
             <video
-              className="w-4/5 rounded-xl mx-auto z-0 relative"
+              className="w-5/5 rounded-xl mx-auto z-0 relative"
               autoPlay
               loop
               muted
             >
               <source
-                src="https://looksyummyapp.s3.us-east-2.amazonaws.com/NEW+SCREEN.mp4"
+                src="https://looksyummyapp.s3.us-east-2.amazonaws.com/NEW+SCREEN+ONE+TRAINAGLE+.mp4"
                 type="video/mp4"
               />
             </video>
