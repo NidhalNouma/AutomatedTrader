@@ -72,14 +72,14 @@ export default function Header() {
             </a>
           </div> */}
           <div className="sm:block hidden">
-            <Link href="/signup">
-              <span className="cursor-pointer mr-4 py-1 px-4 rounded-lg text-text-h bg-primary border-2 border-primary">
-                Sign up
+            <Link href="/signin">
+              <span className="cursor-pointer mr-4 py-1 px-6 rounded-lg border-2 text-text-h bg-transparent border-primary">
+                Login
               </span>
             </Link>
-            <Link href="/signin">
-              <span className="cursor-pointer py-1 px-6 rounded-lg border-2 text-text-h bg-primary border-primary">
-                Login
+            <Link href="/signup">
+              <span className="cursor-pointer py-1 px-4 rounded-lg text-text-h bg-primary border-2 border-primary">
+                Sign up
               </span>
             </Link>
           </div>

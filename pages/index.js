@@ -8,8 +8,8 @@ export default function Home() {
   return (
     // <div className="text-black w-full h-screen bg-accent bg-gradient-to-tl from-bg to-accent">
     <div
-      className="text-black w-full min-h-screen bg-bg "
-      // style={{ backgroundImage: "url(/Images/bg-landing.png" }}
+      className="overflow-hidden text-black w-full min-h-screen bg-bg "
+      style={{ backgroundImage: "url(/Images/bg-landing.png" }}
     >
       <Head>
         {/* <title>nine4</title> */}
@@ -18,7 +18,7 @@ export default function Home() {
       <Header />
 
       <div className="flex-col justify-between mt-24">
-        <div className="sm:mx-0 mx-2 text-center">
+        <div className="sm:mx-0 mx-2 text-center relative z-10">
           <div className="flex justify-center">
             <h5 className="bg-gray-600 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
               Beta Coming Soon Q4
@@ -37,7 +37,7 @@ export default function Home() {
         </div>
 
         <div className="mx-auto sm:flex-row flex flex-col-reverse justify-center items-center w-full max-w-6xl">
-          <div className="sm:w-2/5 w-4/5 p-5 text-center">
+          <div className="sm:w-2/5 w-4/5 p-5 text-center relative z-10">
             <h4 className="text-primary mb-3 text-xl font-bold">
               The most innovative trading Dashboard!
             </h4>
@@ -59,19 +59,27 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="sm:w-3/5 w-4/5 p-0 rounded-xl relative overflow-hidden">
-            {/* <video className="w-full rounded-xl" autoPlay loop muted>
-            <source src="/Draft3.mp4" type="video/mp4" />
-          </video> */}
-            {/* <img
-              className="absolute w-full h-full top-0 left-0 bottom-0 right-0 scale-125 "
-              src="/Images/flow.png"
-            /> */}
+          <div className="sm:w-3/5 w-4/5 p-0 relative mt-8 overflow-visible">
             <img
+              className="absolute -bottom-1/2 right-0 scale-150 z-0"
+              src="/Images/flow.png"
+            />
+            <video
+              className="w-3/5 rounded-xl mx-auto z-10 relative"
+              autoPlay
+              loop
+              muted
+            >
+              <source
+                src="https://looksyummyapp.s3.us-east-2.amazonaws.com/SCREEN_OPTION_GREY.mp4"
+                type="video/mp4"
+              />
+            </video>
+            {/* <img
               // src="https://looksyummyapp.s3.us-east-2.amazonaws.com/_SCREEN-OPTION-4-angled.gif"
               src="https://looksyummyapp.s3.us-east-2.amazonaws.com/Transparent-Cropped-NO-SHADOW-SMALL.gif"
               className="w-full transform-gpu skew-y-2"
-            />
+            /> */}
           </div>
         </div>
       </div>
