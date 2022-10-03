@@ -28,7 +28,7 @@ export default function Header() {
                 />
               </div>
             </a>
-            <p className="text-xs text-right">Say goodbye to Manuel Trading!</p>
+            <p className="text-xs text-right">Say goodbye to Manual Trading!</p>
           </div>
           {/* <button
             className="text-white pb-4 cursor-pointer leading-none px-3 py-1 md:hidden outline-none focus:outline-none content-end ml-auto"

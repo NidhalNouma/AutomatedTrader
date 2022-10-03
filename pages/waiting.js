@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { SignOut } from "../hooks/SignHook";
 
 export default function Home() {
   return (
@@ -15,6 +16,16 @@ export default function Home() {
           You&apos;re successfully signed up, You will receive an email when our
           product is ready.
         </h4>
+        <p className="text-text-p text-center mt-4">
+          Click{" "}
+          <button
+            className="text-text-p underline hover:text-text-h"
+            onClick={() => SignOut()}
+          >
+            here
+          </button>{" "}
+          to sign out.
+        </p>
       </div>
     </div>
   );

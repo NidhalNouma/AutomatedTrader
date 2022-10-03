@@ -20,7 +20,7 @@ export default function Home() {
       <div className="mt-24 sm:mx-0 mx-2 text-center">
         <div className="flex justify-center">
           <h5 className="bg-gray-600 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
-            Beta Comming Soon Q4
+            Beta Coming Soon Q4
           </h5>
         </div>
         <div className="container flex flex-col items-center justify-center mx-auto">
@@ -43,7 +43,7 @@ export default function Home() {
 
           <div className="flex justify-center">
             <p className="text-text-h bg-primary rounded-xl p-1 text-lg text-center font-4 lh-6 ld-04 font-bold text-white mb-6">
-              Pre-regestration is now available.
+              Pre-registration is now available.
             </p>
           </div>
           <p className="text-text-h font-bold mb-5">
@@ -67,7 +67,8 @@ export default function Home() {
             src="/Images/flow.png"
           />
           <img
-            src="https://looksyummyapp.s3.us-east-2.amazonaws.com/_SCREEN-OPTION-4-angled.gif"
+            // src="https://looksyummyapp.s3.us-east-2.amazonaws.com/_SCREEN-OPTION-4-angled.gif"
+            src="https://looksyummyapp.s3.us-east-2.amazonaws.com/Transparent-Cropped-NO-SHADOW-SMALL.gif"
             className="w-full transform-gpu skew-y-2"
           />
         </div>
