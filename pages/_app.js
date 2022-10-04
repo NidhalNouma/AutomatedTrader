@@ -46,7 +46,8 @@ function MyApp({ Component, pageProps }) {
         pathname !== "/signin" &&
         pathname !== "/signup" &&
         pathname !== "/" &&
-        pathname !== "/forgetpassword"
+        pathname !== "/forgetpassword" &&
+        "/" !== landingUrl
       )
         router.push(landingUrl);
     }
