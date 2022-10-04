@@ -1,7 +1,8 @@
 import React from "react";
 import SignIn from "../Features/SignForm/SignIn";
-import { Button } from "react-daisyui";
 import Link from "next/link";
+
+import { landingUrl } from "../utils/constant";
 
 function Signin() {
   return (
@@ -11,7 +12,7 @@ function Signin() {
     >
       <div className="w-11/12 max-w-xs border-2 rounded-xl relative mr-8">
         <div className="absolute right-4 top-4">
-          <Link className="" href="/">
+          <Link className="" href={landingUrl}>
             <span className="cursor-pointer px-2 py-1 rounded-full bg-bgai">
               X
             </span>

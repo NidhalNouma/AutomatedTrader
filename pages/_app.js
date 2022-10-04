@@ -14,6 +14,7 @@ import { MTAccountsCC, GetMTAccounts } from "../hooks/MTAccounts";
 import { ToastCC, ToastHook } from "../hooks/ToastHook";
 
 import Toasti from "../Features/Toast";
+import { landingUrl } from "../utils/constant";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -33,12 +34,21 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const { pathname } = router;
     if (user) {
-      // if (pathname === "/") router.push("/profile");
-      if (pathname === "/") router.push("/waiting");
+      if (
+        pathname === "/" ||
+        pathname === "/signin" ||
+        pathname === "/signup" ||
+        pathname === "/forgetpassword"
+      )
+        router.push("/waiting");
     } else if (!user) {
-      if (pathname === "/profile") router.push("/");
-      else if (pathname === "/settings") router.push("/");
-      else if (pathname !== "/") router.push("/");
+      if (
+        pathname !== "/signin" &&
+        pathname !== "/signup" &&
+        pathname !== "/" &&
+        pathname !== "/forgetpassword"
+      )
+        router.push(landingUrl);
     }
 
     if (user) {

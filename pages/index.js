@@ -6,25 +6,18 @@ import Header from "../Features/Landing/Header";
 
 export default function Home() {
   return (
-    // <div className="text-black w-full h-screen bg-accent bg-gradient-to-tl from-bg to-accent">
     <div
       className="overflow-hidden text-black w-full min-h-screen bg-bg"
-      // style={{ backgroundImage: "url(/Images/bg-landing.png" }}
       style={{
         backgroundImage:
-          "linear-gradient(-45deg, black 0 77%, rgb(5, 5, 5) 95% 100%)",
+          "radial-gradient( farthest-corner at -150px -150px, rgb(10, 11, 10) 4%, black  35%);",
       }}
     >
-      <Head>
-        {/* <title>nine4</title> */}
-        {/* <link rel="icon" href="/favicon.png" /> */}
-      </Head>
       <Header />
-
       <div className="flex-col justify-between items-center mt-24 h-3/6">
         <div className="sm:mx-0 mx-2 text-center relative z-10">
           <div className="flex justify-center">
-            <h5 className="bg-gray-600 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
+            <h5 className="bg-gray-700 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
               Beta Coming Soon Q4
             </h5>
           </div>
@@ -69,7 +62,7 @@ export default function Home() {
               src="/Images/flow.png"
             /> */}
             <video
-              className="w-5/5 rounded-xl mx-auto z-0 relative"
+              className="w-11/12 rounded-xl mx-auto z-0 relative"
               autoPlay
               loop
               muted

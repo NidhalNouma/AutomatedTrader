@@ -11,6 +11,8 @@ export const firebaseConfig = {
   measurementId: "G-N59NRR3N6T",
 };
 
+export const landingUrl = process.env.LANDING_URL || "/";
+
 export function WebhhokURL() {
   return window.location.protocol + "//" + window.location.host + "/api/wh/";
 }

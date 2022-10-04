@@ -30,47 +30,6 @@ export default function Header() {
             </a>
             <p className="text-xs text-right">Say goodbye to Manual Trading!</p>
           </div>
-          {/* <button
-            className="text-white pb-4 cursor-pointer leading-none px-3 py-1 md:hidden outline-none focus:outline-none content-end ml-auto"
-            type="button"
-            aria-label="button"
-            onClick={() => setNavbarOpen(!navbarOpen)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="feather feather-menu"
-            >
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button> */}
-          {/* </div> */}
-          {/* <div
-          className={
-            "md:flex flex-grow items-center" +
-            (navbarOpen ? " flex" : " hidden")
-          }
-        > */}
-          {/* <div className="md:ml-auto md:mr-auto font-4 pt-1 flex flex-wrap items-center md:text-base text-1xl md:justify-center justify-items-start">
-            <a className="mr-12 pr-2 cursor-pointer text-gray-300 hover:text-white font-semibold tr04">
-              Features
-            </a>
-            <a className="mr-12 pr-2 cursor-pointer text-gray-300 hover:text-white font-semibold tr04">
-              Pricing
-            </a>
-            <a className="mr-0 pr-2 cursor-pointer text-gray-300 hover:text-white font-semibold tr04">
-              Testimonials
-            </a>
-          </div> */}
           <div className="sm:block hidden">
             <Link href="/signin">
               <span className="cursor-pointer mr-4 py-1 px-6 rounded-lg border-2 text-text-h bg-transparent border-primary">
