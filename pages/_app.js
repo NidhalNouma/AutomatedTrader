@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }) {
       if (
         pathname !== "/signin" &&
         pathname !== "/signup" &&
-        pathname !== "/" &&
+        // pathname !== "/" &&
         pathname !== "/forgetpassword" &&
         "/" !== landingUrl
       )

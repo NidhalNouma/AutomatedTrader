@@ -73,7 +73,7 @@ function SignIn() {
           className=""
           onClick={async () => {
             const r = await submit();
-            if (r === true) router.push("/profile");
+            // if (r === true) router.push("/profile");
           }}
         >
           Sign In
@@ -85,7 +85,7 @@ function SignIn() {
         className="w-full bg-bgai"
         onClick={async () => {
           const r = await continueWithGoogleClick();
-          if (r === true) router.push("/profile");
+          // if (r === true) router.push("/profile");
         }}
       >
         <svg

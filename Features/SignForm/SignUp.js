@@ -96,7 +96,7 @@ function SignUp() {
         <ButtonP
           onClick={async () => {
             const r = await submit();
-            if (r === true) router.push("/profile");
+            // if (r === true) router.push("/profile");
           }}
           className="mx-auto"
         >
@@ -109,7 +109,7 @@ function SignUp() {
         className="w-full bg-bgai"
         onClick={async () => {
           const r = await continueWithGoogleClick();
-          if (r === true) router.push("/profile");
+          // if (r === true) router.push("/profile");
         }}
       >
         <svg
