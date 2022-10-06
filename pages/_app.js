@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }) {
         pathname === "/signup" ||
         pathname === "/forgetpassword"
       )
-        router.push("/waiting");
+        router.push("/profile");
     } else if (!user) {
       if (
         pathname !== "/signin" &&
