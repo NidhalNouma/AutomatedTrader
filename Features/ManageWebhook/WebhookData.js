@@ -242,6 +242,15 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
             helper="Information about this input"
             type="number"
             disabled={!BE.use}
+            value={BE.activate}
+            setValue={(v) => setBE({ ...BE, activate: v })}
+          />
+          <Input1Inline
+            name="SL into profit (Pips)"
+            placeholder=""
+            helper="Information about this input"
+            type="number"
+            disabled={!BE.use}
             value={BE.move}
             setValue={(v) => setBE({ ...BE, move: v })}
           />

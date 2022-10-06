@@ -24,7 +24,13 @@ export const WebHook = (userId) => {
     stop: "",
     step: "",
   });
-  const [BE, setBE] = useState({ use: false, stop: "", partiel: "", move: "" });
+  const [BE, setBE] = useState({
+    use: false,
+    stop: "",
+    partiel: "",
+    activate: "",
+    move: "",
+  });
   const [time, setTime] = useState({
     use: false,
     start: "",
@@ -57,6 +63,7 @@ export const WebHook = (userId) => {
       msg += "useBreakEven=" + BE.use + " ";
       msg += "stopInProfit=" + BE.stop + " ";
       msg += "partialProfit=" + BE.partiel + " ";
+      msg += "activateBE=" + BE.activate + " ";
       msg += "moveSL=" + BE.move + " ";
     }
 
@@ -285,7 +292,7 @@ export function getMessageData(message) {
     stop: "",
     step: "",
   };
-  let bei = { use: false, stop: "", partiel: "", move: "" };
+  let bei = { use: false, stop: "", partiel: "", activate: "", move: "" };
   let timei = {
     use: false,
     start: "",
@@ -344,6 +351,8 @@ export function getMessageData(message) {
         bei = { ...bei, stop: v.replace("stopInProfit=", "") };
       } else if (v.search("partialProfit=") >= 0) {
         bei = { ...bei, partiel: v.replace("partialProfit=", "") };
+      } else if (v.search("activateBE=") >= 0) {
+        bei = { ...bei, activate: v.replace("activateBE=", "") };
       } else if (v.search("moveSL=") >= 0) {
         bei = { ...bei, move: v.replace("moveSL=", "") };
       } else if (v.search("useHedging=") >= 0) {
