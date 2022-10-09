@@ -49,7 +49,7 @@ export default function Home() {
                 <span className="text-xs flex item-center">
                   <CalendarIcon className="w-4 h-4" />
                   <span className="ml-1">
-                    Joined {moment(user.metadata.creationTime).fromNow()}
+                    Joined {moment(user?.metadata?.creationTime).fromNow()}
                   </span>
                 </span>
               </div>
