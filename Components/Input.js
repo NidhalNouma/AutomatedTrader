@@ -1,6 +1,14 @@
-import { Fragment } from "react";
-import { Input, Dropdown, Button, Toggle, Select, Range } from "react-daisyui";
-import { H6 } from "./H";
+import { Fragment, useState } from "react";
+import {
+  Input,
+  Dropdown,
+  Button,
+  Toggle,
+  Select,
+  Range,
+  Textarea,
+} from "react-daisyui";
+import { H6, Hi4 } from "./H";
 
 export const Input1 = ({
   placeholder,
@@ -194,6 +202,104 @@ export function Range1({ name, value, setValue }) {
           <span>10%</span>
           <span>20%</span>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function EditInput({
+  className,
+  children,
+  name,
+  text,
+  onEdit,
+  displayText,
+  type,
+  isTextArea,
+}) {
+  const [edit, setEdit] = useState(false);
+  const [value, setValue] = useState(text);
+  const [done, setDone] = useState(false);
+
+  return (
+    <div className={`${className} w-full`}>
+      <div className="w-full flex items-center justify-between">
+        <H6>{name}</H6>
+        {!edit ? (
+          <Button
+            size="sm"
+            color="secondary"
+            className="text-secondary capitalize"
+            variant="link"
+            onClick={() => setEdit(true)}
+          >
+            Edit
+          </Button>
+        ) : (
+          <div className="">
+            {done ? (
+              <span className="text-success text-sm font-semibold">
+                Saving ...
+              </span>
+            ) : (
+              <Fragment>
+                <Button
+                  size="sm"
+                  color="secondary"
+                  className="text-error capitalize"
+                  variant="link"
+                  onClick={() => setEdit(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  size="sm"
+                  color="secondary"
+                  className="text-success capitalize"
+                  variant="link"
+                  onClick={async () => {
+                    if (value === text) {
+                      setEdit(false);
+                      return;
+                    }
+                    setDone(true);
+                    const r = await onEdit(value);
+
+                    setEdit(false);
+                    setDone(false);
+                  }}
+                >
+                  Save
+                </Button>
+              </Fragment>
+            )}
+          </div>
+        )}
+      </div>
+      <div className="">
+        {!edit ? (
+          <Hi4 className="text-sm">{text ? text : displayText}</Hi4>
+        ) : isTextArea ? (
+          <Textarea
+            size="sm"
+            className="bg-transparent border-primaryi focus:outline-primaryi w-full"
+            // placeholder={placeholder}
+            // disabled={disabled}
+            type={type}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        ) : (
+          <Input
+            size="sm"
+            className="bg-transparent border-primaryi focus:outline-primaryi w-full"
+            // placeholder={placeholder}
+            // disabled={disabled}
+            type={type}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+        )}
       </div>
     </div>
   );

@@ -103,3 +103,15 @@ export async function getUserByTelegram(chatId) {
   console.log(whs);
   return whs;
 }
+
+export async function updateUserData(id, key, value) {
+  console.log("Update user data ... ", key, value, id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    [key]: value,
+  });
+
+  const nwh = await getUser(id);
+  return nwh;
+}

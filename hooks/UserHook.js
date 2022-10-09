@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { getUser } from "../db/user";
+import { getUser, updateUserData } from "../db/user";
 
 export const UserC = createContext(null);
 
@@ -28,4 +28,33 @@ export const GetFullUser = () => {
   };
 
   return { fullUser, setFullUser, getFullUser };
+};
+
+export const UpdateUser = () => {
+  async function updateBio(id, bio) {
+    const r = await updateUserData(id, "bio", bio);
+    return r;
+  }
+
+  async function updateTradingview(id, data) {
+    const r = await updateUserData(id, "tradingview", data);
+    return r;
+  }
+
+  async function updateTwitter(id, data) {
+    const r = await updateUserData(id, "twitter", data);
+    return r;
+  }
+
+  async function updateYoutube(id, data) {
+    const r = await updateUserData(id, "youtube", data);
+    return r;
+  }
+
+  async function updateWebsite(id, data) {
+    const r = await updateUserData(id, "website", data);
+    return r;
+  }
+
+  return { updateBio, updateTradingview, updateTwitter, updateWebsite };
 };

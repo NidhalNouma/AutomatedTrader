@@ -25,6 +25,15 @@ import { copyTextToClipboard } from "../../utils/functions";
 
 import { WebhhokURL } from "../../utils/constant";
 
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 function Index({ webhook: wh }) {
   const [webhook, setWebhook] = useState(wh);
 
@@ -59,8 +68,12 @@ function Index({ webhook: wh }) {
           messages={messages}
         />
       </Modal1>
-      <div className="bg-bga p-2">
-        <div className="bg-bg p-3 irounded-b-xl">
+      <div className="bg-accent rounded">
+        <div
+          className="w-full pt-2 pb-1 rounded-t"
+          style={{ backgroundColor: getRandomColor() }}
+        ></div>
+        <div className="pt-1 p-3">
           <div className="flex items-center justify-between">
             <H6>{webhook.name}</H6>
             <ButtonInfo
@@ -136,7 +149,7 @@ function Index({ webhook: wh }) {
                     setMsg(messages[v]);
                   }}
                   size="sm"
-                  className="bg-bg w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
+                  className="bg-transparent w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
                 >
                   {messages.map((v, i) => (
                     <option key={i} value={i} selected={v.msg === msg.msg}>

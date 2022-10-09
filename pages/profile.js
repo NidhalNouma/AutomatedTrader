@@ -1,18 +1,23 @@
 import { Fragment } from "react";
+import { useRouter } from "next/router";
+import { CalendarIcon } from "@heroicons/react/outline";
+
 import moment from "moment";
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
-import { GetUserContext } from "../hooks/UserHook";
+import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
 import { GetAlertsContext } from "../hooks/AlertsHook";
 
 import { H1, H4, H6, Hi6 } from "../Components/H";
-// import { ButtonP } from "../Components/Button";
+import { ButtonP } from "../Components/Button";
 import WebhooksItem from "../Features/WebhooksItem";
 
 export default function Home() {
+  const router = useRouter();
   const { user } = GetUserContext();
+  const { fullUser } = GetFullUserContext();
   const { webhooks } = GetWebhookContext();
   const { alertsHook } = GetAlertsContext();
 
@@ -29,13 +34,32 @@ export default function Home() {
                 className="rounded-full w-full h-full border-4 border-text-h object-cover"
               />
             </div>
-            <H1>{user?.displayName || "NA"}</H1>
+            <div className="">
+              <div className="flex items-end">
+                <H1>{user?.displayName || "NA"}</H1>
+                <ButtonP
+                  onClick={() => router.push("/settings")}
+                  className="ml-4 !rounded"
+                >
+                  Edit
+                </ButtonP>
+              </div>
+              <p className="text-sm font-semibold">{fullUser?.bio}</p>
+              <div className="mt-1">
+                <span className="text-xs flex item-center">
+                  <CalendarIcon className="w-4 h-4" />
+                  <span className="ml-1">
+                    Joined {moment(user.metadata.creationTime).fromNow()}
+                  </span>
+                </span>
+              </div>
+            </div>
           </div>
 
           <div className="mt-6">
             <H4 className="">Webhooks Url&apos;s</H4>
             {webhooks?.length > 0 ? (
-              <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-0">
+              <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-2">
                 {webhooks
                   .map((v, i) => <WebhooksItem key={v.id} webhook={v} />)
                   .reverse()}
