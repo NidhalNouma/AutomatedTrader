@@ -13,6 +13,7 @@ module.exports = {
     colors: {
       gray: colors.gray,
       green: colors.green,
+      red: colors.red,
       primaryi: "rgb(39, 69, 235)",
       secondaryi: "rgb(174, 168, 216)",
       accenti: "rgb(28, 28, 31)",

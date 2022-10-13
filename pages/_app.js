@@ -81,7 +81,7 @@ function MyApp({ Component, pageProps }) {
               }}
             >
               <AlertsCC value={{ alertsHook }}>
-                <MTAccountsCC value={{ mtAccounts }}>
+                <MTAccountsCC value={{ mtAccounts, setMTAccounts }}>
                   <Component {...pageProps} />
                 </MTAccountsCC>
               </AlertsCC>

@@ -36,7 +36,7 @@ export default function help() {
 
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 gap-3">
             {mtAccounts.map((v, i) => (
-              <Mt4 key={v.id} account={v} />
+              <Mt4 key={v.id} account={v} userId={user.uid} />
             ))}
           </div>
         </div>

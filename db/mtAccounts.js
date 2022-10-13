@@ -11,6 +11,7 @@ import {
   addDoc,
   getDoc,
   updateDoc,
+  deleteDoc,
   arrayUnion,
   arrayRemove,
   onSnapshot,
@@ -103,6 +104,15 @@ export async function getMTAccountByAccount(
   });
   if (whs.length === 0) return null;
   else return whs[0];
+}
+
+export async function deleteMTAccount(userId, accountId) {
+  const docRef = doc(db, collName, accountId);
+
+  const d = await deleteDoc(docRef);
+
+  const r = getMTAccountsByUserId(userId);
+  return r;
 }
 
 export async function getMTAccountsByUserId(userId) {

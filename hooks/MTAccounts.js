@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { listenToNewMTAccounts } from "../db/mtAccounts";
+import { listenToNewMTAccounts, deleteMTAccount } from "../db/mtAccounts";
 
 export function GetMTAccounts() {
   const [mtAccounts, setMTAccounts] = useState([]);
@@ -12,6 +12,12 @@ export function GetMTAccounts() {
   }
 
   return { mtAccounts, setMTAccounts, getAllMTAccounts };
+}
+
+export async function DeleteMTAccount(userId, accountId) {
+  if (!userId || !accountId) return;
+  const r = await deleteMTAccount(userId, accountId);
+  return r;
 }
 
 export const MTAccountsC = createContext(null);

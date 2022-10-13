@@ -13,7 +13,7 @@ function WebhooksPopUp({ id, close }) {
   const { active, addMT4, removeMT4 } = WebhookMT4(id, webhooks);
 
   return (
-    <div className="">
+    <div className="mb-8">
       <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
         <H3 className="flex">Webhooks</H3>
         <Button

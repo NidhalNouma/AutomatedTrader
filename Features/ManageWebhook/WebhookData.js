@@ -392,6 +392,13 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       />
       {hedging.use && (
         <Fragment>
+          <Select1
+            name="Period"
+            helper="Information about this input"
+            options={["Minutes", "Hours", "Days", "Weeks", "Months"]}
+            value={hedging.period}
+            setValue={(v) => setHedging({ ...hedging, period: v })}
+          />
           <Input1Inline
             name="Pending order duration"
             placeholder=""

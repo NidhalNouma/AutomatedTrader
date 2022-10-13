@@ -37,7 +37,12 @@ export const WebHook = (userId) => {
     end: "",
     day: ["MON", "TUE", "WED"],
   });
-  const [hedging, setHedging] = useState({ use: false, pending: "", max: "" });
+  const [hedging, setHedging] = useState({
+    use: false,
+    pending: "",
+    max: "",
+    period: 0,
+  });
   const [maxSS, setMaxSS] = useState({ use: false, spread: "", slippage: "" });
 
   function formatMsg() {
@@ -69,6 +74,7 @@ export const WebHook = (userId) => {
 
     if (hedging.use) {
       msg += "useHedging=" + hedging.use + " ";
+      msg += "pendingPeriod=" + periodToStr(hedging.period) + " ";
       msg += "pendingOrderDuration=" + hedging.pending + " ";
       // msg += "-MT " + hedging.max + " ";
     }
@@ -250,6 +256,42 @@ function typeToStr(type) {
   return type;
 }
 
+function periodToStr(type) {
+  type = type.toString();
+  switch (type) {
+    case "0":
+      return "Minutes";
+    case "1":
+      return "Hours";
+    case "2":
+      return "Days";
+    case "3":
+      return "Weeks";
+    case "4":
+      return "Months";
+  }
+
+  return type;
+}
+
+function strToPeriod(type) {
+  type = type.toString();
+  switch (type) {
+    case "Minutes":
+      return 0;
+    case "Hours":
+      return 1;
+    case "Days":
+      return 2;
+    case "Weeks":
+      return 3;
+    case "Months":
+      return 4;
+  }
+
+  return type;
+}
+
 export const GetWebhook = () => {
   const [webhooks, setWebhooks] = useState([]);
 
@@ -302,6 +344,7 @@ export function getMessageData(message) {
   let hedgingi = {
     use: false,
     pending: "",
+    period: 0,
     // max: "",
   };
   let maxSSi = { use: false, spread: "", slippage: "" };
@@ -357,6 +400,11 @@ export function getMessageData(message) {
         bei = { ...bei, move: v.replace("moveSL=", "") };
       } else if (v.search("useHedging=") >= 0) {
         hedgingi = { ...hedgingi, use: Boolean(v.replace("useHedging=", "")) };
+      } else if (v.search("pendingPeriod=") >= 0) {
+        hedgingi = {
+          ...hedgingi,
+          period: strToPeriod(v.replace("pendingPeriod=", "")),
+        };
       } else if (v.search("pendingOrderDuration=") >= 0) {
         hedgingi = {
           ...hedgingi,
