@@ -1,9 +1,9 @@
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
-import { ButtonFile } from "../Components/Button";
+import { ButtonFile, ButtonP } from "../Components/Button";
 import { H1, H3, Hi4 } from "../Components/H";
-import { EditInput } from "../Components/Input";
+import { EditInput, Input1 } from "../Components/Input";
 import {
   GetUserContext,
   GetFullUserContext,
@@ -17,8 +17,23 @@ export default function Settings() {
   const { user, setUser } = GetUserContext();
   const { fullUser, setFullUser } = GetFullUserContext();
 
-  const { updateBio, updateTradingview, updateTwitter, updateWebsite } =
-    UpdateUser();
+  const {
+    displayName,
+    setDisplayName,
+    bio,
+    setBio,
+    tv,
+    setTV,
+    twitter,
+    setTwitter,
+    ytURL,
+    setYtURL,
+    ytUsername,
+    setYtUsername,
+    website,
+    setWebsite,
+    submit,
+  } = UpdateUser(fullUser);
 
   return (
     <>
@@ -54,62 +69,71 @@ export default function Settings() {
                   <div className="w-full max-w-xs">
                     <div className="w-xs my-1 pt-1 rounded bg-gray-700"></div>
                     {/* <Hi4 className="mt-3">{user?.email || "NA"}</Hi4> */}
-                    <EditInput
+                    <Input1
                       className="px-3 mb-2"
-                      name="Your Name"
-                      text={user?.displayName}
-                    ></EditInput>
-                    <EditInput
+                      name="Your name"
+                      type="text"
+                      placeholder="Name"
+                      value={displayName}
+                      setValue={setDisplayName}
+                    />
+
+                    <Input1
                       className="px-3 mb-2"
                       name="Your Bio"
-                      text={fullUser?.bio}
-                      displayText="Fill your bio!"
+                      value={bio}
+                      placeholder="Fill your bio!"
                       isTextArea={true}
-                      onEdit={async (v) => {
-                        const r = await updateBio(user.uid, v);
-                        if (r) setFullUser(r);
-                      }}
-                    ></EditInput>
-                    <EditInput
+                      setValue={setBio}
+                    ></Input1>
+                    <Input1
                       className="px-3 mb-2"
                       name="TradingView Account"
-                      text={fullUser?.tradingview}
-                      displayText="Add your TradingView account!"
-                      onEdit={async (v) => {
-                        const r = await updateTradingview(user.uid, v);
-                        if (r) setFullUser(r);
-                      }}
-                    ></EditInput>
-                    <EditInput
-                      className="px-3 mb-2"
-                      name="Youtube Channel"
-                      text={fullUser?.youtube}
-                      displayText="Add your Youtube channel!"
-                      onEdit={async (v) => {
-                        const r = await updateYoutube(user.uid, v);
-                        if (r) setFullUser(r);
-                      }}
-                    ></EditInput>
-                    <EditInput
+                      value={tv}
+                      placeholder="Username"
+                      setValue={setTV}
+                    ></Input1>
+                    <Input1
                       className="px-3 mb-2"
                       name="Twitter Account"
-                      text={fullUser?.twitter}
-                      displayText="Add your Twitter account!"
-                      onEdit={async (v) => {
-                        const r = await updateTwitter(user.uid, v);
-                        if (r) setFullUser(r);
-                      }}
-                    ></EditInput>
-                    <EditInput
+                      value={twitter}
+                      placeholder="Username"
+                      setValue={setTwitter}
+                    ></Input1>
+
+                    <Input1
+                      className="px-3 mb-2"
+                      name="Youtube Channel Link"
+                      value={ytURL}
+                      placeholder="https://www.youtube.com/channel/XXXXXXXXXXXXXXXXXXX"
+                      setValue={setYtURL}
+                    ></Input1>
+
+                    <Input1
+                      className="px-3 mb-2"
+                      name="Youtube Username"
+                      value={ytUsername}
+                      placeholder="Username"
+                      setValue={setYtUsername}
+                    ></Input1>
+                    <Input1
                       className="px-3 mb-2"
                       name="Your Website"
-                      text={fullUser?.website}
-                      displayText="Add your own Website!"
-                      onEdit={async (v) => {
-                        const r = await updateWebsite(user.uid, v);
-                        if (r) setFullUser(r);
-                      }}
-                    ></EditInput>
+                      value={website}
+                      placeholder="https://..."
+                      setValue={setWebsite}
+                    ></Input1>
+                    <div className="w-full px-3 mt-8">
+                      <ButtonP
+                        className="w-full"
+                        onClick={async () => {
+                          const r = await submit();
+                          if (r) setFullUser(r);
+                        }}
+                      >
+                        Save changes
+                      </ButtonP>
+                    </div>
                   </div>
                 </div>
               </div>

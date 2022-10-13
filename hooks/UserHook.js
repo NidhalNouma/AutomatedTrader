@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { getUser, updateUserData } from "../db/user";
+import { createContext, useContext, useState, useEffect } from "react";
+import { getUser, updateUserData, updateUserDatas } from "../db/user";
 
 export const UserC = createContext(null);
 
@@ -30,7 +30,61 @@ export const GetFullUser = () => {
   return { fullUser, setFullUser, getFullUser };
 };
 
-export const UpdateUser = () => {
+export const UpdateUser = (fuser) => {
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [tv, setTV] = useState("");
+  const [twitter, setTwitter] = useState("");
+  const [ytURL, setYtURL] = useState("");
+  const [ytUsername, setYtUsername] = useState("");
+  const [website, setWebsite] = useState("");
+
+  useEffect(() => {
+    if (fuser) {
+      setDisplayName(fuser.displayName);
+      setBio(fuser.bio);
+      setTV(fuser.tradingview);
+      setTwitter(fuser.twitter);
+      setYtURL(fuser.youtubeURL);
+      setYtUsername(fuser.youtubeUsername);
+      setWebsite(fuser.website);
+    }
+  }, [fuser]);
+
+  const submit = async () => {
+    const d = {
+      bio: bio || "",
+      displayName: displayName || "",
+      tradingview: tv || "",
+      twitter: twitter || "",
+      youtubeURL: ytURL || "",
+      youtubeUsername: ytUsername || "",
+      website: website || "",
+    };
+    const r = await updateUserDatas(fuser.id, d);
+    return r;
+  };
+
+  return {
+    displayName,
+    setDisplayName,
+    bio,
+    setBio,
+    tv,
+    setTV,
+    twitter,
+    setTwitter,
+    ytURL,
+    setYtURL,
+    ytUsername,
+    setYtUsername,
+    website,
+    setWebsite,
+    submit,
+  };
+};
+
+export const UpdateUser1 = () => {
   async function updateBio(id, bio) {
     const r = await updateUserData(id, "bio", bio);
     return r;

@@ -19,6 +19,7 @@ export const Input1 = ({
   value,
   setValue,
   type,
+  isTextArea,
 }) => {
   return (
     <div className={className + " form-control w-full max-w-xs"}>
@@ -27,14 +28,33 @@ export const Input1 = ({
         <Helper message={helper} />
         {/* <span className="label-text-alt">Alt label</span> */}
       </label>
-      <Input
-        size="sm"
-        className={classNameInput + " border-primaryi focus:outline-primaryi"}
-        placeholder={placeholder}
-        type={type}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
+
+      {isTextArea ? (
+        <Textarea
+          size="sm"
+          className={
+            classNameInput +
+            " bg-transparent border-primaryi focus:outline-primaryi placeholder-gray-600"
+          }
+          placeholder={placeholder}
+          // disabled={disabled}
+          type={type}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      ) : (
+        <Input
+          size="sm"
+          className={
+            classNameInput +
+            " bg-transparent border-primaryi focus:outline-primaryi placeholder-gray-600"
+          }
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+      )}
       {/* <label className="label">
           <span className="label-text-alt">Alt label</span>
           <span className="label-text-alt">Alt label</span>
@@ -59,7 +79,7 @@ export const Input1Inline = ({
         <div>
           <Input
             size="sm"
-            className="bg-accenti border-primaryi focus:outline-primaryi mx-2 w-24"
+            className="bg-transparent border-primaryi focus:outline-primaryi mx-2 w-24 placeholder-gray-600"
             placeholder={placeholder}
             disabled={disabled}
             type={type}
@@ -282,7 +302,7 @@ export function EditInput({
         ) : isTextArea ? (
           <Textarea
             size="sm"
-            className="bg-transparent border-primaryi focus:outline-primaryi w-full"
+            className="bg-transparent border-primaryi focus:outline-primaryi w-full placeholder-gray-600"
             // placeholder={placeholder}
             // disabled={disabled}
             type={type}
@@ -292,7 +312,7 @@ export function EditInput({
         ) : (
           <Input
             size="sm"
-            className="bg-transparent border-primaryi focus:outline-primaryi w-full"
+            className="bg-transparent border-primaryi focus:outline-primaryi w-full placeholder-gray-600"
             // placeholder={placeholder}
             // disabled={disabled}
             type={type}

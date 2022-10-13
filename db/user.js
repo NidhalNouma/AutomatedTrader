@@ -31,12 +31,15 @@ export const updateProfilePicture = async (photoURL) => {
   return auth.currentUser;
 };
 
-export async function addNewUser(userId, email) {
+export async function addNewUser(userId, email, displayName) {
   console.log("Adding new user ...");
 
   try {
     const existUser = await getUser(userId);
-    if (existUser) return true;
+    if (existUser) {
+      if (!existUser) await updateUserData(userId, "displayName", displayName);
+      return true;
+    }
 
     const docRef = await setDoc(
       doc(db, collName, userId),
@@ -44,6 +47,7 @@ export async function addNewUser(userId, email) {
         telegram: "",
         active: true,
         email,
+        displayName,
         created_at: serverTimestamp(),
       }
       // { merge: true }
@@ -111,6 +115,16 @@ export async function updateUserData(id, key, value) {
   await updateDoc(msgDoc, {
     [key]: value,
   });
+
+  const nwh = await getUser(id);
+  return nwh;
+}
+
+export async function updateUserDatas(id, data) {
+  console.log("Update user datas ... ", id, data);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, data);
 
   const nwh = await getUser(id);
   return nwh;

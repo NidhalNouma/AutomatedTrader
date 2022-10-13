@@ -17,7 +17,7 @@ export const ButtonP = ({ className, icon, ...props }) => {
       animation={true}
       size="sm"
       responds={true}
-      className={`${className} py-0 h-7 px-4 capitalize hover:bg-primaryi bg-primaryi text-text-h rounded-lg border-0`}
+      className={`${className} py-0 h-7 px-4 capitalize hover:bg-primary bg-primary text-text-h rounded-lg border-0`}
       {...props}
     />
   );
