@@ -1,4 +1,4 @@
-import { addMTAccount } from "../../../db/mtAccounts";
+import { addMTAccount } from "../../../../db/mtAccounts";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         accountEquity,
         "MT4"
       );
-      if (r) return res.status(200).json({ id: r, done: true });
+      if (r) return res.status(200).json(r);
     }
   }
 

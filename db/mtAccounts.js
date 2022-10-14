@@ -154,3 +154,32 @@ export async function listenToNewMTAccounts(userId, func) {
 
   return unsubscribe;
 }
+
+export async function addDataToMTAccount(
+  accountId,
+  accountBalance,
+  accountEquity,
+  data,
+  lastOrder
+) {
+  const r = await getMTAccount(accountId);
+
+  if (r) {
+    const ti = new Date(lastOrder);
+    const t = new Date(r.lastOrder);
+    if (!r.lastOrder || ti > t) {
+      console.log("Adding data to MT account account ...", accountId, t, ti);
+      const msgDoc = doc(db, collName, accountId);
+
+      const u = await updateDoc(msgDoc, {
+        accountBalance,
+        accountEquity,
+        data: arrayUnion(...data),
+        lastOrder,
+      });
+      return { exist: true, added: true };
+    }
+    return { exist: true, added: false };
+  }
+  return { exist: false, added: false };
+}
