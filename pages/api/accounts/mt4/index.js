@@ -21,7 +21,7 @@ export default async function handler(req, res) {
         accountEquity,
         "MT4"
       );
-      if (r) return res.status(200).json(r);
+      if (r) return res.status(200).json({ id: r, done: true });
     }
   }
 
