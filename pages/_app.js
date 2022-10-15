@@ -23,7 +23,8 @@ function MyApp({ Component, pageProps }) {
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
   const { getAllAlertsHook, alertsHook } = GetAlerts();
-  const { mtAccounts, setMTAccounts, getAllMTAccounts } = GetMTAccounts();
+  const { mtAccounts, setMTAccounts, getAllMTAccounts, getData } =
+    GetMTAccounts();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
 
@@ -81,7 +82,7 @@ function MyApp({ Component, pageProps }) {
               }}
             >
               <AlertsCC value={{ alertsHook }}>
-                <MTAccountsCC value={{ mtAccounts, setMTAccounts }}>
+                <MTAccountsCC value={{ mtAccounts, setMTAccounts, getData }}>
                   <Component {...pageProps} />
                 </MTAccountsCC>
               </AlertsCC>

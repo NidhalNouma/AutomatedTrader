@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         data,
         lastOrder
       );
-      if (r) return res.status(200).json({ exist: r, done: true });
+      if (r) return res.status(200).json({ ...r, done: true });
     }
   }
 

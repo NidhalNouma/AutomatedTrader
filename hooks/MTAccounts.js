@@ -11,7 +11,17 @@ export function GetMTAccounts() {
     listenToNewMTAccounts(userId, setMTAccounts);
   }
 
-  return { mtAccounts, setMTAccounts, getAllMTAccounts };
+  function getData() {
+    let data = [];
+    mtAccounts.forEach(function (v, i) {
+      console.log(v);
+      if (v.data?.length > 0) data.push(...v.data);
+    });
+
+    return data;
+  }
+
+  return { mtAccounts, setMTAccounts, getAllMTAccounts, getData };
 }
 
 export async function DeleteMTAccount(userId, accountId) {

@@ -6,12 +6,14 @@ import { GetUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext } from "../../hooks/MTAccounts";
 
 import Mt4 from "../../Features/MTAccount/Mt4";
+import DataTable from "../../Features/MTAccount/DataTable";
 
 import { MT4EAPath } from "../../utils/constant";
 
 export default function help() {
   const { user } = GetUserContext();
-  const { mtAccounts } = GetMTAccountsContext();
+  const { mtAccounts, getData } = GetMTAccountsContext();
+  const data = getData();
   return (
     <>
       <Sidenav cpath="mt4" />
@@ -39,6 +41,13 @@ export default function help() {
               <Mt4 key={v.id} account={v} userId={user.uid} />
             ))}
           </div>
+
+          {data?.length > 0 && (
+            <div className="mt-12">
+              <H4 className="mb-6">Metatrader 4 Trades</H4>
+              <DataTable data={data} />
+            </div>
+          )}
         </div>
       </div>
     </>
