@@ -18,21 +18,23 @@ function DataTable({ data }) {
         </Table.Head>
 
         <Table.Body>
-          {data?.map((d, i) => {
-            return (
-              <Table.Row key={i}>
-                <span>{i + 1}</span>
-                <span>{d.symbol}</span>
-                <span>{d.type === "0" ? "Buy" : "Sell"}</span>
-                <span>{d.lot}</span>
-                <span>{d.open}</span>
-                <span>{d.close}</span>
-                <span>{d.profit}</span>
-                <span>{d.openTime}</span>
-                <span>{d.closeTime}</span>
-              </Table.Row>
-            );
-          })}
+          {data
+            ?.map((d, i) => {
+              return (
+                <Table.Row key={i}>
+                  <span>{i + 1}</span>
+                  <span>{d.symbol}</span>
+                  <span>{d.type === "0" ? "Buy" : "Sell"}</span>
+                  <span>{d.lot}</span>
+                  <span>{d.open}</span>
+                  <span>{d.close}</span>
+                  <span>{d.profit}</span>
+                  <span>{d.openTime}</span>
+                  <span>{d.closeTime}</span>
+                </Table.Row>
+              );
+            })
+            .reverse()}
         </Table.Body>
       </Table>
     </div>
