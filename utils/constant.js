@@ -36,3 +36,5 @@ export async function telegramInit() {
 }
 
 // telegramInit();
+
+export const listOfEmails = process.env.NEXT_PUBLIC_ALLOWED_EMAILS?.split(",");

@@ -12,7 +12,7 @@ import {
   updatePassword,
   updateProfile,
 } from "firebase/auth";
-import { firebaseConfig } from "../utils/constant";
+import { firebaseConfig, listOfEmails } from "../utils/constant";
 
 import { addNewUser, getUser } from "./user";
 
@@ -21,8 +21,9 @@ const provider = new GoogleAuthProvider();
 
 export function checkUser(setUser) {
   const auth = getAuth();
+  console.log(listOfEmails);
   onAuthStateChanged(auth, async (user) => {
-    if (user) {
+    if (user && listOfEmails?.find((e) => e === user.email)) {
       console.log("user=> . ", user);
       setUser(user);
     } else {
