@@ -3,17 +3,26 @@ import Header from "../../Features/Header";
 import { H1, H4 } from "../../Components/H";
 import { ButtonText } from "../../Components/Button";
 import { GetUserContext } from "../../hooks/UserHook";
-import { GetMTAccountsContext } from "../../hooks/MTAccounts";
+import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 
 import Mt4 from "../../Features/MTAccount/Mt4";
 import DataTable from "../../Features/MTAccount/DataTable";
+import LineChart from "../../Features/MTAccount/LineChart";
 
 import { MT4EAPath } from "../../utils/constant";
+
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Doughnut } from "react-chartjs-2";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function help() {
   const { user } = GetUserContext();
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
+
+  const { totalProfit, profitPerPair, profitPerWebhook } = CalculateData(data);
+  console.log(totalProfit(), profitPerPair(), profitPerWebhook());
   return (
     <>
       <Sidenav cpath="mt4" />
@@ -45,6 +54,18 @@ export default function help() {
           {data?.length > 0 && (
             <div className="mt-12">
               <H4 className="mb-6">Metatrader 4 Trades</H4>
+
+              <div className="my-4">
+                <div className="flex">
+                  <div className="w-2/3">
+                    <LineChart />
+                  </div>
+                  <div className="w-1/3">
+                    <App />
+                  </div>
+                </div>
+              </div>
+
               <DataTable data={data} />
             </div>
           )}
@@ -52,4 +73,48 @@ export default function help() {
       </div>
     </>
   );
+}
+
+export const data = {
+  labels: ["US30", "EURUSD", "USDJPY", "BTCUSD", "GOLD", "GBPJPY"],
+  datasets: [
+    {
+      label: "# of Votes",
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        "rgba(255, 99, 132, 0.2)",
+        "rgba(54, 162, 235, 0.2)",
+        "rgba(255, 206, 86, 0.2)",
+        "rgba(75, 192, 192, 0.2)",
+        "rgba(153, 102, 255, 0.2)",
+        "rgba(255, 159, 64, 0.2)",
+      ],
+      borderColor: [
+        "rgba(255, 99, 132, 1)",
+        "rgba(54, 162, 235, 1)",
+        "rgba(255, 206, 86, 1)",
+        "rgba(75, 192, 192, 1)",
+        "rgba(153, 102, 255, 1)",
+        "rgba(255, 159, 64, 1)",
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+
+export const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: "bottom",
+    },
+    title: {
+      display: true,
+      //   text: "Chart.js Line Chart",
+    },
+  },
+};
+
+export function App() {
+  return <Doughnut data={data} options={options} />;
 }
