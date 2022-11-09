@@ -13,7 +13,7 @@ function DataTable({ data }) {
           <span>Open price</span>
           <span>Close price</span>
           <span>Profit</span>
-          <span>Open time</span>
+          {/* <span>Open time</span> */}
           <span>Close time</span>
         </Table.Head>
 
@@ -29,7 +29,7 @@ function DataTable({ data }) {
                   <span>{d.open}</span>
                   <span>{d.close}</span>
                   <span>{d.profit}</span>
-                  <span>{d.openTime}</span>
+                  {/* <span>{d.openTime}</span> */}
                   <span>{d.closeTime}</span>
                 </Table.Row>
               );

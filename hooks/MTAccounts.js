@@ -77,5 +77,41 @@ export const CalculateData = (data) => {
     return r;
   };
 
-  return { totalProfit, profitPerPair, profitPerWebhook };
+  const profitPerTime = (getProfit = true) => {
+    let r = {};
+
+    data.forEach((v) => {
+      const day = new Date(v.closeTime).getDate();
+      const month = new Date(v.closeTime).getMonth();
+      const year = new Date(v.closeTime).getFullYear();
+
+      const profit = Number(v.profit);
+
+      if ((getProfit && profit >= 0) || (!getProfit && profit < 0)) {
+        if (r[year] !== undefined) {
+          r[year].profit = Number(r[year].profit) + Number(profit);
+
+          if (r[year][month] !== undefined) {
+            r[year][month].profit =
+              Number(r[year][month].profit) + Number(profit);
+
+            if (r[year][month][day] !== undefined) {
+              r[year][month][day].profit =
+                Number(r[year][month][day].profit) + Number(profit);
+            } else r[year][month][day] = { profit };
+          } else {
+            r[year][month] = { profit };
+            r[year][month][day] = { profit };
+          }
+        } else {
+          r[year] = { profit };
+          r[year][month] = { profit };
+          r[year][month][day] = { profit };
+        }
+      }
+    });
+    return r;
+  };
+
+  return { totalProfit, profitPerPair, profitPerWebhook, profitPerTime };
 };

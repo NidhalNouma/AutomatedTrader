@@ -1,6 +1,6 @@
 import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
-import { H1, H4 } from "../../Components/H";
+import { H1, H4, Hi5, H6 } from "../../Components/H";
 import { ButtonText } from "../../Components/Button";
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
@@ -8,20 +8,20 @@ import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 import Mt4 from "../../Features/MTAccount/Mt4";
 import DataTable from "../../Features/MTAccount/DataTable";
 import LineChart from "../../Features/MTAccount/LineChart";
+import ArcCircle from "../../Features/MTAccount/ArcCircle";
+import DoughChart from "../../Features/MTAccount/DoughChart";
+import BarAndLineChart from "../../Features/MTAccount/BarAndLineChart";
 
 import { MT4EAPath } from "../../utils/constant";
-
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie, Doughnut } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function help() {
   const { user } = GetUserContext();
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
 
-  const { totalProfit, profitPerPair, profitPerWebhook } = CalculateData(data);
+  const { totalProfit, profitPerPair, profitPerWebhook, profitPerTime } =
+    CalculateData(data);
+  const tp = totalProfit();
   console.log(totalProfit(), profitPerPair(), profitPerWebhook());
   return (
     <>
@@ -55,66 +55,67 @@ export default function help() {
             <div className="mt-12">
               <H4 className="mb-6">Metatrader 4 Trades</H4>
 
-              <div className="my-4">
-                <div className="flex">
-                  <div className="w-2/3">
-                    <LineChart />
+              <div className="flex">
+                <DataTable data={data} />
+                <div className="h-i3">
+                  <DoughChart adata={profitPerPair()} total={tp} />
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center">
+                <div className="py-5 px-3 bg-accent rounded-xl">
+                  <Hi5>Profits: </Hi5>
+                  <div className="mt-1 flex items-center">
+                    <H4>$ {tp.profit.toFixed(2)}</H4>
+                    <H6 className="ml-2 text-blue-500">
+                      {(
+                        (tp.profitCnt / (tp.profitCnt + tp.lossCnt)) *
+                        100
+                      ).toFixed(1)}
+                      % Wins
+                    </H6>
                   </div>
-                  <div className="w-1/3">
-                    <App />
+                </div>
+
+                <div className="py-5 px-3 bg-accent rounded-xl ml-4">
+                  <Hi5>Losses: </Hi5>
+                  <div className="mt-1 flex items-center">
+                    <H4>$ {tp.loss.toFixed(2)}</H4>
+                    <H6 className="ml-2 text-red-500">
+                      {(
+                        (tp.lossCnt / (tp.profitCnt + tp.lossCnt)) *
+                        100
+                      ).toFixed(1)}
+                      % Losing
+                    </H6>
                   </div>
                 </div>
               </div>
 
-              <DataTable data={data} />
+              <div className="my-4">
+                <div className="flex">
+                  <div className="w-4/6">
+                    <BarAndLineChart
+                      profit={profitPerTime()}
+                      loss={profitPerTime(false)}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="my-4">
+                <div className="flex">
+                  <div className="w-4/6">
+                    <LineChart
+                      profit={profitPerTime()}
+                      loss={profitPerTime(false)}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
       </div>
     </>
   );
-}
-
-export const data = {
-  labels: ["US30", "EURUSD", "USDJPY", "BTCUSD", "GOLD", "GBPJPY"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
-export const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "bottom",
-    },
-    title: {
-      display: true,
-      //   text: "Chart.js Line Chart",
-    },
-  },
-};
-
-export function App() {
-  return <Doughnut data={data} options={options} />;
 }
