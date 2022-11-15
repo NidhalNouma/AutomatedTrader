@@ -23,7 +23,7 @@ export default async function handler(req, res) {
         accountStartBalance,
         "MT4"
       );
-      if (r)
+      if (r.id)
         return res.status(200).json({ id: r.id, exist: r.exist, done: true });
     }
   }
