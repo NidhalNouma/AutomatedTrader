@@ -23,15 +23,6 @@ const collName = "mtaccounts";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-function getRandomColor() {
-  var letters = "0123456789ABCDEF";
-  var color = "#";
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
 export async function addMTAccount(
   userId,
   accountName,
@@ -195,4 +186,13 @@ export async function addDataToMTAccount(
     return { exist: true, added: false };
   }
   return { exist: false, added: false };
+}
+
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }
