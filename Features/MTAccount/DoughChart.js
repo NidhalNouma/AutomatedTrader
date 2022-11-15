@@ -31,9 +31,11 @@ function DoughChart({ adata, total }) {
   };
 
   const options = {
-    cutout: 125,
+    cutout: 70,
     responsive: true,
-    maintainAspectRatio: true,
+    maintainAspectRatio: false,
+
+    fillStyle: "#000",
 
     layout: {
       padding: {
@@ -59,26 +61,26 @@ function DoughChart({ adata, total }) {
   };
 
   return (
-    <div className="ml-5">
+    <div className="ml-5 flex flex-col items-center justify-center">
       <div className="relative my-auto">
         <Doughnut
-          className="flex justify-center items-center"
+          className="flex justify-center items-cente"
           // className="relative mt-auto"
           data={data}
           options={options}
-          height="150"
-          width="150"
+          //   height="150"
+          //   width="150"
         ></Doughnut>
-        <div className="w-44 h-44 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-accent flex justify-center items-center">
+        <div className="w-28 h-28 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-accent flex justify-center items-center">
           <div className="text-center">
             <H4>${total.total.toFixed(2)}</H4>
             <Hi5>Total profit</Hi5>
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-2 justify-center items-center mt-1">
+      <div className="grid grid-cols-2 justify-center items-center mt-4">
         {Object.keys(adata).map((v, i) => (
-          <div className="mx-2 mt-1 flex items-center" key={i}>
+          <div className="mx-1 mt-1 flex items-center" key={i}>
             <CheckCircleIcon
               className="h-2 w-2 mr-2"
               color={clrs[i]}

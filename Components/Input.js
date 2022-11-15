@@ -162,7 +162,7 @@ export const Select1 = ({
         <Select
           color="primary"
           size="sm"
-          className="bg-accenti mx-2 w-24"
+          className={`bg-accenti mx-2 w-24 ${className}`}
           value={options[value]}
           onChange={(e) => setValue(e)}
         >

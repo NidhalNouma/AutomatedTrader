@@ -17,7 +17,10 @@ function Mt4({ account, userId }) {
   const { setMTAccounts } = GetMTAccountsContext();
 
   return (
-    <div className="bg-bga p-3 rounded-b-xl">
+    <div
+      className="bg-bga p-3 rounded-xl my-2"
+      style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
+    >
       <div className="">
         <H6>Account name: {account.accountName}</H6>
         <H6>Account balance: {account.accountBalance}</H6>

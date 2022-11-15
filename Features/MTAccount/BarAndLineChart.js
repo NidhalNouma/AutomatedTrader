@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -12,6 +12,10 @@ import {
   BarController,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
+import { H2 } from "../../Components/H";
+import { Select1 } from "../../Components/Input";
+
+import { getDataPerAccountMonths, monthNamesI } from "../../hooks/MTAccounts";
 
 ChartJS.register(
   LinearScale,
@@ -39,6 +43,7 @@ const options = {
   },
   plugins: {
     legend: {
+      display: false,
       position: "bottom",
     },
     title: {
@@ -47,89 +52,29 @@ const options = {
     },
   },
 };
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
-const weekDay = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
-
-export default function BarAndLineChart({ profit, loss }) {
-  const pArr = () => {
-    const r = {};
-    const year = new Date().getFullYear();
-
-    if (profit[year] !== undefined) {
-      monthNames.forEach((v, i) => {
-        if (profit[year][i] !== undefined) {
-          r[v] = profit[year][i].profit;
-        } else r[v] = 0;
-      });
-    }
-    return r;
-  };
-
-  const lArr = () => {
-    const r = {};
-    const year = new Date().getFullYear();
-
-    if (loss[year] !== undefined) {
-      monthNames.forEach((v, i) => {
-        if (loss[year][i] !== undefined) {
-          r[v] = loss[year][i].profit;
-        } else r[v] = 0;
-      });
-    }
-    return r;
-  };
-
-  const tArr = () => {
-    const p = pArr();
-    const l = lArr();
-    const r = {};
-
-    monthNames.forEach((v, i) => {
-      r[v] = p[v] + l[v];
-    });
-    return r;
-  };
+export default function BarAndLineChart({ accounts }) {
+  const [account, setAccount] = useState(accounts[0]);
+  const d = getDataPerAccountMonths(accounts[0]).total;
 
   const data = {
-    labels: monthNames,
+    labels: monthNamesI,
     datasets: [
       {
         type: "line",
-        label: "Total",
+        label: "Drawdown",
         borderColor: "rgb(153, 102, 255)",
         borderWidth: 2,
         fill: false,
-        data: Object.values(tArr()),
+        data: Object.values(getDataPerAccountMonths(account).loss),
 
         lineTension: 0.3,
       },
       {
         type: "bar",
-        label: "Profit",
+        label: "Gain",
         backgroundColor: "rgb(53, 162, 235)",
-        data: Object.values(pArr()),
+        data: Object.values(getDataPerAccountMonths(account).total),
         barPercentage: 0.35,
         categoryPercentage: 1,
         borderRadius: 25,
@@ -138,20 +83,41 @@ export default function BarAndLineChart({ profit, loss }) {
         // maxBarThickness: 3,
       },
 
-      {
-        type: "bar",
-        label: "Loss",
-        backgroundColor: "rgb(255, 99, 132)",
-        data: Object.values(lArr()),
-        barPercentage: 0.35,
-        categoryPercentage: 1,
-        borderRadius: 25,
+      //   {
+      //     type: "bar",
+      //     label: "Loss",
+      //     backgroundColor: "rgb(255, 99, 132)",
+      //     data: Object.values(lArr()),
+      //     barPercentage: 0.35,
+      //     categoryPercentage: 1,
+      //     borderRadius: 25,
 
-        barThickness: 5,
-        // maxBarThickness: 3,
-      },
+      //     barThickness: 5,
+      //     // maxBarThickness: 3,
+      //   },
     ],
   };
 
-  return <Chart type="bar" data={data} options={options} />;
+  return (
+    <div className="">
+      <div className="mb-2 flex justify-between items-center">
+        <H2>Gains</H2>
+
+        <Select1
+          className="!outline-none !focus:outline-none !border-bga !focus:border-bga"
+          name=""
+          helper=""
+          options={accounts.map((account) => account.accountName)}
+          value={account}
+          setValue={(i) => setAccount(accounts[i])}
+        />
+      </div>
+      <Chart
+        className="bg-bg rounded-xl p-2"
+        type="bar"
+        data={data}
+        options={options}
+      />
+    </div>
+  );
 }

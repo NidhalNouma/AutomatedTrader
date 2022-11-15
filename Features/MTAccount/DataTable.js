@@ -1,42 +1,55 @@
-import React from "react";
-import { Table } from "react-daisyui";
+import React, { useState } from "react";
+import moment from "moment";
+import { ButtonText } from "../../Components/Button";
 
 function DataTable({ data }) {
-  return (
-    <div className="overflow-x-auto">
-      <Table zebra={true}>
-        <Table.Head>
-          <span />
-          <span>Pair</span>
-          <span>Type</span>
-          <span>Lot</span>
-          <span>Open price</span>
-          <span>Close price</span>
-          <span>Profit</span>
-          {/* <span>Open time</span> */}
-          <span>Close time</span>
-        </Table.Head>
+  const [show, setShow] = useState(false);
 
-        <Table.Body>
+  return (
+    <div className="overflow-x-auto w-full">
+      <table className="table-auto w-full">
+        <thead>
+          <tr>
+            <th className="text-text-h text-sm">Date/Time</th>
+            <th className="text-text-h text-sm">Pair</th>
+            <th className="text-text-h text-sm">Open Price</th>
+            <th className="text-text-h text-sm">Lot</th>
+            <th className="text-text-h text-sm">Pips</th>
+            <th className="text-text-h text-sm">Profit</th>
+          </tr>
+        </thead>
+        <tbody>
           {data
-            ?.map((d, i) => {
-              return (
-                <Table.Row key={i}>
-                  <span>{i + 1}</span>
-                  <span>{d.symbol}</span>
-                  <span>{d.type === "0" ? "Buy" : "Sell"}</span>
-                  <span>{d.lot}</span>
-                  <span>{d.open}</span>
-                  <span>{d.close}</span>
-                  <span>{d.profit}</span>
-                  {/* <span>{d.openTime}</span> */}
-                  <span>{d.closeTime}</span>
-                </Table.Row>
-              );
-            })
-            .reverse()}
-        </Table.Body>
-      </Table>
+            ?.slice(0)
+            .reverse()
+            ?.map((v, i) =>
+              (i < 6 && !show) || show ? (
+                <React.Fragment key={i}>
+                  <tr className="border-spacing-[7px] border-b-[1px] border-gray-700">
+                    <td className="text-xs text-center py-3">
+                      {moment(v.closeTime).fromNow()}
+                    </td>
+                    <td className="text-xs text-center">{v.symbol}</td>
+                    <td className="text-xs text-center">{v.open}</td>
+                    <td className="text-xs text-center">{v.lot}</td>
+                    <td className="text-xs text-center">{v.pips}</td>
+                    <td className="text-xs text-center">
+                      ${Number(v.profit).toFixed(2)}
+                    </td>
+                  </tr>
+                  {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
+                </React.Fragment>
+              ) : (
+                <React.Fragment></React.Fragment>
+              )
+            )}
+        </tbody>
+      </table>
+      <div className="w-full text-center mt-4">
+        <ButtonText className="" onClick={() => setShow(!show)}>
+          {!show ? "Show all" : "Hide"}
+        </ButtonText>
+      </div>
     </div>
   );
 }

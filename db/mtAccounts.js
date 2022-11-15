@@ -23,6 +23,15 @@ const collName = "mtaccounts";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 export async function addMTAccount(
   userId,
   accountName,
@@ -30,6 +39,7 @@ export async function addMTAccount(
   accountNumber,
   accountBalance,
   accountEquity,
+  accountStartBalance,
   type
 ) {
   console.log("Adding new MT account ...");
@@ -43,7 +53,7 @@ export async function addMTAccount(
     );
     if (find) {
       console.log("account already exist ... ");
-      return find.id;
+      return { id: find.id, exist: true };
     }
 
     const docRef = await addDoc(collection(db, collName), {
@@ -53,12 +63,15 @@ export async function addMTAccount(
       accountNumber,
       accountBalance,
       accountEquity,
+      accountStartBalance,
+      accountStarty,
       type,
       lastUpdated: "",
+      color: getRandomColor(),
       created_at: serverTimestamp(),
     });
     console.log("Document written with: ", docRef.id);
-    return docRef.id;
+    return { id: docRef.id, exist: false };
   } catch (e) {
     console.error("Error adding document: ", e);
     return false;
