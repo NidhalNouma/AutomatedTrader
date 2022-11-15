@@ -74,7 +74,7 @@ export async function addMTAccount(
     return { id: docRef.id, exist: false };
   } catch (e) {
     console.error("Error adding document: ", e);
-    return false;
+    return { error: e };
   }
 }
 

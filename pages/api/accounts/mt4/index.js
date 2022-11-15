@@ -25,6 +25,7 @@ export default async function handler(req, res) {
       );
       if (r.id)
         return res.status(200).json({ id: r.id, exist: r.exist, done: true });
+      else res.status(200).json({ done: false, error: r.error });
     }
   }
 
