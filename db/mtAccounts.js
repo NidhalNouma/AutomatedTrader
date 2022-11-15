@@ -55,7 +55,6 @@ export async function addMTAccount(
       accountBalance,
       accountEquity,
       accountStartBalance,
-      accountStarty,
       type,
       lastUpdated: "",
       color: getRandomColor(),
