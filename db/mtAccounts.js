@@ -196,15 +196,16 @@ function getRandomColor() {
   // return color;
   var o = Math.round,
     r = Math.random,
-    s = 155;
-  // s = 255;
+    red = 155,
+    green = 170,
+    blue = 255;
   return (
     "rgba(" +
-    o(r() * s) +
+    o(r() * red) +
     "," +
-    o(r() * s) +
+    o(r() * green) +
     "," +
-    o(r() * s) +
+    o(r() * blue) +
     "," +
     r().toFixed(1) +
     ")"
