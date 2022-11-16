@@ -57,36 +57,6 @@ export default function help() {
                   </div>
                   {/* </div> */}
                 </div>
-
-                <div className="mt-4 flex items-center">
-                  <div className="py-5 px-3 bg-accent rounded-xl">
-                    <Hi5>Profits: </Hi5>
-                    <div className="mt-1 flex items-center">
-                      <H4>$ {tp.profit.toFixed(2)}</H4>
-                      <H6 className="ml-2 text-blue-500">
-                        {(
-                          (tp.profitCnt / (tp.profitCnt + tp.lossCnt)) *
-                          100
-                        ).toFixed(1)}
-                        % Wins
-                      </H6>
-                    </div>
-                  </div>
-
-                  <div className="py-5 px-3 bg-accent rounded-xl ml-4">
-                    <Hi5>Losses: </Hi5>
-                    <div className="mt-1 flex items-center">
-                      <H4>$ {tp.loss.toFixed(2)}</H4>
-                      <H6 className="ml-2 text-red-500">
-                        {(
-                          (tp.lossCnt / (tp.profitCnt + tp.lossCnt)) *
-                          100
-                        ).toFixed(1)}
-                        % Losing
-                      </H6>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div className="mt-3 w-8/12 pl-4">
@@ -103,6 +73,36 @@ export default function help() {
                   </div>
                   <div className="w-2/5 mt-8">
                     <DoughChart adata={profitPerPair()} total={tp} />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center w-full">
+                  <div className="py-7 px-4 bg-accent rounded-xl w-1/2">
+                    <Hi5>Profits: </Hi5>
+                    <div className="mt-1 flex items-center">
+                      <H4>$ {tp.profit.toFixed(2)}</H4>
+                      <H6 className="ml-2 text-blue-500">
+                        {(
+                          (tp.profitCnt / (tp.profitCnt + tp.lossCnt)) *
+                          100
+                        ).toFixed(1)}
+                        % Wins
+                      </H6>
+                    </div>
+                  </div>
+
+                  <div className="py-7 px-4 bg-accent rounded-xl ml-4 w-1/2">
+                    <Hi5>Losses: </Hi5>
+                    <div className="mt-1 flex items-center">
+                      <H4>$ {tp.loss.toFixed(2)}</H4>
+                      <H6 className="ml-2 text-red-500">
+                        {(
+                          (tp.lossCnt / (tp.profitCnt + tp.lossCnt)) *
+                          100
+                        ).toFixed(1)}
+                        % Losing
+                      </H6>
+                    </div>
                   </div>
                 </div>
               </div>
