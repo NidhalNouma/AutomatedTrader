@@ -8,8 +8,8 @@ import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 import Mt4 from "../../Features/MTAccount/Mt4";
 import DataTable from "../../Features/MTAccount/DataTable";
 import LineChart from "../../Features/MTAccount/LineChart";
-import ArcCircle from "../../Features/MTAccount/ArcCircle";
 import DoughChart from "../../Features/MTAccount/DoughChart";
+import HalfDoughChart from "../../Features/MTAccount/HalfDoughChart";
 import BarAndLineChart from "../../Features/MTAccount/BarAndLineChart";
 
 import { MT4EAPath } from "../../utils/constant";
@@ -56,6 +56,12 @@ export default function help() {
                     <BarAndLineChart accounts={mtAccounts} />
                   </div>
                   {/* </div> */}
+                </div>
+
+                <div className="w-full mt-8">
+                  <div className="w-full bg-accent p-4 rounded-xl">
+                    <HalfDoughChart adata={profitPerPair()} total={tp} />
+                  </div>
                 </div>
               </div>
 

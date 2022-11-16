@@ -65,10 +65,12 @@ export default function BarAndLineChart({ accounts }) {
         label: "Drawdown",
         borderColor: "rgb(153, 102, 255)",
         borderWidth: 2,
-        fill: false,
+        // fill: false,
         data: Object.values(getDataPerAccountMonths(account).loss),
-
         lineTension: 0.3,
+
+        fill: true,
+        backgroundColor: "rgba(153, 102, 255,0.2)",
       },
       {
         type: "bar",

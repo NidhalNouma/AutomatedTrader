@@ -64,7 +64,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           classNameInput="bg-accenti "
           name="Webhooks name"
           placeholder={"Name"}
-          helper="Information about this input"
+          helper="Name of the webhook"
           value={name}
           setValue={setName}
         />
@@ -73,7 +73,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         classNameInput="bg-accenti "
         name="What's the pair name?"
         placeholder={"pair"}
-        helper="Information about this input"
+        helper="Pair Name"
         value={pair}
         setValue={setPair}
       />
@@ -81,7 +81,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
 
       <Select1
         name="Order type"
-        helper="Information about this input"
+        helper="Type of the order"
         options={[
           "Buy",
           "Sell",
@@ -98,7 +98,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         <Input1Inline
           name="Pending distqnce"
           placeholder=""
-          helper="Information about this input"
+          helper="Pending order distance in pips"
           type="number"
           value={pendingDistance}
           setValue={setPendingDistance}
@@ -148,7 +148,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
               {"Fixing position based"}
             </Fragment>
           }
-          helper="Information about this input"
+          helper="Fixed position value"
           type="number"
           value={positionType === 1 && positionValue}
           setValue={setPositionValue}
@@ -158,7 +158,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       <Input1Inline
         name="Stop loss (Pips)"
         placeholder=""
-        helper="Information about this input"
+        helper="Stop loss value in pips"
         type="number"
         value={stopLoss}
         setValue={setStopLoss}
@@ -166,7 +166,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       <Input1Inline
         name="Take profit (Pips)"
         placeholder=""
-        helper="Information about this input"
+        helper="Take profit value in pips"
         type="number"
         value={takeProfit}
         setValue={setTakeProfit}
@@ -174,7 +174,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
 
       <Toggle1
         name="Trailing stop (Pips)"
-        helper="Information about this input"
+        helper="Enable trailing stop"
         value={TS.use}
         setValue={() => setTS({ ...TS, use: !TS.use })}
       />
@@ -183,7 +183,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           <Input1Inline
             name="Trailing Stop Start"
             placeholder=""
-            helper="Information about this input"
+            helper="Trailing start value in pips"
             type="number"
             disabled={!TS.use}
             value={TS.start}
@@ -192,7 +192,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           <Input1Inline
             name="Trailing Stop Distance"
             placeholder=""
-            helper="Information about this input"
+            helper="Trailing stop value in pips"
             type="number"
             disabled={!TS.use}
             value={TS.stop}
@@ -201,7 +201,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           <Input1Inline
             name="Trailing Step"
             placeholder=""
-            helper="Information about this input"
+            helper="Trailing step value in pips"
             type="number"
             disabled={!TS.use}
             value={TS.step}
@@ -212,7 +212,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
 
       <Toggle1
         name="Break even / Partial profit"
-        helper="Information about this input"
+        helper="Enable break even and partial profit"
         value={BE.use}
         setValue={() => setBE({ ...BE, use: !BE.use })}
       />
@@ -221,7 +221,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           <Input1Inline
             name="Partial Close Target (Pips)"
             placeholder=""
-            helper="Information about this input"
+            helper="Profit close target in pips"
             type="number"
             disabled={!BE.use}
             value={BE.stop}

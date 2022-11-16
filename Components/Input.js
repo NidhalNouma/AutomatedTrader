@@ -115,7 +115,7 @@ export const Helper = ({ message }) => {
               ></path>
             </svg>
           </Button>
-          <Dropdown.Menu className="card compact w-auto !p-0 shadow bg-bga rounded-xl">
+          <Dropdown.Menu className="w-44 !p-0 shadow bg-bga rounded-xl">
             <div className="p-2">
               <H6>{message}</H6>
             </div>
