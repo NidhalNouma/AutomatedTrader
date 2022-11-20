@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import { listenToNewMTAccounts, deleteMTAccount } from "../db/mtAccounts";
+import moment from "moment";
 
 export function GetMTAccounts() {
   const [mtAccounts, setMTAccounts] = useState([]);
@@ -295,3 +296,113 @@ const profitPerTime = (data, getProfit = true, wh) => {
   });
   return r;
 };
+
+export function getDataFromAccountPerPeriod(account, period = []) {
+  const loss = profitPerTime(account?.data, false);
+  const profit = profitPerTime(account?.data, true);
+
+  console.log("period", period);
+
+  const r = { profit: [], loss: [], total: [] };
+
+  const il = period.length - 1;
+  period.forEach((v, i) => {
+    const lv = i === il ? new Date() : period[i + 1];
+    const range = getDates(v, lv);
+
+    console.log(range);
+
+    range.forEach((d, i) => {
+      const day = new Date(d).getDate();
+      const month = new Date(d).getMonth();
+      const year = new Date(d).getFullYear();
+
+      if (loss[year] !== undefined) {
+        if (loss[year][month] !== undefined) {
+          if (loss[year][month][day] !== undefined) {
+            if (r.loss[v]) r.loss[v] += loss[year][month][day].profit;
+            else r.loss[v] = loss[year][month][day].profit;
+          }
+        }
+      }
+
+      if (profit[year] !== undefined) {
+        if (profit[year][month] !== undefined) {
+          if (profit[year][month][day] !== undefined) {
+            if (r.profit[v]) r.profit[v] += profit[year][month][day].profit;
+            else r.profit[v] = profit[year][month][day].profit;
+          }
+        }
+      }
+
+      if (!r.loss[v]) r.loss[v] = 0;
+      if (!r.profit[v]) r.profit[v] = 0;
+
+      console.log(year, month, day, r);
+
+      const t = r.profit[v] + r.loss[v];
+      r.total[v] = t;
+    });
+  });
+
+  r.loss.reverse();
+  r.profit.reverse();
+  r.total.reverse();
+
+  //  console.log(r);
+
+  return r;
+}
+
+function getDates(startDate, stopDate) {
+  var dateArray = [];
+  var currentDate = moment(startDate);
+  var stopDate = moment(stopDate);
+  while (currentDate < stopDate) {
+    dateArray.push(moment(currentDate).format("YYYY-MM-DD"));
+    currentDate = moment(currentDate).add(1, "days");
+  }
+  return dateArray;
+}
+
+export function getLastWeek() {
+  var dates = [];
+  var date = new Date();
+
+  for (var i = 0; i < 7; i += 1) {
+    var tempDate = new Date();
+    tempDate.setDate(date.getDate() - i);
+    dates.push(tempDate);
+  }
+
+  dates.reverse();
+  return dates;
+}
+
+export function getLastMonth() {
+  var dates = [];
+  var date = new Date();
+
+  for (var i = 0; i < 30; i += 2) {
+    var tempDate = new Date();
+    tempDate.setDate(date.getDate() - i);
+    dates.push(tempDate);
+  }
+
+  dates.reverse();
+  return dates;
+}
+
+export function getLastYear() {
+  var dates = [];
+  var date = new Date();
+
+  for (var i = 0; i < 365; i += 12) {
+    var tempDate = new Date();
+    tempDate.setDate(date.getDate() - i);
+    dates.push(tempDate);
+  }
+
+  dates.reverse();
+  return dates;
+}
