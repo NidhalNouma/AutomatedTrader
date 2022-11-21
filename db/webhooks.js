@@ -30,6 +30,7 @@ export async function addWebhook(name, message, url, userId) {
       url,
       messages: [message],
       active: true,
+      public: false,
       created_at: serverTimestamp(),
     });
     console.log("Document written with: ", docRef);
@@ -100,6 +101,18 @@ export async function activeWebhook(id, active) {
 
   await updateDoc(msgDoc, {
     active,
+  });
+
+  const nwh = await getWebhook(id);
+  nwh["id"] = id;
+  return nwh;
+}
+
+export async function publicWebhook(id, ispublic) {
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    public: ispublic,
   });
 
   const nwh = await getWebhook(id);

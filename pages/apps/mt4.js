@@ -1,3 +1,4 @@
+// import { useState } from "react";
 import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
 import { H1, H3, H4, Hi5, H6 } from "../../Components/H";
@@ -12,7 +13,10 @@ import DoughChart from "../../Features/MTAccount/DoughChart";
 import HalfDoughChart from "../../Features/MTAccount/HalfDoughChart";
 import BarAndLineChart from "../../Features/MTAccount/BarAndLineChart";
 
+import { Dropdown } from "react-daisyui";
+
 import { MT4EAPath } from "../../utils/constant";
+import { copyTextToClipboard } from "../../utils/functions";
 
 export default function help() {
   const { user } = GetUserContext();
@@ -22,13 +26,14 @@ export default function help() {
   const { totalProfit, profitPerPair, profitPerWebhook, profitPerTime } =
     CalculateData(data);
   const tp = totalProfit();
-  console.log(totalProfit(), profitPerPair(), profitPerWebhook());
+  // console.log(totalProfit(), profitPerPair(), profitPerWebhook());
+
   return (
     <>
       <Sidenav cpath="mt4" />
-      <div className="w-full overflow-hidden">
+      <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8">
+        <div className="px-10 py-8 overflow-hidden">
           <div className="flex justify-between">
             <H1>Metatrader 4</H1>
             <ButtonText
@@ -41,7 +46,28 @@ export default function help() {
             </ButtonText>
           </div>
           <div className="my-4">
-            <span className="">Your Id: {user?.uid}</span>
+            <span className="">
+              Your Id:{" "}
+              <Dropdown hover={true} horizontal="right" vertical="middle">
+                <span
+                  className="bg-accent px-2 py-1 rounded-xl cursor-pointer"
+                  onClick={(e) =>
+                    copyTextToClipboard(
+                      user?.uid,
+                      () => {},
+                      () => {}
+                    )
+                  }
+                >
+                  {user?.uid}
+                </span>
+                <Dropdown.Menu className="w-24 !p-0 shadow bg-bga rounded-xl">
+                  <div className="p-2">
+                    <H6>{"Click to copy!"}</H6>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+            </span>
           </div>
           {/* <H4>Accounts</H4> */}
           {mtAccounts?.length > 0 && (

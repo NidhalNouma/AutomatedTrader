@@ -17,6 +17,7 @@ import EditMessage from "../ManageWebhook/EditMessage";
 import {
   getMessages,
   setActiveWebhook,
+  setPublicWebhook,
   GetWebhookContext,
 } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
@@ -104,6 +105,26 @@ function Index({ webhook: wh }) {
                 if (r) {
                   setWebhook(r);
                   newAlert(webhook.name + " webhook is " + is, "success");
+                }
+              }}
+            />
+          </div>
+
+          <div className="mt-2 flex">
+            <H6 className="mr-4">Public</H6>
+            <Toggle
+              size="sm"
+              color="secondary"
+              className=""
+              checked={webhook.public}
+              onChange={async () => {
+                let is = "public";
+                if (webhook.public) is = "private";
+                const r = await setPublicWebhook(webhook.id, !webhook.public);
+                // const r1 = await getAllWebhooks();
+                if (r) {
+                  setWebhook(r);
+                  newAlert(webhook.name + " webhook is " + is, "!");
                 }
               }}
             />

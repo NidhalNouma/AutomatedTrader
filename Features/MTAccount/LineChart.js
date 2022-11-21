@@ -107,21 +107,27 @@ export default function App({ accounts }) {
           <ButtonGroup>
             <Button
               size="sm"
-              className={`rounded bg-accent ${type === 0 && "text-primary"}`}
+              className={`capitalize !text-xs rounded bg-accent ${
+                type === 0 && "text-primary"
+              }`}
               onClick={() => setType(0)}
             >
               Total
             </Button>
             <Button
               size="sm"
-              className={` bg-accent ${type === 1 && "text-primary"}`}
+              className={`capitalize !text-xs bg-accent ${
+                type === 1 && "text-primary"
+              }`}
               onClick={() => setType(1)}
             >
               Profit
             </Button>
             <Button
               size="sm"
-              className={`rounded bg-accent ${type === 2 && "text-primary"}`}
+              className={`capitalize !text-xs rounded bg-accent ${
+                type === 2 && "text-primary"
+              }`}
               onClick={() => setType(2)}
             >
               Drawdown

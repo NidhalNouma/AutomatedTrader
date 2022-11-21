@@ -5,6 +5,7 @@ import {
   deleteMessage,
   getWebhooksByUserId,
   activeWebhook,
+  publicWebhook,
 } from "../db/webhooks";
 
 export const WebHook = (userId) => {
@@ -219,6 +220,11 @@ export const WebHook = (userId) => {
 
 export async function setActiveWebhook(id, active) {
   const r = activeWebhook(id, active);
+  return r;
+}
+
+export async function setPublicWebhook(id, ispublic) {
+  const r = publicWebhook(id, ispublic);
   return r;
 }
 

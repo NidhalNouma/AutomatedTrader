@@ -34,7 +34,10 @@ function Index() {
       >
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
-      <div className="px-6 py-5 bg-accent w-full sticky top-0 z-30">
+      <div
+        className="px-6 py-5 bg-accent w-full sticky top-0 z-50"
+        style={{ zIndex: 100 }}
+      >
         {/* <DD /> */}
         <div className="flex justify-between items-center">
           <div className="w-6/12 flex item-center">
