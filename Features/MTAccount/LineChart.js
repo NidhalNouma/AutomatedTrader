@@ -157,6 +157,5 @@ function addAlpha(color, opacity) {
   //   return color + _opacity.toString(16).toUpperCase();
 
   const r = color.replace(/[\d\.]+\)$/g, opacity);
-  console.log(r, color);
   return r;
 }

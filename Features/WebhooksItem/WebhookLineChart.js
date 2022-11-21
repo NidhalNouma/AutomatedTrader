@@ -58,21 +58,19 @@ function WebhookLineChart({ webhook }) {
     labels: [1, 2, 3, 4, 5],
     datasets: [
       {
-        // fillColor: "rgba(151,187,205,0.5)",
-        // strokeColor: "rgba(151,187,205,1)",
-        // pointColor: "rgba(151,187,205,1)",
-        // pointStrokeColor: "#fff",
+        pointColor: webhook.color,
+        pointStrokeColor: webhook.color,
         borderColor: webhook.color,
-        backgroundColor: "rgba(52, 54, 59, 0.3)",
-        lineTension: 0.3,
+        backgroundColor: "rgba(52, 54, 59, 0.1)",
+        lineTension: 0.4,
         fill: true,
-        data: [1, 3, 6, 2, 8],
+        data: [4, 3, 6, 2, 8],
       },
     ],
   });
 
   return (
-    <div className="p-1">
+    <div className="p-0">
       {/* WebhookLineChart */}
       <H5 className="">%87</H5>
       <Line options={options} data={data} className="max-w-full" />
