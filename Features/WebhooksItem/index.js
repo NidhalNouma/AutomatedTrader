@@ -40,7 +40,7 @@ function Index({ webhook: wh }) {
 
   return (
     <Fragment>
-      <div className="flex flex-col justify-center items-center overflow-hidden">
+      <div className="flex flex-col justify-center items-center">
         <Modal1
           open={open}
           close={() => {
