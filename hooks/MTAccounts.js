@@ -71,9 +71,8 @@ export const CalculateData = (data) => {
     let r = {};
 
     data.forEach((v) => {
-      if (r[v.comment] !== undefined)
-        r[v.comment] = Number(r[v.comment]) + Number(v.profit);
-      else r[v.comment] = Number(v.profit);
+      if (r[v.id] !== undefined) r[v.id] = Number(r[v.id]) + Number(v.profit);
+      else r[v.id] = Number(v.profit);
     });
     return r;
   };
@@ -88,7 +87,7 @@ export const CalculateData = (data) => {
 
       const profit = Number(v.profit);
 
-      if (v.comment === wh || !wh)
+      if (v.id === wh || !wh)
         if ((getProfit && profit >= 0) || (!getProfit && profit < 0)) {
           if (r[year] !== undefined) {
             r[year].profit = Number(r[year].profit) + Number(profit);

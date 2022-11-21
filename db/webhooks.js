@@ -31,6 +31,7 @@ export async function addWebhook(name, message, url, userId) {
       messages: [message],
       active: true,
       public: false,
+      color: getRandomColor(),
       created_at: serverTimestamp(),
     });
     console.log("Document written with: ", docRef);
@@ -142,4 +143,13 @@ export async function deleteMT4Account(id, accountId) {
 
   const nwh = await getWebhook(id);
   return nwh;
+}
+
+function getRandomColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
 }

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
 import { H1, H3, H4, Hi5, H6 } from "../../Components/H";
@@ -18,7 +18,7 @@ import { Dropdown } from "react-daisyui";
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
 
-export default function help() {
+export default function MT4() {
   const { user } = GetUserContext();
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
@@ -26,6 +26,8 @@ export default function help() {
   const { totalProfit, profitPerPair, profitPerWebhook, profitPerTime } =
     CalculateData(data);
   const tp = totalProfit();
+
+  const [idcopy, setIdcopy] = useState("Click to copy!");
   // console.log(totalProfit(), profitPerPair(), profitPerWebhook());
 
   return (
@@ -50,11 +52,14 @@ export default function help() {
               Your Id:{" "}
               <Dropdown hover={true} horizontal="right" vertical="middle">
                 <span
-                  className="bg-accent px-2 py-1 rounded-xl cursor-pointer"
+                  onMouseLeave={() => setIdcopy("Click to copy!")}
+                  className="bg-accent px-2 py-1 rounded-xl cursor-pointer text-sm"
                   onClick={(e) =>
                     copyTextToClipboard(
                       user?.uid,
-                      () => {},
+                      () => {
+                        setIdcopy("Copied!");
+                      },
                       () => {}
                     )
                   }
@@ -62,8 +67,8 @@ export default function help() {
                   {user?.uid}
                 </span>
                 <Dropdown.Menu className="w-24 !p-0 shadow bg-bga rounded-xl">
-                  <div className="p-2">
-                    <H6>{"Click to copy!"}</H6>
+                  <div className="p-2 text-center">
+                    <H6>{idcopy}</H6>
                   </div>
                 </Dropdown.Menu>
               </Dropdown>
