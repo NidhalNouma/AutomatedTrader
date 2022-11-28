@@ -31,13 +31,25 @@ export const updateProfilePicture = async (photoURL) => {
   return auth.currentUser;
 };
 
-export async function addNewUser(userId, email, displayName) {
-  console.log("Adding new user ...");
+export async function addNewUser(
+  userId,
+  email,
+  displayName,
+  metadata,
+  photoURL
+) {
+  console.log("Adding or updating new user ... ");
 
   try {
     const existUser = await getUser(userId);
     if (existUser) {
-      if (!existUser) await updateUserData(userId, "displayName", displayName);
+      if (!existUser.displayName)
+        await updateUserData(userId, "displayName", displayName);
+      if (!existUser.metadata)
+        await updateUserData(userId, "metadata", { ...metadata });
+
+      if (!existUser.photoURL)
+        await updateUserData(userId, "photoURL", photoURL);
       return true;
     }
 
@@ -48,6 +60,8 @@ export async function addNewUser(userId, email, displayName) {
         active: true,
         email,
         displayName,
+        metadata,
+        photoURL,
         created_at: serverTimestamp(),
       }
       // { merge: true }
@@ -62,6 +76,7 @@ export async function addNewUser(userId, email, displayName) {
 }
 
 export async function getUser(id) {
+  if (!id) return null;
   const docRef = doc(db, collName, id);
   const docSnap = await getDoc(docRef);
 

@@ -87,7 +87,13 @@ export async function signIn(email, password) {
     if (user) {
       userf = await getUser(user.uid);
       if (!userf)
-        userf = await addNewUser(user.uid, user.email, user.displayName);
+        userf = await addNewUser(
+          user.uid,
+          user.email,
+          user.displayName,
+          user.metadata,
+          user.photoURL
+        );
     }
     return { user, error: null, userf };
   } catch (error) {
@@ -112,7 +118,13 @@ export async function continueWithGoogle() {
 
     let userf = null;
     if (user) {
-      userf = await addNewUser(user.uid, user.email, user.displayName);
+      userf = await addNewUser(
+        user.uid,
+        user.email,
+        user.displayName,
+        user.metadata,
+        user.photoURL
+      );
     }
 
     return { user, error: null, userf };

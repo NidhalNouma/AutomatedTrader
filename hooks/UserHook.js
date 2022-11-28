@@ -110,5 +110,29 @@ export const UpdateUser1 = () => {
     return r;
   }
 
-  return { updateBio, updateTradingview, updateTwitter, updateWebsite };
+  async function updatePhotoURL(id, data) {
+    const r = await updateUserData(id, "photoURL", data);
+    return r;
+  }
+
+  return {
+    updateBio,
+    updateTradingview,
+    updateTwitter,
+    updateWebsite,
+    updatePhotoURL,
+  };
+};
+
+export const GetUserPage = (id) => {
+  const [puser, setUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const r = await getUser(id);
+      setUser(r);
+    })();
+  }, [id]);
+
+  return { puser };
 };

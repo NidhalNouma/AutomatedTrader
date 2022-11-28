@@ -8,6 +8,7 @@ import {
   GetUserContext,
   GetFullUserContext,
   UpdateUser,
+  UpdateUser1,
 } from "../hooks/UserHook";
 
 import { uploadImg } from "../db/storage";
@@ -16,6 +17,8 @@ import { updateProfilePicture } from "../db/user";
 export default function Settings() {
   const { user, setUser } = GetUserContext();
   const { fullUser, setFullUser } = GetFullUserContext();
+
+  const { updatePhotoURL } = UpdateUser1();
 
   const {
     displayName,
@@ -57,6 +60,7 @@ export default function Settings() {
                         const r = await uploadImg(user?.uid, e.target.files[0]);
                         if (r) {
                           const nu = await updateProfilePicture(r);
+                          const nu1 = await updatePhotoURL(user?.uid, r);
                           setUser({ ...user, photoURL: r });
                         }
                       }}
