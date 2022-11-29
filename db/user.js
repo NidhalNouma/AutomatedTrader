@@ -144,3 +144,26 @@ export async function updateUserDatas(id, data) {
   const nwh = await getUser(id);
   return nwh;
 }
+
+export async function searchByDisplayName(displayName) {
+  const q = query(
+    collection(db, collName)
+    // where("displayName", ">=", displayName)
+    // orderBy("created_at", "desc")
+  );
+
+  console.log("Getting users by displayName ...", displayName);
+
+  const querySnapshot = await getDocs(q);
+  const r = [];
+  displayName = displayName.toLowerCase();
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    //console.log(`${doc.id} => ${doc.data()}`);
+    if (data?.displayName?.toLowerCase()?.search(displayName) >= 0)
+      r.push({ id: doc.id, ...data });
+  });
+
+  console.log(r);
+  return r;
+}

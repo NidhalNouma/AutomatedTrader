@@ -10,11 +10,22 @@ import WebhooksPopUp from "./WebhooksPopUp";
 import { TrashIcon } from "@heroicons/react/outline";
 
 import { GetMTAccountsContext, DeleteMTAccount } from "../../hooks/MTAccounts";
+import { txtColorFromBg } from "../../utils/functions";
+
+import tailwindConfig from "../../tailwind.config.js";
 
 function Mt4({ account, userId }) {
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const { setMTAccounts } = GetMTAccountsContext();
+
+  const colors = tailwindConfig.theme.colors;
+
+  const txtColor = txtColorFromBg(
+    account.color,
+    colors["text-p"],
+    colors["text-h"]
+  );
 
   return (
     <div
@@ -22,9 +33,13 @@ function Mt4({ account, userId }) {
       style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
     >
       <div className="">
-        <H6>Account name: {account.accountName}</H6>
-        <H6>Account balance: {account.accountBalance}</H6>
-        <H6>Account equity: {account.accountEquity}</H6>
+        <H6 style={{ color: txtColor }}>Account name: {account.accountName}</H6>
+        <H6 style={{ color: txtColor }}>
+          Account balance: {account.accountBalance}
+        </H6>
+        <H6 style={{ color: txtColor }}>
+          Account equity: {account.accountEquity}
+        </H6>
 
         <div className="flex items-center justify-between">
           <ButtonText

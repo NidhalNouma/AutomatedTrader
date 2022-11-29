@@ -1,17 +1,11 @@
 import { useState, Fragment } from "react";
 
 import { ButtonP } from "../../Components/Button";
-import {
-  Input,
-  Dropdown,
-  Button,
-  Indicator,
-  Swap,
-  Drawer,
-} from "react-daisyui";
+import { Input, Dropdown, Button, Indicator, Drawer } from "react-daisyui";
 
 import Link from "next/link";
-import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { BellIcon } from "@heroicons/react/outline";
+import SearchHeader from "./SearchHeader";
 
 import { Modal1 } from "../../Components/Modal";
 import ManageWebhook from "../ManageWebhook";
@@ -40,22 +34,7 @@ function Index() {
       >
         {/* <DD /> */}
         <div className="flex justify-between items-center">
-          <div className="w-6/12 flex item-center">
-            <div className="flex justify-cente item-center md:hidden">
-              <Swap
-                className="mr-4 "
-                rotate={true}
-                offElement={<MenuIcon className="h-7 w-7" />}
-                onElement={<XIcon className="h-7 w-7 " />}
-              />
-            </div>
-            <Input
-              className="w-11/12 rounded-2xl bg-accent border-bgai border-4 placeholder:text-text-p placeholder:opacity-100 focus:outline-0"
-              // bordered
-              type="text"
-              placeholder="Search for webhooks, profiles and more ..."
-            />
-          </div>
+          <SearchHeader />
           {user ? (
             <div className="flex items-center">
               <ButtonP className="ml-6" onClick={() => setOpen(true)}>

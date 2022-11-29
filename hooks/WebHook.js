@@ -301,10 +301,14 @@ function strToPeriod(type) {
 export const GetWebhook = () => {
   const [webhooks, setWebhooks] = useState([]);
 
-  const getAllWebhooks = async (userId) => {
+  const getAllWebhooks = async (userId, onlyPublic = false) => {
     if (!userId) return;
     const r = await getWebhooksByUserId(userId);
-    setWebhooks([...r]);
+    if (!onlyPublic) setWebhooks([...r]);
+    else {
+      const nr = r.filter((v, i) => v?.public);
+      setWebhooks([...nr]);
+    }
   };
 
   function changeWebhookData(data) {

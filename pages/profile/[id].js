@@ -12,14 +12,14 @@ import moment from "moment";
 
 // import { ButtonP } from "../Components/Button";
 
-function Profile() {
+function Profile({}) {
   const router = useRouter();
   const { id } = router.query;
   const { puser } = GetUserPage(id);
   const { webhooks, getAllWebhooks } = GetWebhook();
 
   useEffect(() => {
-    getAllWebhooks(id);
+    getAllWebhooks(id, true);
   }, [id]);
 
   return (
@@ -121,16 +121,9 @@ function Profile() {
             {webhooks?.length > 0 ? (
               <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-2">
                 {webhooks
-                  .map(
-                    (v, i) =>
-                      v.public && (
-                        <WebhooksItem
-                          key={v.id}
-                          webhook={v}
-                          forDisplay={true}
-                        />
-                      )
-                  )
+                  .map((v, i) => (
+                    <WebhooksItem key={v.id} webhook={v} forDisplay={true} />
+                  ))
                   .reverse()}
               </div>
             ) : (

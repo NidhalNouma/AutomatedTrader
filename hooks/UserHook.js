@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getUser, updateUserData, updateUserDatas } from "../db/user";
+import {
+  getUser,
+  updateUserData,
+  updateUserDatas,
+  searchByDisplayName,
+} from "../db/user";
 
 export const UserC = createContext(null);
 
@@ -135,4 +140,20 @@ export const GetUserPage = (id) => {
   }, [id]);
 
   return { puser };
+};
+
+export const SearchByDisplayName = () => {
+  const [displayName, setDisplayName] = useState("");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (displayName.length > 3)
+      (async () => {
+        const r = await searchByDisplayName(displayName);
+        setUsers(r);
+      })();
+    else setUsers([]);
+  }, [displayName]);
+
+  return { users, displayName, setDisplayName };
 };

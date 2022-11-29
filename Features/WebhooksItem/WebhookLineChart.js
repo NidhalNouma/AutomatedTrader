@@ -13,6 +13,9 @@ import {
 import { Line } from "react-chartjs-2";
 import { H5, H6, Hi6 } from "../../Components/H";
 
+import { txtColorFromBg } from "../../utils/functions";
+import tailwindConfig from "../../tailwind.config.js";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -69,6 +72,14 @@ function WebhookLineChart({ webhook }) {
     ],
   });
 
+  const colors = tailwindConfig.theme.colors;
+
+  const txtColor = txtColorFromBg(
+    webhook.color,
+    colors["text-p"],
+    colors["text-h"]
+  );
+
   return (
     <div className="p-0">
       {/* WebhookLineChart */}
@@ -78,16 +89,16 @@ function WebhookLineChart({ webhook }) {
         className="mt-1 p-2 rounded-xl"
         style={{ backgroundColor: webhook.color }}
       >
-        <H6>{webhook.name}</H6>
+        <H6 style={{ color: txtColor }}>{webhook.name}</H6>
         <div className="flex justify-between items-center">
           <div className="">
             <Hi6>Total</Hi6>
-            <H5>%80</H5>
+            <H5 style={{ color: txtColor }}>%80</H5>
           </div>
 
           <div className="">
             <Hi6>Today</Hi6>
-            <H5>%23</H5>
+            <H5 style={{ color: txtColor }}>%23</H5>
           </div>
         </div>
       </div>
