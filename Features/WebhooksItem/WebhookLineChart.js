@@ -81,7 +81,7 @@ function WebhookLineChart({ webhook }) {
   );
 
   return (
-    <div className="p-0">
+    <div className="p-0 w-full">
       {/* WebhookLineChart */}
       <H5 className="">%87</H5>
       <Line options={options} data={data} className="max-w-full" />
