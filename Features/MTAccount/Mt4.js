@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { H6, H5 } from "../../Components/H";
+import { H6, H5, H4 } from "../../Components/H";
 import { ButtonText } from "../../Components/Button";
 import { Button } from "react-daisyui";
 
@@ -33,13 +33,21 @@ function Mt4({ account, userId }) {
       style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
     >
       <div className="">
-        <H6 style={{ color: txtColor }}>Account name: {account.accountName}</H6>
-        <H6 style={{ color: txtColor }}>
-          Account balance: {account.accountBalance}
-        </H6>
-        <H6 style={{ color: txtColor }}>
-          Account equity: {account.accountEquity}
-        </H6>
+        <div className="flex items-center justify-between">
+          <H4 style={{ color: txtColor }}>{account.accountName}</H4>
+          <H6 style={{ color: txtColor }}>No: {account.accountNumber}</H6>
+        </div>
+
+        <div className="grid grid-cols-3">
+          <div className="">
+            <H6 style={{ color: txtColor }}>Balance</H6>
+            <H5 style={{ color: txtColor }}>{account.accountBalance}</H5>
+          </div>
+          <div className="">
+            <H6 style={{ color: txtColor }}>Equity</H6>
+            <H5 style={{ color: txtColor }}>{account.accountEquity}</H5>
+          </div>
+        </div>
 
         <div className="flex items-center justify-between">
           <ButtonText

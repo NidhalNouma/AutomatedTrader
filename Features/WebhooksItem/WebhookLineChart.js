@@ -11,6 +11,7 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import "chartjs-plugin-style";
 import { H5, H6, Hi6 } from "../../Components/H";
 
 import { txtColorFromBg } from "../../utils/functions";
@@ -25,6 +26,7 @@ ChartJS.register(
   Tooltip,
   Filler,
   Legend
+  // ChartStyle
 );
 
 const options = {
@@ -64,10 +66,24 @@ function WebhookLineChart({ webhook }) {
         pointColor: webhook.color,
         pointStrokeColor: webhook.color,
         borderColor: webhook.color,
-        backgroundColor: "rgba(52, 54, 59, 0.1)",
+        pointBackgroundColor: webhook.color,
         lineTension: 0.4,
-        fill: true,
+        fill: false,
         data: [4, 3, 6, 2, 8],
+
+        shadowOffsetX: 5,
+        shadowOffsetY: 5,
+        shadowBlur: 5,
+        shadowColor: "rgba(0, 255, 59, 1)",
+
+        hoverInnerGlowWidth: 20,
+        hoverInnerGlowColor: "rgb(255, 255, 0)",
+        hoverOuterGlowWidth: 20,
+        hoverOuterGlowWidth: "rgb(255, 255, 0)",
+
+        pointRadius: 2,
+        pointBevelWidth: 2,
+        pointHoverRadius: 4,
       },
     ],
   });
@@ -84,7 +100,12 @@ function WebhookLineChart({ webhook }) {
     <div className="p-0 w-full">
       {/* WebhookLineChart */}
       <H5 className="">%87</H5>
-      <Line options={options} data={data} className="max-w-full" />
+      <Line
+        options={options}
+        data={data}
+        className="max-w-full"
+        redraw={true}
+      />
       <div
         className="mt-1 p-2 rounded-xl"
         style={{ backgroundColor: webhook.color }}

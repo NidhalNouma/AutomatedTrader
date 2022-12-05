@@ -63,7 +63,11 @@ function Index({ webhook: wh, forDisplay = false }) {
             messages={messages}
           />
         </Modal1>
-        <div className="bg-accent w-full rounded-t-lg">
+        <div
+          className={`${
+            !forDisplay ? "bg-accent" : "bg-bg"
+          } w-full rounded-t-lg`}
+        >
           <div
             className="w-full pt-2 pb-1 rounded-t-lg"
             style={{ backgroundColor: webhook.color }}
@@ -135,10 +139,10 @@ function Index({ webhook: wh, forDisplay = false }) {
                 />
               </div>
             )}
-            <div className="mt-2">
-              <div className="flex items-center justify-between">
-                <Hi6>List of messages</Hi6>
-                {!forDisplay && (
+            {!forDisplay && (
+              <div className="mt-2">
+                <div className="flex items-center justify-between">
+                  <Hi6>List of messages</Hi6>
                   <div className="flex">
                     <ButtonInfo
                       helper="Add new message"
@@ -168,29 +172,30 @@ function Index({ webhook: wh, forDisplay = false }) {
                       <ClipboardCopyIcon className="h-5 w-5 text-secondaryi" />
                     </ButtonInfo>
                   </div>
-                )}
+                </div>
+
+                <div className="mt-2">
+                  {messages && (
+                    <Select
+                      value={msg?.msg}
+                      onChange={(v) => {
+                        setMsg(messages[v]);
+                      }}
+                      size="sm"
+                      className="bg-transparent w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
+                    >
+                      {messages.map((v, i) => (
+                        <option key={i} value={i} selected={v.msg === msg.msg}>
+                          {v.data.pair}
+                          {" - "}
+                          {v.data.type}
+                        </option>
+                      ))}
+                    </Select>
+                  )}
+                </div>
               </div>
-              <div className="mt-2">
-                {messages && (
-                  <Select
-                    value={msg?.msg}
-                    onChange={(v) => {
-                      setMsg(messages[v]);
-                    }}
-                    size="sm"
-                    className="bg-transparent w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
-                  >
-                    {messages.map((v, i) => (
-                      <option key={i} value={i} selected={v.msg === msg.msg}>
-                        {v.data.pair}
-                        {" - "}
-                        {v.data.type}
-                      </option>
-                    ))}
-                  </Select>
-                )}
-              </div>
-            </div>
+            )}
           </div>
           {/* <div className="mt-3 "></div> */}
         </div>

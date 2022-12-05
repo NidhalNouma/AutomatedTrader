@@ -146,7 +146,7 @@ export default function App({ accounts }) {
           </div>
         </div>
       </div>
-      <Line options={options} data={data} />
+      <Line options={options} data={data} redraw={true} />
     </div>
   );
 }
