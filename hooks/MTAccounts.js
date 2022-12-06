@@ -1,5 +1,9 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { listenToNewMTAccounts, deleteMTAccount } from "../db/mtAccounts";
+import {
+  listenToNewMTAccounts,
+  deleteMTAccount,
+  updateDisplayName,
+} from "../db/mtAccounts";
 import moment from "moment";
 
 export function GetMTAccounts() {
@@ -29,6 +33,18 @@ export async function DeleteMTAccount(userId, accountId) {
   if (!userId || !accountId) return;
   const r = await deleteMTAccount(userId, accountId);
   return r;
+}
+
+export function EditMTAccountDisplayName(userId, accountId, defaultName) {
+  const [mtname, setMtname] = useState(defaultName || "");
+
+  async function editMTDisplayName() {
+    if (!userId || !accountId) return;
+    const r = await updateDisplayName(userId, accountId, mtname);
+    return r;
+  }
+
+  return { mtname, setMtname, editMTDisplayName };
 }
 
 export const MTAccountsC = createContext(null);

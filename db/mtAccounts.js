@@ -50,6 +50,7 @@ export async function addMTAccount(
     const docRef = await addDoc(collection(db, collName), {
       userId,
       accountName,
+      accountDisplayName: accountName,
       accountServer,
       accountNumber,
       accountBalance,
@@ -185,6 +186,21 @@ export async function addDataToMTAccount(
     return { exist: true, added: false };
   }
   return { exist: false, added: false };
+}
+
+export async function updateDisplayName(userId, id, accountDisplayName) {
+  console.log("Update MT display name ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    accountDisplayName,
+  });
+
+  const r = getMTAccountsByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
 }
 
 function getRandomColor() {

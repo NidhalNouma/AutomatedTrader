@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { H6, H5, H4 } from "../../Components/H";
-import { ButtonText } from "../../Components/Button";
-import { Button } from "react-daisyui";
+// import { ButtonText } from "../../Components/Button";
+import { Input1 } from "../../Components/Input";
+import { Button, Dropdown } from "react-daisyui";
 
 import { Modal1 } from "../../Components/Modal";
-import { DeleteMessage } from "../../Components/ModalMsg";
+import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
 import WebhooksPopUp from "./WebhooksPopUp";
 
-import { TrashIcon } from "@heroicons/react/outline";
+// import { EllipsVer } from "@heroicons/react/solid";
 
-import { GetMTAccountsContext, DeleteMTAccount } from "../../hooks/MTAccounts";
+import {
+  GetMTAccountsContext,
+  DeleteMTAccount,
+  EditMTAccountDisplayName,
+} from "../../hooks/MTAccounts";
 import { txtColorFromBg } from "../../utils/functions";
 
 import tailwindConfig from "../../tailwind.config.js";
@@ -17,7 +22,13 @@ import tailwindConfig from "../../tailwind.config.js";
 function Mt4({ account, userId }) {
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const { setMTAccounts } = GetMTAccountsContext();
+  const { mtname, setMtname, editMTDisplayName } = EditMTAccountDisplayName(
+    userId,
+    account.id,
+    account.accountDisplayName
+  );
 
   const colors = tailwindConfig.theme.colors;
 
@@ -29,13 +40,56 @@ function Mt4({ account, userId }) {
 
   return (
     <div
-      className="bg-bga p-3 rounded-xl my-2"
+      className="bg-bga px-3 py-2 rounded-xl my-2"
       style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
     >
       <div className="">
         <div className="flex items-center justify-between">
-          <H4 style={{ color: txtColor }}>{account.accountName}</H4>
-          <H6 style={{ color: txtColor }}>No: {account.accountNumber}</H6>
+          <div className="flex items-end">
+            <H4 style={{ color: txtColor }}>{account.accountDisplayName}</H4>
+            <span className="text-xs ml-1" style={{ color: txtColor }}>
+              ({account.accountName})
+            </span>
+          </div>
+          <div className="flex items-center">
+            <H6 style={{ color: txtColor }}>No: {account.accountNumber}</H6>
+
+            <Dropdown>
+              {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
+              {/* <Button className=""> */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-6 h-6 cursor-pointer"
+                style={{ color: txtColor }}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                />
+              </svg>
+              {/* </Button> */}
+              <Dropdown.Menu className="w-52  bg-accent">
+                <Dropdown.Item onClick={() => setOpenEdit(true)}>
+                  <span className="text-secondary text-sm font-bold">
+                    Change name
+                  </span>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setOpen(true)}>
+                  <span className="text-secondary text-sm font-bold">
+                    Webhooks
+                  </span>
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => setOpenDel(true)}>
+                  <span className="text-text-p text-sm font-bold">Delete</span>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         </div>
 
         <div className="grid grid-cols-3">
@@ -47,25 +101,6 @@ function Mt4({ account, userId }) {
             <H6 style={{ color: txtColor }}>Equity</H6>
             <H5 style={{ color: txtColor }}>{account.accountEquity}</H5>
           </div>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <ButtonText
-            helper="List of webhooks"
-            className=""
-            onClick={() => setOpen(true)}
-          >
-            Webhooks
-            {/* <PlusCircleIcon className="h-5 w-5 text-secondaryi " /> */}
-          </ButtonText>
-
-          <Button
-            size="xs"
-            className="bg-transparent border-0"
-            onClick={() => setOpenDel(true)}
-          >
-            <TrashIcon className="h-4 w-4" />
-          </Button>
         </div>
       </div>
 
@@ -100,6 +135,36 @@ function Mt4({ account, userId }) {
             lost!
           </H5>
         </DeleteMessage>
+      </Modal1>
+
+      <Modal1
+        open={openEdit}
+        close={() => {
+          setOpenEdit(false);
+        }}
+        backclose={() => {
+          setOpenEdit(false);
+        }}
+      >
+        <EditMessage
+          close={() => setOpenEdit(false)}
+          title="Change account name"
+          onEdit={async () => {
+            const r = await editMTDisplayName();
+            setMTAccounts(r);
+          }}
+        >
+          <div className="">
+            <Input1
+              className="mb-4"
+              // name="Your name"
+              type="text"
+              placeholder="Name"
+              value={mtname}
+              setValue={(v) => setMtname(v)}
+            />
+          </div>
+        </EditMessage>
       </Modal1>
     </div>
   );
