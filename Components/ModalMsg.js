@@ -62,7 +62,7 @@ export const EditMessage = ({ close, title, children, onEdit }) => {
           ✕
         </Button>
       </div>
-      <div className="flex flex-col justify-center items-center w-full mt-2">
+      <div className="flex flex-col justify-center items-center w-full">
         {children}
 
         <div className="flex items-center justify-between ">

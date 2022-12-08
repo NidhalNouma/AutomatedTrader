@@ -95,11 +95,15 @@ function Mt4({ account, userId }) {
         <div className="grid grid-cols-3">
           <div className="">
             <H6 style={{ color: txtColor }}>Balance</H6>
-            <H5 style={{ color: txtColor }}>{account.accountBalance}</H5>
+            <H5 style={{ color: txtColor }} className="font-bold">
+              {account.accountBalance}
+            </H5>
           </div>
           <div className="">
             <H6 style={{ color: txtColor }}>Equity</H6>
-            <H5 style={{ color: txtColor }}>{account.accountEquity}</H5>
+            <H5 style={{ color: txtColor }} className="font-bold">
+              {account.accountEquity}
+            </H5>
           </div>
         </div>
       </div>
@@ -162,6 +166,7 @@ function Mt4({ account, userId }) {
               placeholder="Name"
               value={mtname}
               setValue={(v) => setMtname(v)}
+              focus={openEdit}
             />
           </div>
         </EditMessage>

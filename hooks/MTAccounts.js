@@ -23,6 +23,12 @@ export function GetMTAccounts() {
       if (v.data?.length > 0) data.push(...v.data);
     });
 
+    data.sort(function (a, b) {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      return new Date(a.closeTime) - new Date(b.closeTime);
+    });
+
     return data;
   }
 
@@ -54,6 +60,8 @@ export const MTAccountsCC = ({ children, value }) => {
 };
 
 export const GetMTAccountsContext = () => useContext(MTAccountsC);
+
+// --- DATA CALCULATION
 
 export const CalculateData = (data) => {
   const totalProfit = () => {
@@ -316,16 +324,16 @@ export function getDataFromAccountPerPeriod(account, period = []) {
   const loss = profitPerTime(account?.data, false);
   const profit = profitPerTime(account?.data, true);
 
-  console.log("period", period);
+  // console.log("period", period);
 
   const r = { profit: [], loss: [], total: [] };
 
   const il = period.length - 1;
   period.forEach((v, i) => {
-    const lv = i === il ? new Date() : period[i + 1];
+    const lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
     const range = getDates(v, lv);
 
-    console.log(range);
+    // console.log("range", range);
 
     range.forEach((d, i) => {
       const day = new Date(d).getDate();
@@ -353,7 +361,7 @@ export function getDataFromAccountPerPeriod(account, period = []) {
       if (!r.loss[v]) r.loss[v] = 0;
       if (!r.profit[v]) r.profit[v] = 0;
 
-      console.log(year, month, day, r);
+      // console.log(year, month, day, r);
 
       const t = r.profit[v] + r.loss[v];
       r.total[v] = t;
@@ -381,8 +389,10 @@ function getDates(startDate, stopDate) {
 }
 
 export function getLastWeek() {
-  var dates = [];
   var date = new Date();
+  var tempDate = new Date();
+  tempDate.setDate(date.getDate() + 1);
+  var dates = [tempDate];
 
   for (var i = 0; i < 7; i += 1) {
     var tempDate = new Date();

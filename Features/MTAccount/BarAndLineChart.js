@@ -12,8 +12,10 @@ import {
   BarController,
 } from "chart.js";
 import { Chart } from "react-chartjs-2";
-import { H2 } from "../../Components/H";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { H3, H2 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
+import tailwindConfig from "../../tailwind.config.js";
 
 import { getDataPerAccountMonths, monthNamesI } from "../../hooks/MTAccounts";
 
@@ -33,13 +35,17 @@ const options = {
   responsive: true,
 
   scales: {
-    xAxis: [
-      {
-        // barThickness: 10,
-        // categoryPercentage: 1,
-        // barPercentage: 10,
+    x: {
+      ticks: {
+        font: {
+          size: 10,
+        },
       },
-    ],
+    },
+
+    y: {
+      display: false, //this will remove all the x-axis grid lines
+    },
   },
   plugins: {
     legend: {
@@ -50,6 +56,18 @@ const options = {
       display: false,
       //   text: "Chart.js Line Chart",
     },
+
+    datalabels: {
+      display: false,
+      formatter: (v) => v.toFixed(1),
+      anchor: "end",
+      offset: -18,
+      align: "start",
+
+      font: {
+        size: 10,
+      },
+    },
   },
 };
 
@@ -57,29 +75,41 @@ export default function BarAndLineChart({ accounts }) {
   const [account, setAccount] = useState(accounts[0]);
   const d = getDataPerAccountMonths(accounts[0]).total;
 
+  const colors = tailwindConfig.theme.colors;
+
   const data = {
     labels: monthNamesI,
     datasets: [
       {
         type: "line",
         label: "Drawdown",
-        borderColor: "rgb(153, 102, 255)",
+        borderColor: "rgb(60, 168, 162)",
         borderWidth: 2,
         // fill: false,
-        data: Object.values(getDataPerAccountMonths(account).loss),
+        data: Object.values(getDataPerAccountMonths(account).total),
         lineTension: 0.3,
 
         fill: true,
-        backgroundColor: "rgba(153, 102, 255,0.2)",
+        backgroundColor: "rgba(60, 168, 162,0.2)",
+
+        datalabels: {
+          display: false,
+          color: colors["text-p"],
+        },
       },
       {
         type: "bar",
         label: "Gain",
+        borderColor: "rgb(53, 162, 235)",
+        borderWidth: 1,
         backgroundColor: "rgb(53, 162, 235)",
-        data: Object.values(getDataPerAccountMonths(account).total),
+        data: Object.values(getDataPerAccountMonths(account).profit),
         barPercentage: 0.35,
         categoryPercentage: 1,
         borderRadius: 25,
+        datalabels: {
+          color: colors["text-p"],
+        },
 
         // barThickness: 8,
         // maxBarThickness: 3,
@@ -102,24 +132,67 @@ export default function BarAndLineChart({ accounts }) {
 
   return (
     <div className="">
-      <div className="mb-2 flex justify-between items-center">
-        <H2>Gains</H2>
+      <div className="mb-2">
+        <div className="flex items-center justify-start">
+          <H3>Gains</H3>
+          <div className="ml-2">
+            <Select1
+              className="!ml-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+              name=""
+              helper=""
+              size="xs"
+              options={accounts.map((account) => account.accountDisplayName)}
+              value={account}
+              setValue={(i) => setAccount(accounts[i])}
+            />
+          </div>
+        </div>
+        <div className="flex justify-between items-center w-full">
+          <H2>{"+200%"}</H2>
+          <div className="grid grid-cols-4 gap-2">
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-text-h">Today</span>
+              <span className="text-xs">{"+7.5%"}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-text-h">week</span>
+              <span className="text-xs">{"+7.5%"}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-text-h">month</span>
+              <span className="text-xs">{"+7.5%"}</span>
+            </div>
+            <div className="flex flex-col items-center">
+              <span className="text-xs text-text-h">year</span>
+              <span className="text-xs">{"+7.5%"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="bg-bg rounded-xl p-2">
+        <div className="flex justify-between items-center">
+          <span className="text-text-h text-xs">Percentage analytics</span>
 
-        <Select1
-          className="!outline-none !focus:outline-none !border-bga !focus:border-bga"
-          name=""
-          helper=""
-          options={accounts.map((account) => account.accountName)}
-          value={account}
-          setValue={(i) => setAccount(accounts[i])}
+          <div className="">
+            <Select1
+              className="!m-0 !p-0 !w-16 !outline-none !focus:outline-none !border-bg !focus:border-bg !bg-bg"
+              name=""
+              helper=""
+              size="xs"
+              options={["Week", "Month", "Year"]}
+              value={account}
+              // setValue={(i) => setAccount(accounts[i])}
+            />
+          </div>
+        </div>
+        <Chart
+          className=""
+          type="bar"
+          data={data}
+          options={options}
+          plugins={[ChartDataLabels]}
         />
       </div>
-      <Chart
-        className="bg-bg rounded-xl p-2"
-        type="bar"
-        data={data}
-        options={options}
-      />
     </div>
   );
 }

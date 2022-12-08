@@ -36,6 +36,29 @@ ChartJS.register(
 const options = {
   responsive: true,
   plugins: {
+    tooltip: {
+      // enabled: false,
+      mode: "index",
+      intersect: false,
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      titleFontSize: 14,
+      titleFontColor: "#0066ff",
+      bodyFontColor: "#000",
+      bodyFontSize: 12,
+      displayColors: false,
+      displayY: false,
+
+      callbacks: {
+        footer: (tooltipItems) => {
+          let sum = 0;
+
+          tooltipItems.forEach(function (tooltipItem) {
+            sum += tooltipItem.parsed.y;
+          });
+          return "Sum: " + sum.toFixed(2);
+        },
+      },
+    },
     legend: {
       display: false,
       position: "bottom",
@@ -84,6 +107,12 @@ export default function App({ accounts }) {
         lineTension: 0.25,
         fill: true,
         label: account.accountName,
+
+        // datalabels: {
+        //   align: function (context) {
+        //     return context.active ? "start" : "center";
+        //   },
+        // },
       };
     });
 

@@ -50,7 +50,7 @@ function HalfDoughChart({ total }) {
         position: "bottom",
       },
 
-      tooltips: {
+      tooltip: {
         enabled: false,
       },
       title: {

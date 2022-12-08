@@ -20,6 +20,7 @@ export const Input1 = ({
   setValue,
   type,
   isTextArea,
+  focus = false,
 }) => {
   return (
     <div className={className + " form-control w-full max-w-xs"}>
@@ -41,9 +42,11 @@ export const Input1 = ({
           type={type}
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          autoFocus={focus}
         />
       ) : (
         <Input
+          autoFocus={focus}
           size="sm"
           className={
             classNameInput +
@@ -154,6 +157,7 @@ export const Select1 = ({
   options,
   value,
   setValue,
+  size = "sm",
 }) => {
   return (
     <div className="p-1 w-full max-w-xs flex items-center justify-between">
@@ -161,7 +165,7 @@ export const Select1 = ({
       <div>
         <Select
           color="primary"
-          size="sm"
+          size={size}
           className={`bg-accenti mx-2 w-24 ${className}`}
           value={options[value]}
           onChange={(e) => setValue(e)}
