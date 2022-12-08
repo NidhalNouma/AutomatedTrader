@@ -17,7 +17,12 @@ import { H3, H2 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
 import tailwindConfig from "../../tailwind.config.js";
 
-import { getDataPerAccountMonths, monthNamesI } from "../../hooks/MTAccounts";
+import {
+  getDataFromAccountPerPeriod,
+  getLastMonth,
+  getLastYear,
+  getFullYearMonths,
+} from "../../hooks/MTAccounts";
 
 ChartJS.register(
   LinearScale,
@@ -73,12 +78,18 @@ const options = {
 
 export default function BarAndLineChart({ accounts }) {
   const [account, setAccount] = useState(accounts[0]);
-  const d = getDataPerAccountMonths(accounts[0]).total;
+  const d = getDataFromAccountPerPeriod(account, getFullYearMonths());
+
+  const total = Object.values(d.tPerc).reduce((p, v) => p + v, 0);
+
+  const labels = Object.keys(d.profit)?.map((v) =>
+    new Date(v).toLocaleString("default", { month: "long" }).substring(0, 3)
+  );
 
   const colors = tailwindConfig.theme.colors;
 
   const data = {
-    labels: monthNamesI,
+    labels: labels,
     datasets: [
       {
         type: "line",
@@ -86,12 +97,12 @@ export default function BarAndLineChart({ accounts }) {
         borderColor: "rgb(60, 168, 162)",
         borderWidth: 2,
         // fill: false,
-        data: Object.values(getDataPerAccountMonths(account).total),
+        data: Object.values(
+          getDataFromAccountPerPeriod(account, getFullYearMonths()).tPerc
+        ),
         lineTension: 0.3,
-
         fill: true,
         backgroundColor: "rgba(60, 168, 162,0.2)",
-
         datalabels: {
           display: false,
           color: colors["text-p"],
@@ -103,30 +114,16 @@ export default function BarAndLineChart({ accounts }) {
         borderColor: "rgb(53, 162, 235)",
         borderWidth: 1,
         backgroundColor: "rgb(53, 162, 235)",
-        data: Object.values(getDataPerAccountMonths(account).profit),
+        data: Object.values(
+          getDataFromAccountPerPeriod(account, getFullYearMonths()).pPerc
+        ),
         barPercentage: 0.35,
         categoryPercentage: 1,
         borderRadius: 25,
         datalabels: {
           color: colors["text-p"],
         },
-
-        // barThickness: 8,
-        // maxBarThickness: 3,
       },
-
-      //   {
-      //     type: "bar",
-      //     label: "Loss",
-      //     backgroundColor: "rgb(255, 99, 132)",
-      //     data: Object.values(lArr()),
-      //     barPercentage: 0.35,
-      //     categoryPercentage: 1,
-      //     borderRadius: 25,
-
-      //     barThickness: 5,
-      //     // maxBarThickness: 3,
-      //   },
     ],
   };
 
@@ -148,7 +145,7 @@ export default function BarAndLineChart({ accounts }) {
           </div>
         </div>
         <div className="flex justify-between items-center w-full">
-          <H2>{"+200%"}</H2>
+          <H2>{total.toFixed(1) + "%"}</H2>
           <div className="grid grid-cols-4 gap-2">
             <div className="flex flex-col items-center">
               <span className="text-xs text-text-h">Today</span>

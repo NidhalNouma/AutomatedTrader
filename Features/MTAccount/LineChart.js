@@ -35,6 +35,26 @@ ChartJS.register(
 
 const options = {
   responsive: true,
+  elements: {
+    point: {
+      radius: 0,
+    },
+  },
+
+  scales: {
+    x: {
+      ticks: {
+        font: {
+          size: 12,
+        },
+      },
+    },
+
+    y: {
+      display: false, //this will remove all the x-axis grid lines
+    },
+  },
+
   plugins: {
     tooltip: {
       // enabled: false,
@@ -79,6 +99,8 @@ export default function App({ accounts }) {
   const [data, setData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
+    setSum(0);
+
     let per = getLastWeek();
     if (speriod === period[1]) per = getLastMonth();
     else if (speriod === period[2]) per = getLastYear();
@@ -96,7 +118,7 @@ export default function App({ accounts }) {
       );
 
       const s = Object.values(d).reduce((p, v) => p + v, 0);
-      setSum(s);
+      setSum((ps) => s + ps);
 
       return {
         data: Object.values(d),

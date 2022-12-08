@@ -96,7 +96,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
 
       {type > 1 && (
         <Input1Inline
-          name="Pending distqnce"
+          name="Pending distance"
           placeholder=""
           helper="Pending order distance in pips"
           type="number"
@@ -117,7 +117,8 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
                 size="sm"
                 color="primary"
                 checked={positionType === 0}
-                onClick={() => setPositionType(0)}
+                // onClick={() => setPositionType(0)}
+                onChange={() => setPositionType(0)}
               />
               {"Percantage base %"}
             </Fragment>
@@ -143,7 +144,8 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
                 size="sm"
                 color="primary"
                 checked={positionType === 1}
-                onClick={() => setPositionType(1)}
+                // onClick={() => setPositionType(1)}
+                onChange={() => setPositionType(1)}
               />
               {"Fixing position based"}
             </Fragment>

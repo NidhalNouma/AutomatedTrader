@@ -29,7 +29,8 @@ a {
   /* height: 100vh; */
   display: flex;
   /* flex-direction: column; */
-  /* overflow: auto; */
+  overflow: clip;
+  /* contain: paint; */
   max-width: 100vw;
 }
 
