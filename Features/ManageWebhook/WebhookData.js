@@ -120,7 +120,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
                 onClick={() => setPositionType(0)}
                 // onChange={() => setPositionType(0)}
               />
-              {"Percantage base %"}
+              {"Percentage base %"}
             </Fragment>
           }
           value={positionType === 0 && positionValue}
