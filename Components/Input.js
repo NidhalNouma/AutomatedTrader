@@ -215,17 +215,18 @@ export function Range1({ name, value, setValue }) {
           color="primary"
           size="xs"
           max="20"
-          min="0"
+          min="1"
           value={value}
           onChange={(v) => setValue(v.target.value)}
         />
-        <div className="w-full flex justify-between text-xs px-2 my-1">
-          <span>1%</span>
+        <div className="w-full flex justify-between items-center text-xs px-2 my-1">
+          <span className="text-text-h font-bold mx-auto">{value}%</span>
+          {/* <span>1%</span>
           <span>2%</span>
           <span>5%</span>
           <span>7.5%</span>
           <span>10%</span>
-          <span>20%</span>
+          <span>20%</span> */}
         </div>
       </div>
     </div>

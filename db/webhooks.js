@@ -7,6 +7,7 @@ import {
   where,
   serverTimestamp,
   getDocs,
+  deleteDoc,
   setDoc,
   addDoc,
   getDoc,
@@ -74,6 +75,15 @@ export async function getWebhook(id) {
     console.log("No such document!");
     return null;
   }
+}
+
+export async function deleteWebhook(id) {
+  const docRef = doc(db, collName, id);
+
+  console.log("Delete webhook ...", id);
+  const d = await deleteDoc(docRef);
+
+  return d;
 }
 
 export async function addMessage(id, message) {

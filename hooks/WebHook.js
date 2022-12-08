@@ -6,6 +6,7 @@ import {
   getWebhooksByUserId,
   activeWebhook,
   publicWebhook,
+  deleteWebhook,
 } from "../db/webhooks";
 
 export const WebHook = (userId) => {
@@ -217,6 +218,11 @@ export const WebHook = (userId) => {
     getData,
   };
 };
+
+export async function DeleteWebhook(id) {
+  const r = await deleteWebhook(id);
+  return r;
+}
 
 export async function setActiveWebhook(id, active) {
   const r = activeWebhook(id, active);

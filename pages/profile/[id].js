@@ -119,7 +119,7 @@ function Profile({}) {
           <div className="mt-6">
             <H4 className="">Webhooks</H4>
             {webhooks?.length > 0 ? (
-              <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-2">
+              <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
                 {webhooks
                   .map((v, i) => (
                     <WebhooksItem key={v.id} webhook={v} forDisplay={true} />

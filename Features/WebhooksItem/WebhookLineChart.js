@@ -184,7 +184,7 @@ function WebhookLineChart({ webhook }) {
   return (
     <div className="p-0 w-full">
       {/* WebhookLineChart */}
-      <H5 className="font-bold">%{totalp.toFixed(1)}</H5>
+      <H5 className="font-bold">{totalp.toFixed(1)}%</H5>
       <Line
         options={options}
         data={data}
@@ -200,14 +200,14 @@ function WebhookLineChart({ webhook }) {
           <div className="">
             <H6>Total</H6>
             <H5 className="font-bold" style={{ color: txtColor }}>
-              %{totalp.toFixed(1)}
+              {totalp.toFixed(1)}%
             </H5>
           </div>
 
           <div className="">
             <H6>Today</H6>
             <H5 className="font-bold" style={{ color: txtColor }}>
-              %{totald.toFixed(1)}
+              {totald.toFixed(1)}%
             </H5>
           </div>
         </div>
