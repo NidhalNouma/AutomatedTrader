@@ -23,8 +23,7 @@ export default function MT4() {
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
 
-  const { totalProfit, profitPerPair, profitPerWebhook, profitPerTime } =
-    CalculateData(data);
+  const { totalProfit, profitPerPair } = CalculateData(data);
   const tp = totalProfit();
 
   const [idcopy, setIdcopy] = useState("Click to copy!");

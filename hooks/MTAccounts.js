@@ -193,7 +193,7 @@ const profitPerTime = (data, getProfit = true, wh) => {
 
     const profit = Number(v.profit);
 
-    if (v.id === wh || !wh)
+    if (v.ID === wh || !wh)
       if ((getProfit && profit >= 0) || (!getProfit && profit < 0)) {
         if (r[year] !== undefined) {
           r[year].profit = Number(r[year].profit) + Number(profit);
@@ -241,8 +241,8 @@ export function getDataFromAccountPerPeriod(
 
   const il = period.length - 1;
   period.forEach((v, i) => {
-    const lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
     if (i === il) return;
+    const lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
     const range = getDates(v, lv);
 
     // console.log("range", range);
@@ -304,9 +304,9 @@ export function getDataFromAccountPerPeriod(
         r.lPerc[v] = lp;
       }
 
-      console.log(v);
+      // console.log(v);
     });
-  console.log(r);
+  // console.log(r);
 
   return r;
 }
@@ -373,6 +373,33 @@ export function getFullYearMonths() {
     var tempDate = new Date();
     tempDate.setMonth(i);
     tempDate.setDate(1);
+    dates.push(tempDate);
+  }
+
+  // dates.reverse();
+  return dates;
+}
+
+export function getFullMonthsDays() {
+  var dates = [];
+
+  for (var i = 0; i <= 30; i += 1) {
+    var tempDate = new Date();
+    tempDate.setDate(i);
+    dates.push(tempDate);
+  }
+
+  // dates.reverse();
+  return dates;
+}
+
+export function getFullWeekDays() {
+  var dates = [];
+  const curr = new Date();
+
+  for (var i = 0; i <= 7; i += 1) {
+    var tempDate = new Date();
+    tempDate.setDate(curr.getDate() - curr.getDay() + i);
     dates.push(tempDate);
   }
 
