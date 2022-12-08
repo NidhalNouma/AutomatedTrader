@@ -295,9 +295,9 @@ export function getDataFromAccountPerPeriod(
         r.pPerc[v] = 0;
         r.lPerc[v] = 0;
       } else {
-        tp += (t / sb) * 100;
-        pp += (p / sb) * 100;
-        lp += (l / sb) * 100;
+        tp += (t / sb) * 10000;
+        pp += (p / sb) * 10000;
+        lp += (l / sb) * 10000;
 
         r.tPerc[v] = tp;
         r.pPerc[v] = pp;

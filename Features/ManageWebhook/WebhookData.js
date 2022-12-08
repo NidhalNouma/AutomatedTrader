@@ -106,7 +106,7 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
       )}
 
       <span className="text-text-h w-full max-w-xs my-1">
-        Enty position size:
+        Entry position size:
       </span>
       <div className="flex items-center max-w-xs w-full">
         <Range1
