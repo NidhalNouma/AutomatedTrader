@@ -16,7 +16,7 @@ function EditMessage({ close, webhook, msg, setMsg, messages }) {
             // value={msg.msg}
             onChange={(v) => setMsg(messages[v])}
             size="sm"
-            className="bg-accenti border focus:outline-none rounded-lg font-normal text-text-p ml-2"
+            className="bg-accenti border focus:outline-none rounded-lg text-text-p font-bold ml-5"
           >
             {messages.map((v, i) => (
               <option key={i} value={i} selected={v.msg === msg.msg}>

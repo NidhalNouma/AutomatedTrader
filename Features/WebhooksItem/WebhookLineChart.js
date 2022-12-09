@@ -109,12 +109,16 @@ function WebhookLineChart({ webhook }) {
 
   const dayData = mtAccounts.map(
     (account) =>
-      getDataFromAccountPerPeriod(account, [
-        moment().startOf("day").toString(),
-        moment().endOf("day").toString(),
-        // new Date().setDate(new Date().getDate() - 1),
-        // new Date().setDate(new Date().getDate()),
-      ]).tPerc
+      getDataFromAccountPerPeriod(
+        account,
+        [
+          moment().startOf("day").toString(),
+          moment().endOf("day").toString(),
+          // new Date().setDate(new Date().getDate() - 1),
+          // new Date().setDate(new Date().getDate()),
+        ],
+        webhook.id
+      ).tPerc
   );
 
   let totald = 0;

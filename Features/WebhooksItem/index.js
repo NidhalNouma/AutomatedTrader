@@ -183,7 +183,7 @@ function Index({ webhook, user, forDisplay = false }) {
                         webhook.id,
                         !webhook.active
                       );
-                      // const r1 = await getAllWebhooks();
+                      const r1 = await getAllWebhooks(user.uid);
                       if (r) {
                         // setWebhook(r);
                         newAlert(webhook.name + " webhook is " + is, "success");
@@ -206,7 +206,7 @@ function Index({ webhook, user, forDisplay = false }) {
                         webhook.id,
                         !webhook.public
                       );
-                      // const r1 = await getAllWebhooks();
+                      const r1 = await getAllWebhooks(user.uid);
                       if (r) {
                         // setWebhook(r);
                         newAlert(webhook.name + " webhook is " + is, "!");

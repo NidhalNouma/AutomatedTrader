@@ -1,32 +1,49 @@
-import { Toast, Alert, Button } from "react-daisyui";
+import { Fragment, useState, useEffect } from "react";
+import { Toast, Alert } from "react-daisyui";
+import { XIcon } from "@heroicons/react/solid";
 
 function Toasti({ alerts, setAlerts }) {
   const handleRemoveToast = (index) => {
     setAlerts((alerts) => alerts.filter((_, i) => i !== index));
   };
 
+  // const alert = alerts[alerts.length - 1];
+
   return (
     <Toast horizontal="end" vertical="bottom">
       {alerts?.map((alert, index) => (
-        <Alert
+        <DAlert
           key={index}
-          status={alert.status}
-          className="py-1 w-full toastDiv"
-        >
-          <div className="w-full flex-row justify-between gap-2">
-            <h3>{alert.text}</h3>
-          </div>
-          <Button
-            className="ml-auto"
-            color="ghost"
-            onClick={() => handleRemoveToast(index)}
-          >
-            X
-          </Button>
-        </Alert>
+          alert={alert}
+          close={() => handleRemoveToast(index)}
+        />
       ))}
     </Toast>
   );
 }
 
 export default Toasti;
+
+const DAlert = ({ alert, close, time = 3000 }) => {
+  const [showElement, setShowElement] = useState(true);
+  useEffect(() => {
+    setTimeout(function () {
+      setShowElement(false);
+    }, time);
+  }, []);
+
+  return (
+    <Fragment>
+      {showElement && (
+        <Alert status={alert.status} className="p-3 w-64 toastDiv rounded-xl">
+          <div className="w-full flex-row justify-between gap-2">
+            <p className="font-semibold text-sm">{alert.text}</p>
+          </div>
+          <button className="" onClick={close}>
+            <XIcon className="h-4 w-4 cursor-pointer" />
+          </button>
+        </Alert>
+      )}
+    </Fragment>
+  );
+};
