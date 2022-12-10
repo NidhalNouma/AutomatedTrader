@@ -37,7 +37,13 @@ export const ButtonText = ({ className, icon, ...props }) => {
   );
 };
 
-export const ButtonInfo = ({ className, onClick, children, helper }) => {
+export const ButtonInfo = ({
+  className,
+  onClick,
+  children,
+  helper,
+  onMouseLeave,
+}) => {
   return (
     <Dropdown hover={true} horizontal="right" vertical="top">
       <Button
@@ -46,12 +52,13 @@ export const ButtonInfo = ({ className, onClick, children, helper }) => {
         color="ghost"
         size="xs"
         onClick={onClick}
+        onMouseLeave={onMouseLeave}
       >
         {children}
       </Button>
       <Dropdown.Menu className="card compact w-auto !p-0 shadow bg-bgai rounded-xl">
         <div className="p-2">
-          <H6>{helper}</H6>
+          <H6 className="whitespace-nowrap">{helper}</H6>
         </div>
       </Dropdown.Menu>
     </Dropdown>

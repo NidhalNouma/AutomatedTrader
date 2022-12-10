@@ -5,6 +5,7 @@ import { CalendarIcon, GlobeAltIcon } from "@heroicons/react/outline";
 import moment from "moment";
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
+import Alerts from "../Features/AlertsCom";
 
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
@@ -117,11 +118,11 @@ export default function Home() {
             <H4 className="">Webhooks</H4>
             {webhooks?.length > 0 ? (
               <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-                {webhooks
-                  .map((v, i) => (
-                    <WebhooksItem key={v.id} webhook={v} user={user} />
-                  ))
-                  .reverse()}
+                {webhooks.map((v, i) => (
+                  <Fragment key={v.id}>
+                    <WebhooksItem webhook={v} user={user} />
+                  </Fragment>
+                ))}
               </div>
             ) : (
               <div className="mt-3">
@@ -129,36 +130,7 @@ export default function Home() {
               </div>
             )}
           </div>
-
-          {alertsHook?.length > 0 && (
-            <div className="mt-6">
-              <H4 className="">Recent alerts</H4>
-              <div className="bg-bg w-1/2 mt-2 rounded-xl">
-                {alertsHook.map((v, i) =>
-                  i < 10 ? (
-                    <div
-                      key={i}
-                      className={
-                        "bg-bga p-1 mx-4 " + (10 - 1 === i ? "" : "pb-0")
-                      }
-                    >
-                      <div className="bg-bg py-3 px-2 border-bgai flex items-center justify-between">
-                        <H6>
-                          {v.webhookName}
-                          <span className="ml-4 text-text-p px-2 py-1 rounded-lg border-2 ">
-                            {getMessageData(v.message).pair}
-                          </span>
-                        </H6>
-                        <Hi6>{moment(v.created_at.toDate()).fromNow()}</Hi6>
-                      </div>
-                    </div>
-                  ) : (
-                    <Fragment></Fragment>
-                  )
-                )}
-              </div>
-            </div>
-          )}
+          <Alerts alertsHook={alertsHook} />
         </div>
       </div>
     </>

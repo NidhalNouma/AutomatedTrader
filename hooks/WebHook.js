@@ -16,7 +16,7 @@ export const WebHook = (userId) => {
   const [type, setType] = useState(0);
   const [pendingDistance, setPendingDistance] = useState("");
   const [positionType, setPositionType] = useState(0);
-  const [positionValue, setPositionValue] = useState("0.1");
+  const [positionValue, setPositionValue] = useState("1");
   const [stopLoss, setStopLoss] = useState("200.0");
   const [takeProfit, setTakeProfit] = useState("200.0");
 
@@ -249,7 +249,7 @@ export function getMessages(webhook) {
   return r;
 }
 
-function typeToStr(type) {
+export function typeToStr(type) {
   switch (type) {
     case "0":
       return "Buy";
@@ -309,11 +309,13 @@ export const GetWebhook = () => {
 
   const getAllWebhooks = async (userId, onlyPublic = false) => {
     if (!userId) return;
-    const r = await getWebhooksByUserId(userId);
-    if (!onlyPublic) setWebhooks([...r]);
+    let r = await getWebhooksByUserId(userId);
+    if (r.length > 0)
+      r = r.sort((a, b) => b?.created_at.seconds - a?.created_at.seconds);
+    if (!onlyPublic) setWebhooks(r);
     else {
       const nr = r.filter((v, i) => v?.public);
-      setWebhooks([...nr]);
+      setWebhooks(nr);
     }
   };
 

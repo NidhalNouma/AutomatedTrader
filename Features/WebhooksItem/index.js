@@ -43,6 +43,9 @@ function Index({ webhook, user, forDisplay = false }) {
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState(null);
 
+  const [urlcopy, setURLcopy] = useState("Click to copy webhook URL!");
+  const [msgcopy, setMsgcopy] = useState("Click to copy webhook message!");
+
   useEffect(() => {
     const msgs = getMessages(webhook);
     setMessages(msgs);
@@ -118,11 +121,14 @@ function Index({ webhook, user, forDisplay = false }) {
                   <H6>{webhook.name}</H6>
                   <div className="flex items-center justify-center">
                     <ButtonInfo
-                      helper="Copy webhooks URL"
+                      helper={urlcopy}
+                      onMouseLeave={() =>
+                        setURLcopy("Click to copy webhook URL!")
+                      }
                       onClick={() =>
                         copyTextToClipboard(
                           WebhhokURL() + webhook.id,
-                          () => newAlert("Webhooks URL copied", "success"),
+                          () => setURLcopy("URL copied to clipboard!"),
                           () => newAlert("Webhooks URL copied", "error")
                         )
                       }
@@ -209,7 +215,10 @@ function Index({ webhook, user, forDisplay = false }) {
                       const r1 = await getAllWebhooks(user.uid);
                       if (r) {
                         // setWebhook(r);
-                        newAlert(webhook.name + " webhook is " + is, "!");
+                        newAlert(
+                          webhook.name + " webhook is " + is + "!",
+                          "success"
+                        );
                       }
                     }}
                   />
@@ -233,12 +242,15 @@ function Index({ webhook, user, forDisplay = false }) {
                         <PencilAltIcon className="h-5 w-5 text-secondaryi" />
                       </ButtonInfo> */}
                       <ButtonInfo
-                        helper="Copy message"
+                        helper={msgcopy}
                         className="ml-2"
+                        onMouseLeave={() =>
+                          setMsgcopy("Click to copy webhook message!")
+                        }
                         onClick={() =>
                           copyTextToClipboard(
                             msg.msg,
-                            () => newAlert("Message copied", "success"),
+                            () => setMsgcopy("Message copied to clipboard!"),
                             () => newAlert("Message copied", "error")
                           )
                         }

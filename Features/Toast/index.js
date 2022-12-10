@@ -35,9 +35,11 @@ const DAlert = ({ alert, close, time = 3000 }) => {
   return (
     <Fragment>
       {showElement && (
-        <Alert status={alert.status} className="p-3 w-64 toastDiv rounded-xl">
+        <Alert status={alert.status} className="p-3 toastDiv rounded-xl">
           <div className="w-full flex-row justify-between gap-2">
-            <p className="font-semibold text-sm">{alert.text}</p>
+            <p className="font-semibold whitespace-nowrap text-sm">
+              {alert.text}
+            </p>
           </div>
           <button className="" onClick={close}>
             <XIcon className="h-4 w-4 cursor-pointer" />

@@ -202,14 +202,14 @@ function WebhookLineChart({ webhook }) {
         <H5 style={{ color: txtColor }}>{webhook.name}</H5>
         <div className="flex justify-between items-center mt-1">
           <div className="">
-            <H6>Total</H6>
+            <H6 style={{ color: txtColor }}>Total</H6>
             <H5 className="font-bold" style={{ color: txtColor }}>
               {totalp.toFixed(1)}%
             </H5>
           </div>
 
           <div className="">
-            <H6>Today</H6>
+            <H6 style={{ color: txtColor }}>Today</H6>
             <H5 className="font-bold" style={{ color: txtColor }}>
               {totald.toFixed(1)}%
             </H5>
