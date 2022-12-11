@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,14 +11,11 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { H5, H6 } from "../../Components/H";
-import moment from "moment";
-
-import { txtColorFromBg } from "../../utils/functions";
-import tailwindConfig from "../../tailwind.config.js";
+// import "chartjs-plugin-style";
+import { H5, H4 } from "../../Components/H";
+import { Select1 } from "../../Components/Input";
 
 import {
-  GetMTAccountsContext,
   getDataFromAccountPerPeriod,
   getDaysFromTimeTillNow,
   cleanData,
@@ -34,6 +30,7 @@ ChartJS.register(
   Tooltip,
   Filler,
   Legend
+  // ChartStyle
 );
 
 const options = {
@@ -48,9 +45,9 @@ const options = {
   scales: {
     x: {
       ticks: {
-        display: false, //this will remove only the label
+        display: true, //this will remove only the label
       },
-      display: false, //this will remove all the x-axis grid lines
+      display: true, //this will remove all the x-axis grid lines
     },
 
     y: {
@@ -96,10 +93,11 @@ const options = {
   },
 };
 
-function WebhookLineChart({ webhook }) {
-  const { mtAccounts } = GetMTAccountsContext();
-  const pdata = [];
+function LineChart({ webhook, mtAccounts }) {
+  const period = ["Week", "Month", "Year", "All"];
+  const [speriod, setSperiod] = useState(period[3]);
 
+  const pdata = [];
   const allData = mtAccounts.map((account) =>
     cleanData(
       getDataFromAccountPerPeriod(
@@ -112,26 +110,6 @@ function WebhookLineChart({ webhook }) {
     )
   );
 
-  const dayData = mtAccounts.map(
-    (account) =>
-      getDataFromAccountPerPeriod(
-        account,
-        [
-          moment().startOf("day").toString(),
-          moment().endOf("day").toString(),
-          // new Date().setDate(new Date().getDate() - 1),
-          // new Date().setDate(new Date().getDate()),
-        ],
-        webhook.id
-      ).tPerc
-  );
-
-  let totald = 0;
-  dayData.forEach((dv) => {
-    const r = Object.values(dv).reduce((p, v) => p + v, 0);
-    totald += r;
-  });
-
   allData.forEach((d, i) => {
     // console.log(d, i);
     Object.keys(d).forEach((k) => {
@@ -140,14 +118,10 @@ function WebhookLineChart({ webhook }) {
     });
   });
 
+  const totalp = Object.values(pdata).reduce((p, v) => p + v, 0);
+
   const values = Object.values(pdata);
   const keys = Object.keys(pdata);
-  while (values[values.length - 1] === 0) {
-    keys.pop();
-    values.pop();
-  }
-
-  const totalp = Object.values(pdata).reduce((p, v) => p + v, 0);
 
   const [data, setDate] = useState({
     labels: keys.map(
@@ -179,49 +153,37 @@ function WebhookLineChart({ webhook }) {
     ],
   });
 
-  const colors = tailwindConfig.theme.colors;
-
-  const txtColor = txtColorFromBg(
-    webhook.color,
-    colors["text-p"],
-    colors["text-h"]
-  );
-
   return (
-    <div className="p-0 w-full">
-      {/* WebhookLineChart */}
-      <H5 className="font-bold">{totalp.toFixed(1)}%</H5>
-      <Line
-        options={options}
-        data={data}
-        className="max-w-full"
-        redraw={true}
-      />
-      <Link href={"/webhook/" + webhook.id}>
-        <div
-          className="mt-1 p-2 rounded-xl cursor-pointer"
-          style={{ backgroundColor: webhook.color }}
-        >
-          <H5 style={{ color: txtColor }}>{webhook.name}</H5>
-          <div className="flex justify-between items-center mt-1">
-            <div className="">
-              <H6 style={{ color: txtColor }}>Total</H6>
-              <H5 className="font-bold" style={{ color: txtColor }}>
-                {totalp.toFixed(1)}%
-              </H5>
-            </div>
-
-            <div className="">
-              <H6 style={{ color: txtColor }}>Today</H6>
-              <H5 className="font-bold" style={{ color: txtColor }}>
-                {totald.toFixed(1)}%
-              </H5>
-            </div>
-          </div>
+    <div>
+      <div className="flex justify-between items-end">
+        <div className="">
+          <H4 className="font-bold">Overall</H4>
+          <H5 className="font-bold">{totalp.toFixed(2)}%</H5>
         </div>
-      </Link>
+
+        <div className="">
+          <Select1
+            className="!m-0 !p-0 !w-16 !outline-none !focus:outline-none !border-bg !focus:border-bg !bg-bg"
+            name=""
+            helper=""
+            size="sm"
+            options={period}
+            value={speriod}
+            setValue={(i) => setSperiod(period[i])}
+            defaultValue={period.indexOf(speriod)}
+          />
+        </div>
+      </div>
+      <div className="">
+        <Line
+          options={options}
+          data={data}
+          className="max-w-full"
+          redraw={true}
+        />
+      </div>
     </div>
   );
 }
 
-export default WebhookLineChart;
+export default LineChart;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   LinearScale,
@@ -20,11 +20,8 @@ import tailwindConfig from "../../tailwind.config.js";
 
 import {
   getDataFromAccountPerPeriod,
-  getLastMonth,
-  getLastYear,
-  getFullYearMonths,
-  getFullMonthsDays,
-  getFullWeekDays,
+  getDaysFromTimeTillNow,
+  cleanData,
 } from "../../hooks/MTAccounts";
 
 ChartJS.register(
@@ -80,10 +77,23 @@ const options = {
 };
 
 export default function BarAndLineChart({ accounts }) {
+  const period = ["Week", "Month", "Year"];
+  const [speriod, setSperiod] = useState(period[2]);
   const [account, setAccount] = useState(accounts[0]);
-  const d = getDataFromAccountPerPeriod(account, getFullYearMonths());
-  const dm = getDataFromAccountPerPeriod(account, getFullMonthsDays());
-  const dw = getDataFromAccountPerPeriod(account, getFullWeekDays());
+  const [data, setData] = useState({});
+
+  const d = getDataFromAccountPerPeriod(
+    account,
+    getDaysFromTimeTillNow(moment().startOf("year"))
+  );
+  const dm = getDataFromAccountPerPeriod(
+    account,
+    getDaysFromTimeTillNow(moment().startOf("month"))
+  );
+  const dw = getDataFromAccountPerPeriod(
+    account,
+    getDaysFromTimeTillNow(moment().startOf("week"))
+  );
   const dd = getDataFromAccountPerPeriod(account, [
     moment().startOf("day").toString(),
     moment().endOf("day").toString(),
@@ -96,50 +106,64 @@ export default function BarAndLineChart({ accounts }) {
   const totalw = Object.values(dw.tPerc).reduce((p, v) => p + v, 0);
   const totald = Object.values(dd.tPerc).reduce((p, v) => p + v, 0);
 
-  const labels = Object.keys(d.profit)?.map((v) =>
-    new Date(v).toLocaleString("default", { month: "long" }).substring(0, 3)
-  );
-
   const colors = tailwindConfig.theme.colors;
 
-  const data = {
-    labels: labels,
-    datasets: [
-      {
-        type: "line",
-        label: "Drawdown",
-        borderColor: "rgb(60, 168, 162)",
-        borderWidth: 2,
-        // fill: false,
-        data: Object.values(
-          getDataFromAccountPerPeriod(account, getFullYearMonths()).tPerc
-        ),
-        lineTension: 0.3,
-        fill: true,
-        backgroundColor: "rgba(60, 168, 162,0.2)",
-        datalabels: {
-          display: false,
-          color: colors["text-p"],
+  useEffect(() => {
+    const sep = 12;
+    // let sepTime = moment().startOf("week");
+    let sepTime = moment().subtract(7, "d");
+    if (speriod === period[1]) sepTime = moment().startOf("month");
+    if (speriod === period[2]) sepTime = moment().startOf("year");
+
+    const di = getDataFromAccountPerPeriod(
+      account,
+      getDaysFromTimeTillNow(sepTime)
+    );
+
+    const datai = {
+      labels: Object.keys(cleanData(di.tPerc, sep)).map(
+        (v) =>
+          new Date(v).getDate() +
+          " " +
+          new Date(v)
+            .toLocaleString("default", { month: "long" })
+            .substring(0, 3)
+      ),
+      datasets: [
+        {
+          type: "line",
+          label: "Drawdown",
+          borderColor: "rgb(60, 168, 162)",
+          borderWidth: 2,
+          // fill: false,
+          data: Object.values(cleanData(di.tPerc, sep)),
+          lineTension: 0.3,
+          fill: true,
+          backgroundColor: "rgba(60, 168, 162,0.2)",
+          datalabels: {
+            display: false,
+            color: colors["text-p"],
+          },
         },
-      },
-      {
-        type: "bar",
-        label: "Gain",
-        borderColor: "rgb(53, 162, 235)",
-        borderWidth: 1,
-        backgroundColor: "rgb(53, 162, 235)",
-        data: Object.values(
-          getDataFromAccountPerPeriod(account, getFullYearMonths()).pPerc
-        ),
-        barPercentage: 0.35,
-        categoryPercentage: 1,
-        borderRadius: 25,
-        datalabels: {
-          color: colors["text-p"],
+        {
+          type: "bar",
+          label: "Gain",
+          borderColor: "rgb(53, 162, 235)",
+          borderWidth: 1,
+          backgroundColor: "rgb(53, 162, 235)",
+          data: Object.values(cleanData(di.pPerc, sep)),
+          barPercentage: 0.35,
+          categoryPercentage: 1,
+          borderRadius: 25,
+          datalabels: {
+            color: colors["text-p"],
+          },
         },
-      },
-    ],
-  };
+      ],
+    };
+
+    setData(datai);
+  }, [speriod, account]);
 
   return (
     <div className="">
@@ -226,19 +250,22 @@ export default function BarAndLineChart({ accounts }) {
               name=""
               helper=""
               size="xs"
-              options={["Week", "Month", "Year"]}
-              value={account}
-              // setValue={(i) => setAccount(accounts[i])}
+              options={period}
+              value={speriod}
+              setValue={(i) => setSperiod(period[i])}
+              defaultValue={period.indexOf(speriod)}
             />
           </div>
         </div>
-        <Chart
-          className=""
-          type="bar"
-          data={data}
-          options={options}
-          plugins={[ChartDataLabels]}
-        />
+        {data.datasets && (
+          <Chart
+            className=""
+            type="bar"
+            data={data}
+            options={options}
+            plugins={[ChartDataLabels]}
+          />
+        )}
       </div>
     </div>
   );

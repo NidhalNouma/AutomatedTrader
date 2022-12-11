@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
-import { addMT4Account, deleteMT4Account } from "../db/webhooks";
+import {
+  addMT4Account,
+  deleteMT4Account,
+  getWebhookWithUserData,
+} from "../db/webhooks";
 
 export const WebhookMT4 = (id, webhooks) => {
   const [active, setActive] = useState([]);
@@ -33,4 +37,17 @@ export const WebhookMT4 = (id, webhooks) => {
   }
 
   return { active, addMT4, removeMT4 };
+};
+
+export const WebhookWithData = (id) => {
+  const [webData, setWebData] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const r = await getWebhookWithUserData(id);
+      setWebData(r);
+    })();
+  }, [id]);
+
+  return { webData };
 };

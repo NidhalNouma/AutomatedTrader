@@ -16,11 +16,16 @@ export function GetMTAccounts() {
     listenToNewMTAccounts(userId, setMTAccounts);
   }
 
-  function getData() {
+  function getData(withWebHook = null) {
     let data = [];
     mtAccounts.forEach(function (v, i) {
       console.log(v);
-      if (v.data?.length > 0) data.push(...v.data);
+      if (v.data?.length > 0 && !withWebHook) data.push(...v.data);
+      else if (v.data?.length > 0 && withWebHook) {
+        v.data.forEach((v) => {
+          if (v.Id == withWebHook) data.push(v);
+        });
+      }
     });
 
     data.sort(function (a, b) {
@@ -33,6 +38,24 @@ export function GetMTAccounts() {
   }
 
   return { mtAccounts, setMTAccounts, getAllMTAccounts, getData };
+}
+
+export function getDataByWebhook(mtAccounts, withWebHook = null) {
+  let data = [];
+  mtAccounts.forEach(function (v, i) {
+    console.log(v);
+    if (v.data?.length > 0) data.push(...v.data);
+  });
+
+  if (withWebHook) data = data.filter((v) => v.ID === withWebHook);
+
+  data.sort(function (a, b) {
+    return new Date(a.closeTime) - new Date(b.closeTime);
+  });
+
+  console.log(data);
+
+  return data;
 }
 
 export async function DeleteMTAccount(userId, accountId) {
@@ -63,18 +86,20 @@ export const GetMTAccountsContext = () => useContext(MTAccountsC);
 
 // --- DATA CALCULATION
 
-export const CalculateData = (data) => {
+export const CalculateData = (data, withWebHook = null) => {
   const totalProfit = () => {
     let r = { profit: 0, loss: 0, total: 0, profitCnt: 0, lossCnt: 0 };
     data.forEach((v) => {
-      let p = Number(v?.profit);
-      r.total += p;
-      if (p >= 0) {
-        r.profit += p;
-        r.profitCnt += 1;
-      } else {
-        r.loss += p;
-        r.lossCnt += 1;
+      if (!withWebHook || v.withWebHook === v.ID) {
+        let p = Number(v?.profit);
+        r.total += p;
+        if (p >= 0) {
+          r.profit += p;
+          r.profitCnt += 1;
+        } else {
+          r.loss += p;
+          r.lossCnt += 1;
+        }
       }
     });
     return r;
@@ -295,9 +320,9 @@ export function getDataFromAccountPerPeriod(
         r.pPerc[v] = 0;
         r.lPerc[v] = 0;
       } else {
-        tp += (t / sb) * 10000;
-        pp += (p / sb) * 10000;
-        lp += (l / sb) * 10000;
+        tp = (t / sb) * 10000;
+        pp = (p / sb) * 10000;
+        lp = (l / sb) * 10000;
 
         r.tPerc[v] = tp;
         r.pPerc[v] = pp;
@@ -322,57 +347,16 @@ function getDates(startDate, stopDate) {
   return dateArray;
 }
 
-export function getLastWeek() {
-  var date = new Date();
-  var tempDate = new Date();
-  tempDate.setDate(date.getDate() + 1);
-  var dates = [tempDate];
+export function getDaysFromTimeTillNow(startTime, sep = 1) {
+  let dates = [];
 
-  for (var i = 0; i < 7; i += 1) {
-    var tempDate = new Date();
-    tempDate.setDate(date.getDate() - i);
-    dates.push(tempDate);
-  }
+  const days = Math.floor(
+    (new Date() - new Date(startTime)) / (1000 * 60 * 60 * 24)
+  );
 
-  dates.reverse();
-  return dates;
-}
-
-export function getLastMonth() {
-  var dates = [];
-  var date = new Date();
-
-  for (var i = 0; i < 30; i += 2) {
-    var tempDate = new Date();
-    tempDate.setDate(date.getDate() - i);
-    dates.push(tempDate);
-  }
-
-  dates.reverse();
-  return dates;
-}
-
-export function getLastYear() {
-  var dates = [];
-  var date = new Date();
-
-  for (var i = 0; i < 365; i += 12) {
-    var tempDate = new Date();
-    tempDate.setDate(date.getDate() - i);
-    dates.push(tempDate);
-  }
-
-  dates.reverse();
-  return dates;
-}
-
-export function getFullYearMonths() {
-  var dates = [];
-
-  for (var i = 0; i <= 12; i += 1) {
-    var tempDate = new Date();
-    tempDate.setMonth(i);
-    tempDate.setDate(1);
+  for (let i = 0; i < days + sep; i += sep) {
+    let tempDate = new Date(startTime);
+    tempDate.setDate(tempDate.getDate() + i);
     dates.push(tempDate);
   }
 
@@ -380,29 +364,44 @@ export function getFullYearMonths() {
   return dates;
 }
 
-export function getFullMonthsDays() {
-  var dates = [];
+export function cleanData(data, numData, cleanTop0 = false) {
+  const values = Object.values(data);
+  const keys = Object.keys(data);
 
-  for (var i = 0; i <= 30; i += 1) {
-    var tempDate = new Date();
-    tempDate.setDate(i);
-    dates.push(tempDate);
+  if (cleanTop0)
+    while (values[values.length - 1] === 0) {
+      keys.pop();
+      values.pop();
+    }
+
+  const length = values.length;
+
+  // for (let i = 0; i < length; i++) {
+  //   if (values[i] == 0) {
+  //     values.slice(i, 1);
+  //     keys.slice(i, 1);
+  //   }
+  // }
+
+  // length = values.length;
+
+  let r = [];
+
+  let sep = Math.round(length / numData) + 1;
+  if (length < numData) {
+    sep = 1;
   }
 
-  // dates.reverse();
-  return dates;
-}
-
-export function getFullWeekDays() {
-  var dates = [];
-  const curr = new Date();
-
-  for (var i = 0; i <= 7; i += 1) {
-    var tempDate = new Date();
-    tempDate.setDate(curr.getDate() - curr.getDay() + i);
-    dates.push(tempDate);
+  for (let i = 0; i <= length + sep; i += sep) {
+    for (let j = i; j < i + sep; j++) {
+      if (values[j] !== undefined) {
+        if (r[keys[i]] === undefined) r[keys[i]] = values[j];
+        else r[keys[i]] += values[j];
+      }
+    }
   }
 
-  // dates.reverse();
-  return dates;
+  // console.log("clean ", r, sep, data);
+
+  return r;
 }

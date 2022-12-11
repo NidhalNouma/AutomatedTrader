@@ -17,10 +17,11 @@ import { ButtonGroup, Button } from "react-daisyui";
 
 import {
   getDataFromAccountPerPeriod,
-  getLastWeek,
-  getLastMonth,
-  getLastYear,
+  getDaysFromTimeTillNow,
+  cleanData,
 } from "../../hooks/MTAccounts";
+
+import moment from "moment";
 
 ChartJS.register(
   CategoryScale,
@@ -101,17 +102,20 @@ export default function App({ accounts }) {
   useEffect(() => {
     setSum(0);
 
-    let per = getLastWeek();
-    if (speriod === period[1]) per = getLastMonth();
-    else if (speriod === period[2]) per = getLastYear();
+    let per = getDaysFromTimeTillNow(moment().subtract(7, "d"));
+    if (speriod === period[1])
+      per = getDaysFromTimeTillNow(moment().subtract(30, "d"));
+    else if (speriod === period[2])
+      per = getDaysFromTimeTillNow(moment().subtract(365, "d"));
 
     const labels = [];
     const datasets = accounts?.map((account) => {
       const di = getDataFromAccountPerPeriod(account, per);
 
-      let d = di.total;
-      if (type === 1) d = di.profit;
-      if (type === 2) d = di.loss;
+      const sep = 16;
+      let d = cleanData(di.total, sep);
+      if (type === 1) d = cleanData(di.profit, sep);
+      if (type === 2) d = cleanData(di.loss, sep);
 
       labels = Object.keys(d)?.map(
         (v) => new Date(v).getMonth() + 1 + "/" + new Date(v).getDate()

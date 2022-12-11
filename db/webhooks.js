@@ -15,6 +15,8 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
+import { getMTAccountsByUserId } from "./mtAccounts";
+import { getUser } from "./user";
 import { firebaseConfig } from "../utils/constant";
 
 const collName = "webhooks";
@@ -162,4 +164,17 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
+}
+
+export async function getWebhookWithUserData(id) {
+  console.log("Getting webhook with account data ... ", id);
+  const webhook = await getWebhook(id);
+  if (webhook) {
+    let userId = webhook.userId;
+    const user = await getUser(userId);
+    const mtAccounts = await getMTAccountsByUserId(userId);
+
+    return { webhook, user, mtAccounts };
+  }
+  return { webhook };
 }

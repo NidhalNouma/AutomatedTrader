@@ -158,13 +158,14 @@ export const Select1 = ({
   value,
   setValue,
   size = "sm",
+  defaultValue = 0,
 }) => {
   return (
     <div className="p-1 w-full max-w-xs flex items-center justify-between">
       <span className="label-text text-text-h flex items-center">{name}</span>
       <div>
         <Select
-          defaultValue={0}
+          defaultValue={defaultValue}
           color="primary"
           size={size}
           className={`bg-accenti mx-2 w-24 ${className}`}
