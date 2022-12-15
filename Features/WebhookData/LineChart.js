@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,6 +14,7 @@ import { Line } from "react-chartjs-2";
 // import "chartjs-plugin-style";
 import { H5, H4 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
+import moment from "moment";
 
 import {
   getDataFromAccountPerPeriod,
@@ -96,62 +97,82 @@ const options = {
 function LineChart({ webhook, mtAccounts }) {
   const period = ["Week", "Month", "Year", "All"];
   const [speriod, setSperiod] = useState(period[3]);
+  const [data, setData] = useState({});
+  const [totalp, setTotalp] = useState(0);
 
-  const pdata = [];
-  const allData = mtAccounts.map((account) =>
-    cleanData(
-      getDataFromAccountPerPeriod(
-        account,
-        // getDaysFromTimeTillNow(moment().startOf("year").toString(), 1),
-        getDaysFromTimeTillNow(new Date(webhook.created_at.seconds * 1000), 1),
-        webhook.id
-      ).tPerc,
-      12
-    )
-  );
+  useEffect(() => {
+    let per = null;
 
-  allData.forEach((d, i) => {
-    // console.log(d, i);
-    Object.keys(d).forEach((k) => {
-      if (pdata[k] !== undefined) pdata[k] += d[k];
-      else pdata[k] = d[k];
+    if (speriod === period[0])
+      per = getDaysFromTimeTillNow(moment().subtract(7, "d"));
+    else if (speriod === period[1])
+      per = getDaysFromTimeTillNow(moment().subtract(30, "d"));
+    else if (speriod === period[2])
+      per = getDaysFromTimeTillNow(moment().subtract(365, "d"));
+    else if (speriod === period[3])
+      per = getDaysFromTimeTillNow(
+        new Date(webhook.created_at.seconds * 1000),
+        1
+      );
+
+    const pdata = [];
+    const allData = mtAccounts.map((account) =>
+      cleanData(
+        getDataFromAccountPerPeriod(
+          account,
+          // getDaysFromTimeTillNow(moment().startOf("year").toString(), 1),
+          per,
+          webhook.id
+        ).tPerc,
+        12
+      )
+    );
+
+    allData.forEach((d, i) => {
+      // console.log(d, i);
+      Object.keys(d).forEach((k) => {
+        if (pdata[k] !== undefined) pdata[k] += d[k];
+        else pdata[k] = d[k];
+      });
     });
-  });
 
-  const totalp = Object.values(pdata).reduce((p, v) => p + v, 0);
+    setTotalp(Object.values(pdata).reduce((p, v) => p + v, 0));
 
-  const values = Object.values(pdata);
-  const keys = Object.keys(pdata);
+    const values = Object.values(pdata);
+    const keys = Object.keys(pdata);
 
-  const [data, setDate] = useState({
-    labels: keys.map(
-      (v) =>
-        new Date(v).getDate() +
-        " " +
-        new Date(v).toLocaleString("default", { month: "long" }).substring(0, 3)
-    ),
-    datasets: [
-      {
-        // pointColor: webhook.color,
-        // pointStrokeColor: webhook.color,
-        borderColor: webhook.color,
-        // pointBackgroundColor: webhook.color,
-        lineTension: 0.25,
-        fill: true,
-        // data: Object.values(pdata),
-        data: values,
-        // shadowOffsetX: 5,
-        // shadowOffsetY: 5,
-        // shadowBlur: 5,
-        // shadowColor: "rgba(0, 255, 59, 1)",
+    setData({
+      labels: keys.map(
+        (v) =>
+          new Date(v).getDate() +
+          " " +
+          new Date(v)
+            .toLocaleString("default", { month: "long" })
+            .substring(0, 3)
+      ),
+      datasets: [
+        {
+          // pointColor: webhook.color,
+          // pointStrokeColor: webhook.color,
+          borderColor: webhook.color,
+          // pointBackgroundColor: webhook.color,
+          lineTension: 0.25,
+          fill: true,
+          // data: Object.values(pdata),
+          data: values,
+          // shadowOffsetX: 5,
+          // shadowOffsetY: 5,
+          // shadowBlur: 5,
+          // shadowColor: "rgba(0, 255, 59, 1)",
 
-        // hoverInnerGlowWidth: 20,
-        // hoverInnerGlowColor: "rgb(255, 255, 0)",
-        // hoverOuterGlowWidth: 20,
-        // hoverOuterGlowWidth: "rgb(255, 255, 0)",
-      },
-    ],
-  });
+          // hoverInnerGlowWidth: 20,
+          // hoverInnerGlowColor: "rgb(255, 255, 0)",
+          // hoverOuterGlowWidth: 20,
+          // hoverOuterGlowWidth: "rgb(255, 255, 0)",
+        },
+      ],
+    });
+  }, [speriod]);
 
   return (
     <div>
@@ -175,12 +196,14 @@ function LineChart({ webhook, mtAccounts }) {
         </div>
       </div>
       <div className="">
-        <Line
-          options={options}
-          data={data}
-          className="max-w-full"
-          redraw={true}
-        />
+        {data?.datasets && (
+          <Line
+            options={options}
+            data={data}
+            className="max-w-full"
+            redraw={true}
+          />
+        )}
       </div>
     </div>
   );

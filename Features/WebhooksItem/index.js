@@ -32,7 +32,7 @@ import { WebhhokURL } from "../../utils/constant";
 
 import WebhookLineChart from "./WebhookLineChart";
 
-function Index({ webhook, user, forDisplay = false }) {
+function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   // const [webhook, setWebhook] = useState(wh);
   const { getAllWebhooks } = GetWebhookContext();
 
@@ -291,7 +291,7 @@ function Index({ webhook, user, forDisplay = false }) {
           </Fragment>
         )}
 
-        <WebhookLineChart webhook={webhook} />
+        <WebhookLineChart webhook={webhook} mtAccounts={mtAccounts} />
       </div>
     </Fragment>
   );

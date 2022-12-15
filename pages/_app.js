@@ -48,7 +48,8 @@ function MyApp({ Component, pageProps }) {
         pathname !== "/signup" &&
         // pathname !== "/" &&
         pathname !== "/forgetpassword" &&
-        pathname.search("/profile/") === -1
+        pathname.search("/profile/") === -1 &&
+        pathname.search("/webhook/") === -1
         // "/" !== landingUrl
       )
         router.push(landingUrl);

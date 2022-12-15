@@ -3,6 +3,7 @@ import {
   listenToNewMTAccounts,
   deleteMTAccount,
   updateDisplayName,
+  getMTAccountsByUserId,
 } from "../db/mtAccounts";
 import moment from "moment";
 
@@ -11,9 +12,13 @@ export function GetMTAccounts() {
 
   async function getAllMTAccounts(userId) {
     if (!userId) return;
-    // const all = await getAlertsByUserId(userId);
-    // setAlertsHook(all);
     listenToNewMTAccounts(userId, setMTAccounts);
+  }
+
+  async function getAllMTAccountsWithoutListen(userId) {
+    if (!userId) return;
+    const all = await getMTAccountsByUserId(userId);
+    setMTAccounts(all);
   }
 
   function getData(withWebHook = null) {
@@ -37,7 +42,13 @@ export function GetMTAccounts() {
     return data;
   }
 
-  return { mtAccounts, setMTAccounts, getAllMTAccounts, getData };
+  return {
+    mtAccounts,
+    setMTAccounts,
+    getAllMTAccounts,
+    getAllMTAccountsWithoutListen,
+    getData,
+  };
 }
 
 export function getDataByWebhook(mtAccounts, withWebHook = null) {
@@ -248,7 +259,8 @@ const profitPerTime = (data, getProfit = true, wh) => {
 export function getDataFromAccountPerPeriod(
   account,
   period = [],
-  withWebHook = null
+  withWebHook = null,
+  addPerc = false
 ) {
   const loss = profitPerTime(account?.data, false, withWebHook);
   const profit = profitPerTime(account?.data, true, withWebHook);
@@ -320,9 +332,15 @@ export function getDataFromAccountPerPeriod(
         r.pPerc[v] = 0;
         r.lPerc[v] = 0;
       } else {
-        tp = (t / sb) * 10000;
-        pp = (p / sb) * 10000;
-        lp = (l / sb) * 10000;
+        if (addPerc) {
+          tp += (t / sb) * 10000;
+          pp += (p / sb) * 10000;
+          lp += (l / sb) * 10000;
+        } else {
+          tp = (t / sb) * 10000;
+          pp = (p / sb) * 10000;
+          lp = (l / sb) * 10000;
+        }
 
         r.tPerc[v] = tp;
         r.pPerc[v] = pp;
@@ -349,9 +367,11 @@ function getDates(startDate, stopDate) {
 
 export function getDaysFromTimeTillNow(startTime, sep = 1) {
   let dates = [];
+  let endTime = new Date();
+  endTime.setDate(new Date().getDate() + 1);
 
   const days = Math.floor(
-    (new Date() - new Date(startTime)) / (1000 * 60 * 60 * 24)
+    (endTime - new Date(startTime)) / (1000 * 60 * 60 * 24)
   );
 
   for (let i = 0; i < days + sep; i += sep) {
@@ -401,7 +421,20 @@ export function cleanData(data, numData, cleanTop0 = false) {
     }
   }
 
-  // console.log("clean ", r, sep, data);
+  const minData = 4;
+  const l = minData - Object.values(r).length;
+  if (l > 0) {
+    const ar = [];
+    const fdate = new Date(Object.keys(r)[0]);
+    console.log(fdate);
+    for (let i = 0; i < l; i++) {
+      let d = fdate;
+      d.setDate(fdate.getDate() - (i + 1));
+      console.log("----", d);
+      ar[d] = 0;
+    }
+    r = { ...ar, ...r };
+  }
 
   return r;
 }

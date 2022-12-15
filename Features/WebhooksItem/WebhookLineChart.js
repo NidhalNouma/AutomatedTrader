@@ -19,7 +19,6 @@ import { txtColorFromBg } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
 
 import {
-  GetMTAccountsContext,
   getDataFromAccountPerPeriod,
   getDaysFromTimeTillNow,
   cleanData,
@@ -96,8 +95,7 @@ const options = {
   },
 };
 
-function WebhookLineChart({ webhook }) {
-  const { mtAccounts } = GetMTAccountsContext();
+function WebhookLineChart({ webhook, mtAccounts }) {
   const pdata = [];
 
   const allData = mtAccounts.map((account) =>
@@ -108,7 +106,7 @@ function WebhookLineChart({ webhook }) {
         getDaysFromTimeTillNow(new Date(webhook.created_at.seconds * 1000), 1),
         webhook.id
       ).tPerc,
-      12
+      9
     )
   );
 
@@ -142,10 +140,6 @@ function WebhookLineChart({ webhook }) {
 
   const values = Object.values(pdata);
   const keys = Object.keys(pdata);
-  while (values[values.length - 1] === 0) {
-    keys.pop();
-    values.pop();
-  }
 
   const totalp = Object.values(pdata).reduce((p, v) => p + v, 0);
 
