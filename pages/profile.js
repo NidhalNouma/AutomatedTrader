@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import { CalendarIcon, GlobeAltIcon } from "@heroicons/react/outline";
 
@@ -16,6 +16,9 @@ import { H1, H4, H6, Hi6 } from "../Components/H";
 import { ButtonP } from "../Components/Button";
 import WebhooksItem from "../Features/WebhooksItem";
 
+import { Modal1 } from "../Components/Modal";
+import ManageWebhook from "../Features/ManageWebhook";
+
 export default function Home() {
   const router = useRouter();
   const { user } = GetUserContext();
@@ -24,13 +27,23 @@ export default function Home() {
   const { alertsHook } = GetAlertsContext();
   const { mtAccounts } = GetMTAccountsContext();
 
+  const [open, setOpen] = useState(false);
+
   return (
     <>
+      <Modal1
+        open={open}
+        close={() => {
+          setOpen(false);
+        }}
+      >
+        <ManageWebhook close={() => setOpen(false)} />
+      </Modal1>
       <Sidenav cpath="profile" />
       <div className="w-full flex flex-col">
         <Header />
         <div className="px-10 py-8 overflow-x-hidden">
-          <div className="flex items-start">
+          <div className="flex items-start px-0">
             <div className="w-20 h-20 mr-4">
               <img
                 src={user?.photoURL || "Images/profile.png"}
@@ -117,7 +130,12 @@ export default function Home() {
           </div>
 
           <div className="mt-6">
-            <H4 className="">Webhooks</H4>
+            <div className="flex items-center justify-betweeni">
+              <H4 className="">Webhooks</H4>
+              <ButtonP className="ml-6" onClick={() => setOpen(true)}>
+                <span className="text-xs">+ New</span>
+              </ButtonP>
+            </div>
             {webhooks?.length > 0 ? (
               <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
                 {webhooks.map((v, i) => (

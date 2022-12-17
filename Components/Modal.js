@@ -17,3 +17,21 @@ export const Modal1 = ({
     </Modal>
   );
 };
+
+export const Modalt = ({
+  open,
+  children,
+  backclose = false,
+  responsive = false,
+}) => {
+  return (
+    <Modal
+      open={open}
+      onClickBackdrop={backclose}
+      className="bg-accent modalt p-0"
+      responsive={responsive}
+    >
+      {children}
+    </Modal>
+  );
+};

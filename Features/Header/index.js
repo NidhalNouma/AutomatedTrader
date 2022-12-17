@@ -37,10 +37,10 @@ function Index() {
           <SearchHeader />
           {user ? (
             <div className="flex items-center">
-              <ButtonP className="ml-6" onClick={() => setOpen(true)}>
+              {/* <ButtonP className="ml-6" onClick={() => setOpen(true)}>
                 <span className="text-xs">+ New</span>
-              </ButtonP>
-              <Indicator
+              </ButtonP> */}
+              {/* <Indicator
                 vertical="top"
                 horizontal=""
                 // item={<Badge size="xs" color="accent" />}
@@ -50,7 +50,7 @@ function Index() {
                 <span className="ml-6 cursor-pointer text-text-p">
                   <BellIcon className="h-7 w-7" />
                 </span>
-              </Indicator>
+              </Indicator> */}
               <div className="ml-6">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">
