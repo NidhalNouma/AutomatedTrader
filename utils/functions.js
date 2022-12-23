@@ -16,6 +16,7 @@ export function copyTextToClipboard(text, succesFn, failFn) {
 }
 
 export function txtColorFromBg(bgColor, darkTxt = "#000", lightTxt = "#fff") {
+  if (!bgColor) return bgColor;
   if (bgColor.search("#") >= 0) bgColor = hexToRgbA(bgColor);
 
   const rgb = bgColor
@@ -43,4 +44,19 @@ function hexToRgbA(hex, alpha) {
   } else {
     return "rgb(" + r + ", " + g + ", " + b + ")";
   }
+}
+
+export function addAlpha(color, opacity) {
+  //   // coerce values so ti is between 0 and 1.
+  //   var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+  //   return color + _opacity.toString(16).toUpperCase();
+
+  if (color.search("#") >= 0) color = hexToRgbA(color);
+  const r = color.replace(/[\d\.]+\)$/g, opacity);
+
+  let new_col = color.replace(/rgb/i, "rgba");
+  new_col = new_col.replace(/\)/i, "," + opacity.toString() + ")");
+  // console.log(r, color, new_col);
+
+  return new_col;
 }

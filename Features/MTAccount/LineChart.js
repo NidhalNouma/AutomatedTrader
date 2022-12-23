@@ -21,6 +21,7 @@ import {
   cleanData,
 } from "../../hooks/MTAccounts";
 
+import { addAlpha } from "../../utils/functions";
 import moment from "moment";
 
 ChartJS.register(
@@ -204,13 +205,4 @@ export default function App({ accounts }) {
       <Line options={options} data={data} redraw={true} />
     </div>
   );
-}
-
-function addAlpha(color, opacity) {
-  //   // coerce values so ti is between 0 and 1.
-  //   var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-  //   return color + _opacity.toString(16).toUpperCase();
-
-  const r = color.replace(/[\d\.]+\)$/g, opacity);
-  return r;
 }

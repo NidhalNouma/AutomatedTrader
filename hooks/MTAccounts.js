@@ -332,14 +332,15 @@ export function getDataFromAccountPerPeriod(
         r.pPerc[v] = 0;
         r.lPerc[v] = 0;
       } else {
+        const mult = 100;
         if (addPerc) {
-          tp += (t / sb) * 10000;
-          pp += (p / sb) * 10000;
-          lp += (l / sb) * 10000;
+          tp += (t / sb) * mult;
+          pp += (p / sb) * mult;
+          lp += (l / sb) * mult;
         } else {
-          tp = (t / sb) * 10000;
-          pp = (p / sb) * 10000;
-          lp = (l / sb) * 10000;
+          tp = (t / sb) * mult;
+          pp = (p / sb) * mult;
+          lp = (l / sb) * mult;
         }
 
         r.tPerc[v] = tp;

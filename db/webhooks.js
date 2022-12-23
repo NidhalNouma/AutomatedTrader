@@ -65,7 +65,7 @@ export async function getWebhooksByUserId(userId) {
 }
 
 export async function getWebhook(id) {
-  // if (!id) return null;
+  if (!id) return null;
   const docRef = doc(db, collName, id);
   const docSnap = await getDoc(docRef);
 

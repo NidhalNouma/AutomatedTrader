@@ -12,10 +12,11 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import "chartjs-plugin-style";
 import { H5, H6 } from "../../Components/H";
 import moment from "moment";
 
-import { txtColorFromBg } from "../../utils/functions";
+import { txtColorFromBg, addAlpha } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
 
 import {
@@ -154,16 +155,17 @@ function WebhookLineChart({ webhook, mtAccounts }) {
       {
         // pointColor: webhook.color,
         // pointStrokeColor: webhook.color,
-        borderColor: webhook.color,
+        borderColor: addAlpha(webhook.color, 0.8),
         // pointBackgroundColor: webhook.color,
         lineTension: 0.25,
-        fill: true,
+        fill: false,
         // data: Object.values(pdata),
         data: values,
-        // shadowOffsetX: 5,
-        // shadowOffsetY: 5,
-        // shadowBlur: 5,
-        // shadowColor: "rgba(0, 255, 59, 1)",
+
+        shadowOffsetX: 5,
+        shadowOffsetY: 5,
+        shadowBlur: 5,
+        shadowColor: "rgba(0, 255, 59, 1)",
 
         // hoverInnerGlowWidth: 20,
         // hoverInnerGlowColor: "rgb(255, 255, 0)",
@@ -181,6 +183,19 @@ function WebhookLineChart({ webhook, mtAccounts }) {
     colors["text-h"]
   );
 
+  const ShadowPlugin = {
+    beforeDraw: (chart, args, options) => {
+      const { ctx } = chart;
+      // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
+      // console.log(options, args);
+      const color = options.color || webhook.color;
+      ctx.shadowColor = addAlpha(color, 1);
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetX = 4;
+      ctx.shadowOffsetY = 3;
+    },
+  };
+
   return (
     <div className="p-0 w-full">
       {/* WebhookLineChart */}
@@ -190,6 +205,7 @@ function WebhookLineChart({ webhook, mtAccounts }) {
         data={data}
         className="max-w-full"
         redraw={true}
+        plugins={[ShadowPlugin]}
       />
       <Link href={"/webhook/" + webhook.id}>
         <div

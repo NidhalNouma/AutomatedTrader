@@ -21,6 +21,7 @@ import {
   getDaysFromTimeTillNow,
   cleanData,
 } from "../../hooks/MTAccounts";
+import { addAlpha } from "../../utils/functions";
 
 ChartJS.register(
   CategoryScale,
@@ -152,18 +153,20 @@ function LineChart({ webhook, mtAccounts }) {
       ),
       datasets: [
         {
-          // pointColor: webhook.color,
-          // pointStrokeColor: webhook.color,
-          borderColor: webhook.color,
+          pointColor: webhook.color,
+          pointStrokeColor: webhook.color,
+          borderColor: addAlpha(webhook.color, 0.8),
           // pointBackgroundColor: webhook.color,
-          lineTension: 0.25,
-          fill: true,
-          // data: Object.values(pdata),
+          lineTension: 0.3,
+          fill: false,
+
           data: values,
+
           // shadowOffsetX: 5,
           // shadowOffsetY: 5,
           // shadowBlur: 5,
-          // shadowColor: "rgba(0, 255, 59, 1)",
+          // shadowColor: webhook.color,
+          // shadowColor: "rgba(210, 255, 59, 1)",
 
           // hoverInnerGlowWidth: 20,
           // hoverInnerGlowColor: "rgb(255, 255, 0)",
@@ -173,6 +176,19 @@ function LineChart({ webhook, mtAccounts }) {
       ],
     });
   }, [speriod]);
+
+  const ShadowPlugin = {
+    beforeDraw: (chart, args, options) => {
+      const { ctx } = chart;
+      // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
+      // console.log(options, args);
+      const color = options.color || webhook.color;
+      ctx.shadowColor = addAlpha(color, 1);
+      ctx.shadowBlur = 25;
+      ctx.shadowOffsetX = 1;
+      ctx.shadowOffsetY = 1;
+    },
+  };
 
   return (
     <div>
@@ -202,6 +218,7 @@ function LineChart({ webhook, mtAccounts }) {
             data={data}
             className="max-w-full"
             redraw={true}
+            plugins={[ShadowPlugin]}
           />
         )}
       </div>

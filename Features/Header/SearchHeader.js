@@ -4,13 +4,20 @@ import { MenuIcon, XIcon, SearchIcon } from "@heroicons/react/outline";
 import { SearchByDisplayName } from "../../hooks/UserHook";
 import { H5 } from "../../Components/H";
 import Link from "next/link";
+import Drawer from "../Drawer";
+import SideNav from "../SideNav";
 
 import { Modalt } from "../../Components/Modal";
+// import { GetDrawerContext } from "../../hooks/OpenDrawer";
 
 function SearchHeader() {
   const { users, displayName, setDisplayName } = SearchByDisplayName();
   const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
+
+  const [openMenu, setOpenMenu] = useState(false);
+
+  // const { toggleOpenDrawer } = GetDrawerContext();
 
   useEffect(() => {
     if (open) {
@@ -42,21 +49,28 @@ function SearchHeader() {
           <Results users={users} />
         </div>
       </Modalt>
-      <div className="w-6/12 flex item-center relative">
-        <div className="flex justify-cente item-center md:hidden">
+      <Drawer isOpen={openMenu} setIsOpen={() => setOpenMenu((v) => !v)}>
+        <SideNav fixed={false} />
+      </Drawer>
+
+      <div className="w-1/2 flex item-center relative">
+        <div
+          onClick={() => setOpenMenu(true)}
+          className="flex justify-center item-center md:hidden"
+        >
           <Swap
             className="mr-4 "
             rotate={true}
             offElement={<MenuIcon className="h-7 w-7" />}
-            onElement={<XIcon className="h-7 w-7 " />}
+            onElement={<MenuIcon className="h-7 w-7 " />}
           />
         </div>
         <div
           onClick={() => setOpen(true)}
-          className="flex items-center bg-bgai px-4 py-2 rounded-2xl cursor-pointer"
+          className="flex items-center bg-bgai px-4 py-2 rounded-2xl cursor-pointer max-w-full"
         >
           <SearchIcon className="h-5 w-5" />
-          <span className="ml-1 text-sm">
+          <span className="ml-1 text-sm truncate">
             Search for webhooks, profiles and more ...
           </span>
         </div>

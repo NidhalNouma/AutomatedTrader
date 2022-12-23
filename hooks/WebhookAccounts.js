@@ -43,10 +43,11 @@ export const WebhookWithData = (id) => {
   const [webData, setWebData] = useState(null);
 
   useEffect(() => {
-    (async () => {
-      const r = await getWebhookWithUserData(id);
-      setWebData(r);
-    })();
+    if (id)
+      (async () => {
+        const r = await getWebhookWithUserData(id);
+        setWebData(r);
+      })();
   }, [id]);
 
   return { webData };

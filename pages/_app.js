@@ -27,6 +27,7 @@ function MyApp({ Component, pageProps }) {
     GetMTAccounts();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
+  // const { openDrawer, toggleOpenDrawer } = GetDrawer();
 
   useEffect(() => {
     checkUser(setUser);
@@ -92,7 +93,6 @@ function MyApp({ Component, pageProps }) {
           </FullUserCC>
         </UserCC>
       </ToastCC>
-
       <Toasti alerts={alerts} setAlerts={setAlerts} />
     </Fragment>
   );

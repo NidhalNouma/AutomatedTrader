@@ -26,7 +26,6 @@ function Webhook({}) {
   const [tp, setTp] = useState(null);
 
   useEffect(() => {
-    // console.log(webData);
     if (webData) {
       const idata = getDataByWebhook(webData.mtAccounts, webData.webhook.id);
       setData(idata);

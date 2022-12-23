@@ -8,7 +8,7 @@ import tailwindConfig from "../../tailwind.config.js";
 function Title({ user, webhook }) {
   const colors = tailwindConfig.theme.colors;
   const txtColor = txtColorFromBg(
-    webhook.color,
+    webhook?.color,
     colors["text-p"],
     colors["text-h"]
   );
