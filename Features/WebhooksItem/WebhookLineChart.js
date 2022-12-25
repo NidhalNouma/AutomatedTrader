@@ -198,8 +198,9 @@ function WebhookLineChart({ webhook, mtAccounts }) {
       const color = options.color || webhook.color;
       ctx.shadowColor = addAlpha(color, 1);
       ctx.shadowBlur = 18;
-      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetX = -2;
       ctx.shadowOffsetY = 15;
+      ctx.shadowSpread = -4;
     },
   };
 

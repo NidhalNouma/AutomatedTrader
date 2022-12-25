@@ -54,7 +54,7 @@ function Mt4({ account, userId }) {
           <div className="flex items-center">
             <H6 style={{ color: txtColor }}>No: {account.accountNumber}</H6>
 
-            <Dropdown>
+            <Dropdown vertical="end" horizontal="center">
               {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
               {/* <Button className=""> */}
               <svg
@@ -73,7 +73,10 @@ function Mt4({ account, userId }) {
                 />
               </svg>
               {/* </Button> */}
-              <Dropdown.Menu className="w-52  bg-accent">
+              <Dropdown.Menu
+                className="w-40 bg-accent shadow-2xl shadow-bg"
+                // style={{ backgroundColor: account.color }}
+              >
                 <Dropdown.Item onClick={() => setOpenEdit(true)}>
                   <span className="text-secondary text-sm font-bold">
                     Change name

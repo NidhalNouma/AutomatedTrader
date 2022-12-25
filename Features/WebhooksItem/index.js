@@ -108,9 +108,8 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
             </Modal1>
 
             <div
-              className={`${
-                !forDisplay ? "bg-accent" : "bg-bg"
-              } w-full rounded-t-lg`}
+              style={{ boxShadow: `-1px 1px 8px -3px ${webhook.color}` }}
+              className="bg-bg w-full rounded-b-lg"
             >
               <div
                 className="w-full pt-2 pb-1 rounded-t-lg"
@@ -136,7 +135,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                       <ClipboardIcon className="h-5 w-5 text-secondaryi" />
                     </ButtonInfo>
 
-                    <Dropdown>
+                    <Dropdown vertical="end" horizontal="center">
                       {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
                       {/* <Button className=""> */}
                       <svg
@@ -155,7 +154,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         />
                       </svg>
                       {/* </Button> */}
-                      <Dropdown.Menu className="w-52  bg-accent">
+                      <Dropdown.Menu className="w-40 bg-accent shadow-2xl shadow-bg">
                         <Dropdown.Item onClick={() => setOpen(true)}>
                           <span className="text-secondary text-sm font-bold">
                             Add message
@@ -268,7 +267,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           setMsg(messages[v]);
                         }}
                         size="sm"
-                        className="bg-transparent w-full border-primaryi focus:outline-none rounded-lg font-normal text-text-p"
+                        className="bg-transparent w-full border-accent focus:outline-none rounded-lg font-normal text-text-p"
                       >
                         {messages?.map((v, i) => (
                           <option
@@ -290,8 +289,9 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
             </div>
           </Fragment>
         )}
-
-        <WebhookLineChart webhook={webhook} mtAccounts={mtAccounts} />
+        <div className="pt-2 w-full">
+          <WebhookLineChart webhook={webhook} mtAccounts={mtAccounts} />
+        </div>
       </div>
     </Fragment>
   );
