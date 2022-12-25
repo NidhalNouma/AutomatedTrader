@@ -12,7 +12,6 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import "chartjs-plugin-style";
 import { H5, H6 } from "../../Components/H";
 import moment from "moment";
 
@@ -42,6 +41,11 @@ const options = {
   elements: {
     point: {
       radius: 0,
+    },
+    line: {
+      borderJoinStyle: "round",
+      borderWidth: 2,
+      tension: 0.23,
     },
   },
 
@@ -153,19 +157,22 @@ function WebhookLineChart({ webhook, mtAccounts }) {
     ),
     datasets: [
       {
-        // pointColor: webhook.color,
-        // pointStrokeColor: webhook.color,
-        borderColor: addAlpha(webhook.color, 0.8),
+        pointBackgroundColor: webhook.color,
+        pointColor: webhook.color,
+        pointStrokeColor: webhook.color,
+        pointRadius: values.map((v, i) => (i === values.length - 1 ? 3 : 0)),
+        borderColor: addAlpha(webhook.color, 1),
+
         // pointBackgroundColor: webhook.color,
         lineTension: 0.25,
         fill: false,
         // data: Object.values(pdata),
         data: values,
 
-        shadowOffsetX: 5,
-        shadowOffsetY: 5,
-        shadowBlur: 5,
-        shadowColor: "rgba(0, 255, 59, 1)",
+        // shadowOffsetX: 5,
+        // shadowOffsetY: 5,
+        // shadowBlur: 5,
+        // shadowColor: "rgba(0, 255, 59, 1)",
 
         // hoverInnerGlowWidth: 20,
         // hoverInnerGlowColor: "rgb(255, 255, 0)",
@@ -190,9 +197,9 @@ function WebhookLineChart({ webhook, mtAccounts }) {
       // console.log(options, args);
       const color = options.color || webhook.color;
       ctx.shadowColor = addAlpha(color, 1);
-      ctx.shadowBlur = 20;
-      ctx.shadowOffsetX = 4;
-      ctx.shadowOffsetY = 3;
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 15;
     },
   };
 

@@ -17,6 +17,7 @@ import { Dropdown } from "react-daisyui";
 
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
+import Script from "next/script";
 
 export default function MT4() {
   const { user } = GetUserContext();
@@ -31,10 +32,12 @@ export default function MT4() {
 
   return (
     <>
+      {/* <Script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-style@latest/dist/chartjs-plugin-style.min.js" />
+      <Script src="https://unpkg.com/chartjs-plugin-style@latest/dist/chartjs-plugin-style.min.js" /> */}
       <Sidenav cpath="mt4" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8 overflow-hidden">
+        <div className="px-5 md:px-10 py-8 overflow-hidden">
           <div className="flex justify-between">
             <H1>Metatrader 4</H1>
             <ButtonText
@@ -75,8 +78,8 @@ export default function MT4() {
           </div>
           {/* <H4>Accounts</H4> */}
           {mtAccounts?.length > 0 && (
-            <div className="flex items-start justify-between w-full">
-              <div className="mt-3  w-4/12">
+            <div className="md:flex items-start justify-between w-full">
+              <div className="mt-3 w-full md:w-4/12">
                 {mtAccounts.map((v, i) => (
                   <Mt4 key={v.id} account={v} userId={user.uid} />
                 ))}
@@ -95,19 +98,19 @@ export default function MT4() {
                 </div>
               </div>
 
-              <div className="mt-3 w-8/12 pl-4">
+              <div className="mt-3 w-full md:w-8/12 pl-4">
                 <div className="w-full">
                   <LineChart accounts={mtAccounts} />
                 </div>
 
-                <div className="flex w-full bg-accent p-2 rounded-xl mt-6">
-                  <div className="w-3/5">
+                <div className="md:flex w-full bg-accent p-2 rounded-xl mt-6">
+                  <div className="w-full md:w-3/5">
                     <H3 className="m-2">Last transaction</H3>
                     <div className="px-3">
                       <DataTable data={data} />
                     </div>
                   </div>
-                  <div className="w-2/5 mt-8">
+                  <div className="w-full md:w-2/5 mt-8">
                     <DoughChart adata={profitPerPair()} total={tp} />
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "react-daisyui";
 
+import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
 import WebhookData from "./WebhookData";
 
@@ -17,7 +18,7 @@ function Index({ close }) {
             close();
           }}
         >
-          ✕
+          <XIcon className="h-4 w-4" />
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center w-full mt-2">

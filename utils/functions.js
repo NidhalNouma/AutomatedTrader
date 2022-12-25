@@ -51,6 +51,7 @@ export function addAlpha(color, opacity) {
   //   var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
   //   return color + _opacity.toString(16).toUpperCase();
 
+  // console.log("color", color + "00");
   if (color.search("#") >= 0) color = hexToRgbA(color);
   const r = color.replace(/[\d\.]+\)$/g, opacity);
 

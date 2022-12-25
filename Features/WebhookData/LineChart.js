@@ -11,7 +11,6 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-// import "chartjs-plugin-style";
 import { H5, H4 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
 import moment from "moment";
@@ -40,7 +39,12 @@ const options = {
 
   elements: {
     point: {
-      radius: 0,
+      // radius: 1,
+    },
+    line: {
+      borderJoinStyle: "round",
+      borderWidth: 2,
+      tension: 0.23,
     },
   },
 
@@ -153,14 +157,17 @@ function LineChart({ webhook, mtAccounts }) {
       ),
       datasets: [
         {
+          pointBackgroundColor: webhook.color,
           pointColor: webhook.color,
           pointStrokeColor: webhook.color,
-          borderColor: addAlpha(webhook.color, 0.8),
+          borderColor: addAlpha(webhook.color, 1),
           // pointBackgroundColor: webhook.color,
-          lineTension: 0.3,
+          // lineTension: 0,
           fill: false,
 
           data: values,
+
+          pointRadius: values.map((v, i) => (i === values.length - 1 ? 3 : 0)),
 
           // shadowOffsetX: 5,
           // shadowOffsetY: 5,
@@ -184,9 +191,9 @@ function LineChart({ webhook, mtAccounts }) {
       // console.log(options, args);
       const color = options.color || webhook.color;
       ctx.shadowColor = addAlpha(color, 1);
-      ctx.shadowBlur = 25;
-      ctx.shadowOffsetX = 1;
-      ctx.shadowOffsetY = 1;
+      ctx.shadowBlur = 23;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 10;
     },
   };
 

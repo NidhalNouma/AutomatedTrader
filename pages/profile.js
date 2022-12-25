@@ -42,7 +42,7 @@ export default function Home() {
       <Sidenav cpath="profile" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8 overflow-x-hidden">
+        <div className="px-5 md:px-10 py-8 overflow-x-hidden">
           <div className="flex items-start px-0">
             <div className="w-20 h-20 mr-4">
               <img

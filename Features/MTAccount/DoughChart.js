@@ -29,6 +29,23 @@ function DoughChart({ adata, total }) {
       },
     ],
   };
+  const ShadowPlugin = {
+    beforeDraw: (chart, args, options) => {
+      const { ctx } = chart;
+      // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
+      console.log(options, args, chart, chart._options.color);
+      const color = options.color || chart._options.color;
+      // ctx.shadowColor = addAlpha(color, 1);
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+    },
+    defaults: {
+      // color: accounts[0].color,
+      color: "rgba(120, 120, 120, 0.2)",
+    },
+  };
 
   const options = {
     cutout: 70,
@@ -68,6 +85,7 @@ function DoughChart({ adata, total }) {
           // className="relative mt-auto"
           data={data}
           options={options}
+          plugins={[ShadowPlugin]}
           //   height="150"
           //   width="150"
         ></Doughnut>

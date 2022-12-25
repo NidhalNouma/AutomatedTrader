@@ -135,6 +135,14 @@ export default function App({ accounts }) {
         fill: true,
         label: account.accountName,
 
+        shadowOffsetX: 3,
+
+        shadowOffsetY: 3,
+
+        shadowBlur: 10,
+
+        shadowColor: account.color,
+
         // datalabels: {
         //   align: function (context) {
         //     return context.active ? "start" : "center";
@@ -150,6 +158,24 @@ export default function App({ accounts }) {
 
     setData(idata);
   }, [speriod, type]);
+
+  const ShadowPlugin = {
+    beforeDraw: (chart, args, options) => {
+      const { ctx } = chart;
+      // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
+      // console.log(options, args, chart, chart._options.color);
+      const color = options.color || chart._options.color;
+      // ctx.shadowColor = addAlpha(color, 1);
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 16;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 5;
+    },
+    defaults: {
+      // color: accounts[0].color,
+      color: "rgba(255, 255, 255, 0.2)",
+    },
+  };
 
   return (
     <div className="w-full">
@@ -202,7 +228,12 @@ export default function App({ accounts }) {
           </div>
         </div>
       </div>
-      <Line options={options} data={data} redraw={true} />
+      <Line
+        options={options}
+        data={data}
+        redraw={true}
+        plugins={[ShadowPlugin]}
+      />
     </div>
   );
 }

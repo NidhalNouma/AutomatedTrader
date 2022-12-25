@@ -30,7 +30,7 @@ function Profile({}) {
       <Sidenav />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="flex flex-col items-start justify-center m-8">
+        <div className="flex flex-col items-start justify-center px-5 py-8 md:px-10">
           <div className="">
             <div className="flex items-start">
               <div className="w-20 h-20 mr-4">
@@ -119,7 +119,7 @@ function Profile({}) {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6 w-full">
             <H4 className="">Webhooks</H4>
             {webhooks?.length > 0 ? (
               <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
