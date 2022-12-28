@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
       if (test && test?.isTest) {
         const accId = test.account;
-        r.MT4 = [accId];
+        r.MT4 = accId;
       }
 
       if (r && (r.active === true || test)) {

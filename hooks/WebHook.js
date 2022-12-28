@@ -167,7 +167,7 @@ export const WebHook = (userId) => {
     setSuccTestMsg("");
     let msg = formatMsg();
     msg = "test " + JSON.stringify({ account: accounts }) + " " + msg;
-    console.log(msg);
+    console.log(msg, accounts);
 
     const r = await axios.post("/api/wh/" + id, msg, {
       headers: {
@@ -389,7 +389,7 @@ export function getMessageData(message) {
       r.test = { isTest: true, ...testData };
 
       datai = datai.filter((v, i) => i > 1);
-      // console.log(datai);
+      // console.log(datai, r);
     }
   }
 
@@ -505,7 +505,7 @@ export function getMessageData(message) {
   r.hedging = hedgingi;
   r.maxSS = maxSSi;
 
-  // console.log(r);
+  // console.log(r, message);
 
   return r;
 }
