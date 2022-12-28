@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Alert, Checkbox, ButtonGroup, Button } from "react-daisyui";
 import {
   Input1,
@@ -7,16 +7,22 @@ import {
   Select1,
   Range1,
 } from "../../Components/Input";
-import { ButtonP } from "../../Components/Button";
+import { ButtonP, ButtonText } from "../../Components/Button";
 import { WebHook } from "../../hooks/WebHook";
 
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetWebhookContext } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
+import { GetMTAccountsContext } from "../../hooks/MTAccounts";
 
 function WebhookData({ includeName, close, webhook, typeWh, msg }) {
   const { newAlert } = GetToastContext();
   const { user } = GetUserContext();
+  const { mtAccounts } = GetMTAccountsContext();
+  const [testAccount, setTestAccount] = useState(
+    mtAccounts?.length > 0 ? mtAccounts[0] : null
+  );
+
   const {
     name,
     setName,
@@ -45,10 +51,12 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
     maxSS,
     setMaxSS,
     error,
+    succTestMsg,
     add,
     addMsg,
     getData,
     editMsg,
+    testMsg,
   } = WebHook(user?.uid);
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
@@ -479,6 +487,35 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         </div>
       )}
 
+      {mtAccounts?.length > 0 && (
+        <div className="mb-2 w-full max-w-xs">
+          <div className=" flex justify-between items-center">
+            <ButtonText
+              onClick={async () => {
+                await testMsg(webhook?.id, [testAccount?.id]);
+              }}
+              className="ml-auto"
+            >
+              Send Test alert
+            </ButtonText>
+            <Select1
+              className="!border-bgai focus:outline-none"
+              helper="Information about this input"
+              options={mtAccounts.map((v) => v.accountDisplayName)}
+              value={mtAccounts.indexOf(testAccount)}
+              setValue={(v) => setTestAccount(mtAccounts[v])}
+            />
+          </div>
+          {succTestMsg && (
+            // <div className="mx-auto text-center">
+            <span className="text-success px-3rounded-xl text-sm">
+              {succTestMsg}
+            </span>
+            // {/* </div> */}
+          )}
+        </div>
+      )}
+
       <div className="mt-1 mb-4 w-full px-20">
         <ButtonP
           onClick={async () => {
@@ -505,6 +542,13 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           Save
         </ButtonP>
       </div>
+
+      {typeWh === "EditMessage" && (
+        <div className="mb-2 w-full max-w-xs flex justify-between">
+          <ButtonText className="!text-error">Delete</ButtonText>
+          <ButtonText className="">Duplicate</ButtonText>
+        </div>
+      )}
     </div>
   );
 }

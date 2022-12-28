@@ -2,6 +2,7 @@ let alerts = [];
 
 export function newAlert(id, data) {
   let n = { id, data: [data] };
+  // console.log(n, data.MT4, data.messageData);
 
   const f = alerts.find(function (v, i) {
     return v.id === id;

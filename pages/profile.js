@@ -1,10 +1,9 @@
 import { Fragment, useState } from "react";
-import { useRouter } from "next/router";
-import { CalendarIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import { PlusIcon } from "@heroicons/react/solid";
 
-import moment from "moment";
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
+import ProfileSection from "../Features/ProfileSection";
 import Alerts from "../Features/AlertsCom";
 
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
@@ -20,7 +19,6 @@ import { Modal1 } from "../Components/Modal";
 import ManageWebhook from "../Features/ManageWebhook";
 
 export default function Home() {
-  const router = useRouter();
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
   const { webhooks } = GetWebhookContext();
@@ -43,97 +41,20 @@ export default function Home() {
       <div className="w-full flex flex-col">
         <Header />
         <div className="px-5 md:px-10 py-8 overflow-x-hidden">
-          <div className="flex items-start px-0">
-            <div className="w-20 h-20 mr-4">
-              <img
-                src={user?.photoURL || "Images/profile.png"}
-                className="rounded-full w-full h-full border-4 border-text-h object-cover"
-              />
-            </div>
-            <div className="">
-              <div className="flex items-end">
-                <H1>{fullUser?.displayName || "NA"}</H1>
-                <ButtonP
-                  onClick={() => router.push("/settings")}
-                  className="ml-4 !rounded !bg-transparent !border-primary !border-2"
-                >
-                  Edit
-                </ButtonP>
-              </div>
-              <p className="mt-1 text-sm font-semibold">{fullUser?.bio}</p>
-              <div className=" flex items-center">
-                <span className="text-xs flex item-center">
-                  <CalendarIcon className="w-4 h-4" />
-                  <span className="ml-1">
-                    Joined {moment(user?.metadata?.creationTime).fromNow()}
-                  </span>
-                </span>
-
-                {fullUser?.tradingview && (
-                  <a
-                    target="_blank"
-                    href={
-                      "https://www.tradingview.com/u/" + fullUser.tradingview
-                    }
-                    rel="noopener noreferrer"
-                    className="ml-4 flex items-center"
-                  >
-                    <img src="/Images/TV.png" className="h-6 w-6 rounded" />
-                    <span className="ml-1 text-xs py-auto">
-                      {fullUser.tradingview}
-                    </span>
-                  </a>
-                )}
-                {fullUser?.twitter && (
-                  <a
-                    className="ml-4 flex items-center"
-                    target="_blank"
-                    href={"https://twitter.com/" + fullUser.twitter}
-                    rel="noopener noreferrer"
-                  >
-                    <img src="/Images/TW.png" className="h-4 w-5 rounded" />
-                    <span className="ml-1 text-xs py-auto">
-                      {fullUser.twitter}
-                    </span>
-                  </a>
-                )}
-
-                {fullUser?.youtubeURL && (
-                  <a
-                    className="ml-4 flex items-center"
-                    target="_blank"
-                    href={fullUser.youtubeURL}
-                    rel="noopener noreferrer"
-                  >
-                    <img src="/Images/YT.png" className="h-4 w-5 rounded" />
-                    <span className="ml-1 text-xs py-auto">
-                      {fullUser.youtubeUsername}
-                    </span>
-                  </a>
-                )}
-
-                {fullUser?.website && (
-                  <a
-                    className="ml-4 flex items-center"
-                    target="_blank"
-                    href={fullUser.website}
-                    rel="noopener noreferrer"
-                  >
-                    <GlobeAltIcon className="h-5 w-5" />
-                    <span className="ml-1 text-xs py-auto">
-                      {fullUser.website}
-                    </span>
-                  </a>
-                )}
-              </div>
-            </div>
-          </div>
-
+          <ProfileSection
+            user={user}
+            fullUser={fullUser}
+            publicProfile={false}
+          />
           <div className="mt-6">
             <div className="flex items-center justify-betweeni">
               <H4 className="">Webhooks</H4>
-              <ButtonP className="ml-6" onClick={() => setOpen(true)}>
-                <span className="text-xs">+ New</span>
+              <ButtonP
+                endIcon={<PlusIcon className="h-3 w-3" />}
+                className="ml-4"
+                onClick={() => setOpen(true)}
+              >
+                <span className="text-xs">New</span>
               </ButtonP>
             </div>
             {webhooks?.length > 0 ? (

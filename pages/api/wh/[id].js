@@ -13,11 +13,21 @@ export default async function handler(req, res) {
   const { id } = req.query;
   if (req.method === "POST") {
     const message = req.body;
+    console.log("msg, ", message);
     if (id && message) {
       const r = await getWebhook(id);
-      if (r && r.active === true) {
+      const msgData = getMessageData(message);
+
+      const test = msgData.test;
+
+      if (test && test?.isTest) {
+        const accId = test.account;
+        r.MT4 = [accId];
+      }
+
+      if (r && (r.active === true || test)) {
         const user = await getUser(r.userId);
-        const msgData = getMessageData(message);
+
         if (msgData.time.use || msgData.time.use === false) {
           const alert = addAlert(id, message, r.userId, r.name);
           if (alert) {

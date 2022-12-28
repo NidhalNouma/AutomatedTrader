@@ -8,9 +8,11 @@ import {
   publicWebhook,
   deleteWebhook,
 } from "../db/webhooks";
+import axios from "axios";
 
 export const WebHook = (userId) => {
   const [error, setError] = useState("");
+  const [succTestMsg, setSuccTestMsg] = useState("");
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
   const [type, setType] = useState(0);
@@ -145,6 +147,40 @@ export const WebHook = (userId) => {
     return r;
   }
 
+  async function testMsg(id, accounts) {
+    if (!pair) {
+      setError("Pair must be provided!");
+      return;
+    }
+
+    if (!userId) {
+      setError("User ID must be provided!");
+      return;
+    }
+
+    if (accounts?.length <= 0) {
+      setError("Please select an account!");
+      return;
+    }
+
+    setError("");
+    setSuccTestMsg("");
+    let msg = formatMsg();
+    msg = "test " + JSON.stringify({ account: accounts }) + " " + msg;
+    console.log(msg);
+
+    const r = await axios.post("/api/wh/" + id, msg, {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+
+    setSuccTestMsg("Test alert sent successfully!");
+
+    // const r = await addMessage(id, msg);
+    return r;
+  }
+
   async function addMsg(id) {
     if (!pair) {
       setError("Pair must be provided!");
@@ -212,10 +248,12 @@ export const WebHook = (userId) => {
     maxSS,
     setMaxSS,
     error,
+    succTestMsg,
     add,
     addMsg,
     editMsg,
     getData,
+    testMsg,
   };
 };
 
@@ -342,9 +380,18 @@ export const GetWebhookContext = () => useContext(WebHooksC);
 
 export function getMessageData(message) {
   if (!message) return;
-  const datai = message.split(" ");
+  let datai = message.split(" ");
 
   let r = {};
+  if (datai.length > 1) {
+    if (datai[0] === "test") {
+      const testData = JSON.parse(datai[1]);
+      r.test = { isTest: true, ...testData };
+
+      datai = datai.filter((v, i) => i > 1);
+      // console.log(datai);
+    }
+  }
 
   let tsi = {
     use: false,
@@ -457,6 +504,8 @@ export function getMessageData(message) {
   r.time = timei;
   r.hedging = hedgingi;
   r.maxSS = maxSSi;
+
+  // console.log(r);
 
   return r;
 }

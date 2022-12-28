@@ -7,6 +7,6 @@ export async function sendMessage(chatId, message) {
     text: message,
   });
 
-  console.log(r);
+  // console.log(r);
   return r;
 }

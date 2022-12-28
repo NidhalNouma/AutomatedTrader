@@ -1,8 +1,6 @@
 import { useState, Fragment } from "react";
 import Image from "next/image";
-import { Collapse, Toggle } from "react-daisyui";
 
-import { H5 } from "../../Components/H";
 import Linksn from "./Linksn";
 import { HomeIcon, LightBulbIcon } from "@heroicons/react/outline";
 import {
@@ -23,8 +21,8 @@ function Index({ cpath, fixed = true }) {
         <Image
           src="/Logo/dark-logo.png"
           alt=""
-          width="6w"
-          height="1h"
+          width="12w"
+          height="2h"
           className=""
           layout="responsive"
         />
