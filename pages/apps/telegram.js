@@ -19,7 +19,7 @@ export default function help() {
       <Sidenav cpath="telegram" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8">
+        <div className="px-10 py-6">
           <div className="flex justify-between">
             <H1>Telegram</H1>
             {/* <ButtonText

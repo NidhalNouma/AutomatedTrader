@@ -17,7 +17,7 @@ function Linksn({ icon, children, isActive, className, href = "/" }) {
             isActive
               ? "bg-bgai hover:bg-bgai text-text-h"
               : "bg-accent text-text-p"
-          }   w-full rounded-xl flex justify-start decoration-transparent`}
+          } w-full rounded-xl flex justify-start decoration-transparent`}
         >
           {children}
         </Button>

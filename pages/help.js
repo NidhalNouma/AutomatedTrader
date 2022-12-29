@@ -7,7 +7,7 @@ export default function help() {
       <Sidenav cpath="help" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8"></div>
+        <div className="px-10 py-6"></div>
       </div>
     </>
   );

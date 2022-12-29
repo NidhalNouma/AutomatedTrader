@@ -17,7 +17,7 @@ function Index({ cpath, fixed = true }) {
   return (
     <Content fixed={fixed}>
       {/* {fixed && ( */}
-      <div className="p-5 m-3">
+      <div className="py-4 px-2 m-3 sticky top-3 left-0 bg-accent">
         <Image
           src="/Logo/dark-logo.png"
           alt=""
@@ -39,6 +39,28 @@ function Index({ cpath, fixed = true }) {
           isActive={cpath === "profile"}
         >
           <span className="capitalize ml-2 text-base">Profile</span>
+        </Linksn>
+        <Linksn
+          href="/alerts"
+          isActive={cpath === "alerts"}
+          icon={
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"
+              />
+            </svg>
+          }
+        >
+          <span className="capitalize ml-2 text-base">Alerts</span>
         </Linksn>
         <Linksn
           href="/actions"
@@ -180,7 +202,7 @@ function Content({ children, fixed }) {
   return (
     <Fragment>
       {fixed ? (
-        <div className="sidenav md:flex hidden bg-accent z-50 sticky top-0 left-0">
+        <div className="sidenav md:flex hidden bg-accent z-50 sticky top-0 left-0 overflow-y-scroll hideScrollbar">
           {children}
         </div>
       ) : (

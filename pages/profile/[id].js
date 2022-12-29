@@ -27,7 +27,7 @@ function Profile({}) {
       <Sidenav />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="flex flex-col items-start justify-center px-5 py-8 md:px-10">
+        <div className="flex flex-col items-start justify-center px-5 py-6 md:px-10">
           <ProfileSection user={puser} fullUser={puser} publicProfile={true} />
 
           <div className="mt-6 w-full">

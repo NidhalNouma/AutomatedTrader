@@ -16,6 +16,8 @@ import { firebaseConfig, listOfEmails } from "../utils/constant";
 
 import { addNewUser, getUser } from "./user";
 
+import { errorMessageByCode } from "../utils/errorMessage";
+
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
@@ -63,12 +65,12 @@ export async function signUp(email, password, username) {
     // await sendEmailVerification(auth.currentUser);
     return { user, error: null, userf };
   } catch (error) {
-    console.log("SignUp error => . ", error.message);
+    console.log("SignUp error => . ", error.message, error.code);
     return {
       user: null,
       error,
       // err: errorMessage,
-      err: "An error occurred while trying to sign up",
+      err: errorMessageByCode(error.code),
     };
   }
 }
@@ -101,7 +103,7 @@ export async function signIn(email, password) {
     const errorMessage = error.message;
     return {
       user: null,
-      err: "Email or password incorrect",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -138,7 +140,7 @@ export async function continueWithGoogle() {
     const credential = GoogleAuthProvider.credentialFromError(error);
     return {
       user: null,
-      err: "User doesn't exists",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -155,7 +157,7 @@ export async function signOutf() {
     const errorMessage = error.message;
     return {
       user: null,
-      err: "an error occurred while trying to sign out!",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -171,7 +173,7 @@ export async function changePassword(password) {
     const errorCode = error.code;
     const errorMessage = error.message;
     return {
-      err: "Error occurred while updating password",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -187,7 +189,7 @@ export async function resetPassword(email) {
     const errorMessage = error.message;
     return {
       reset: null,
-      err: "Email not exist",
+      err: errorMessageByCode(error.code),
       error,
     };
   }

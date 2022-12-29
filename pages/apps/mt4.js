@@ -37,7 +37,7 @@ export default function MT4() {
       <Sidenav cpath="mt4" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-5 md:px-10 py-8 overflow-hidden">
+        <div className="px-5 md:px-10 py-6 overflow-hidden">
           <div className="flex justify-between">
             <H1>Metatrader 4</H1>
             <ButtonText

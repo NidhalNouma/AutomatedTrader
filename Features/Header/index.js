@@ -1,7 +1,6 @@
 import { useState, Fragment } from "react";
 
-import { ButtonP } from "../../Components/Button";
-import { Input, Dropdown, Button, Indicator, Drawer } from "react-daisyui";
+import { Dropdown, Button, Drawer } from "react-daisyui";
 
 import Link from "next/link";
 import { BellIcon } from "@heroicons/react/outline";
@@ -29,7 +28,7 @@ function Index() {
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
       <div
-        className="px-4 md:px-6 py-3 md:py-5 bg-accent w-full sticky top-0 z-50"
+        className="px-4 md:px-6 py-2 md:py-3 bg-accent w-full sticky top-0 z-50"
         style={{ zIndex: 100 }}
       >
         {/* <DD /> */}

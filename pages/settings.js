@@ -43,7 +43,7 @@ export default function Settings() {
       <Sidenav cpath="settings" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8">
+        <div className="px-10 py-6">
           <H1>Settings</H1>
           <div className="mt-6 w-full flex">
             <div className="w-1/2 mx-auto">

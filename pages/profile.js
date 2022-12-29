@@ -4,11 +4,9 @@ import { PlusIcon } from "@heroicons/react/solid";
 import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 import ProfileSection from "../Features/ProfileSection";
-import Alerts from "../Features/AlertsCom";
 
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
-import { GetAlertsContext } from "../hooks/AlertsHook";
 import { GetMTAccountsContext } from "../hooks/MTAccounts";
 
 import { H1, H4, H6, Hi6 } from "../Components/H";
@@ -22,7 +20,6 @@ export default function Home() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
   const { webhooks } = GetWebhookContext();
-  const { alertsHook } = GetAlertsContext();
   const { mtAccounts } = GetMTAccountsContext();
 
   const [open, setOpen] = useState(false);
@@ -40,7 +37,7 @@ export default function Home() {
       <Sidenav cpath="profile" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-5 md:px-10 py-8 overflow-x-hidden">
+        <div className="px-5 md:px-10 py-6 overflow-x-hidden">
           <ProfileSection
             user={user}
             fullUser={fullUser}
@@ -75,7 +72,6 @@ export default function Home() {
               </div>
             )}
           </div>
-          <Alerts alertsHook={alertsHook} />
         </div>
       </div>
     </>

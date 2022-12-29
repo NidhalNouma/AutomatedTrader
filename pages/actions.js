@@ -9,7 +9,7 @@ export default function Actions() {
       <Sidenav cpath="actions" />
       <div className="w-full flex flex-col">
         <Header />
-        <div className="px-10 py-8">
+        <div className="px-10 py-6">
           <H1>Actions</H1>
           <div className="mt-6">
             <Hi6>
