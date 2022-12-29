@@ -23,6 +23,8 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
     mtAccounts?.length > 0 ? mtAccounts[0] : null
   );
 
+  const [showDelete, setShowDelete] = useState(false);
+
   const {
     name,
     setName,
@@ -56,12 +58,14 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
     addMsg,
     getData,
     editMsg,
+    deleteMsg,
     testMsg,
   } = WebHook(user?.uid);
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
 
   useEffect(() => {
+    setShowDelete(false);
     if (typeWh === "EditMessage") getData(msg?.msg);
   }, [msg]);
 
@@ -543,9 +547,43 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
         </ButtonP>
       </div>
 
-      {typeWh === "EditMessage" && (
+      {showDelete && (
+        <div className="w-full max-w-xs border-error border-[1px] p-2 mb-4 rounded-lg">
+          <p className="text-text-p text-sm text-center">
+            This messsage will no longer be visible.
+          </p>
+          <div className="mb-2 w-full flex justify-around">
+            <ButtonText
+              className="!text-error"
+              onClick={async () => {
+                const r = await deleteMsg(webhook?.id, msg.msg);
+                // if (r) {
+                //   // if (typeWh !== "index") changeWebhookData(r);
+                //   // else
+                await getAllWebhooks(user?.uid);
+
+                newAlert("Message deleted!", "error");
+                close();
+                // }
+              }}
+            >
+              Delete
+            </ButtonText>
+            <ButtonText className="" onClick={() => setShowDelete(false)}>
+              Cancel
+            </ButtonText>
+          </div>
+        </div>
+      )}
+
+      {typeWh === "EditMessage" && !showDelete && (
         <div className="mb-2 w-full max-w-xs flex justify-between">
-          <ButtonText className="!text-error">Delete</ButtonText>
+          <ButtonText
+            className="!text-error"
+            onClick={() => setShowDelete(true)}
+          >
+            Delete
+          </ButtonText>
           <ButtonText className="">Duplicate</ButtonText>
         </div>
       )}

@@ -39,7 +39,7 @@ const options = {
   responsive: true,
   elements: {
     point: {
-      radius: 0,
+      // radius: 0,
     },
   },
 
@@ -57,10 +57,15 @@ const options = {
     },
   },
 
+  hover: {
+    mode: "index",
+    intersect: false,
+  },
+
   plugins: {
     tooltip: {
       // enabled: false,
-      mode: "index",
+      // mode: "index",
       intersect: false,
       backgroundColor: "rgba(0, 0, 0, 0.8)",
       titleFontSize: 14,
@@ -71,14 +76,13 @@ const options = {
       displayY: false,
 
       callbacks: {
-        footer: (tooltipItems) => {
-          let sum = 0;
-
-          tooltipItems.forEach(function (tooltipItem) {
-            sum += tooltipItem.parsed.y;
-          });
-          return "Sum: " + sum.toFixed(2);
-        },
+        // footer: (tooltipItems) => {
+        //   let sum = 0;
+        //   tooltipItems.forEach(function (tooltipItem) {
+        //     sum += tooltipItem.parsed.y;
+        //   });
+        //   return "Sum: " + sum.toFixed(2);
+        // },
       },
     },
     legend: {
@@ -133,7 +137,7 @@ export default function App({ accounts }) {
           : "rgba(52, 54, 59, 0.3)",
         lineTension: 0.25,
         fill: true,
-        label: account.accountName,
+        label: account.accountDisplayName,
 
         shadowOffsetX: 3,
 
@@ -142,6 +146,11 @@ export default function App({ accounts }) {
         shadowBlur: 10,
 
         shadowColor: account.color,
+
+        pointRadius: 0,
+        pointHoverBackgroundColor: account.color,
+        pointHoverBorderColor: account.color,
+        pointHoverRadius: 3,
 
         // datalabels: {
         //   align: function (context) {

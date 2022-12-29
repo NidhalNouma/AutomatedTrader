@@ -220,6 +220,16 @@ export const WebHook = (userId) => {
     return r;
   }
 
+  async function deleteMsg(id, msg) {
+    setError("");
+    await deleteMessage(id, msg);
+  }
+
+  useEffect(() => {
+    setError("");
+    setSuccTestMsg("");
+  }, []);
+
   return {
     name,
     setName,
@@ -253,6 +263,7 @@ export const WebHook = (userId) => {
     addMsg,
     editMsg,
     getData,
+    deleteMsg,
     testMsg,
   };
 };

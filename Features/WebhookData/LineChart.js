@@ -63,6 +63,10 @@ const options = {
       display: false, //this will remove all the y-axis grid lines
     },
   },
+  hover: {
+    mode: "index",
+    intersect: false,
+  },
   plugins: {
     legend: {
       display: false,
@@ -164,8 +168,11 @@ function LineChart({ webhook, mtAccounts }) {
           // pointBackgroundColor: webhook.color,
           // lineTension: 0,
           fill: false,
-
           data: values,
+
+          pointHoverBackgroundColor: webhook.color,
+          pointHoverBorderColor: webhook.color,
+          pointHoverRadius: 3,
 
           pointRadius: values.map((v, i) => (i === values.length - 1 ? 3 : 0)),
 

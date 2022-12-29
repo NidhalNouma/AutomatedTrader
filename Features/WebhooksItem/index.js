@@ -160,11 +160,13 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             Add message
                           </span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => setOpenEdit(true)}>
-                          <span className="text-secondary text-sm font-bold">
-                            Edit messages
-                          </span>
-                        </Dropdown.Item>
+                        {messages?.length > 0 && (
+                          <Dropdown.Item onClick={() => setOpenEdit(true)}>
+                            <span className="text-secondary text-sm font-bold">
+                              Edit messages
+                            </span>
+                          </Dropdown.Item>
+                        )}
                         <Dropdown.Item onClick={() => setOpenDel(true)}>
                           <span className="text-text-p text-sm font-bold">
                             Delete
@@ -240,27 +242,29 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                       >
                         <PencilAltIcon className="h-5 w-5 text-secondaryi" />
                       </ButtonInfo> */}
-                      <ButtonInfo
-                        helper={msgcopy}
-                        className="ml-2"
-                        onMouseLeave={() =>
-                          setMsgcopy("Click to copy webhook message!")
-                        }
-                        onClick={() =>
-                          copyTextToClipboard(
-                            msg.msg,
-                            () => setMsgcopy("Message copied to clipboard!"),
-                            () => newAlert("Message copied", "error")
-                          )
-                        }
-                      >
-                        <ClipboardCopyIcon className="h-5 w-5 text-secondaryi" />
-                      </ButtonInfo>
+                      {messages?.length > 0 && (
+                        <ButtonInfo
+                          helper={msgcopy}
+                          className="ml-2"
+                          onMouseLeave={() =>
+                            setMsgcopy("Click to copy webhook message!")
+                          }
+                          onClick={() =>
+                            copyTextToClipboard(
+                              msg.msg,
+                              () => setMsgcopy("Message copied to clipboard!"),
+                              () => newAlert("Message copied", "error")
+                            )
+                          }
+                        >
+                          <ClipboardCopyIcon className="h-5 w-5 text-secondaryi" />
+                        </ButtonInfo>
+                      )}
                     </div>
                   </div>
 
                   <div className="mt-2">
-                    {messages && (
+                    {messages?.length > 0 ? (
                       <Select
                         value={msg?.msg}
                         onChange={(v) => {
@@ -281,6 +285,10 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           </option>
                         ))}
                       </Select>
+                    ) : (
+                      <div className="py-1 mb-2">
+                        <p className="text-xs">No message available!</p>
+                      </div>
                     )}
                   </div>
                 </div>

@@ -40,6 +40,11 @@ const Index = ({ alertsHook }) => {
                       <span className="font-extrabold text-text-p px-2 py-1">
                         {msg.pair}
                       </span>
+                      {msg.test?.isTest && (
+                        <span className=" text-bg rounded-xl px-2 py-0 bg-info">
+                          Test
+                        </span>
+                      )}
                     </H6>
                     <Hi6>{moment(v.created_at.toDate()).fromNow()}</Hi6>
                   </div>
@@ -48,7 +53,7 @@ const Index = ({ alertsHook }) => {
                       <span className="text-xs">
                         Position type:
                         <span className="ml-1 font-bold">
-                          {typeToStr(msg.positionType.toString())}
+                          {typeToStr(msg.type.toString())}
                         </span>
                       </span>
 
@@ -56,6 +61,7 @@ const Index = ({ alertsHook }) => {
                         Position value:
                         <span className="ml-1 font-bold">
                           {msg.positionValue}
+                          {msg.positionType === 0 ? "%" : ""}
                         </span>
                       </span>
 

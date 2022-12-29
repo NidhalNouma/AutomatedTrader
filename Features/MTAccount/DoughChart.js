@@ -97,18 +97,21 @@ function DoughChart({ adata, total }) {
         </div>
       </div>
       <div className="grid grid-cols-2 justify-center items-center mt-4">
-        {Object.keys(adata).map((v, i) => (
-          <div className="mx-1 mt-1 flex items-center" key={i}>
-            <CheckCircleIcon
-              className="h-2 w-2 mr-2"
-              color={clrs[i]}
-            ></CheckCircleIcon>
-            <span className="text-xs text-text-p">{v}</span>
-            <span className="text-xs text-text-h ml-1">
-              ${adata[v].toFixed(2)}
-            </span>
-          </div>
-        ))}
+        {Object.keys(adata).map(
+          (v, i) =>
+            i < 6 && (
+              <div className="mx-1 mt-1 flex items-center" key={i}>
+                <CheckCircleIcon
+                  className="h-2 w-2 mr-2"
+                  color={clrs[i]}
+                ></CheckCircleIcon>
+                <span className="text-xs text-text-p">{v}</span>
+                <span className="text-xs text-text-h ml-1">
+                  ${adata[v].toFixed(2)}
+                </span>
+              </div>
+            )
+        )}
       </div>
     </div>
   );
