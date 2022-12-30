@@ -40,6 +40,16 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 
+  const [duplicateMsg, setDuplicateMsg] = useState(null);
+
+  useEffect(() => {
+    // console.log("ddddD", duplicateMsg);
+    if (duplicateMsg) {
+      setOpenEdit(false);
+      setOpen(true);
+    }
+  }, [duplicateMsg]);
+
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState(null);
 
@@ -66,7 +76,11 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 setOpen(false);
               }}
             >
-              <AddMessage close={() => setOpen(false)} webhook={webhook} />
+              <AddMessage
+                close={() => setOpen(false)}
+                webhook={webhook}
+                msg={duplicateMsg}
+              />
             </Modal1>
             <Modal1
               open={openEdit}
@@ -80,6 +94,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 msg={msg}
                 setMsg={setMsg}
                 messages={messages}
+                duplicateMsg={(m) => setDuplicateMsg(m)}
               />
             </Modal1>
 

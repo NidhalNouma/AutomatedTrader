@@ -60,7 +60,7 @@ export async function addNewUser(
         active: true,
         email,
         displayName,
-        metadata,
+        metadata: { ...metadata },
         photoURL,
         created_at: serverTimestamp(),
       }

@@ -5,7 +5,7 @@ import { H3 } from "../../Components/H";
 import WebhookData from "./WebhookData";
 import { Select1 } from "../../Components/Input";
 
-function EditMessage({ close, webhook, msg, setMsg, messages }) {
+function EditMessage({ close, webhook, msg, setMsg, messages, duplicateMsg }) {
   return (
     <div className="">
       <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
@@ -44,6 +44,7 @@ function EditMessage({ close, webhook, msg, setMsg, messages }) {
           typeWh="EditMessage"
           webhook={webhook}
           msg={msg}
+          duplicateMsg={duplicateMsg}
         />
       </div>
     </div>

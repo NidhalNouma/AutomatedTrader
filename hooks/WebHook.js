@@ -230,6 +230,10 @@ export const WebHook = (userId) => {
     setSuccTestMsg("");
   }, []);
 
+  function getMsg() {
+    return formatMsg();
+  }
+
   return {
     name,
     setName,
@@ -265,6 +269,7 @@ export const WebHook = (userId) => {
     getData,
     deleteMsg,
     testMsg,
+    getMsg,
   };
 };
 

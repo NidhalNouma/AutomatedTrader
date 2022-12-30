@@ -3,16 +3,22 @@ import { H4, Hi6, H6 } from "../../Components/H";
 import moment from "moment";
 import { ButtonText } from "../../Components/Button";
 
-import { typeToStr, getMessageData } from "../../hooks/WebHook";
+import {
+  typeToStr,
+  getMessageData,
+  GetWebhookContext,
+} from "../../hooks/WebHook";
 
 const Index = ({ alertsHook }) => {
   const [length, setLength] = useState(10);
+  const { webhooks } = GetWebhookContext();
 
   return (
     alertsHook?.length > 0 && (
       <Fragment>
         {alertsHook.map((v, i) => {
           const msg = getMessageData(v.message);
+          const wh = webhooks?.find((w) => w.id === v.webhookId);
 
           return i < length ? (
             <div key={i} className={"p-1 mx-1" + (10 - 1 === i ? "" : "pb-0")}>
@@ -36,7 +42,12 @@ const Index = ({ alertsHook }) => {
                         test
                       </span>
                     )}
-                    {v.webhookName}
+                    <span
+                      className="rounded-sm"
+                      style={{ borderBottom: `4px solid ${wh?.color}` }}
+                    >
+                      {wh?.name || v.webhookName}
+                    </span>
                     <span className="font-extrabold text-text-p px-2 py-1">
                       {msg.pair}
                     </span>

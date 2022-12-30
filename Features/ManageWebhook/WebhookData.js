@@ -15,7 +15,14 @@ import { GetWebhookContext } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
 import { GetMTAccountsContext } from "../../hooks/MTAccounts";
 
-function WebhookData({ includeName, close, webhook, typeWh, msg }) {
+function WebhookData({
+  includeName,
+  close,
+  webhook,
+  typeWh,
+  msg,
+  duplicateMsg,
+}) {
   const { newAlert } = GetToastContext();
   const { user } = GetUserContext();
   const { mtAccounts } = GetMTAccountsContext();
@@ -60,13 +67,17 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
     editMsg,
     deleteMsg,
     testMsg,
+    getMsg,
   } = WebHook(user?.uid);
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
 
   useEffect(() => {
     setShowDelete(false);
-    if (typeWh === "EditMessage") getData(msg?.msg);
+    if (msg) {
+      if (typeWh === "EditMessage") getData(msg?.msg);
+      if (typeWh === "AddMessage") getData(msg);
+    }
   }, [msg]);
 
   return (
@@ -584,7 +595,9 @@ function WebhookData({ includeName, close, webhook, typeWh, msg }) {
           >
             Delete
           </ButtonText>
-          <ButtonText className="">Duplicate</ButtonText>
+          <ButtonText className="" onClick={() => duplicateMsg(getMsg())}>
+            Duplicate
+          </ButtonText>
         </div>
       )}
     </div>
