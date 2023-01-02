@@ -33,7 +33,7 @@ function DoughChart({ adata, total }) {
     beforeDraw: (chart, args, options) => {
       const { ctx } = chart;
       // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
-      console.log(options, args, chart, chart._options.color);
+      // console.log(options, args, chart, chart._options.color);
       const color = options.color || chart._options.color;
       // ctx.shadowColor = addAlpha(color, 1);
       ctx.shadowColor = color;

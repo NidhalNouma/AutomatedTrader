@@ -11,8 +11,12 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/solid";
 
+import { GetFullUserContext } from "../../hooks/UserHook";
+import Link from "next/link";
+
 function Index({ cpath, fixed = true }) {
   const [openApps, setOpenApps] = useState(true);
+  const { fullUser } = GetFullUserContext();
 
   return (
     <Content fixed={fixed}>
@@ -32,156 +36,158 @@ function Index({ cpath, fixed = true }) {
         <H5>YOUR WEBHOOKS</H5>
         <div className="h-24 bg-bgai my-2 mr-4 rounded-xl"></div>
       </div> */}
-      <div className="pl-4">
-        <Linksn
-          href="/profile"
-          icon={<HomeIcon className="h-5 w-5" />}
-          isActive={cpath === "profile"}
-        >
-          <span className="capitalize ml-2 text-base">Profile</span>
-        </Linksn>
-        <Linksn
-          href="/alerts"
-          isActive={cpath === "alerts"}
-          icon={
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"
-              />
-            </svg>
-          }
-        >
-          <span className="capitalize ml-2 text-base">Alerts</span>
-        </Linksn>
-        <Linksn
-          href="/actions"
-          isActive={cpath === "actions"}
-          icon={<LightBulbIcon className="h-5 w-5" />}
-        >
-          <span className="capitalize ml-2 text-base">Actions</span>
-        </Linksn>
-      </div>
-
-      <div className="my-1 px-4">
-        <div className="border-t-2 border-bgai"></div>
-      </div>
-
-      <div className="text-text-p pl-4 my-4">
-        <div
-          className="flex items-center pl-4 mr-3 cursor-pointer"
-          onClick={() => setOpenApps(!openApps)}
-        >
-          <span
-            className="bg-bgaii p-1 rounded-md mr-2"
-            onClick={() => {
-              return;
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-5 h-5 text-text-p"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
-              />
-            </svg>
-          </span>
-          <span className="text-base font-semibold ">Apps</span>
-          {openApps ? (
-            <ChevronDownIcon className="h-4 w-4 ml-auto" />
-          ) : (
-            <ChevronUpIcon className="h-4 w-4 ml-auto" />
-          )}
-        </div>
-        {openApps && (
-          <div className="pr-0 pb-0">
+      {fullUser ? (
+        <Fragment>
+          <div className="pl-4">
             <Linksn
-              href="/apps/mt4"
-              isActive={cpath === "mt4"}
-              className="mt-2"
-              icon={
-                <div className="w-5 h-5 ml-1">
-                  <Image
-                    className=""
-                    src="/Images/mt4-icon.png"
-                    alt=""
-                    width="1w"
-                    height="1h"
-                    layout="responsive"
-                  />
-                </div>
-              }
+              href="/profile"
+              icon={<HomeIcon className="h-5 w-5" />}
+              isActive={cpath === "profile"}
             >
-              <span className="capitalize ml-2 text-base">MT4</span>
+              <span className="capitalize ml-2 text-base">Profile</span>
             </Linksn>
             <Linksn
-              href="/apps/telegram"
-              isActive={cpath === "telegram"}
-              // className="my-0"
+              href="/alerts"
+              isActive={cpath === "alerts"}
               icon={
-                <div className="w-5 h-5 ml-1">
-                  <Image
-                    className=""
-                    src="/Images/telegram-icon.png"
-                    alt=""
-                    width="1w"
-                    height="1h"
-                    layout="responsive"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5"
                   />
-                </div>
+                </svg>
               }
             >
-              <span className="capitalize ml-2 text-base">Telegram</span>
+              <span className="capitalize ml-2 text-base">Alerts</span>
+            </Linksn>
+            <Linksn
+              href="/actions"
+              isActive={cpath === "actions"}
+              icon={<LightBulbIcon className="h-5 w-5" />}
+            >
+              <span className="capitalize ml-2 text-base">Actions</span>
             </Linksn>
           </div>
-        )}
-      </div>
 
-      <div className="my-1 px-4 /mt-auto">
-        <div className="border-t-2 border-bgai"></div>
-      </div>
+          <div className="my-1 px-4">
+            <div className="border-t-2 border-bgai"></div>
+          </div>
 
-      <div className="pl-4">
-        <Linksn
-          icon={<UserGroupIcon className="h-5 w-5" />}
-          href="/membership"
-          isActive={cpath === "membership"}
-        >
-          <span className="capitalize ml-2 text-base">membership</span>
-        </Linksn>
+          <div className="text-text-p pl-4 my-4">
+            <div
+              className="flex items-center pl-4 mr-3 cursor-pointer"
+              onClick={() => setOpenApps(!openApps)}
+            >
+              <span
+                className="bg-bgaii p-1 rounded-md mr-2"
+                onClick={() => {
+                  return;
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-5 h-5 text-text-p"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122"
+                  />
+                </svg>
+              </span>
+              <span className="text-base font-semibold ">Apps</span>
+              {openApps ? (
+                <ChevronDownIcon className="h-4 w-4 ml-auto" />
+              ) : (
+                <ChevronUpIcon className="h-4 w-4 ml-auto" />
+              )}
+            </div>
+            {openApps && (
+              <div className="pr-0 pb-0">
+                <Linksn
+                  href="/apps/mt4"
+                  isActive={cpath === "mt4"}
+                  className="mt-2"
+                  icon={
+                    <div className="w-5 h-5 ml-1">
+                      <Image
+                        className=""
+                        src="/Images/mt4-icon.png"
+                        alt=""
+                        width="1w"
+                        height="1h"
+                        layout="responsive"
+                      />
+                    </div>
+                  }
+                >
+                  <span className="capitalize ml-2 text-base">MT4</span>
+                </Linksn>
+                <Linksn
+                  href="/apps/telegram"
+                  isActive={cpath === "telegram"}
+                  // className="my-0"
+                  icon={
+                    <div className="w-5 h-5 ml-1">
+                      <Image
+                        className=""
+                        src="/Images/telegram-icon.png"
+                        alt=""
+                        width="1w"
+                        height="1h"
+                        layout="responsive"
+                      />
+                    </div>
+                  }
+                >
+                  <span className="capitalize ml-2 text-base">Telegram</span>
+                </Linksn>
+              </div>
+            )}
+          </div>
 
-        <Linksn
-          href="/settings"
-          isActive={cpath === "settings"}
-          icon={<CogIcon className="h-5 w-5" />}
-        >
-          <span className="capitalize ml-2 text-base">Settings</span>
-        </Linksn>
+          <div className="my-1 px-4 /mt-auto">
+            <div className="border-t-2 border-bgai"></div>
+          </div>
 
-        <Linksn
-          icon={<InformationCircleIcon className="h-5 w-5" />}
-          href="/help"
-          isActive={cpath === "help"}
-        >
-          <span className="capitalize ml-2 text-base">Help & FAQ</span>
-        </Linksn>
+          <div className="pl-4">
+            <Linksn
+              icon={<UserGroupIcon className="h-5 w-5" />}
+              href="/membership"
+              isActive={cpath === "membership"}
+            >
+              <span className="capitalize ml-2 text-base">membership</span>
+            </Linksn>
 
-        {/* <div className="mx-4 flex items-center my-4">
+            <Linksn
+              href="/settings"
+              isActive={cpath === "settings"}
+              icon={<CogIcon className="h-5 w-5" />}
+            >
+              <span className="capitalize ml-2 text-base">Settings</span>
+            </Linksn>
+
+            <Linksn
+              icon={<InformationCircleIcon className="h-5 w-5" />}
+              href="/help"
+              isActive={cpath === "help"}
+            >
+              <span className="capitalize ml-2 text-base">Help & FAQ</span>
+            </Linksn>
+
+            {/* <div className="mx-4 flex items-center my-4">
           <MoonIcon className="h-5 w-5 text-text-p" />
           <span className="capitalize ml-2 text-base font-semibold text-text-p">
             Dark mode
@@ -191,7 +197,21 @@ function Index({ cpath, fixed = true }) {
             className="ml-auto bg-text-h text-text-p border-text-p"
           />
         </div> */}
-      </div>
+          </div>
+        </Fragment>
+      ) : (
+        <Fragment>
+          <div className=" w-full flex items-center justify-center h-full ">
+            <p className="text-sm">
+              Click{" "}
+              <span className="font-bold underline">
+                <Link href="/signin">here</Link>
+              </span>{" "}
+              to sign in.
+            </p>
+          </div>
+        </Fragment>
+      )}
     </Content>
   );
 }

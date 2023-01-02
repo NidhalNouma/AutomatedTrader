@@ -17,7 +17,7 @@ import { Dropdown } from "react-daisyui";
 
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
-import Script from "next/script";
+// import Script from "next/script";
 
 export default function MT4() {
   const { user } = GetUserContext();
@@ -81,7 +81,7 @@ export default function MT4() {
             <div className="md:flex items-start justify-between w-full">
               <div className="mt-3 w-full md:w-4/12">
                 {mtAccounts.map((v, i) => (
-                  <Mt4 key={v.id} account={v} userId={user.uid} />
+                  <Mt4 key={v.id} account={v} userId={user?.uid} />
                 ))}
                 <div className="my-4">
                   {/* <div className="flex"> */}

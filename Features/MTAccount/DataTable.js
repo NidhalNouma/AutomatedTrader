@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { ButtonText } from "../../Components/Button";
+import { Badge } from "react-daisyui";
 
 function DataTable({ data }) {
   const [show, setShow] = useState(false);
@@ -10,26 +11,31 @@ function DataTable({ data }) {
       <table className="table-auto w-full">
         <thead>
           <tr>
-            <th className="text-text-h text-sm">Date/Time</th>
-            <th className="text-text-h text-sm">Pair</th>
-            <th className="text-text-h text-sm">Open Price</th>
-            <th className="text-text-h text-sm">Lot</th>
-            <th className="text-text-h text-sm">Pips</th>
-            <th className="text-text-h text-sm">Profit</th>
+            <th className="text-text-h text-xs">Date/Time</th>
+            <th className="text-text-h text-xs">Pair</th>
+            <th className="text-text-h text-xs">Open Price</th>
+            <th className="text-text-h text-xs">Lot</th>
+            <th className="text-text-h text-xs">Pips</th>
+            <th className="text-text-h text-xs">Profit</th>
           </tr>
         </thead>
         <tbody>
           {data
             ?.slice(0)
             .reverse()
-            ?.map((v, i) =>
-              (i < 6 && !show) || show ? (
+            ?.map((v, i) => {
+              return (i < 6 && !show) || show ? (
                 <React.Fragment key={i}>
                   <tr className="border-spacing-[7px] border-b-[1px] border-gray-700">
                     <td className="text-xs text-center py-3">
                       {moment(v.closeTime).fromNow()}
                     </td>
-                    <td className="text-xs text-center">{v.symbol}</td>
+                    <td className="text-xs text-center">
+                      {v.test && (
+                        <Badge className="!h-2 !w-2 !p-0" color="info" />
+                      )}{" "}
+                      {v.symbol}
+                    </td>
                     <td className="text-xs text-center">{v.open}</td>
                     <td className="text-xs text-center">{v.lot}</td>
                     <td className="text-xs text-center">{v.pips}</td>
@@ -41,8 +47,8 @@ function DataTable({ data }) {
                 </React.Fragment>
               ) : (
                 <React.Fragment></React.Fragment>
-              )
-            )}
+              );
+            })}
         </tbody>
       </table>
       <div className="w-full text-center mt-4">

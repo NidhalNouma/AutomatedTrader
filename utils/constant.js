@@ -3,8 +3,8 @@ import axios from "axios";
 
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: "automated-trader-fd733.firebaseapp.com",
   // authDomain: "auth.automatedtrader.com",
+  authDomain: "automated-trader-fd733.firebaseapp.com",
   projectId: "automated-trader-fd733",
   storageBucket: "automated-trader-fd733.appspot.com",
   messagingSenderId: "1097394175779",

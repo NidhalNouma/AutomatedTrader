@@ -164,7 +164,8 @@ export async function addDataToMTAccount(
   accountBalance,
   accountEquity,
   data,
-  lastOrder
+  lastOrder,
+  gmtOffset
 ) {
   const r = await getMTAccount(accountId);
 
@@ -180,6 +181,7 @@ export async function addDataToMTAccount(
         accountEquity,
         data: arrayUnion(...data),
         lastOrder,
+        gmtOffset,
       });
       return { exist: true, added: true };
     }
