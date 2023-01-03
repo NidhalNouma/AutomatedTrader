@@ -10,12 +10,12 @@ const Buttoni = ({ className, onClick, children }) => {
   );
 };
 
-export const ButtonP = ({ className, icon, ...props }) => {
+export const ButtonP = ({ className, icon, size = "sm", ...props }) => {
   return (
     <Button
       startIcon={icon}
       animation={true}
-      size="sm"
+      size={size}
       responds={true}
       className={`${className} py-0 h-7 px-4 capitalize hover:bg-primary bg-primary text-text-h rounded-lg border-0`}
       {...props}

@@ -531,7 +531,7 @@ function WebhookData({
         </div>
       )}
 
-      <div className="mt-1 mb-4 w-full px-20">
+      <div className="mt-1 mb-4 w-full flex">
         <ButtonP
           onClick={async () => {
             let r;
@@ -552,7 +552,7 @@ function WebhookData({
               close();
             }
           }}
-          className="w-full"
+          className="w-full max-w-xs mx-auto"
         >
           Save
         </ButtonP>

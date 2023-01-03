@@ -44,31 +44,26 @@ export default function Home() {
             publicProfile={false}
           />
           <div className="mt-6">
-            <div className="flex items-center justify-betweeni">
-              <H4 className="">Webhooks</H4>
-              <ButtonP
-                endIcon={<PlusIcon className="h-3 w-3" />}
-                className="ml-4"
-                onClick={() => setOpen(true)}
-              >
-                <span className="text-xs">New</span>
-              </ButtonP>
-            </div>
+            <H4 className="">Webhooks</H4>
             {webhooks?.length > 0 ? (
               <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-                {webhooks.map((v, i) => (
-                  <Fragment key={v.id}>
-                    <WebhooksItem
-                      webhook={v}
-                      user={user}
-                      mtAccounts={mtAccounts}
-                    />
-                  </Fragment>
-                ))}
+                {webhooks.map(
+                  (v, i) =>
+                    v.public && (
+                      <Fragment key={v.id}>
+                        <WebhooksItem
+                          webhook={v}
+                          user={user}
+                          mtAccounts={mtAccounts}
+                          forDisplay={true}
+                        />
+                      </Fragment>
+                    )
+                )}
               </div>
             ) : (
               <div className="mt-3">
-                <p>No available webhooks, click new to add a new one.</p>
+                <p>No available public webhooks, click here to add one.</p>
               </div>
             )}
           </div>

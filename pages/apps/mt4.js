@@ -17,7 +17,6 @@ import { Dropdown } from "react-daisyui";
 
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
-// import Script from "next/script";
 
 export default function MT4() {
   const { user } = GetUserContext();
@@ -32,8 +31,6 @@ export default function MT4() {
 
   return (
     <>
-      {/* <Script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-style@latest/dist/chartjs-plugin-style.min.js" />
-      <Script src="https://unpkg.com/chartjs-plugin-style@latest/dist/chartjs-plugin-style.min.js" /> */}
       <Sidenav cpath="mt4" />
       <div className="w-full flex flex-col">
         <Header />

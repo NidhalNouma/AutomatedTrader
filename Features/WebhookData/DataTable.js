@@ -20,14 +20,15 @@ function DataTable({ data }) {
         </thead>
         <tbody>
           {data
-            ?.slice(0)
-            .reverse()
-            ?.map((v, i) =>
+            ?.sort((a, b) => b.closeTime - a.closeTime)
+            .map((v, i) =>
               (i < 6 && !show) || show ? (
                 <React.Fragment key={i}>
                   <tr className="border-spacing-[7px] border-b-[1px] border-gray-700">
                     <td className="text-xs text-center py-3">
-                      {moment(v.closeTime).fromNow()}
+                      {v.closeTimeGMT
+                        ? moment.utc(v.closeTimeGMT).fromNow()
+                        : moment(v.closeTime).fromNow()}
                     </td>
                     <td className="text-xs text-center">{v.symbol}</td>
                     <td className="text-xs text-center">{v.open}</td>

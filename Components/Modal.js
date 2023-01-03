@@ -10,7 +10,7 @@ export const Modal1 = ({
     <Modal
       open={open}
       onClickBackdrop={backclose}
-      className="bg-accent modali p-0"
+      className="bg-accent modali p-0 w-9/12 max-w-lg h-[89vh]"
       responsive={responsive}
     >
       {children}

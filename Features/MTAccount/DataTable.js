@@ -28,7 +28,9 @@ function DataTable({ data }) {
                 <React.Fragment key={i}>
                   <tr className="border-spacing-[7px] border-b-[1px] border-gray-700">
                     <td className="text-xs text-center py-3">
-                      {moment(v.closeTime).fromNow()}
+                      {v.closeTimeGMT
+                        ? moment.utc(v.closeTimeGMT).fromNow()
+                        : moment(v.closeTime).fromNow()}
                     </td>
                     <td className="text-xs text-center">
                       {v.test && (
