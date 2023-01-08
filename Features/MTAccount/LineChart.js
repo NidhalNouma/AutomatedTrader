@@ -198,7 +198,7 @@ export default function App({ accounts }) {
           <ButtonGroup>
             <Button
               size="sm"
-              className={`capitalize !text-xs rounded bg-accent ${
+              className={`capitalize !text-xs rounded bg-bgt ${
                 type === 0 && "text-primary"
               }`}
               onClick={() => setType(0)}
@@ -207,7 +207,7 @@ export default function App({ accounts }) {
             </Button>
             <Button
               size="sm"
-              className={`capitalize !text-xs bg-accent ${
+              className={`capitalize !text-xs bg-bgt ${
                 type === 1 && "text-primary"
               }`}
               onClick={() => setType(1)}
@@ -216,7 +216,7 @@ export default function App({ accounts }) {
             </Button>
             <Button
               size="sm"
-              className={`capitalize !text-xs rounded bg-accent ${
+              className={`capitalize !text-xs rounded bg-bgt ${
                 type === 2 && "text-primary"
               }`}
               onClick={() => setType(2)}

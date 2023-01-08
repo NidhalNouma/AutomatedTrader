@@ -47,13 +47,13 @@ export default function Settings() {
           <H1>Settings</H1>
           <div className="mt-6 w-full flex">
             <div className="w-1/2 mx-auto">
-              <div className="p-4 bg-accent rounded-xl">
+              <div className="p-4 bg-bg rounded-xl">
                 <H3 className="mb-4">Profile</H3>
                 <div className="flex flex-col w-full items-center ">
                   <div className="flex flex-col items-center">
                     <img
                       src={user?.photoURL || "Images/profile.png"}
-                      className="rounded-full w-20 h-20 border-4 border-text-h object-cover"
+                      className="rounded-full w-20 h-20 border-2 border-text-h object-cover"
                     />
                     <ButtonFile
                       onSelect={async (e) => {
@@ -71,7 +71,7 @@ export default function Settings() {
                     </ButtonFile>
                   </div>
                   <div className="w-full max-w-xs">
-                    <div className="w-xs my-1 pt-1 rounded bg-gray-700"></div>
+                    <div className="w-xs my-1 pt-1 rounded bg-bga"></div>
                     {/* <Hi4 className="mt-3">{user?.email || "NA"}</Hi4> */}
                     <Input1
                       className="px-3 mb-2"
@@ -142,7 +142,7 @@ export default function Settings() {
                 </div>
               </div>
 
-              <div className="mt-6 p-4 bg-accent rounded-xl">
+              <div className="mt-6 p-4 bg-bg rounded-xl">
                 <H3 className="mb-4">Membership</H3>
                 <div className="mt-4">
                   <Hi4 className="">

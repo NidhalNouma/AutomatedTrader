@@ -13,11 +13,11 @@ const Buttoni = ({ className, onClick, children }) => {
 export const ButtonP = ({ className, icon, size = "sm", ...props }) => {
   return (
     <Button
-      startIcon={icon}
+      endIcon={icon}
       animation={true}
       size={size}
       responds={true}
-      className={`${className} py-0 h-7 px-4 capitalize hover:bg-primary bg-primary text-text-h rounded-lg border-0`}
+      className={`${className} py-0 h-7 px-4 capitalize hover:bg-primary bg-transparent border-2 border-primary text-text-h rounded-2xl transition-colors ease-in duration-200`}
       {...props}
     />
   );
@@ -45,7 +45,7 @@ export const ButtonInfo = ({
   onMouseLeave,
 }) => {
   return (
-    <Dropdown hover={true} horizontal="right" vertical="top">
+    <Dropdown hover={true} horizontal="left" vertical="middle">
       <Button
         shape="circle"
         className={`${className} text-info`}
@@ -56,7 +56,7 @@ export const ButtonInfo = ({
       >
         {children}
       </Button>
-      <Dropdown.Menu className="card compact w-auto !p-0 shadow bg-bgai rounded-xl">
+      <Dropdown.Menu className="card compact w-auto !p-0 shadow bg-bga rounded-xl">
         <div className="p-2">
           <H6 className="whitespace-nowrap">{helper}</H6>
         </div>

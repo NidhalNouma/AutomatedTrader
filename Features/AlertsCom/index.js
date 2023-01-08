@@ -33,7 +33,7 @@ const Index = ({ alertsHook }) => {
                 </div> */}
               <div
                 tabIndex={i}
-                className="cursor-pointer collapse collapse-plus bg-bg py-3 px-2 mb-1 border-[2px] border-bgai rounded-xl"
+                className="cursor-pointer collapse collapse-plus bg-bgt py-3 px-2 mb-1 border-[2px] border-bga rounded-xl"
               >
                 <div className="flex items-center justify-between">
                   <H6>

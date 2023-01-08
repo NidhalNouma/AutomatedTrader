@@ -8,7 +8,7 @@ import WebhookData from "./WebhookData";
 function Index({ close }) {
   return (
     <div className="">
-      <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
+      <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
         <H3 className="flex">New Webhooks</H3>
         <Button
           size="sm"

@@ -29,10 +29,10 @@ function SearchHeader() {
     <Fragment>
       <Modalt open={open} backclose={() => setOpen(false)}>
         <div className="pb-12 px-4 ">
-          <div className="flex items-center border-b-2 border-bgai px-2 py-0 w-full">
+          <div className="flex items-center border-b-2 border-bga px-2 py-0 w-full">
             <SearchIcon className="h-5 w-5" />
             <Input
-              className="px-2 pb-0 grow bg-transparent border-none bg-accentplaceholder:text-text-p placeholder:opacity-100 focus:outline-0"
+              className="px-2 pb-0 grow bg-transparent border-none placeholder:text-text-p placeholder:opacity-100 focus:outline-0"
               // bordered
               type="text"
               placeholder="Search for webhooks, profiles and more ..."
@@ -67,7 +67,7 @@ function SearchHeader() {
         </div>
         <div
           onClick={() => setOpen(true)}
-          className="flex items-center bg-bgai px-4 py-2 rounded-2xl cursor-pointer max-w-full"
+          className="flex items-center bg-bg border-[1px] border-bga px-4 py-2 rounded-2xl cursor-pointer max-w-full"
         >
           <SearchIcon className="h-5 w-5" />
           <span className="ml-1 text-sm truncate">

@@ -3,7 +3,7 @@ import Sidenav from "../Features/SideNav";
 import Header from "../Features/Header";
 
 import { H1 } from "../Components/H";
-import { PlusIcon } from "@heroicons/react/solid";
+import { PlusIcon } from "@heroicons/react/outline";
 
 import { ButtonP } from "../Components/Button";
 import WebhooksItem from "../Features/WebhooksItem";
@@ -37,12 +37,11 @@ export default function Webhook() {
           <div className="flex justify-between items-center">
             <H1>Webhooks</H1>
             <ButtonP
-              className="ml-4" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+              className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
               onClick={() => setOpen(true)}
+              icon={<PlusIcon className="h-4 w-4" />}
             >
-              <span className="text-md rounded flex items-center">
-                New <PlusIcon className="h-[0.9rem] w-[0.9rem] ml-1" />
-              </span>
+              New
             </ButtonP>
           </div>
           <div className="mt-6">

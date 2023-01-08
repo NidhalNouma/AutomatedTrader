@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidenav from "../../Features/SideNav";
 import Header from "../../Features/Header";
 import { H1, H3, H4, Hi5, H6 } from "../../Components/H";
-import { ButtonText } from "../../Components/Button";
+import { ButtonP } from "../../Components/Button";
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 
@@ -14,6 +14,7 @@ import HalfDoughChart from "../../Features/MTAccount/HalfDoughChart";
 import BarAndLineChart from "../../Features/MTAccount/BarAndLineChart";
 
 import { Dropdown } from "react-daisyui";
+import { ArrowCircleDownIcon } from "@heroicons/react/outline";
 
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
@@ -37,22 +38,23 @@ export default function MT4() {
         <div className="px-5 md:px-10 py-6 overflow-hidden">
           <div className="flex justify-between">
             <H1>Metatrader 4</H1>
-            <ButtonText
+            <ButtonP
               onClick={(e) => {
                 e.preventDefault();
                 window.location = MT4EAPath;
               }}
+              icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >
               download EA
-            </ButtonText>
+            </ButtonP>
           </div>
           <div className="my-4">
             <span className="">
-              Your Id:{" "}
+              Your ID:{" "}
               <Dropdown hover={true} horizontal="right" vertical="middle">
                 <span
                   onMouseLeave={() => setIdcopy("Click to copy!")}
-                  className="bg-accent px-2 py-1 rounded-xl cursor-pointer text-sm"
+                  className="bg-bg border-2 border-bga px-2 py-1 rounded-xl cursor-pointer text-sm"
                   onClick={(e) =>
                     copyTextToClipboard(
                       user?.uid,
@@ -82,14 +84,14 @@ export default function MT4() {
                 ))}
                 <div className="my-4">
                   {/* <div className="flex"> */}
-                  <div className="w-full bg-accent p-4 rounded-xl">
+                  <div className="w-full bg-bgt shadow-sm shadow-bga p-4 rounded-xl">
                     <BarAndLineChart accounts={mtAccounts} />
                   </div>
                   {/* </div> */}
                 </div>
 
                 <div className="w-full mt-8">
-                  <div className="w-full bg-accent p-4 rounded-xl">
+                  <div className="w-full bg-bgt shadow-sm shadow-bga p-4 rounded-xl">
                     <HalfDoughChart adata={profitPerPair()} total={tp} />
                   </div>
                 </div>
@@ -100,7 +102,7 @@ export default function MT4() {
                   <LineChart accounts={mtAccounts} />
                 </div>
 
-                <div className="md:flex w-full bg-accent p-2 rounded-xl mt-6">
+                <div className="md:flex w-full bg-bgt shadow-sm shadow-bga p-2 rounded-xl mt-6">
                   <div className="w-full md:w-3/5">
                     <H3 className="m-2">Last transaction</H3>
                     <div className="px-3">
@@ -113,7 +115,7 @@ export default function MT4() {
                 </div>
 
                 <div className="mt-4 flex items-center w-full">
-                  <div className="py-7 px-4 bg-accent rounded-xl w-1/2">
+                  <div className="py-7 px-4 bg-bgt shadow-sm shadow-bga rounded-xl w-1/2">
                     <Hi5>Profits: </Hi5>
                     <div className="mt-1 flex items-center">
                       <H4>$ {tp.profit.toFixed(2)}</H4>
@@ -127,7 +129,7 @@ export default function MT4() {
                     </div>
                   </div>
 
-                  <div className="py-7 px-4 bg-accent rounded-xl ml-4 w-1/2">
+                  <div className="py-7 px-4 bg-bgt shadow-sm shadow-bga rounded-xl ml-4 w-1/2">
                     <Hi5>Losses: </Hi5>
                     <div className="mt-1 flex items-center">
                       <H4>$ {tp.loss.toFixed(2)}</H4>

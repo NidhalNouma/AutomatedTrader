@@ -10,7 +10,7 @@ export const Modal1 = ({
     <Modal
       open={open}
       onClickBackdrop={backclose}
-      className="bg-accent modali p-0 w-9/12 max-w-lg h-[89vh]"
+      className="bg-bg modali p-0 w-9/12 max-w-lg max-h-[89vh]"
       responsive={responsive}
     >
       {children}
@@ -28,7 +28,7 @@ export const Modalt = ({
     <Modal
       open={open}
       onClickBackdrop={backclose}
-      className="bg-accent modalt p-0"
+      className="bg-bg modalt p-0"
       responsive={responsive}
     >
       {children}

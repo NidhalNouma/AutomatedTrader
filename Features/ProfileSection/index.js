@@ -2,33 +2,36 @@ import React from "react";
 import { useRouter } from "next/router";
 import moment from "moment";
 import { ButtonP } from "../../Components/Button";
-import { H1 } from "../../Components/H";
-import { CalendarIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import { H1, H2 } from "../../Components/H";
+import {
+  CalendarIcon,
+  GlobeAltIcon,
+  PencilAltIcon,
+} from "@heroicons/react/outline";
 
 function Index({ user, fullUser, publicProfile }) {
   const router = useRouter();
   return (
     <div className="flex items-start px-0">
-      <div className="w-20 h-20 mr-4">
+      <div className="w-16 h-16 mr-4">
         <img
           src={user?.photoURL || "Images/profile.png"}
-          className="rounded-full w-full h-full border-4 border-text-h object-cover"
+          className="rounded-full w-full h-full border-2 border-text-h object-cover"
         />
       </div>
       <div className="">
         <div className="flex items-end">
-          <H1>{fullUser?.displayName || "NA"}</H1>
+          <H2>{fullUser?.displayName || "NA"}</H2>
           {!publicProfile && (
             <ButtonP
+              className="ml-0 hover:!bg-transparent !border-primary !border-none "
+              icon={<PencilAltIcon className="h-5 w-5 text-secondary" />}
               onClick={() => router.push("/settings")}
-              className="ml-4 !rounded !bg-transparent !border-primary !border-2"
-            >
-              Edit
-            </ButtonP>
+            ></ButtonP>
           )}
         </div>
-        <p className="mt-1 text-sm font-semibold">{fullUser?.bio}</p>
-        <div className=" flex items-center">
+        <p className="mb-1 text-sm font-normal">{fullUser?.bio}</p>
+        <div className=" flex items-center text-text-p">
           <span className="text-xs flex item-center">
             <CalendarIcon className="w-4 h-4" />
             <span className="ml-1">
@@ -41,7 +44,7 @@ function Index({ user, fullUser, publicProfile }) {
               target="_blank"
               href={"https://www.tradingview.com/u/" + fullUser.tradingview}
               rel="noopener noreferrer"
-              className="ml-4 flex items-center"
+              className="ml-4 flex items-center text-text-p"
             >
               <img src="/Images/TV.png" className="h-6 w-6 rounded" />
               <span className="ml-1 text-xs py-auto">
@@ -51,7 +54,7 @@ function Index({ user, fullUser, publicProfile }) {
           )}
           {fullUser?.twitter && (
             <a
-              className="ml-4 flex items-center"
+              className="ml-4 flex items-center text-text-p"
               target="_blank"
               href={"https://twitter.com/" + fullUser.twitter}
               rel="noopener noreferrer"
@@ -63,7 +66,7 @@ function Index({ user, fullUser, publicProfile }) {
 
           {fullUser?.youtubeURL && (
             <a
-              className="ml-4 flex items-center"
+              className="ml-4 flex items-center text-text-p"
               target="_blank"
               href={fullUser.youtubeURL}
               rel="noopener noreferrer"
@@ -77,7 +80,7 @@ function Index({ user, fullUser, publicProfile }) {
 
           {fullUser?.website && (
             <a
-              className="ml-4 flex items-center"
+              className="ml-4 flex items-center text-text-p"
               target="_blank"
               href={fullUser.website}
               rel="noopener noreferrer"

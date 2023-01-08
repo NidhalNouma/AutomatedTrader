@@ -124,10 +124,10 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
 
             <div
               style={{ boxShadow: `-1px 1px 8px -3px ${webhook.color}` }}
-              className="bg-bg w-full rounded-b-lg"
+              className="bg-bgt w-full rounded-b-lg"
             >
               <div
-                className="w-full pt-2 pb-1 rounded-t-lg"
+                className="w-full pb-2 rounded-t-lg"
                 style={{ backgroundColor: webhook.color }}
               ></div>
               <div className="pt-2 p-3">
@@ -147,7 +147,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         )
                       }
                     >
-                      <ClipboardIcon className="h-5 w-5 text-secondaryi" />
+                      <ClipboardIcon className="h-5 w-5 text-secondary" />
                     </ButtonInfo>
 
                     <Dropdown vertical="end" horizontal="center">
@@ -169,7 +169,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         />
                       </svg>
                       {/* </Button> */}
-                      <Dropdown.Menu className="w-40 bg-accent shadow-2xl shadow-bg">
+                      <Dropdown.Menu className="w-40 bg-bga shadow-2xl shadow-bg">
                         <Dropdown.Item onClick={() => setOpen(true)}>
                           <span className="text-secondary text-sm font-bold">
                             Add message
@@ -272,7 +272,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             )
                           }
                         >
-                          <ClipboardCopyIcon className="h-5 w-5 text-secondaryi" />
+                          <ClipboardCopyIcon className="h-5 w-5 text-secondary" />
                         </ButtonInfo>
                       )}
                     </div>
@@ -286,7 +286,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           setMsg(messages[v]);
                         }}
                         size="sm"
-                        className="bg-transparent w-full border-accent focus:outline-none rounded-lg font-normal text-text-p"
+                        className="bg-transparent w-full border-secondary focus:outline-none rounded-lg font-normal text-text-p"
                       >
                         {messages?.map((v, i) => (
                           <option

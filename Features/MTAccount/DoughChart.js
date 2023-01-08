@@ -89,7 +89,7 @@ function DoughChart({ adata, total }) {
           //   height="150"
           //   width="150"
         ></Doughnut>
-        <div className="w-28 h-28 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-accent flex justify-center items-center">
+        <div className="w-28 h-28 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-bgt flex justify-center items-center">
           <div className="text-center">
             <H4>${total.total.toFixed(2)}</H4>
             <Hi5>Total profit</Hi5>

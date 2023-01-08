@@ -168,7 +168,7 @@ export const Select1 = ({
           defaultValue={defaultValue}
           color="primary"
           size={size}
-          className={`bg-accenti mx-2 w-24 ${className}`}
+          className={`bg-transparent mx-2 w-24 ${className}`}
           value={options[value]}
           onChange={(e) => setValue(e)}
         >

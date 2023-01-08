@@ -8,7 +8,7 @@ import { Select1 } from "../../Components/Input";
 function EditMessage({ close, webhook, msg, setMsg, messages, duplicateMsg }) {
   return (
     <div className="">
-      <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
+      <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
         <div className="flex items-center">
           <H3 className="block whitespace-nowrap">Edit message</H3>
 
@@ -16,7 +16,7 @@ function EditMessage({ close, webhook, msg, setMsg, messages, duplicateMsg }) {
             // value={msg.msg}
             onChange={(v) => setMsg(messages[v])}
             size="sm"
-            className="bg-accenti border focus:outline-none rounded-lg text-text-p font-bold ml-5"
+            className="bg-transparent border focus:outline-none rounded-lg text-text-p font-bold ml-5"
           >
             {messages.map((v, i) => (
               <option key={i} value={i} selected={v.msg === msg.msg}>

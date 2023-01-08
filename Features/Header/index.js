@@ -28,7 +28,7 @@ function Index() {
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
       <div
-        className="px-4 md:px-6 py-2 md:py-3 bg-accent w-full sticky top-0 z-50"
+        className="px-4 md:px-6 py-2 md:py-3 bg-bg w-full sticky top-0 z-50 border-b2 border-b-bga"
         style={{ zIndex: 100 }}
       >
         {/* <DD /> */}

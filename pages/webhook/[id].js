@@ -57,7 +57,7 @@ function Webhook({}) {
                   />
                 </div>
 
-                <div className="flex w-full bg-accent p-2 rounded-xl mt-6">
+                <div className="flex w-full bg-bg p-2 rounded-xl mt-6">
                   <div className="w-3/5">
                     <H3 className="m-2">Last transaction</H3>
                     <div className="px-3">

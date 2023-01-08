@@ -240,7 +240,7 @@ export default function BarAndLineChart({ accounts }) {
           </div>
         </div>
       </div>
-      <div className="bg-bg rounded-xl p-2">
+      <div className="bg-bgt rounded-xl p-2">
         <div className="flex justify-between items-center">
           <span className="text-text-h text-xs">Percentage analytics</span>
 
