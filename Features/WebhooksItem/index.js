@@ -123,16 +123,15 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
             </Modal1>
 
             <div
-              style={{ boxShadow: `-1px 1px 8px -3px ${webhook.color}` }}
-              className="bg-bgt w-full rounded-b-lg"
+              style={{
+                boxShadow: `-1px 1px 8px -3px ${webhook.color}`,
+                borderColor: webhook.color,
+              }}
+              className="bg-bgt w-full rounded-lg border-t-2"
             >
-              <div
-                className="w-full pb-2 rounded-t-lg"
-                style={{ backgroundColor: webhook.color }}
-              ></div>
               <div className="pt-2 p-3">
                 <div className="flex items-center justify-between">
-                  <H6>{webhook.name}</H6>
+                  <H6 className="font-bold">{webhook.name}</H6>
                   <div className="flex items-center justify-center">
                     <ButtonInfo
                       helper={urlcopy}
@@ -169,7 +168,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         />
                       </svg>
                       {/* </Button> */}
-                      <Dropdown.Menu className="w-40 bg-bga shadow-2xl shadow-bg">
+                      <Dropdown.Menu className="w-40 bg-bg shadow-2xl shadow-bgt">
                         <Dropdown.Item onClick={() => setOpen(true)}>
                           <span className="text-secondary text-sm font-bold">
                             Add message

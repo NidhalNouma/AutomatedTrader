@@ -9,7 +9,7 @@ export const DeleteMessage = ({ close, title, children, onDelete }) => {
         <Button
           size="sm"
           shape="circle"
-          className=" bg-accent"
+          className=" bg-bga"
           onClick={() => {
             close();
           }}
@@ -54,7 +54,7 @@ export const EditMessage = ({ close, title, children, onEdit }) => {
         <Button
           size="sm"
           shape="circle"
-          className=" bg-accent"
+          className=" bg-bga"
           onClick={() => {
             close();
           }}

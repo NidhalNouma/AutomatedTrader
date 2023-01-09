@@ -127,7 +127,7 @@ export default function Settings() {
                       placeholder="https://..."
                       setValue={setWebsite}
                     ></Input1>
-                    <div className="w-full px-3 mt-8">
+                    <div className="w-full px-3 mt-8 flex justify-center">
                       <ButtonP
                         className="w-full"
                         onClick={async () => {

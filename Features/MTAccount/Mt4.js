@@ -74,7 +74,7 @@ function Mt4({ account, userId }) {
               </svg>
               {/* </Button> */}
               <Dropdown.Menu
-                className="w-40 bg-bga shadow-2xl shadow-bg"
+                className="w-40 bg-bg shadow-2xl shadow-bg"
                 // style={{ backgroundColor: account.color }}
               >
                 <Dropdown.Item onClick={() => setOpenEdit(true)}>

@@ -1,7 +1,6 @@
 import React from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
-
-import PaddleLoader from "../Paddle";
+import { ButtonP } from "../../Components/Button";
 
 import { GetUserContext } from "../../hooks/UserHook";
 
@@ -9,35 +8,43 @@ function Index({ title }) {
   const { user } = GetUserContext();
 
   return (
-    <div className="lg:w-1/3 md:w-1/2 w-full p-4 ">
-      <PaddleLoader />
-      <div className="p-8 rounded-xl border border-gray-20">
-        <h4> {title} </h4>
-        <h5 className="text-5xl font-bold py-2 text-gray-500">
-          {" "}
+    <div className="lg:w-1/4 md:w-1/2 w-full px-4 ">
+      <div className="p-8 rounded-xl">
+        <div className="flex w-full justify-center">
+          <h4 className="bg-text-h rounded-xl text-bg px-4 py-1 !text-xs !font-semibold">
+            {title} PLAN
+          </h4>
+        </div>
+        <h5 className="text-3xl font-bold pb-2 pt-4 text-accent text-center">
           $9.99<small className="text-lg">/mo</small>
         </h5>
-        <hr />
-        <div className="my-4 flex flex-col text-base items-center">
-          <p className="flex items-center w-full my-1">
-            <CheckCircleIcon className="h-5 w-5 mr-2" />
-            This feature and that stuff{" "}
+        <hr className="mx-1" />
+        <div className="mt-2 mb-3 flex flex-col text-sm items-start justify-center">
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            Automate Tradingview
           </p>
-          <p className="flex items-center w-full my-1">
-            <CheckCircleIcon className="h-5 w-5 mr-2" />
-            This feature and that stuff{" "}
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />1 Account
           </p>
-          <p className="flex items-center w-full my-1">
-            <CheckCircleIcon className="h-5 w-5 mr-2" />
-            This feature and that stuff{" "}
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />1 Webhook
           </p>
-          <p className="flex items-center w-full my-1">
-            <CheckCircleIcon className="h-5 w-5 mr-2" />
-            This feature and that stuff{" "}
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            MT4 & MT5 EA
+          </p>
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            Telegram Notifications
+          </p>
+          <p className="flex justify-center items-center my-1">
+            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            24/7 Support
           </p>
         </div>
-        <button
-          className="my-4 px-4 py-2 block w-full text-white bg-blue-500 hover:bg-blue-700 rounded"
+        <ButtonP
+          className="w-full max-w-xs"
           onClick={() => {
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
             Paddle.Checkout.open({
@@ -47,7 +54,7 @@ function Index({ title }) {
           }}
         >
           Select
-        </button>
+        </ButtonP>
       </div>
     </div>
   );

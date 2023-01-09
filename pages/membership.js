@@ -4,6 +4,8 @@ import Header from "../Features/Header";
 import Pricing from "../Features/Pricing";
 import { H1 } from "../Components/H";
 
+import PaddleLoader from "../Features/Paddle";
+
 export default function membership() {
   return (
     <>
@@ -14,13 +16,15 @@ export default function membership() {
           <H1>Membership</H1>
           <div className="mt-6">
             <section className="container mx-auto flex flex-wrap">
-              <Pricing title="Standard" />
-              <Pricing title="Pro" />
-              <Pricing title="Primium" />
+              <Pricing title="BASIC" />
+              <Pricing title="STANDARD" />
+              <Pricing title="PROFESSIONAL" />
+              <Pricing title="PREMIUM" />
             </section>
           </div>
         </div>
       </div>
+      <PaddleLoader />
     </>
   );
 }

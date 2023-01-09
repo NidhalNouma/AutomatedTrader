@@ -531,7 +531,7 @@ function WebhookData({
         </div>
       )}
 
-      <div className="mt-1 mb-4 w-full flex">
+      <div className="mt-1 mb-4 w-full flex justify-center">
         <ButtonP
           onClick={async () => {
             let r;

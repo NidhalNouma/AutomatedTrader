@@ -77,9 +77,9 @@ function Forgetpassword() {
         </div>
       )}
 
-      <div className="flex item-center justify-between w-full max-w-xs">
+      <div className="flex item-center justify-center w-full max-w-xs">
         <ButtonP
-          className="mx-auto"
+          className="mx-auto w-full"
           onClick={async () => {
             const r = await submit();
           }}
@@ -91,7 +91,7 @@ function Forgetpassword() {
       <div className="w-full mt-4">
         <span className="text-xs">Back to</span>
         <Link href="/signin">
-          <span className="text-sm text-primaryi ml-1 cursor-pointer">
+          <span className="text-sm text-primary ml-1 cursor-pointer">
             Sign in
           </span>
         </Link>

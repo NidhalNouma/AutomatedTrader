@@ -92,13 +92,13 @@ function SignUp() {
           </Alert>
         </div>
       )}
-      <div className="flex item-center justify-between w-full max-w-xs">
+      <div className="flex item-center justify-center w-full max-w-xs">
         <ButtonP
           onClick={async () => {
             const r = await submit();
             // if (r === true) router.push("/profile");
           }}
-          className="mx-auto"
+          className="mx-auto w-full"
         >
           Sign Up
         </ButtonP>
@@ -106,7 +106,7 @@ function SignUp() {
       <Divider>Or</Divider>
       <Button
         size="sm"
-        className="w-full bg-bgai"
+        className="w-full bg-bga rounded-2xl"
         onClick={async () => {
           const r = await continueWithGoogleClick();
           // if (r === true) router.push("/profile");
@@ -128,7 +128,7 @@ function SignUp() {
       <div className="w-full mt-4">
         <span className="text-xs">You have account?</span>
         <Link href="/signin">
-          <span className="text-sm text-primaryi ml-1 cursor-pointer">
+          <span className="text-sm text-primary ml-1 cursor-pointer">
             Sign in
           </span>
         </Link>

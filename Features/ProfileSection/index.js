@@ -13,19 +13,19 @@ function Index({ user, fullUser, publicProfile }) {
   const router = useRouter();
   return (
     <div className="flex items-start px-0">
-      <div className="w-16 h-16 mr-4">
+      <div className="w-16 h-16 mr-3">
         <img
           src={user?.photoURL || "Images/profile.png"}
           className="rounded-full w-full h-full border-2 border-text-h object-cover"
         />
       </div>
       <div className="">
-        <div className="flex items-end">
+        <div className="flex items-start">
           <H2>{fullUser?.displayName || "NA"}</H2>
           {!publicProfile && (
             <ButtonP
-              className="ml-0 hover:!bg-transparent !border-primary !border-none "
-              icon={<PencilAltIcon className="h-5 w-5 text-secondary" />}
+              className="ml-2 !p-0 hover:!bg-transparent !border-primary !border-none "
+              icon={<PencilAltIcon className="h-4 w-4 text-secondary" />}
               onClick={() => router.push("/settings")}
             ></ButtonP>
           )}

@@ -20,7 +20,7 @@ function SignIn() {
   return (
     <div className="p-7 flex flex-col items-center justify-center">
       <H1 className="mb-8">Sign In</H1>
-      <div className="mb-8 w-full">
+      <div className="mb-2 w-full">
         <Input1
           className="mx-auto mb-3"
           classNameInput="bg-transparent "
@@ -31,7 +31,7 @@ function SignIn() {
           setValue={setEmail}
         />
         <Input1
-          className="mx-auto"
+          className="mx-auto mb-2"
           classNameInput="bg-transparent "
           placeholder="Password"
           name="Password"
@@ -39,6 +39,9 @@ function SignIn() {
           value={password}
           setValue={setPassword}
         />
+        <Link className="" href="/forgetpassword">
+          <span className="text-xs cursor-pointer">Forgot password?</span>
+        </Link>
       </div>
       {error && (
         <div className="mb-4 w-full">
@@ -65,12 +68,9 @@ function SignIn() {
           </Alert>
         </div>
       )}
-      <div className="flex item-center justify-between w-full max-w-xs">
-        <Link className="" href="/forgetpassword">
-          <span className="text-sm cursor-pointer">Forgot password?</span>
-        </Link>
+      <div className="w-full max-w-xs flex justify-center">
         <ButtonP
-          className=""
+          className="w-full mt-2"
           onClick={async () => {
             const r = await submit();
             // if (r === true) router.push("/profile");
@@ -82,7 +82,7 @@ function SignIn() {
       <Divider>Or</Divider>
       <Button
         size="sm"
-        className="w-full bg-bgai"
+        className="w-full bg-bga rounded-2xl"
         onClick={async () => {
           const r = await continueWithGoogleClick();
           // if (r === true) router.push("/profile");
@@ -104,7 +104,7 @@ function SignIn() {
       <div className="w-full mt-4">
         <span className="text-xs">Dont have account?</span>
         <Link href="/signup">
-          <span className="text-sm text-primaryi ml-1 cursor-pointer">
+          <span className="text-sm text-primary ml-1 cursor-pointer">
             Sign up
           </span>
         </Link>
