@@ -7,15 +7,15 @@ const H = ({ children, onClick, className, style }) => {
 };
 
 export const H1 = ({ className, ...props }) => {
-  return <H className={`${className} text-text-h text-2xl`} {...props} />;
+  return <H className={`${className} text-text-h text-3xl`} {...props} />;
 };
 
 export const H2 = ({ className, ...props }) => {
-  return <H className={`${className} text-text-h text-xl`} {...props} />;
+  return <H className={`${className} text-text-h text-2xl`} {...props} />;
 };
 
 export const H3 = ({ className, ...props }) => {
-  return <H className={`${className} text-text-h text-lg`} {...props} />;
+  return <H className={`${className} text-text-h text-xl`} {...props} />;
 };
 
 export const H4 = ({ className, ...props }) => {

@@ -20,7 +20,8 @@ function DataTable({ data }) {
         </thead>
         <tbody>
           {data
-            ?.sort((a, b) => b.closeTime - a.closeTime)
+            ?.slice(0)
+            .reverse()
             .map((v, i) =>
               (i < 6 && !show) || show ? (
                 <React.Fragment key={i}>

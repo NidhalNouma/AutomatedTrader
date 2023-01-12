@@ -150,6 +150,21 @@ export const Toggle1 = ({ className, name, helper, value, setValue }) => {
   );
 };
 
+export const Togglew = ({ className, checked, onChange }) => {
+  return (
+    <label className="relative inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        value=""
+        className="sr-only peer"
+        checked={checked}
+        onChange={onChange}
+      />
+      <div className="w-8 h-4 bg-bga rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0 after:left-[1px] after:bg-text-h after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-primary"></div>
+    </label>
+  );
+};
+
 export const Select1 = ({
   className,
   name,

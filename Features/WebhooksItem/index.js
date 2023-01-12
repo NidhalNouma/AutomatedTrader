@@ -1,7 +1,8 @@
 import { Fragment, useState, useEffect } from "react";
 
-import { H6, Hi6 } from "../../Components/H";
-import { ButtonInfo } from "../../Components/Button";
+import { H6, Hi6, H4 } from "../../Components/H";
+import { ButtonInfo, ButtonText } from "../../Components/Button";
+import { Togglew } from "../../Components/Input";
 import { Toggle, Select, Dropdown } from "react-daisyui";
 import {
   PlusCircleIcon,
@@ -55,6 +56,8 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
 
   const [urlcopy, setURLcopy] = useState("Click to copy webhook URL!");
   const [msgcopy, setMsgcopy] = useState("Click to copy webhook message!");
+
+  const [viewChart, setViewChart] = useState(forDisplay);
 
   useEffect(() => {
     const msgs = getMessages(webhook);
@@ -127,11 +130,11 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 boxShadow: `-1px 1px 8px -3px ${webhook.color}`,
                 borderColor: webhook.color,
               }}
-              className="bg-bgt w-full rounded-lg border-t-2"
+              className="bg-bgt w-full rounded-lg border-t-[3px]"
             >
-              <div className="pt-2 p-3">
+              <div className="pt-2 px-3 pb-1">
                 <div className="flex items-center justify-between">
-                  <H6 className="font-bold">{webhook.name}</H6>
+                  <H4 className="font-bold">{webhook.name}</H4>
                   <div className="flex items-center justify-center">
                     <ButtonInfo
                       helper={urlcopy}
@@ -146,7 +149,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         )
                       }
                     >
-                      <ClipboardIcon className="h-5 w-5 text-secondary" />
+                      <ClipboardIcon className="h-5 w-5 text-primary" />
                     </ButtonInfo>
 
                     <Dropdown vertical="end" horizontal="center">
@@ -190,11 +193,11 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     </Dropdown>
                   </div>
                 </div>
-                <div className="mt-2 flex">
-                  <H6 className="mr-4">Active</H6>
-                  <Toggle
+                <div className="mt-2 flex items-center">
+                  <H6 className="mr-3">Active</H6>
+                  <Togglew
                     size="sm"
-                    color="secondary"
+                    color="primary"
                     className=""
                     checked={webhook.active}
                     onChange={async () => {
@@ -213,11 +216,11 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                   />
                 </div>
 
-                <div className="mt-2 flex">
-                  <H6 className="mr-4">Public</H6>
-                  <Toggle
+                <div className="mt-2 flex items-center">
+                  <H6 className="mr-3">Public</H6>
+                  <Togglew
                     size="sm"
-                    color="secondary"
+                    color="primary"
                     className=""
                     checked={webhook.public}
                     onChange={async () => {
@@ -271,7 +274,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             )
                           }
                         >
-                          <ClipboardCopyIcon className="h-5 w-5 text-secondary" />
+                          <ClipboardCopyIcon className="h-5 w-5 text-primary" />
                         </ButtonInfo>
                       )}
                     </div>
@@ -285,7 +288,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           setMsg(messages[v]);
                         }}
                         size="sm"
-                        className="bg-transparent w-full border-secondary focus:outline-none rounded-lg font-normal text-text-p"
+                        className="bg-transparent w-full border-primary focus:outline-none rounded-lg font-normal text-text-p"
                       >
                         {messages?.map((v, i) => (
                           <option
@@ -306,14 +309,39 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     )}
                   </div>
                 </div>
+                <div className="mt-2">
+                  {messages?.map(
+                    (v, i) =>
+                      i < 3 && (
+                        <span
+                          key={i}
+                          className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1"
+                        >
+                          {v.data.pair}
+                        </span>
+                      )
+                  )}
+                </div>
+
+                <ButtonText
+                  className="mt-1"
+                  onClick={() => setViewChart(!viewChart)}
+                >
+                  {viewChart ? "Hide" : "View"} chart
+                </ButtonText>
               </div>
-              {/* <div className="mt-3 "></div> */}
             </div>
           </Fragment>
         )}
-        <div className="pt-2 w-full">
-          <WebhookLineChart webhook={webhook} mtAccounts={mtAccounts} />
-        </div>
+        {viewChart && (
+          <div className="pt-2 w-full">
+            <WebhookLineChart
+              webhook={webhook}
+              mtAccounts={mtAccounts}
+              messages={messages}
+            />
+          </div>
+        )}
       </div>
     </Fragment>
   );

@@ -1,7 +1,7 @@
 export const pricingList = {
   monthly: {
     "Basic plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_B),
       price: 29,
       save: 0,
       accounts: 1,
@@ -12,7 +12,7 @@ export const pricingList = {
       more: false,
     },
     "Standard plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_S),
       price: 49,
       save: 0,
       accounts: 3,
@@ -23,7 +23,7 @@ export const pricingList = {
       more: false,
     },
     "Professional plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRO),
       price: 99,
       save: 0,
       accounts: 5,
@@ -34,7 +34,7 @@ export const pricingList = {
       more: false,
     },
     "Premium plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRIM),
       price: 159,
       save: 0,
       accounts: 20,
@@ -47,7 +47,7 @@ export const pricingList = {
   },
   annual: {
     "Basic plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_B_Y),
       price: 243,
       save: 30,
       accounts: 1,
@@ -58,7 +58,7 @@ export const pricingList = {
       more: false,
     },
     "Standard plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_S_Y),
       price: 411,
       save: 30,
       accounts: 3,
@@ -69,7 +69,7 @@ export const pricingList = {
       more: false,
     },
     "Professional plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRO_Y),
       price: 712,
       save: 40,
       accounts: 5,
@@ -80,7 +80,7 @@ export const pricingList = {
       more: false,
     },
     "Premium plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRIM_Y),
       price: 954,
       save: 50,
       accounts: 20,

@@ -12,7 +12,7 @@ import {
   Filler,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { H5, H6 } from "../../Components/H";
+import { H5, H6, H4, H3 } from "../../Components/H";
 import moment from "moment";
 
 import { txtColorFromBg, addAlpha } from "../../utils/functions";
@@ -105,7 +105,7 @@ const options = {
   },
 };
 
-function WebhookLineChart({ webhook, mtAccounts }) {
+function WebhookLineChart({ webhook, mtAccounts, messages }) {
   const pdata = [];
 
   const allData = mtAccounts.map((account) =>
@@ -230,21 +230,37 @@ function WebhookLineChart({ webhook, mtAccounts }) {
           className="mt-1 p-2 rounded-xl cursor-pointer"
           style={{ backgroundColor: webhook.color }}
         >
-          <H5 style={{ color: txtColor }}>{webhook.name}</H5>
+          <H4 className="font-bold" style={{ color: txtColor }}>
+            {webhook.name}
+          </H4>
           <div className="flex justify-between items-center mt-1">
             <div className="">
               <H6 style={{ color: txtColor }}>Total</H6>
-              <H5 className="font-bold" style={{ color: txtColor }}>
+              <H3 className="font-bold" style={{ color: txtColor }}>
                 {totalp.toFixed(1)}%
-              </H5>
+              </H3>
             </div>
 
             <div className="">
               <H6 style={{ color: txtColor }}>Today</H6>
-              <H5 className="font-bold" style={{ color: txtColor }}>
+              <H3 className="font-bold" style={{ color: txtColor }}>
                 {totald.toFixed(1)}%
-              </H5>
+              </H3>
             </div>
+          </div>
+
+          <div className="mt-0">
+            {messages?.map(
+              (v, i) =>
+                i < 3 && (
+                  <span
+                    key={i}
+                    className="text-xs bg-bg text-text-h px-2 py-1 rounded-xl mx-1"
+                  >
+                    {v.data.pair}
+                  </span>
+                )
+            )}
           </div>
         </div>
       </Link>

@@ -83,7 +83,7 @@ function Index({ title, value, t }) {
           onClick={() => {
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
             Paddle.Checkout.open({
-              product: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+              product: value.paddleId,
               email: user?.email,
             });
           }}

@@ -223,9 +223,9 @@ const profitPerTime = (data, getProfit = true, wh) => {
   let r = {};
 
   data?.forEach((v) => {
-    const day = new Date(v.closeTime).getDate();
-    const month = new Date(v.closeTime).getMonth();
-    const year = new Date(v.closeTime).getFullYear();
+    const day = new Date(v.closeTimeGMT).getDate();
+    const month = new Date(v.closeTimeGMT).getMonth();
+    const year = new Date(v.closeTimeGMT).getFullYear();
 
     const profit = Number(v.profit);
 
