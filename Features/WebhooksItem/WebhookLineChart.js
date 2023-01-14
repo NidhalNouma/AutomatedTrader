@@ -230,22 +230,22 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
           className="mt-1 p-2 rounded-xl cursor-pointer"
           style={{ backgroundColor: webhook.color }}
         >
-          <H4 className="font-bold" style={{ color: txtColor }}>
+          <H4 className="font-bold truncate" style={{ color: txtColor }}>
             {webhook.name}
           </H4>
           <div className="flex justify-between items-center mt-1">
             <div className="">
               <H6 style={{ color: txtColor }}>Total</H6>
-              <H3 className="font-bold" style={{ color: txtColor }}>
+              <H4 className="font-bold" style={{ color: txtColor }}>
                 {totalp.toFixed(1)}%
-              </H3>
+              </H4>
             </div>
 
             <div className="">
               <H6 style={{ color: txtColor }}>Today</H6>
-              <H3 className="font-bold" style={{ color: txtColor }}>
+              <H4 className="font-bold" style={{ color: txtColor }}>
                 {totald.toFixed(1)}%
-              </H3>
+              </H4>
             </div>
           </div>
 

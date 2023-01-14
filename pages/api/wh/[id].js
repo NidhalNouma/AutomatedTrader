@@ -19,9 +19,14 @@ export default async function handler(req, res) {
       const msgData = getMessageData(message);
 
       const test = msgData.test;
-
       if (test && test?.isTest) {
         const accId = test.account;
+        r.MT4 = accId;
+      }
+
+      const manual = msgData.manual;
+      if (manual && manual?.isManual) {
+        const accId = manual.account;
         r.MT4 = accId;
       }
 

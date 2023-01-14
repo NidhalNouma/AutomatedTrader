@@ -1,14 +1,11 @@
 import Sidenav from "../Features/SideNav";
-import Header from "../Features/Header";
+import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
 export default function help() {
   return (
     <>
       <Sidenav cpath="help" />
-      <div className="w-full flex flex-col">
-        <Header />
-        <div className="px-10 py-6"></div>
-      </div>
+      <MainWithHeader></MainWithHeader>
     </>
   );
 }

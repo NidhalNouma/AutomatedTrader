@@ -18,7 +18,7 @@ module.exports = {
       // primaryi: "rgb(39, 69, 235)",
       // secondaryi: "rgb(174, 168, 216)",
       // accenti: "rgb(28, 28, 31)",
-      bgt: "#00000",
+      bgt: "#000",
       bg: "#050505",
       bga: "#2D2F39",
       // bgai: "rgb(66, 70, 79)",

@@ -7,6 +7,7 @@ import {
   LightBulbIcon,
   UserCircleIcon,
   UserIcon,
+  PaperAirplaneIcon,
 } from "@heroicons/react/outline";
 import {
   CogIcon,
@@ -72,6 +73,13 @@ function Index({ cpath, fixed = true }) {
               isActive={cpath === "webhook"}
             >
               <span className="capitalize ml-2 text-base">Webhooks</span>
+            </Linksn>
+            <Linksn
+              href="/trades"
+              isActive={cpath === "trades"}
+              icon={<PaperAirplaneIcon className="h-5 w-5 rotate-[60deg]" />}
+            >
+              <span className="capitalize ml-2 text-base">Trades</span>
             </Linksn>
             <Linksn
               href="/alerts"

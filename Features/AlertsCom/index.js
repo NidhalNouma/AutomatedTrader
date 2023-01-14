@@ -42,6 +42,11 @@ const Index = ({ alertsHook }) => {
                         test
                       </span>
                     )}
+                    {msg.manual?.isManual && (
+                      <span className=" text-bg rounded-xl px-2 py-0 bg-accent mr-2">
+                        manual
+                      </span>
+                    )}
                     <span
                       className="rounded-sm"
                       style={{ borderBottom: `4px solid ${wh?.color}` }}
@@ -59,7 +64,7 @@ const Index = ({ alertsHook }) => {
                     <span className="text-xs">
                       Position type:
                       <span className="ml-1 font-bold">
-                        {typeToStr(msg.type.toString())}
+                        {typeToStr(msg.type?.toString())}
                       </span>
                     </span>
 

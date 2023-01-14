@@ -21,15 +21,16 @@ export function GetMTAccounts() {
     setMTAccounts(all);
   }
 
-  function getData(withWebHook = null) {
+  function getData(accId = null, withWebHook = null) {
     let data = [];
     mtAccounts.forEach(function (v, i) {
-      console.log(v);
-      if (v.data?.length > 0 && !withWebHook) data.push(...v.data);
-      else if (v.data?.length > 0 && withWebHook) {
-        v.data.forEach((v) => {
-          if (v.Id == withWebHook) data.push(v);
-        });
+      if (accId === null || accId === v.id) {
+        if (v.data?.length > 0 && !withWebHook) data.push(...v.data);
+        else if (v.data?.length > 0 && withWebHook) {
+          v.data.forEach((v) => {
+            if (v.Id == withWebHook) data.push(v);
+          });
+        }
       }
     });
 

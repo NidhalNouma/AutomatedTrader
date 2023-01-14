@@ -406,6 +406,12 @@ export function getMessageData(message) {
 
       datai = datai.filter((v, i) => i > 1);
       // console.log(datai, r);
+    } else if (datai[0] === "manual") {
+      const testData = JSON.parse(datai[1]);
+      r.manual = { isManual: true, ...testData };
+
+      datai = datai.filter((v, i) => i > 1);
+      // console.log(datai, r);
     }
   }
 

@@ -2,7 +2,6 @@ import { Fragment, useState } from "react";
 import { PlusIcon } from "@heroicons/react/solid";
 
 import Sidenav from "../Features/SideNav";
-import Header from "../Features/Header";
 import ProfileSection from "../Features/ProfileSection";
 
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
@@ -11,6 +10,7 @@ import { GetMTAccountsContext } from "../hooks/MTAccounts";
 
 import { H1, H3, H6, Hi6 } from "../Components/H";
 import { ButtonP } from "../Components/Button";
+import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import WebhooksItem from "../Features/WebhooksItem";
 
 import { Modal1 } from "../Components/Modal";
@@ -35,40 +35,33 @@ export default function Home() {
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
       <Sidenav cpath="profile" />
-      <div className="w-full flex flex-col">
-        <Header />
-        <div className="px-5 md:px-10 py-6 overflow-x-hidden">
-          <ProfileSection
-            user={user}
-            fullUser={fullUser}
-            publicProfile={false}
-          />
-          <div className="mt-6">
-            <H3 className="">Webhooks</H3>
-            {webhooks?.length > 0 ? (
-              <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-                {webhooks.map(
-                  (v, i) =>
-                    v.public && (
-                      <Fragment key={v.id}>
-                        <WebhooksItem
-                          webhook={v}
-                          user={user}
-                          mtAccounts={mtAccounts}
-                          forDisplay={true}
-                        />
-                      </Fragment>
-                    )
-                )}
-              </div>
-            ) : (
-              <div className="mt-3">
-                <p>No available public webhooks, click here to add one.</p>
-              </div>
-            )}
-          </div>
+      <MainWithHeader>
+        <ProfileSection user={user} fullUser={fullUser} publicProfile={false} />
+        <div className="mt-6">
+          <H3 className="">Webhooks</H3>
+          {webhooks?.length > 0 ? (
+            <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
+              {webhooks.map(
+                (v, i) =>
+                  v.public && (
+                    <Fragment key={v.id}>
+                      <WebhooksItem
+                        webhook={v}
+                        user={user}
+                        mtAccounts={mtAccounts}
+                        forDisplay={true}
+                      />
+                    </Fragment>
+                  )
+              )}
+            </div>
+          ) : (
+            <div className="mt-3">
+              <p>No available public webhooks, click here to add one.</p>
+            </div>
+          )}
         </div>
-      </div>
+      </MainWithHeader>
     </>
   );
 }
