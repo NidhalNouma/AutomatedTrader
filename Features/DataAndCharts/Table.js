@@ -1,6 +1,6 @@
 import { Fragment, useState } from "react";
 import moment from "moment";
-import { typeToStr } from "../../hooks/WebHook";
+import { typeToStr, GetWebhookContext } from "../../hooks/WebHook";
 import { Modal1 } from "../../Components/Modal";
 import { Button } from "react-daisyui";
 
@@ -50,6 +50,7 @@ function Table({ data }) {
                 .reverse()
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
+                  console.log(v);
                   return (
                     <Fragment key={i}>
                       <tr
@@ -57,11 +58,11 @@ function Table({ data }) {
                         className="border-spacing-[7px] border-b-[0px] border-gray-900 cursor-pointer hover:bg-bga"
                       >
                         <td className="text-xs text-center rounded-l-md">
-                          {v.test ? (
+                          {v.test === "true" ? (
                             <span className="px-2 py-0 rounded-full bg-info text-bg">
                               Test
                             </span>
-                          ) : v.manual ? (
+                          ) : v.manual === "true" ? (
                             <span className="px-2 py-0 rounded-full bg-accent text-bg">
                               Manual
                             </span>
@@ -129,12 +130,28 @@ function Table({ data }) {
 export default Table;
 
 function TradeDetails({ data, close }) {
+  const { webhooks } = GetWebhookContext();
+  const wh = webhooks.find((v) => v.id === data?.ID);
+  console.log(wh, data);
   const type = typeToStr(data?.type?.toString());
 
   return (
     <div className="">
       <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
-        <H3 className="flex">Trade details</H3>
+        <div className="flex items-center">
+          <H3 className="inline-block mr-2">Trade details</H3>
+          {data?.test === "true" ? (
+            <span className="px-2 py-0 rounded-full bg-info text-bg text-xs">
+              Test
+            </span>
+          ) : data?.manual === "true" ? (
+            <span className="px-2 py-0 rounded-full bg-accent text-bg text-xs">
+              Manual
+            </span>
+          ) : (
+            <></>
+          )}
+        </div>
         <Button
           size="sm"
           shape="circle"
@@ -147,6 +164,32 @@ function TradeDetails({ data, close }) {
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-y-4 w-full px-10 mt-2 mb-4">
+        <div className="flex flex-col">
+          <span className="text-sm text-text-p">Account</span>
+          <div>
+            <span
+              className="text-sm text-text-h border-b-4"
+              style={{ borderColor: data?.accountColor }}
+            >
+              {data?.accountDisplayName}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-sm text-text-p">WebHook</span>
+          {wh ? (
+            <div>
+              <span
+                className="text-sm text-text-h border-b-4"
+                style={{ borderColor: wh?.color }}
+              >
+                {wh?.name}
+              </span>
+            </div>
+          ) : (
+            <span className="text-sm text-text-h">N/A</span>
+          )}
+        </div>
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Symbol</span>
           <span className="text-sm text-text-h">{data?.symbol}</span>
@@ -183,7 +226,7 @@ function TradeDetails({ data, close }) {
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Profit</span>
-          <span className="text-sm text-text-h">{data?.profit}</span>
+          <span className="text-sm text-text-h">${data?.profit}</span>
         </div>
 
         <div className="flex flex-col">

@@ -31,6 +31,10 @@ export async function addMTAccount(
   accountBalance,
   accountEquity,
   accountStartBalance,
+
+  accountCurrency,
+  accountCredit,
+  accountCompany,
   type
 ) {
   console.log("Adding new MT account ...");
@@ -56,6 +60,9 @@ export async function addMTAccount(
       accountBalance,
       accountEquity,
       accountStartBalance,
+      accountCurrency,
+      accountCredit,
+      accountCompany,
       type,
       lastUpdated: "",
       color: getRandomColor(),

@@ -10,6 +10,7 @@ import {
   UpdateUser,
   UpdateUser1,
 } from "../hooks/UserHook";
+import { SignOut } from "../hooks/SignHook";
 
 import { uploadImg } from "../db/storage";
 import { updateProfilePicture } from "../db/user";
@@ -149,14 +150,25 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* <div className="mt-6 p-4 bg-bga rounded-xl">
-                <H3 className="mb-4">Payment methods</H3>
-                <div className="mt-4">
-                  <Hi4 className="">
-                    You have no valid payment method, click here to add one.
-                  </Hi4>
-                </div>
-              </div> */}
+            <div className="mt-6 p-4 bg-bg rounded-xl">
+              <H3 className="mb-4">Telegram</H3>
+              <div className="mt-4">
+                <Hi4 className="">
+                  You have no active membership, click here to get one and link
+                  your telegram account.
+                </Hi4>
+              </div>
+            </div>
+
+            <div className="flex justify-center mt-10">
+              <ButtonP
+                className="!border-none hover:!bg-transparent"
+                variant="link"
+                onClick={async () => SignOut()}
+              >
+                Sign out
+              </ButtonP>
+            </div>
           </div>
         </div>
       </MainWithHeader>

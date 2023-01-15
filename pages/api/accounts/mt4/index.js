@@ -10,6 +10,9 @@ export default async function handler(req, res) {
       accountBalance,
       accountEquity,
       accountStartBalance,
+      accountCurrency,
+      accountCredit,
+      accountCompany,
     } = req.body;
 
     if (userId && accountName && accountNumber && accountServer) {
@@ -21,6 +24,9 @@ export default async function handler(req, res) {
         accountBalance,
         accountEquity,
         accountStartBalance,
+        accountCurrency,
+        accountCredit,
+        accountCompany,
         "MT4"
       );
       if (r.id)

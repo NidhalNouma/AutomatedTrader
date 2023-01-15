@@ -116,9 +116,9 @@ function Index({ cpath, fixed = true }) {
             <div className="border-t-2 border-bga"></div>
           </div>
 
-          <div className="text-text-p pl-4 my-4">
+          <div className="text-text-p pl-4 my-2">
             <div
-              className="flex items-center pl-4 mr-3 cursor-pointer"
+              className="flex items-center pl-4 mr-3 cursor-pointer my-2"
               onClick={() => setOpenApps(!openApps)}
             >
               <span
@@ -170,7 +170,7 @@ function Index({ cpath, fixed = true }) {
                 >
                   <span className="capitalize ml-2 text-base">MT4</span>
                 </Linksn>
-                <Linksn
+                {/* <Linksn
                   href="/apps/telegram"
                   isActive={cpath === "telegram"}
                   // className="my-0"
@@ -188,7 +188,7 @@ function Index({ cpath, fixed = true }) {
                   }
                 >
                   <span className="capitalize ml-2 text-base">Telegram</span>
-                </Linksn>
+                </Linksn> */}
               </div>
             )}
           </div>

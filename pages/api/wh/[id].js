@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         r.MT4 = accId;
       }
 
-      if (r && (r.active === true || test)) {
+      if (r && (r.active === true || test || manual)) {
         const user = await getUser(r.userId);
 
         if (msgData.time.use || msgData.time.use === false) {
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
             });
 
             if (user && user.telegram) {
-              await sendMessage(user.telegram, message);
+              await sendMessage(user.telegram, message, msgData, r);
             }
             return res.status(200).json({ done: true });
           }

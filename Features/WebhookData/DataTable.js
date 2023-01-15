@@ -47,11 +47,13 @@ function DataTable({ data }) {
             )}
         </tbody>
       </table>
-      <div className="w-full text-center mt-4">
-        <ButtonText className="" onClick={() => setShow(!show)}>
-          {!show ? "Show all" : "Hide"}
-        </ButtonText>
-      </div>
+      {data?.length >= 6 && (
+        <div className="w-full text-center mt-4">
+          <ButtonText className="" onClick={() => setShow(!show)}>
+            {!show ? "Show all" : "Hide"}
+          </ButtonText>
+        </div>
+      )}
     </div>
   );
 }

@@ -25,11 +25,29 @@ export function GetMTAccounts() {
     let data = [];
     mtAccounts.forEach(function (v, i) {
       if (accId === null || accId === v.id) {
-        if (v.data?.length > 0 && !withWebHook) data.push(...v.data);
-        else if (v.data?.length > 0 && withWebHook) {
-          v.data.forEach((v) => {
-            if (v.Id == withWebHook) data.push(v);
-          });
+        if (v.data?.length > 0) {
+          if (!withWebHook) {
+            v.data.forEach((d) => {
+              data.push({
+                ...d,
+                accountName: v.accountName,
+                accountDisplayName: v.accountDisplayName,
+                accountId: v.id,
+                accountColor: v.color,
+              });
+            });
+          } else if (withWebHook) {
+            v.data.forEach((d) => {
+              if (d.Id == withWebHook)
+                data.push({
+                  ...d,
+                  accountName: v.accountName,
+                  accountDisplayName: v.accountDisplayName,
+                  accountId: v.id,
+                  accountColor: v.color,
+                });
+            });
+          }
         }
       }
     });
@@ -370,7 +388,7 @@ function getDates(startDate, stopDate) {
 export function getDaysFromTimeTillNow(startTime, sep = 1) {
   let dates = [];
   let endTime = new Date();
-  endTime.setDate(new Date().getDate() + 1);
+  endTime.setDate(new Date().getDate() + 2);
 
   const days = Math.floor(
     (endTime - new Date(startTime)) / (1000 * 60 * 60 * 24)
@@ -428,11 +446,11 @@ export function cleanData(data, numData, cleanTop0 = false) {
   if (l > 0) {
     const ar = [];
     const fdate = new Date(Object.keys(r)[0]);
-    console.log(fdate);
+    // console.log(fdate);
     for (let i = 0; i < l; i++) {
       let d = fdate;
       d.setDate(fdate.getDate() - (i + 1));
-      console.log("----", d);
+      // console.log("----", d);
       ar[d] = 0;
     }
     r = { ...ar, ...r };
