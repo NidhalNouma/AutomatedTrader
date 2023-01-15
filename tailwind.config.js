@@ -20,7 +20,7 @@ module.exports = {
       // accenti: "rgb(28, 28, 31)",
       bgt: "#000",
       bg: "#050505",
-      bga: "#2D2F39",
+      bga: "#2c2b31",
       // bgai: "rgb(66, 70, 79)",
       // bgl: "rgb(0, 0, 50)",
       "text-h": "rgb(255, 255, 255)",

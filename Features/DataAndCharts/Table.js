@@ -28,12 +28,12 @@ function Table({ data }) {
       </Modal1>
 
       <div className="relative rounded-md">
-        <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md ">
+        <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md bg-bgt">
           <table className="table-auto w-full">
             <thead className="sticky top-0 bg-bgt">
               <tr>
-                <th className="text-text-h text-md py-4"></th>
-                <th className="text-text-h text-md ">Symbol</th>
+                <th className="text-text-h text-md"></th>
+                <th className="text-text-h text-md py-3">Symbol</th>
                 <th className="text-text-h text-md">Type</th>
                 <th className="text-text-h text-md">Lot</th>
                 <th className="text-text-h text-md">Pips</th>
@@ -120,7 +120,7 @@ function Table({ data }) {
             </tbody>
           </table>
         </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-bg opacity-30 rounded-b-md z-10"></div>
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-bgt opacity-30 rounded-b-md z-10"></div>
       </div>
     </Fragment>
   );
@@ -152,7 +152,7 @@ function TradeDetails({ data, close }) {
           <span className="text-sm text-text-h">{data?.symbol}</span>
         </div>
         <div className="flex flex-col">
-          <span className="text-sm text-text-p">Lot</span>{" "}
+          <span className="text-sm text-text-p">Type</span>{" "}
           <div>
             <span
               className={`px-2 py-[0.15rem] rounded-md font-bold text-sm ${

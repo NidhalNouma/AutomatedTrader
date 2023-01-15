@@ -36,7 +36,7 @@ export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
 
     setError("");
     const msg =
-      "manual " + JSON.stringify({ account: sAccount.id }) + " " + sMessage;
+      "manual " + JSON.stringify({ account: [sAccount.id] }) + " " + sMessage;
     // console.log(msg, sAccount, sWebhook);
 
     const r = await axios.post("/api/wh/" + sWebhook.id, msg, {

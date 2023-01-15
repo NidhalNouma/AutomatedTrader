@@ -7,11 +7,11 @@ function DataTable({ data }) {
   const [show, setShow] = useState(false);
 
   return (
-    <div className="overflow-x-auto w-full">
+    <div className="overflow-x-auto w-full max-h-72 hideScrollbar">
       <table className="table-auto w-full">
         <thead>
-          <tr>
-            <th className="text-text-h text-xs">Date/Time</th>
+          <tr className="bg-bgt sticky top-0">
+            <th className="text-text-h text-xs pb-3">Date/Time</th>
             <th className="text-text-h text-xs">Pair</th>
             <th className="text-text-h text-xs">Open Price</th>
             <th className="text-text-h text-xs">Lot</th>
@@ -24,7 +24,7 @@ function DataTable({ data }) {
             ?.slice(0)
             .reverse()
             ?.map((v, i) => {
-              return (i < 6 && !show) || show ? (
+              return (i < 10 && !show) || show ? (
                 <React.Fragment key={i}>
                   <tr className="border-spacing-[7px] border-b-[1px] border-gray-700">
                     <td className="text-xs text-center py-3">
@@ -53,11 +53,11 @@ function DataTable({ data }) {
             })}
         </tbody>
       </table>
-      <div className="w-full text-center mt-4">
+      {/* <div className="w-full text-center mt-4">
         <ButtonText className="" onClick={() => setShow(!show)}>
           {!show ? "Show all" : "Hide"}
         </ButtonText>
-      </div>
+      </div> */}
     </div>
   );
 }
