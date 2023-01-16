@@ -103,13 +103,13 @@ function Index({ cpath, fixed = true }) {
             >
               <span className="capitalize ml-2 text-base">Alerts</span>
             </Linksn>
-            <Linksn
+            {/* <Linksn
               href="/actions"
               isActive={cpath === "actions"}
               icon={<LightBulbIcon className="h-5 w-5" />}
             >
               <span className="capitalize ml-2 text-base">Actions</span>
-            </Linksn>
+            </Linksn> */}
           </div>
 
           <div className="my-1 px-4">

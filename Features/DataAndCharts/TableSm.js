@@ -7,7 +7,7 @@ import { Button } from "react-daisyui";
 import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
 
-function Table({ data }) {
+function TableSm({ data }) {
   const [open, setOpen] = useState(null);
 
   return (
@@ -28,20 +28,20 @@ function Table({ data }) {
       </Modal1>
 
       <div className="relative rounded-md">
-        <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md bg-bgt">
+        <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md bg-transparent">
           <table className="table-auto w-full">
-            <thead className="sticky top-0 bg-bgt">
+            <thead className="sticky top-0 bg-bg">
               <tr>
-                <th className="text-text-h text-md"></th>
-                <th className="text-text-h text-md py-3">Symbol</th>
-                <th className="text-text-h text-md">Type</th>
-                <th className="text-text-h text-md">Lot</th>
-                <th className="text-text-h text-md">Pips</th>
-                <th className="text-text-h text-md">Profit</th>
-                <th className="text-text-h text-md">Open Price</th>
-                <th className="text-text-h text-md">Close Price</th>
+                <th className="text-text-h text-sm">Date/Time</th>
+                <th className="text-text-h text-sm py-3">Symbol</th>
+                <th className="text-text-h text-sm">Type</th>
+                {/* <th className="text-text-h text-md">Lot</th> */}
+                {/* <th className="text-text-h text-md">Profit</th> */}
+                <th className="text-text-h text-sm">Open Price</th>
+                <th className="text-text-h text-sm">Close Price</th>
                 {/* <th className="text-text-h text-xs">Open Time</th> */}
-                <th className="text-text-h text-md">Close Time</th>
+                {/* <th className="text-text-h text-md">Close Time</th> */}
+                <th className="text-text-h text-sm">Pips</th>
               </tr>
             </thead>
             <tbody className="">
@@ -50,7 +50,7 @@ function Table({ data }) {
                 .reverse()
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
-                  // console.log(v);
+                  //   console.log(v);
                   return (
                     <Fragment key={i}>
                       <tr
@@ -58,17 +58,11 @@ function Table({ data }) {
                         className="border-spacing-[7px] border-b-[0px] border-gray-900 cursor-pointer hover:bg-bga"
                       >
                         <td className="text-xs text-center rounded-l-md">
-                          {v.test === "true" ? (
-                            <span className="px-2 py-0 rounded-full bg-info text-bg">
-                              Test
-                            </span>
-                          ) : v.manual === "true" ? (
-                            <span className="px-2 py-0 rounded-full bg-accent text-bg">
-                              Manual
-                            </span>
-                          ) : (
-                            <></>
-                          )}
+                          {v.closeTimeGMT
+                            ? moment.utc(v.closeTimeGMT).fromNow()
+                            : // .format("yyyy MM DD HH:mm:ss")
+                              //   format("yyyy MM DD HH:mm:ss")}
+                              moment(v.closeTime).fromNow()}
                         </td>
                         <td className="text-xs text-center font-bold">
                           {v.symbol}
@@ -86,9 +80,9 @@ function Table({ data }) {
                             {type}
                           </span>
                         </td>
-                        <td className="text-xs text-center">{v.lot}</td>
-                        <td className={`text-xs text-center `}>{v.pips}</td>
-                        <td
+                        {/* <td className="text-xs text-center">{v.lot}</td> */}
+                        {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
+                        {/* <td
                           className={`text-xs text-center font-bold ${
                             v.profit > 0
                               ? "text-green-300"
@@ -98,7 +92,7 @@ function Table({ data }) {
                           } `}
                         >
                           ${Number(v.profit).toFixed(2)}
-                        </td>
+                        </td> */}
                         <td className="text-xs text-center">{v.open}</td>
                         <td className="text-xs text-center">{v.close}</td>
                         {/* <td className="text-xs text-center py-3">
@@ -107,11 +101,7 @@ function Table({ data }) {
                         : moment(v.openTime).format()}
                     </td> */}
                         <td className="text-xs text-center py-3 rounded-r-md">
-                          {v.closeTimeGMT
-                            ? moment
-                                .utc(v.closeTimeGMT)
-                                .format("yyyy MM DD HH:mm:ss")
-                            : moment(v.closeTime).format("yyyy MM DD HH:mm:ss")}
+                          {v.pips}
                         </td>
                       </tr>
                       {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
@@ -121,13 +111,13 @@ function Table({ data }) {
             </tbody>
           </table>
         </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-bgt opacity-30 rounded-b-md z-10"></div>
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-7 bg-bgt opacity-30 rounded-b-md z-10"></div>
       </div>
     </Fragment>
   );
 }
 
-export default Table;
+export default TableSm;
 
 function TradeDetails({ data, close }) {
   const { webhooks } = GetWebhookContext();
@@ -164,7 +154,7 @@ function TradeDetails({ data, close }) {
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-y-4 w-full px-10 mt-2 mb-4">
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <span className="text-sm text-text-p">Account</span>
           <div>
             <span
@@ -174,8 +164,8 @@ function TradeDetails({ data, close }) {
               {data?.accountDisplayName}
             </span>
           </div>
-        </div>
-        <div className="flex flex-col">
+        </div> */}
+        {/* <div className="flex flex-col">
           <span className="text-sm text-text-p">WebHook</span>
           {wh ? (
             <div>
@@ -189,7 +179,7 @@ function TradeDetails({ data, close }) {
           ) : (
             <span className="text-sm text-text-h">N/A</span>
           )}
-        </div>
+        </div> */}
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Symbol</span>
           <span className="text-sm text-text-h">{data?.symbol}</span>
@@ -221,15 +211,6 @@ function TradeDetails({ data, close }) {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-sm text-text-p">Pips</span>
-          <span className="text-sm text-text-h">{data?.pips}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-sm text-text-p">Profit</span>
-          <span className="text-sm text-text-h">${data?.profit}</span>
-        </div>
-
-        <div className="flex flex-col">
           <span className="text-sm text-text-p">Open Time</span>
           <span className="text-sm text-text-h">
             {data?.openTimeGMT
@@ -243,6 +224,27 @@ function TradeDetails({ data, close }) {
             {data?.closeTimeGMT
               ? moment.utc(data?.closeTimeGMT).format("yyyy MM DD HH:mm:ss")
               : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          <span className="text-sm text-text-p">Pips</span>
+          <span className="text-sm text-text-h">{data?.pips}</span>
+        </div>
+        {/* <div className="flex flex-col">
+          <span className="text-sm text-text-p">Profit</span>
+          <span className="text-sm text-text-h">${data?.profit}</span>
+        </div> */}
+        <div className="flex flex-col">
+          <span className="text-sm text-text-p">Comment</span>
+          <span className="text-sm font-bold">
+            {data?.profit > 0 ? (
+              <span className="text-green-300">Win</span>
+            ) : data?.profit < 0 ? (
+              <span className="text-red-400">Lost</span>
+            ) : (
+              "BreakEven"
+            )}
           </span>
         </div>
       </div>

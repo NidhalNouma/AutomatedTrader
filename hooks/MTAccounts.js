@@ -242,9 +242,15 @@ const profitPerTime = (data, getProfit = true, wh) => {
   let r = {};
 
   data?.forEach((v) => {
-    const day = new Date(v.closeTimeGMT).getDate();
-    const month = new Date(v.closeTimeGMT).getMonth();
-    const year = new Date(v.closeTimeGMT).getFullYear();
+    const day = new Date(
+      new Date(v.closeTimeGMT).toLocaleDateString()
+    ).getDate();
+    const month = new Date(
+      new Date(v.closeTimeGMT).toLocaleDateString()
+    ).getMonth();
+    const year = new Date(
+      new Date(v.closeTimeGMT).toLocaleDateString()
+    ).getFullYear();
 
     const profit = Number(v.profit);
 
@@ -297,11 +303,12 @@ export function getDataFromAccountPerPeriod(
 
   const il = period.length - 1;
   period.forEach((v, i) => {
-    if (i === il) return;
-    const lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
+    let lv = new Date();
+    if (i === il) {
+      // console.log("pv", v);
+    } else lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
     const range = getDates(v, lv);
-
-    // console.log("range", range);
+    // if (i === il) console.log("range", range, v, lv);
 
     range.forEach((d, i) => {
       const day = new Date(d).getDate();
@@ -388,7 +395,7 @@ function getDates(startDate, stopDate) {
 export function getDaysFromTimeTillNow(startTime, sep = 1) {
   let dates = [];
   let endTime = new Date();
-  endTime.setDate(new Date().getDate() + 2);
+  endTime.setDate(new Date().getDate() + 1);
 
   const days = Math.floor(
     (endTime - new Date(startTime)) / (1000 * 60 * 60 * 24)

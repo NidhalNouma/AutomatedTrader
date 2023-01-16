@@ -246,7 +246,7 @@ export default function BarAndLineChart({ accounts }) {
 
           <div className="">
             <Select1
-              className="!m-0 !p-0 !w-16 !outline-none !focus:outline-none !border-bg !focus:border-bg !bg-bg"
+              className="!m-0 !p-0 !w-16 !outline-none !focus:outline-none !border-transparent !focus:border-bg !bg-transparent"
               name=""
               helper=""
               size="xs"

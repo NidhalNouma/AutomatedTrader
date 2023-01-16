@@ -24,7 +24,7 @@ function Index({ user, fullUser, publicProfile }) {
           <H2>{fullUser?.displayName || "NA"}</H2>
           {!publicProfile && (
             <ButtonP
-              className="ml-2 !p-0 hover:!bg-transparent !border-primary !border-none "
+              className="ml-2 !p-0 hover:!bg-transparent !bg-transparent !border-primary !border-none "
               icon={<PencilAltIcon className="h-4 w-4 text-secondary" />}
               onClick={() => router.push("/settings")}
             ></ButtonP>

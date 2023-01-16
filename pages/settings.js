@@ -162,7 +162,7 @@ export default function Settings() {
 
             <div className="flex justify-center mt-10">
               <ButtonP
-                className="!border-none hover:!bg-transparent"
+                className="!border-none hover:!bg-transparent !bg-transparent !text-sm"
                 variant="link"
                 onClick={async () => SignOut()}
               >

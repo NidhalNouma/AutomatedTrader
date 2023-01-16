@@ -9,6 +9,7 @@ import Sidenav from "../../Features/SideNav";
 
 import { H3 } from "../../Components/H";
 import DataTable from "../../Features/WebhookData/DataTable";
+import TableSm from "../../Features/DataAndCharts/TableSm";
 
 import DoughChart from "../../Features/MTAccount/DoughChart";
 
@@ -59,9 +60,10 @@ function Webhook({}) {
 
                 <div className="flex w-full bg-bg p-2 rounded-xl mt-6">
                   <div className="w-3/5">
-                    <H3 className="m-2">Last transaction</H3>
+                    <H3 className="m-2">Transaction</H3>
                     <div className="px-3">
-                      <DataTable data={data} />
+                      {/* <DataTable data={data} /> */}
+                      <TableSm data={data} />
                     </div>
                   </div>
                   {Object.keys(pairProfit).length > 0 && (
