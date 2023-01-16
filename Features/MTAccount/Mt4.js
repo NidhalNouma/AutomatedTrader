@@ -8,6 +8,7 @@ import { Modal1 } from "../../Components/Modal";
 import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
 import WebhooksPopUp from "./WebhooksPopUp";
 
+import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/solid";
 // import { EllipsVer } from "@heroicons/react/solid";
 
 import {
@@ -20,6 +21,7 @@ import { txtColorFromBg } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
 
 function Mt4({ account, userId }) {
+  const [openNumbers, setOpenNumbers] = useState(true);
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -46,7 +48,20 @@ function Mt4({ account, userId }) {
       <div className="">
         <div className="flex items-center justify-between">
           <div className="flex items-end">
-            <H4 style={{ color: txtColor }}>{account.accountDisplayName}</H4>
+            <H4 style={{ color: txtColor }} className="flex items-center">
+              {openNumbers ? (
+                <ChevronDownIcon
+                  className="h-4 w-4 ml-auto cursor-pointer"
+                  onClick={() => setOpenNumbers(!openNumbers)}
+                />
+              ) : (
+                <ChevronUpIcon
+                  className="h-4 w-4 ml-auto cursor-pointer"
+                  onClick={() => setOpenNumbers(!openNumbers)}
+                />
+              )}
+              {account.accountDisplayName}
+            </H4>
             <span className="text-xs ml-1" style={{ color: txtColor }}>
               ({account.accountName})
             </span>
@@ -95,20 +110,22 @@ function Mt4({ account, userId }) {
           </div>
         </div>
 
-        <div className="grid grid-cols-3">
-          <div className="">
-            <H6 style={{ color: txtColor }}>Balance</H6>
-            <H5 style={{ color: txtColor }} className="font-bold">
-              {account.accountBalance}
-            </H5>
+        {openNumbers && (
+          <div className="grid grid-cols-3">
+            <div className="">
+              <H6 style={{ color: txtColor }}>Balance</H6>
+              <H5 style={{ color: txtColor }} className="font-bold">
+                {account.accountBalance}
+              </H5>
+            </div>
+            <div className="">
+              <H6 style={{ color: txtColor }}>Equity</H6>
+              <H5 style={{ color: txtColor }} className="font-bold">
+                {account.accountEquity}
+              </H5>
+            </div>
           </div>
-          <div className="">
-            <H6 style={{ color: txtColor }}>Equity</H6>
-            <H5 style={{ color: txtColor }} className="font-bold">
-              {account.accountEquity}
-            </H5>
-          </div>
-        </div>
+        )}
       </div>
 
       <Modal1

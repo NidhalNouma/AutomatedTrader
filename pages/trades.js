@@ -54,7 +54,7 @@ export default function TradesPage() {
               </svg>
             }
           >
-            Place
+            Open Trade
           </ButtonP>
         </div>
 

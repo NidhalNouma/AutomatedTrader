@@ -79,7 +79,7 @@ function Index({ title, value, t }) {
           )}
         </div>
         <ButtonP
-          className="w-full max-w-xs mt-auto"
+          className="w-full max-w-xs mt-auto !bg-transparent !border-text-p"
           onClick={() => {
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
             Paddle.Checkout.open({

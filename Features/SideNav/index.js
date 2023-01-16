@@ -28,14 +28,19 @@ function Index({ cpath, fixed = true }) {
     <Content fixed={fixed}>
       {/* {fixed && ( */}
       <div className="py-4 px-2 m-3 sticky top-3 left-0 bg-transparent">
-        <Image
-          src="/Logo/dark-logo.png"
-          alt=""
-          width="12w"
-          height="2h"
-          className=""
-          layout="responsive"
-        />
+        <div className="relative">
+          <Image
+            src="/Logo/dark-logo.png"
+            alt=""
+            width="15w"
+            height="2h"
+            className=""
+            layout="responsive"
+          />
+          <span className="absolute top-full right-0 text-xs font-bold text-text-p bg-text-h px-3 rounded-full">
+            Beta | Under development
+          </span>
+        </div>
       </div>
       {/* )} */}
       {/* <div className="pl-4">
@@ -170,7 +175,7 @@ function Index({ cpath, fixed = true }) {
                 >
                   <span className="capitalize ml-2 text-base">MT4</span>
                 </Linksn>
-                {/* <Linksn
+                <Linksn
                   href="/apps/telegram"
                   isActive={cpath === "telegram"}
                   // className="my-0"
@@ -188,7 +193,7 @@ function Index({ cpath, fixed = true }) {
                   }
                 >
                   <span className="capitalize ml-2 text-base">Telegram</span>
-                </Linksn> */}
+                </Linksn>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 import { useState, Fragment } from "react";
 
-import { Dropdown, Button, Drawer } from "react-daisyui";
+import { Dropdown, Button, Drawer, Indicator } from "react-daisyui";
+import { ButtonP } from "../../Components/Button";
 
 import Link from "next/link";
 import { BellIcon } from "@heroicons/react/outline";
@@ -8,6 +9,7 @@ import SearchHeader from "./SearchHeader";
 
 import { Modal1 } from "../../Components/Modal";
 import ManageWebhook from "../ManageWebhook";
+import OpenTrade from "../tradesManual/Open";
 
 import { SignOut } from "../../hooks/SignHook";
 
@@ -25,21 +27,44 @@ function Index() {
           setOpen(false);
         }}
       >
-        <ManageWebhook close={() => setOpen(false)} />
+        <OpenTrade close={() => setOpen(false)} />
       </Modal1>
       <div
         className="px-4 md:px-6 py-2 md:py-3 bg-bg w-full sticky top-0 z-50 border-b2 border-b-bga"
         style={{ zIndex: 100 }}
       >
-        {/* <DD /> */}
-        <div className="flex justify-between items-center">
-          <SearchHeader />
+        <div className="flex justify-between items-center w-full">
+          <ButtonP
+            className="!bg-transparent !border-text-p hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+            onClick={() => {
+              setOpen(true);
+            }}
+            icon={
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-4 h-4"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+                />
+              </svg>
+            }
+          >
+            Open Trade
+          </ButtonP>
           {user ? (
-            <div className="flex items-center">
+            <div className="flex items-center ml-auto">
+              <SearchHeader />
               {/* <ButtonP className="ml-6" onClick={() => setOpen(true)}>
                 <span className="text-xs">+ New</span>
               </ButtonP> */}
-              {/* <Indicator
+              <Indicator
                 vertical="top"
                 horizontal=""
                 // item={<Badge size="xs" color="accent" />}
@@ -49,7 +74,7 @@ function Index() {
                 <span className="ml-6 cursor-pointer text-text-p">
                   <BellIcon className="h-7 w-7" />
                 </span>
-              </Indicator> */}
+              </Indicator>
               <div className="ml-6">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">

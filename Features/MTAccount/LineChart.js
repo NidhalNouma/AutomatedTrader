@@ -132,9 +132,9 @@ export default function App({ accounts }) {
       return {
         data: Object.values(d),
         borderColor: account.color || "rgb(52, 54, 59)",
-        backgroundColor: account.color
-          ? addAlpha(account.color, 0.3)
-          : "rgba(52, 54, 59, 0.3)",
+        // backgroundColor: account.color
+        //   ? addAlpha(account.color, 0.3)
+        //   : "rgba(52, 54, 59, 0.3)",
         lineTension: 0.25,
         fill: true,
         label: account.accountDisplayName,

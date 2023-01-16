@@ -53,7 +53,7 @@ function SearchHeader() {
         <SideNav fixed={false} />
       </Drawer>
 
-      <div className="w-1/2 flex item-center relative">
+      <div className="w- flex item-center relative">
         <div
           onClick={() => setOpenMenu(true)}
           className="flex justify-center item-center md:hidden"
