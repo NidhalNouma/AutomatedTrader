@@ -158,6 +158,36 @@ export async function deleteMT4Account(id, accountId) {
   return nwh;
 }
 
+export async function updateWebhookName(userId, id, name) {
+  console.log("Update webhook name ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    name,
+  });
+
+  const r = getWebhooksByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
+export async function updateWebhookColor(userId, id, color) {
+  console.log("Update webhook color ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    color,
+  });
+
+  const r = getWebhooksByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
 function getRandomColor() {
   var letters = "0123456789ABCDEF";
   var color = "#";

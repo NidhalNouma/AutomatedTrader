@@ -24,7 +24,7 @@ module.exports = {
       // bgai: "rgb(66, 70, 79)",
       // bgl: "rgb(0, 0, 50)",
       "text-h": "rgb(255, 255, 255)",
-      "text-p": "rgb(101, 105, 114)",
+      "text-p": "rgb(135, 135, 135)",
     },
   },
   plugins: [require("daisyui")],

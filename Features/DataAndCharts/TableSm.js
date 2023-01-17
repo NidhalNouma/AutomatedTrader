@@ -100,7 +100,16 @@ function TableSm({ data }) {
                         ? moment.utc(v.openTimeGMT).format()
                         : moment(v.openTime).format()}
                     </td> */}
-                        <td className="text-xs text-center py-3 rounded-r-md">
+                        <td
+                          // className="text-xs text-center"
+                          className={`text-xs text-center font-bold py-3 rounded-r-md ${
+                            v.profit > 0
+                              ? "text-green-300"
+                              : v.profit < 0
+                              ? "text-red-400"
+                              : ""
+                          } `}
+                        >
                           {v.pips}
                         </td>
                       </tr>

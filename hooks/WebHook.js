@@ -7,6 +7,8 @@ import {
   activeWebhook,
   publicWebhook,
   deleteWebhook,
+  updateWebhookName,
+  updateWebhookColor,
 } from "../db/webhooks";
 import axios from "axios";
 
@@ -286,6 +288,30 @@ export async function setActiveWebhook(id, active) {
 export async function setPublicWebhook(id, ispublic) {
   const r = publicWebhook(id, ispublic);
   return r;
+}
+
+export function EditWebhookName(userId, whId, defaultName) {
+  const [whname, setWHname] = useState(defaultName || "");
+
+  async function editWhName() {
+    if (!userId || !whId) return;
+    const r = await updateWebhookName(userId, whId, whname);
+    return r;
+  }
+
+  return { whname, setWHname, editWhName };
+}
+
+export function EditWebhookColor(userId, whId, defaultColor) {
+  const [whcolor, setWHcolor] = useState(defaultColor || "");
+
+  async function editWhColor() {
+    if (!userId || !whId) return;
+    const r = await updateWebhookColor(userId, whId, whcolor);
+    return r;
+  }
+
+  return { whcolor, setWHcolor, editWhColor };
 }
 
 export function getMessages(webhook) {

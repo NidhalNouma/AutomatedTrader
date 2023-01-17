@@ -1,23 +1,16 @@
 import { Fragment, useRef, useEffect, useState } from "react";
 import { Input, Swap } from "react-daisyui";
-import { MenuIcon, XIcon, SearchIcon } from "@heroicons/react/outline";
+import { XIcon, SearchIcon } from "@heroicons/react/outline";
 import { SearchByDisplayName } from "../../hooks/UserHook";
 import { H5 } from "../../Components/H";
 import Link from "next/link";
-import Drawer from "../Drawer";
-import SideNav from "../SideNav";
 
 import { Modalt } from "../../Components/Modal";
-// import { GetDrawerContext } from "../../hooks/OpenDrawer";
 
 function SearchHeader() {
   const { users, displayName, setDisplayName } = SearchByDisplayName();
   const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
-
-  const [openMenu, setOpenMenu] = useState(false);
-
-  // const { toggleOpenDrawer } = GetDrawerContext();
 
   useEffect(() => {
     if (open) {
@@ -49,40 +42,17 @@ function SearchHeader() {
           <Results users={users} />
         </div>
       </Modalt>
-      <Drawer isOpen={openMenu} setIsOpen={() => setOpenMenu((v) => !v)}>
-        <SideNav fixed={false} />
-      </Drawer>
 
-      <div className="w- flex item-center relative">
-        <div
-          onClick={() => setOpenMenu(true)}
-          className="flex justify-center item-center md:hidden"
-        >
-          <Swap
-            className="mr-4 "
-            rotate={true}
-            offElement={<MenuIcon className="h-7 w-7" />}
-            onElement={<MenuIcon className="h-7 w-7 " />}
-          />
-        </div>
+      <div className="relative">
         <div
           onClick={() => setOpen(true)}
-          className="flex items-center bg-bg border-[1px] border-bga px-4 py-2 rounded-2xl cursor-pointer max-w-full"
+          className="flex items-center bg-bg border-[2px] border-bga px-4 py-2 rounded-full cursor-pointer"
         >
-          <SearchIcon className="h-5 w-5" />
-          <span className="ml-1 text-sm truncate">
-            Search for webhooks, profiles and more ...
+          <SearchIcon className="h-5 w-5 text-text-p" />
+          <span className="ml-1 text-sm truncate text-text-p hidden md:block">
+            Search webhooks, profiles and more ...
           </span>
         </div>
-        {/* <Input
-        className="w-11/12 rounded-2xl bg-accent border-bgai border-4 placeholder:text-text-p placeholder:opacity-100 focus:outline-0"
-        // bordered
-        type="text"
-        placeholder="Search for webhooks, profiles and more ..."
-        value={displayName}
-        onChange={(e) => setDisplayName(e.target.value)}
-        onFocus={() => setFocused(true)}
-      /> */}
       </div>
     </Fragment>
   );

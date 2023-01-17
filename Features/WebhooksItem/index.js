@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 
 import { H6, Hi6, H4 } from "../../Components/H";
 import { ButtonInfo, ButtonText } from "../../Components/Button";
-import { Togglew } from "../../Components/Input";
+import { Togglew, Input1 } from "../../Components/Input";
 import { Toggle, Select, Dropdown } from "react-daisyui";
 import {
   PlusCircleIcon,
@@ -12,11 +12,12 @@ import {
 } from "@heroicons/react/outline";
 
 import { H5 } from "../../Components/H";
+import ColorPicker from "../../Components/ColorPicker";
 
 import { Modal1 } from "../../Components/Modal";
 import AddMessage from "../ManageWebhook/AddMessage";
-import EditMessage from "../ManageWebhook/EditMessage";
-import { DeleteMessage } from "../../Components/ModalMsg";
+import EditMessageWH from "../ManageWebhook/EditMessage";
+import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
 
 import {
   getMessages,
@@ -24,6 +25,8 @@ import {
   setPublicWebhook,
   DeleteWebhook,
   GetWebhookContext,
+  EditWebhookName,
+  EditWebhookColor,
 } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
 
@@ -35,11 +38,25 @@ import WebhookLineChart from "./WebhookLineChart";
 
 function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   // const [webhook, setWebhook] = useState(wh);
-  const { getAllWebhooks } = GetWebhookContext();
+  const { getAllWebhooks, setWebhooks } = GetWebhookContext();
+
+  const { whname, setWHname, editWhName } = EditWebhookName(
+    user?.uid,
+    webhook.id,
+    webhook.name
+  );
+
+  const { whcolor, setWHcolor, editWhColor } = EditWebhookColor(
+    user?.uid,
+    webhook.id,
+    webhook.color
+  );
 
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openChangeName, setOpenChangeName] = useState(false);
+  const [openChangeColor, setOpenChangeColor] = useState(false);
 
   const [duplicateMsg, setDuplicateMsg] = useState(null);
 
@@ -91,7 +108,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 setOpenEdit(false);
               }}
             >
-              <EditMessage
+              <EditMessageWH
                 close={() => setOpenEdit(false)}
                 webhook={webhook}
                 msg={msg}
@@ -123,6 +140,58 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                   will be lost!
                 </H5>
               </DeleteMessage>
+            </Modal1>
+
+            <Modal1
+              open={openChangeName}
+              close={() => {
+                setOpenChangeName(false);
+              }}
+              backclose={() => {
+                setOpenChangeName(false);
+              }}
+            >
+              <EditMessage
+                close={() => setOpenChangeName(false)}
+                title="Change webhook name"
+                onEdit={async () => {
+                  const r = await editWhName();
+                  setWebhooks(r);
+                }}
+              >
+                <div className="">
+                  <Input1
+                    className="mb-4 "
+                    // name="Your name"
+                    type="text"
+                    placeholder="Name"
+                    value={whname}
+                    setValue={(v) => setWHname(v)}
+                    // focus={openEdit}
+                  />
+                </div>
+              </EditMessage>
+            </Modal1>
+
+            <Modal1
+              open={openChangeColor}
+              close={() => {
+                setOpenChangeColor(false);
+              }}
+              backclose={() => {
+                setOpenChangeColor(false);
+              }}
+            >
+              <EditMessage
+                close={() => setOpenChangeColor(false)}
+                title="Change webhook color"
+                onEdit={async () => {
+                  const r = await editWhColor();
+                  setWebhooks(r);
+                }}
+              >
+                <ColorPicker color={whcolor} setColor={setWHcolor} />
+              </EditMessage>
             </Modal1>
 
             <div
@@ -172,18 +241,16 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                       </svg>
                       {/* </Button> */}
                       <Dropdown.Menu className="w-40 bg-bg shadow-2xl shadow-bgt">
-                        <Dropdown.Item onClick={() => setOpen(true)}>
+                        <Dropdown.Item onClick={() => setOpenChangeName(true)}>
                           <span className="text-secondary text-sm font-bold">
-                            Add message
+                            Change name
                           </span>
                         </Dropdown.Item>
-                        {messages?.length > 0 && (
-                          <Dropdown.Item onClick={() => setOpenEdit(true)}>
-                            <span className="text-secondary text-sm font-bold">
-                              Edit messages
-                            </span>
-                          </Dropdown.Item>
-                        )}
+                        <Dropdown.Item onClick={() => setOpenChangeColor(true)}>
+                          <span className="text-secondary text-sm font-bold">
+                            Change color
+                          </span>
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={() => setOpenDel(true)}>
                           <span className="text-text-p text-sm font-bold">
                             Delete
@@ -244,7 +311,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 <div className="mt-2">
                   <div className="flex items-center justify-between">
                     <Hi6>List of messages</Hi6>
-                    <div className="flex">
+                    <div className="flex items-center">
                       {/* <ButtonInfo
                         helper="Add new message"
                         className="ml-2"
@@ -277,6 +344,46 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           <ClipboardCopyIcon className="h-5 w-5 text-primary" />
                         </ButtonInfo>
                       )}
+
+                      <Dropdown vertical="end" horizontal="center">
+                        {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
+                        {/* <Button className=""> */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-5 h-5 cursor-pointer"
+                          // style={{ color: txtColor }}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                          />
+                        </svg>
+                        {/* </Button> */}
+                        <Dropdown.Menu className="w-40 bg-bg shadow-2xl shadow-bgt">
+                          <Dropdown.Item onClick={() => setOpen(true)}>
+                            <span className="text-secondary text-sm font-bold">
+                              New message
+                            </span>
+                          </Dropdown.Item>
+                          {messages?.length > 0 && (
+                            <Dropdown.Item onClick={() => setOpenEdit(true)}>
+                              <span className="text-secondary text-sm font-bold">
+                                Edit messages
+                              </span>
+                            </Dropdown.Item>
+                          )}
+                          {/* <Dropdown.Item onClick={() => setOpenDel(true)}>
+                            <span className="text-text-p text-sm font-bold">
+                              Delete
+                            </span>
+                          </Dropdown.Item> */}
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </div>
                   </div>
 

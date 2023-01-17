@@ -81,3 +81,8 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+.dropdown label {
+  display: flex;
+  /* align-items: center; */
+}

@@ -4,6 +4,7 @@ import {
   deleteMTAccount,
   updateDisplayName,
   getMTAccountsByUserId,
+  updateColor,
 } from "../db/mtAccounts";
 import moment from "moment";
 
@@ -104,6 +105,18 @@ export function EditMTAccountDisplayName(userId, accountId, defaultName) {
   }
 
   return { mtname, setMtname, editMTDisplayName };
+}
+
+export function EditMTAccountColor(userId, accountId, defautColor) {
+  const [mtcolor, setMtcolor] = useState(defautColor || "");
+
+  async function editMTColor() {
+    if (!userId || !accountId) return;
+    const r = await updateColor(userId, accountId, mtcolor);
+    return r;
+  }
+
+  return { mtcolor, setMtcolor, editMTColor };
 }
 
 export const MTAccountsC = createContext(null);

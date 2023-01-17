@@ -73,7 +73,7 @@ export const ButtonInfo = ({
   onMouseLeave,
 }) => {
   return (
-    <Dropdown hover={true} horizontal="left" vertical="middle">
+    <Dropdown hover={true} horizontal="left" vertical="middle" className="">
       <Button
         shape="circle"
         className={`${className} text-info`}

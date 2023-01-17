@@ -6,6 +6,7 @@ import { ButtonP } from "../../Components/Button";
 import Link from "next/link";
 import { BellIcon } from "@heroicons/react/outline";
 import SearchHeader from "./SearchHeader";
+import { LeftMenu } from "./LeftMenu";
 
 import { Modal1 } from "../../Components/Modal";
 import ManageWebhook from "../ManageWebhook";
@@ -34,48 +35,51 @@ function Index() {
         style={{ zIndex: 100 }}
       >
         <div className="flex justify-between items-center w-full">
-          <ButtonP
-            className="!bg-transparent !border-text-p hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
-            onClick={() => {
-              setOpen(true);
-            }}
-            icon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-4 h-4"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
-                />
-              </svg>
-            }
-          >
-            Open Trade
-          </ButtonP>
+          <div className="flex items-center">
+            <LeftMenu />
+            <ButtonP
+              className="!bg-transparent !border-bga !border-[2px] !text-text-h hover:!text-text-h hiddeni md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+              onClick={() => {
+                setOpen(true);
+              }}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-4 h-4"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"
+                  />
+                </svg>
+              }
+            >
+              Open Trade
+            </ButtonP>
+            {/* <ButtonP className="ml-6" onClick={() => setOpen(true)}>
+                <span className="text-xs">+ New</span>
+              </ButtonP> */}
+          </div>
           {user ? (
             <div className="flex items-center ml-auto">
               <SearchHeader />
-              {/* <ButtonP className="ml-6" onClick={() => setOpen(true)}>
-                <span className="text-xs">+ New</span>
-              </ButtonP> */}
               <Indicator
                 vertical="top"
                 horizontal=""
                 // item={<Badge size="xs" color="accent" />}
-                className="relative"
+                className="relative ml-3"
               >
                 <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div>
-                <span className="ml-6 cursor-pointer text-text-p">
+                <span className="cursor-pointer text-text-p">
                   <BellIcon className="h-7 w-7" />
                 </span>
               </Indicator>
-              <div className="ml-6">
+              <div className="ml-3">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">
                     <div className="w-10 rounded-full">

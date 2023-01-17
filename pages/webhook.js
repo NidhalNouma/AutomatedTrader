@@ -45,15 +45,17 @@ export default function Webhook() {
         <div className="mt-6">
           {webhooks?.length > 0 ? (
             <div className="p-2 mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-              {webhooks.map((v, i) => (
-                <Fragment key={v.id}>
-                  <WebhooksItem
-                    webhook={v}
-                    user={user}
-                    mtAccounts={mtAccounts}
-                  />
-                </Fragment>
-              ))}
+              {webhooks
+                .sort((a, b) => b.created_at - a.created_at)
+                .map((v, i) => (
+                  <Fragment key={v.id}>
+                    <WebhooksItem
+                      webhook={v}
+                      user={user}
+                      mtAccounts={mtAccounts}
+                    />
+                  </Fragment>
+                ))}
             </div>
           ) : (
             <div className="mt-3">

@@ -212,6 +212,21 @@ export async function updateDisplayName(userId, id, accountDisplayName) {
   // return nwh;
 }
 
+export async function updateColor(userId, id, color) {
+  console.log("Update MT color ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    color,
+  });
+
+  const r = getMTAccountsByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
 function getRandomColor() {
   // var letters = "0123456789ABCDEF";
   // var color = "#";

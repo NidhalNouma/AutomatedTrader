@@ -6,6 +6,7 @@ import { Button, Dropdown } from "react-daisyui";
 
 import { Modal1 } from "../../Components/Modal";
 import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
+import ColorPicker from "../../Components/ColorPicker";
 import WebhooksPopUp from "./WebhooksPopUp";
 
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/solid";
@@ -15,6 +16,7 @@ import {
   GetMTAccountsContext,
   DeleteMTAccount,
   EditMTAccountDisplayName,
+  EditMTAccountColor,
 } from "../../hooks/MTAccounts";
 import { txtColorFromBg } from "../../utils/functions";
 
@@ -25,11 +27,17 @@ function Mt4({ account, userId }) {
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openColor, setOpenColor] = useState(false);
   const { setMTAccounts } = GetMTAccountsContext();
   const { mtname, setMtname, editMTDisplayName } = EditMTAccountDisplayName(
     userId,
     account.id,
     account.accountDisplayName
+  );
+  const { mtcolor, setMtcolor, editMTColor } = EditMTAccountColor(
+    userId,
+    account.id,
+    account.color
   );
 
   const colors = tailwindConfig.theme.colors;
@@ -92,14 +100,19 @@ function Mt4({ account, userId }) {
                 className="w-40 bg-bg shadow-2xl shadow-bg"
                 // style={{ backgroundColor: account.color }}
               >
+                <Dropdown.Item onClick={() => setOpen(true)}>
+                  <span className="text-secondary text-sm font-bold">
+                    Webhooks
+                  </span>
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => setOpenEdit(true)}>
                   <span className="text-secondary text-sm font-bold">
                     Change name
                   </span>
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => setOpen(true)}>
+                <Dropdown.Item onClick={() => setOpenColor(true)}>
                   <span className="text-secondary text-sm font-bold">
-                    Webhooks
+                    Change color
                   </span>
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => setOpenDel(true)}>
@@ -189,6 +202,27 @@ function Mt4({ account, userId }) {
               focus={openEdit}
             />
           </div>
+        </EditMessage>
+      </Modal1>
+
+      <Modal1
+        open={openColor}
+        close={() => {
+          setOpenColor(false);
+        }}
+        backclose={() => {
+          setOpenColor(false);
+        }}
+      >
+        <EditMessage
+          close={() => setOpenColor(false)}
+          title="Change account color"
+          onEdit={async () => {
+            const r = await editMTColor();
+            setMTAccounts(r);
+          }}
+        >
+          <ColorPicker color={mtcolor} setColor={setMtcolor} />
         </EditMessage>
       </Modal1>
     </div>
