@@ -7,6 +7,7 @@ import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 
 import Mt4 from "../../Features/MTAccount/Mt4";
 import DataTable from "../../Features/MTAccount/DataTable";
+import TableSm from "../../Features/DataAndCharts/TableSm";
 import LineChart from "../../Features/MTAccount/LineChart";
 import DoughChart from "../../Features/MTAccount/DoughChart";
 import HalfDoughChart from "../../Features/MTAccount/HalfDoughChart";
@@ -27,7 +28,7 @@ export default function MT4() {
   const { totalProfit, profitPerPair } = CalculateData(data);
   const tp = totalProfit();
 
-  const [idcopy, setIdcopy] = useState("Click to copy!");
+  const [idcopy, setIdcopy] = useState("Click to copy your ID!");
   // console.log(totalProfit(), profitPerPair(), profitPerWebhook());
 
   return (
@@ -36,18 +37,45 @@ export default function MT4() {
       <MainWithHeader>
         <div className="flex justify-between">
           <H1>Metatrader 4</H1>
-          <ButtonP
-            onClick={(e) => {
-              e.preventDefault();
-              window.location = MT4EAPath;
-            }}
-            icon={<ArrowCircleDownIcon className="h-4 w-4" />}
-          >
-            download EA
-          </ButtonP>
+          <div className="">
+            <Dropdown hover={true} horizontal="left" vertical="middle">
+              <ButtonP
+                onMouseLeave={() => setIdcopy("Click to copy your ID!")}
+                className="mr-3 ml-1 !bg-transparent !border-bga"
+                onClick={(e) => {
+                  e.preventDefault();
+
+                  copyTextToClipboard(
+                    user?.uid,
+                    () => {
+                      setIdcopy("ID copied!");
+                    },
+                    () => {}
+                  );
+                }}
+                // icon={<ArrowCircleDownIcon className="h-4 w-4" />}
+              >
+                Copy ID
+              </ButtonP>
+              <Dropdown.Menu className="w-24 !p-0 shadow bg-bga rounded-xl">
+                <div className="p-2 text-center">
+                  <H6>{idcopy}</H6>
+                </div>
+              </Dropdown.Menu>
+            </Dropdown>
+            <ButtonP
+              onClick={(e) => {
+                e.preventDefault();
+                window.location = MT4EAPath;
+              }}
+              icon={<ArrowCircleDownIcon className="h-4 w-4" />}
+            >
+              download EA
+            </ButtonP>
+          </div>
         </div>
         <div className="my-4">
-          <span className="">
+          {/* <span className="">
             Your ID:{" "}
             <Dropdown hover={true} horizontal="right" vertical="middle">
               <span
@@ -71,7 +99,7 @@ export default function MT4() {
                 </div>
               </Dropdown.Menu>
             </Dropdown>
-          </span>
+          </span> */}
         </div>
         {/* <H4>Accounts</H4> */}
         {mtAccounts?.length > 0 && (
@@ -101,13 +129,19 @@ export default function MT4() {
               </div>
 
               <div className="md:flex w-full bg-bgt shadow-sm shadow-bga p-2 rounded-xl mt-6">
-                <div className="w-full md:w-3/5">
+                <div className="w-full md:w-4/6">
                   <H3 className="m-2">Last transaction</H3>
-                  <div className="px-3">
-                    <DataTable data={data} />
+                  <div className="px-3  h-72 overflow-y-hidden">
+                    <TableSm
+                      data={data}
+                      bgColor="bg-bgt"
+                      profit={true}
+                      pips={false}
+                      limit={9}
+                    />
                   </div>
                 </div>
-                <div className="w-full md:w-2/5 mt-8">
+                <div className="w-full md:w-2/6 mt-8">
                   <DoughChart adata={profitPerPair()} total={tp} />
                 </div>
               </div>

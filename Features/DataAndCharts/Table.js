@@ -226,7 +226,17 @@ function TradeDetails({ data, close }) {
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Profit</span>
-          <span className="text-sm text-text-h">${data?.profit}</span>
+          <span
+            className={`text-sm text-text-h ${
+              data?.profit > 0
+                ? "text-green-300"
+                : data?.profit < 0
+                ? "text-red-400"
+                : ""
+            }`}
+          >
+            ${data?.profit}
+          </span>
         </div>
 
         <div className="flex flex-col">

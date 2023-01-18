@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { H6, H5, H4 } from "../../Components/H";
+import { H6, H5, H4, H3 } from "../../Components/H";
 // import { ButtonText } from "../../Components/Button";
 import { Input1 } from "../../Components/Input";
 import { Button, Dropdown } from "react-daisyui";
@@ -56,7 +56,10 @@ function Mt4({ account, userId }) {
       <div className="">
         <div className="flex items-center justify-between">
           <div className="flex items-end">
-            <H4 style={{ color: txtColor }} className="flex items-center">
+            <H4
+              style={{ color: txtColor }}
+              className="flex items-center font-bold"
+            >
               {openNumbers ? (
                 <ChevronDownIcon
                   className="h-4 w-4 ml-auto cursor-pointer"

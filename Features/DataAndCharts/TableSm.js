@@ -7,7 +7,7 @@ import { Button } from "react-daisyui";
 import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
 
-function TableSm({ data }) {
+function TableSm({ data, bgColor, profit, limit, pips }) {
   const [open, setOpen] = useState(null);
 
   return (
@@ -19,6 +19,7 @@ function TableSm({ data }) {
         }}
       >
         <TradeDetails
+          profit={profit}
           data={open}
           close={() => {
             setOpen(null);
@@ -28,9 +29,11 @@ function TableSm({ data }) {
       </Modal1>
 
       <div className="relative rounded-md">
-        <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md bg-transparent">
+        <div
+          className={`overflow-x-auto w-full max-h-80 h-full hideScrollbar rounded-md ${bgColor}`}
+        >
           <table className="table-auto w-full">
-            <thead className="sticky top-0 bg-bg">
+            <thead className={`sticky top-0 ${bgColor}`}>
               <tr>
                 <th className="text-text-h text-sm">Date/Time</th>
                 <th className="text-text-h text-sm py-3">Symbol</th>
@@ -41,7 +44,8 @@ function TableSm({ data }) {
                 <th className="text-text-h text-sm">Close Price</th>
                 {/* <th className="text-text-h text-xs">Open Time</th> */}
                 {/* <th className="text-text-h text-md">Close Time</th> */}
-                <th className="text-text-h text-sm">Pips</th>
+                {pips && <th className="text-text-h text-sm">Pips</th>}
+                {profit && <th className="text-text-h text-md">Profit</th>}
               </tr>
             </thead>
             <tbody className="">
@@ -50,6 +54,7 @@ function TableSm({ data }) {
                 .reverse()
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
+                  if (limit && i >= limit) return;
                   //   console.log(v);
                   return (
                     <Fragment key={i}>
@@ -82,17 +87,6 @@ function TableSm({ data }) {
                         </td>
                         {/* <td className="text-xs text-center">{v.lot}</td> */}
                         {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
-                        {/* <td
-                          className={`text-xs text-center font-bold ${
-                            v.profit > 0
-                              ? "text-green-300"
-                              : v.profit < 0
-                              ? "text-red-400"
-                              : ""
-                          } `}
-                        >
-                          ${Number(v.profit).toFixed(2)}
-                        </td> */}
                         <td className="text-xs text-center">{v.open}</td>
                         <td className="text-xs text-center">{v.close}</td>
                         {/* <td className="text-xs text-center py-3">
@@ -100,18 +94,33 @@ function TableSm({ data }) {
                         ? moment.utc(v.openTimeGMT).format()
                         : moment(v.openTime).format()}
                     </td> */}
-                        <td
-                          // className="text-xs text-center"
-                          className={`text-xs text-center font-bold py-3 rounded-r-md ${
-                            v.profit > 0
-                              ? "text-green-300"
-                              : v.profit < 0
-                              ? "text-red-400"
-                              : ""
-                          } `}
-                        >
-                          {v.pips}
-                        </td>
+                        {pips && (
+                          <td
+                            // className="text-xs text-center"
+                            className={`text-xs text-center font-bold py-3 rounded-r-md ${
+                              !profit && v.profit > 0
+                                ? "text-green-300"
+                                : !profit && v.profit < 0
+                                ? "text-red-400"
+                                : ""
+                            } `}
+                          >
+                            {v.pips}
+                          </td>
+                        )}
+                        {profit && (
+                          <td
+                            className={`text-xs text-center font-bold py-3 rounded-r-md ${
+                              v.profit > 0
+                                ? "text-green-300"
+                                : v.profit < 0
+                                ? "text-red-400"
+                                : ""
+                            } `}
+                          >
+                            ${Number(v.profit).toFixed(2)}
+                          </td>
+                        )}
                       </tr>
                       {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
                     </Fragment>
@@ -128,7 +137,7 @@ function TableSm({ data }) {
 
 export default TableSm;
 
-function TradeDetails({ data, close }) {
+function TradeDetails({ data, close, profit }) {
   const { webhooks } = GetWebhookContext();
   const wh = webhooks.find((v) => v.id === data?.ID);
   console.log(wh, data);
@@ -240,22 +249,36 @@ function TradeDetails({ data, close }) {
           <span className="text-sm text-text-p">Pips</span>
           <span className="text-sm text-text-h">{data?.pips}</span>
         </div>
-        {/* <div className="flex flex-col">
-          <span className="text-sm text-text-p">Profit</span>
-          <span className="text-sm text-text-h">${data?.profit}</span>
-        </div> */}
-        <div className="flex flex-col">
-          <span className="text-sm text-text-p">Comment</span>
-          <span className="text-sm font-bold">
-            {data?.profit > 0 ? (
-              <span className="text-green-300">Win</span>
-            ) : data?.profit < 0 ? (
-              <span className="text-red-400">Lost</span>
-            ) : (
-              "BreakEven"
-            )}
-          </span>
-        </div>
+        {profit && (
+          <div className="flex flex-col">
+            <span className="text-sm text-text-p">Profit</span>
+            <span
+              className={`text-sm text-text-h ${
+                data?.profit > 0
+                  ? "text-green-300"
+                  : data?.profit < 0
+                  ? "text-red-400"
+                  : ""
+              }`}
+            >
+              ${data?.profit}
+            </span>
+          </div>
+        )}
+        {!profit && (
+          <div className="flex flex-col">
+            <span className="text-sm text-text-p">Comment</span>
+            <span className="text-sm font-bold">
+              {data?.profit > 0 ? (
+                <span className="text-green-300">Win</span>
+              ) : data?.profit < 0 ? (
+                <span className="text-red-400">Lost</span>
+              ) : (
+                "BreakEven"
+              )}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

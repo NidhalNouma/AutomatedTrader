@@ -63,7 +63,12 @@ function Webhook({}) {
                     <H3 className="m-2">Transaction</H3>
                     <div className="px-3">
                       {/* <DataTable data={data} /> */}
-                      <TableSm data={data} />
+                      <TableSm
+                        data={data}
+                        bgColor="bg-bg"
+                        profit={false}
+                        pips={true}
+                      />
                     </div>
                   </div>
                   {Object.keys(pairProfit).length > 0 && (
