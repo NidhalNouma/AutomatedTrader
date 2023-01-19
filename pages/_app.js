@@ -15,6 +15,7 @@ import { ToastCC, ToastHook } from "../hooks/ToastHook";
 
 import Toasti from "../Features/Toast";
 import { landingUrl } from "../utils/constant";
+import LoadingPage from "../Features/LoadingPage";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -29,20 +30,32 @@ function MyApp({ Component, pageProps }) {
   const { alerts, setAlerts, newAlert } = ToastHook();
   // const { openDrawer, toggleOpenDrawer } = GetDrawer();
 
+  const [load, setLoading] = useState(true);
+  const [firstPath, setFirstPath] = useState(null);
+
   useEffect(() => {
-    checkUser(setUser);
+    checkUser(setUser, () => setLoading(false));
   }, []);
 
   useEffect(() => {
     const { pathname } = router;
+    if (!firstPath) setFirstPath(pathname);
     if (user) {
       if (
         pathname === "/" ||
         pathname === "/signin" ||
         pathname === "/signup" ||
         pathname === "/forgetpassword"
-      )
-        router.push("/profile");
+      ) {
+        if (
+          firstPath === "/" ||
+          firstPath === "/signin" ||
+          firstPath === "/signup" ||
+          firstPath === "/forgetpassword"
+        )
+          router.push("/profile");
+        else router.push(firstPath);
+      }
     } else if (!user) {
       if (
         pathname !== "/signin" &&
@@ -57,7 +70,7 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (user) {
-      getFullUser(user?.uid);
+      getFullUser(user?.uid, () => setLoading(false));
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
       getAllMTAccounts(user?.uid);
@@ -73,27 +86,35 @@ function MyApp({ Component, pageProps }) {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <ToastCC value={{ newAlert }}>
-        <UserCC value={{ user, setUser }}>
-          <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>
-            <WebHookCC
-              value={{
-                webhooks,
-                getAllWebhooks,
-                setWebhooks,
-                changeWebhookData,
-              }}
-            >
-              <AlertsCC value={{ alertsHook }}>
-                <MTAccountsCC value={{ mtAccounts, setMTAccounts, getData }}>
-                  <Component {...pageProps} />
-                </MTAccountsCC>
-              </AlertsCC>
-            </WebHookCC>
-          </FullUserCC>
-        </UserCC>
-      </ToastCC>
-      <Toasti alerts={alerts} setAlerts={setAlerts} />
+      {load ? (
+        <LoadingPage />
+      ) : (
+        <Fragment>
+          <ToastCC value={{ newAlert }}>
+            <UserCC value={{ user, setUser }}>
+              <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>
+                <WebHookCC
+                  value={{
+                    webhooks,
+                    getAllWebhooks,
+                    setWebhooks,
+                    changeWebhookData,
+                  }}
+                >
+                  <AlertsCC value={{ alertsHook }}>
+                    <MTAccountsCC
+                      value={{ mtAccounts, setMTAccounts, getData }}
+                    >
+                      <Component {...pageProps} />
+                    </MTAccountsCC>
+                  </AlertsCC>
+                </WebHookCC>
+              </FullUserCC>
+            </UserCC>
+          </ToastCC>
+          <Toasti alerts={alerts} setAlerts={setAlerts} />
+        </Fragment>
+      )}
     </Fragment>
   );
 }

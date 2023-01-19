@@ -82,6 +82,11 @@ export default function BarAndLineChart({ accounts }) {
   const [account, setAccount] = useState(accounts[0]);
   const [data, setData] = useState({});
 
+  // const ds = getDataFromAccountPerPeriod(
+  //   account,
+  //   getDaysFromTimeTillNow(moment(account.created_at.seconds * 1000))
+  // );
+  // console.log(ds, account.data);
   const d = getDataFromAccountPerPeriod(
     account,
     getDaysFromTimeTillNow(moment().startOf("year"))

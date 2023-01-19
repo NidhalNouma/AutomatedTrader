@@ -21,7 +21,7 @@ import { errorMessageByCode } from "../utils/errorMessage";
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
-export function checkUser(setUser) {
+export function checkUser(setUser, onNull, onExist) {
   const auth = getAuth();
   console.log(listOfEmails);
   onAuthStateChanged(auth, async (user) => {
@@ -30,6 +30,7 @@ export function checkUser(setUser) {
       setUser(user);
     } else {
       setUser(null);
+      onNull();
     }
   });
 }

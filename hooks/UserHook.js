@@ -25,11 +25,12 @@ export const GetFullUserContext = () => useContext(FullUserC);
 export const GetFullUser = () => {
   const [fullUser, setFullUser] = useState(null);
 
-  const getFullUser = async (userId) => {
+  const getFullUser = async (userId, onComplete) => {
     if (!userId) return;
     const r = await getUser(userId);
     // console.log(r);
     setFullUser(r);
+    onComplete();
   };
 
   return { fullUser, setFullUser, getFullUser };

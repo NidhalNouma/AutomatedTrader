@@ -189,68 +189,6 @@ export const CalculateData = (data, withWebHook = null) => {
   };
 };
 
-// const weekDay = [
-//   "Sunday",
-//   "Monday",
-//   "Tuesday",
-//   "Wednesday",
-//   "Thursday",
-//   "Friday",
-//   "Saturday",
-// ];
-
-// export const monthNames = [
-//   "January",
-//   "February",
-//   "March",
-//   "April",
-//   "May",
-//   "June",
-//   "July",
-//   "August",
-//   "September",
-//   "October",
-//   "November",
-//   "December",
-// ];
-
-// export const monthNamesI = [
-//   "Jan",
-//   "Feb",
-//   "Mar",
-//   "Apr",
-//   "May",
-//   "Jun",
-//   "Jul",
-//   "Aug",
-//   "Sep",
-//   "Oct",
-//   "Nov",
-//   "Dec",
-// ];
-
-// function Last7Days() {
-//   var result = [];
-//   for (var i = 0; i < 7; i++) {
-//     var d = new Date();
-//     d.setDate(d.getDate() - i);
-//     result.push(d);
-//   }
-
-//   return result;
-// }
-
-// export function lastWeek() {
-//   const l7d = Last7Days();
-//   const r = [];
-//   l7d.forEach((v) => {
-//     const dow = new Date(v).getDay();
-//     r.push(weekDay[dow]);
-//   });
-
-//   return r.reverse();
-// }
-
 const profitPerTime = (data, getProfit = true, wh) => {
   let r = {};
 
@@ -372,7 +310,7 @@ export function getDataFromAccountPerPeriod(
         r.lPerc[v] = 0;
       } else {
         const mult = 100;
-        if (addPerc) {
+        if (!addPerc) {
           tp += (t / sb) * mult;
           pp += (p / sb) * mult;
           lp += (l / sb) * mult;
@@ -419,6 +357,7 @@ export function getDaysFromTimeTillNow(startTime, sep = 1) {
     tempDate.setDate(tempDate.getDate() + i);
     dates.push(tempDate);
   }
+  // console.log("moment", startTime, dates);
 
   // dates.reverse();
   return dates;
