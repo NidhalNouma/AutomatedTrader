@@ -82,15 +82,21 @@ export default function BarAndLineChart({ accounts }) {
   const [account, setAccount] = useState(accounts[0]);
   const [data, setData] = useState({});
 
-  // const ds = getDataFromAccountPerPeriod(
-  //   account,
-  //   getDaysFromTimeTillNow(moment(account.created_at.seconds * 1000))
-  // );
-  // console.log(ds, account.data);
-  const d = getDataFromAccountPerPeriod(
+  const ds = getDataFromAccountPerPeriod(
     account,
-    getDaysFromTimeTillNow(moment().startOf("year"))
+    // getDaysFromTimeTillNow(moment(account.created_at.seconds * 1000))
+    getDaysFromTimeTillNow(new Date(account.data[0]?.openTime))
   );
+  // console.log(
+  //   ds,
+  //   account.data,
+  //   new Date(account.data[0]?.openTime),
+  //   getDaysFromTimeTillNow(new Date(account.data[0]?.openTime))
+  // );
+  // const d = getDataFromAccountPerPeriod(
+  //   account,
+  //   getDaysFromTimeTillNow(moment().startOf("year"))
+  // );
   const dm = getDataFromAccountPerPeriod(
     account,
     getDaysFromTimeTillNow(moment().startOf("month"))
@@ -106,7 +112,7 @@ export default function BarAndLineChart({ accounts }) {
     // new Date().setDate(new Date().getDate()),
   ]);
 
-  const total = Object.values(d.tPerc).reduce((p, v) => p + v, 0);
+  const total = Object.values(ds.tPerc).reduce((p, v) => p + v, 0);
   const totalm = Object.values(dm.tPerc).reduce((p, v) => p + v, 0);
   const totalw = Object.values(dw.tPerc).reduce((p, v) => p + v, 0);
   const totald = Object.values(dd.tPerc).reduce((p, v) => p + v, 0);

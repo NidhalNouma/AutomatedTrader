@@ -193,15 +193,10 @@ const profitPerTime = (data, getProfit = true, wh) => {
   let r = {};
 
   data?.forEach((v) => {
-    const day = new Date(
-      new Date(v.closeTimeGMT).toLocaleDateString()
-    ).getDate();
-    const month = new Date(
-      new Date(v.closeTimeGMT).toLocaleDateString()
-    ).getMonth();
-    const year = new Date(
-      new Date(v.closeTimeGMT).toLocaleDateString()
-    ).getFullYear();
+    const time = v.closeTimeGMT ? v.closeTimeGMT : v.closeTime;
+    const day = new Date(new Date(time).toLocaleDateString()).getDate();
+    const month = new Date(new Date(time).toLocaleDateString()).getMonth();
+    const year = new Date(new Date(time).toLocaleDateString()).getFullYear();
 
     const profit = Number(v.profit);
 
@@ -259,9 +254,9 @@ export function getDataFromAccountPerPeriod(
       // console.log("pv", v);
     } else lv = i === il ? new Date(v).setDate(v.getDate() + 1) : period[i + 1];
     const range = getDates(v, lv);
-    // if (i === il) console.log("range", range, v, lv);
+    // if (i === 0) console.log("range", range, v, lv);
 
-    range.forEach((d, i) => {
+    range.forEach((d, j) => {
       const day = new Date(d).getDate();
       const month = new Date(d).getMonth();
       const year = new Date(d).getFullYear();
@@ -287,9 +282,8 @@ export function getDataFromAccountPerPeriod(
       if (!r.loss[v]) r.loss[v] = 0;
       if (!r.profit[v]) r.profit[v] = 0;
 
-      // console.log(year, month, day, r);
-
       const t = r.profit[v] + r.loss[v];
+      // if (i === 0) console.log(year, month, day, t, profit, loss);
       r.total[v] = t;
     });
   });
@@ -310,7 +304,7 @@ export function getDataFromAccountPerPeriod(
         r.lPerc[v] = 0;
       } else {
         const mult = 100;
-        if (!addPerc) {
+        if (addPerc) {
           tp += (t / sb) * mult;
           pp += (p / sb) * mult;
           lp += (l / sb) * mult;

@@ -61,7 +61,7 @@ function HalfDoughChart({ total }) {
     },
   };
 
-  console.log(total);
+  // console.log(total);
 
   return (
     <div className="flex flex-col items-center justify-center">
