@@ -44,7 +44,7 @@ function Mt4({ account, userId }) {
 
   const txtColor = txtColorFromBg(
     account.color,
-    colors["text-p"],
+    colors["bgt"],
     colors["text-h"]
   );
 

@@ -196,7 +196,7 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
 
   const txtColor = txtColorFromBg(
     webhook.color,
-    colors["text-p"],
+    colors["bgt"],
     colors["text-h"]
   );
 

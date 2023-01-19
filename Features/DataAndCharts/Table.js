@@ -6,6 +6,8 @@ import { Button } from "react-daisyui";
 
 import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
+import tailwindConfig from "../../tailwind.config.js";
+import { txtColorFromBg } from "../../utils/functions";
 
 function Table({ data }) {
   const [open, setOpen] = useState(null);
@@ -51,6 +53,17 @@ function Table({ data }) {
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
                   // console.log(v);
+                  const { webhooks } = GetWebhookContext();
+                  const wh = webhooks.find((w) => w.id === v?.ID);
+                  const colors = tailwindConfig.theme.colors;
+
+                  const txtColor = txtColorFromBg(
+                    wh?.color,
+                    // colors["text-p"],
+                    colors["bgt"],
+                    colors["text-h"]
+                  );
+
                   return (
                     <Fragment key={i}>
                       <tr
@@ -65,6 +78,16 @@ function Table({ data }) {
                           ) : v.manual === "true" ? (
                             <span className="px-2 py-0 rounded-full bg-accent text-bg">
                               Manual
+                            </span>
+                          ) : wh ? (
+                            <span
+                              className="px-2 py-0 rounded-full font-bold bg-accent text-bg"
+                              style={{
+                                backgroundColor: wh.color,
+                                // color: txtColor,
+                              }}
+                            >
+                              Webhook
                             </span>
                           ) : (
                             <></>
@@ -86,7 +109,9 @@ function Table({ data }) {
                             {type}
                           </span>
                         </td>
-                        <td className="text-xs text-center">{v.lot}</td>
+                        <td className="text-xs text-center">
+                          {Number(v.lot)?.toFixed(2)}
+                        </td>
                         <td className={`text-xs text-center `}>{v.pips}</td>
                         <td
                           className={`text-xs text-center font-bold ${
@@ -132,7 +157,7 @@ export default Table;
 function TradeDetails({ data, close }) {
   const { webhooks } = GetWebhookContext();
   const wh = webhooks.find((v) => v.id === data?.ID);
-  console.log(wh, data);
+  // console.log(wh, data);
   const type = typeToStr(data?.type?.toString());
 
   return (

@@ -9,7 +9,7 @@ function Title({ user, webhook }) {
   const colors = tailwindConfig.theme.colors;
   const txtColor = txtColorFromBg(
     webhook?.color,
-    colors["text-p"],
+    colors["bgt"],
     colors["text-h"]
   );
 

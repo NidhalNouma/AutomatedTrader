@@ -138,9 +138,9 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
 export default TableSm;
 
 function TradeDetails({ data, close, profit }) {
-  const { webhooks } = GetWebhookContext();
-  const wh = webhooks.find((v) => v.id === data?.ID);
-  console.log(wh, data);
+  // const { webhooks } = GetWebhookContext();
+  // const wh = webhooks.find((v) => v.id === data?.ID);
+  // console.log(wh, data);
   const type = typeToStr(data?.type?.toString());
 
   return (
