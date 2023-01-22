@@ -23,23 +23,19 @@ function Table({ data: datai, accounts }) {
   const [wh, setWh] = useState(optionsWh[0]);
 
   useEffect(() => {
-    console.log(account, datai);
-    if (account === "All") setData(datai);
+    // console.log(account, datai);
+    if (account === "All" && wh === "All") setData(datai);
     else {
-      const fdata = data.filter((v) => v.accountDisplayName === account);
+      let fdata = datai;
+      if (account !== "All")
+        fdata = datai.filter((v) => v.accountDisplayName === account);
+      if (wh !== "All")
+        fdata = data.filter(
+          (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+        );
       setData(fdata);
     }
-  }, [account]);
-
-  useEffect(() => {
-    if (wh === "All") setData(datai);
-    else {
-      const fdata = data.filter(
-        (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
-      );
-      setData(fdata);
-    }
-  }, [wh]);
+  }, [account, wh]);
 
   return (
     <Fragment>
