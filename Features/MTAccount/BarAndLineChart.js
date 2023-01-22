@@ -93,10 +93,10 @@ export default function BarAndLineChart({ accounts }) {
   //   new Date(account.data[0]?.openTime),
   //   getDaysFromTimeTillNow(new Date(account.data[0]?.openTime))
   // );
-  // const d = getDataFromAccountPerPeriod(
-  //   account,
-  //   getDaysFromTimeTillNow(moment().startOf("year"))
-  // );
+  const dy = getDataFromAccountPerPeriod(
+    account,
+    getDaysFromTimeTillNow(moment().startOf("year"))
+  );
   const dm = getDataFromAccountPerPeriod(
     account,
     getDaysFromTimeTillNow(moment().startOf("month"))
@@ -113,6 +113,7 @@ export default function BarAndLineChart({ accounts }) {
   ]);
 
   const total = Object.values(ds.tPerc).reduce((p, v) => p + v, 0);
+  const totaly = Object.values(dy.tPerc).reduce((p, v) => p + v, 0);
   const totalm = Object.values(dm.tPerc).reduce((p, v) => p + v, 0);
   const totalw = Object.values(dw.tPerc).reduce((p, v) => p + v, 0);
   const totald = Object.values(dd.tPerc).reduce((p, v) => p + v, 0);
@@ -245,7 +246,7 @@ export default function BarAndLineChart({ accounts }) {
                   total > 0 ? "text-blue-500" : total < 0 ? "text-red-500" : ""
                 }`}
               >
-                {total.toFixed(1) + "%"}
+                {totaly.toFixed(1) + "%"}
               </span>
             </div>
           </div>

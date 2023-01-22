@@ -59,7 +59,7 @@ export default function TradesPage() {
         </div>
 
         <div className="mt-12">
-          <Table data={data} />
+          <Table data={data} accounts={mtAccounts} />
         </div>
       </MainWithHeader>
     </>

@@ -198,7 +198,9 @@ const profitPerTime = (data, getProfit = true, wh) => {
     const month = new Date(new Date(time).toLocaleDateString()).getMonth();
     const year = new Date(new Date(time).toLocaleDateString()).getFullYear();
 
-    const profit = Number(v.profit);
+    let profit = Number(v.profit);
+    if (v.swap) profit += Number(v.swap);
+    if (v.commission) profit += Number(v.commission);
 
     if (v.ID === wh || !wh)
       if ((getProfit && profit >= 0) || (!getProfit && profit < 0)) {

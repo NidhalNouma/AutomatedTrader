@@ -1,16 +1,45 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import moment from "moment";
 import { typeToStr, GetWebhookContext } from "../../hooks/WebHook";
 import { Modal1 } from "../../Components/Modal";
 import { Button } from "react-daisyui";
+import { Select1 } from "../../Components/Input";
 
 import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
 import tailwindConfig from "../../tailwind.config.js";
 import { txtColorFromBg } from "../../utils/functions";
 
-function Table({ data }) {
+function Table({ data: datai, accounts }) {
+  const { webhooks } = GetWebhookContext();
+  const [data, setData] = useState(null);
   const [open, setOpen] = useState(null);
+  const options = [
+    "All",
+    ...accounts.map((account) => account.accountDisplayName),
+  ];
+  const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
+  const [account, setAccount] = useState(options[0]);
+  const [wh, setWh] = useState(optionsWh[0]);
+
+  useEffect(() => {
+    console.log(account, datai);
+    if (account === "All") setData(datai);
+    else {
+      const fdata = data.filter((v) => v.accountDisplayName === account);
+      setData(fdata);
+    }
+  }, [account]);
+
+  useEffect(() => {
+    if (wh === "All") setData(datai);
+    else {
+      const fdata = data.filter(
+        (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+      );
+      setData(fdata);
+    }
+  }, [wh]);
 
   return (
     <Fragment>
@@ -31,10 +60,47 @@ function Table({ data }) {
 
       <div className="relative rounded-md">
         <div className="overflow-x-auto w-full max-h-96 hideScrollbar rounded-md bg-bgt">
+          <div className="flex justify-between items-end mb-1">
+            <div className="flex flex-c">
+              {/* <span className="text-sm text-text-p mr-2">Total</span> */}
+              {/* <span className="text-sm text-text-p font-bold">
+                {data?.length} trade total
+              </span> */}
+            </div>
+            <div className="flex">
+              <div className="flex flex-col">
+                <span className="text-sm text-text-p pl-1">Webhook</span>
+
+                <Select1
+                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                  name=""
+                  helper=""
+                  size="sm"
+                  options={optionsWh}
+                  value={wh}
+                  setValue={(i) => setWh(optionsWh[i])}
+                />
+              </div>
+              <div className="flex flex-col ml-4">
+                <span className="text-sm text-text-p pl-1">Account</span>
+
+                <Select1
+                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                  name=""
+                  helper=""
+                  size="sm"
+                  options={options}
+                  value={account}
+                  setValue={(i) => setAccount(options[i])}
+                />
+              </div>
+            </div>
+          </div>
+
           <table className="table-auto w-full">
             <thead className="sticky top-0 bg-bgt">
               <tr>
-                <th className="text-text-h text-md"></th>
+                <th className="text-text-h text-md">Webhook</th>
                 <th className="text-text-h text-md py-3">Symbol</th>
                 <th className="text-text-h text-md">Type</th>
                 <th className="text-text-h text-md">Lot</th>
@@ -90,7 +156,9 @@ function Table({ data }) {
                               Webhook
                             </span>
                           ) : (
-                            <></>
+                            <span className="px-2 py-0 text-text-i font-bold">
+                              N/A
+                            </span>
                           )}
                         </td>
                         <td className="text-xs text-center font-bold">
