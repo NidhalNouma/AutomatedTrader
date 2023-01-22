@@ -28,9 +28,9 @@ function Table({ data: datai, accounts }) {
     else {
       let fdata = datai;
       if (account !== "All")
-        fdata = datai.filter((v) => v.accountDisplayName === account);
+        fdata = fdata.filter((v) => v.accountDisplayName === account);
       if (wh !== "All")
-        fdata = data.filter(
+        fdata = fdata.filter(
           (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
         );
       setData(fdata);
