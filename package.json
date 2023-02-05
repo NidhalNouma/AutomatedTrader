@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chargebee/chargebee-js-react-wrapper": "^0.6.3",
     "@heroicons/react": "^1.0.6",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",

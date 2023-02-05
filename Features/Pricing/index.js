@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { ButtonP } from "../../Components/Button";
+import { Button } from "react-daisyui";
+
+import { XIcon } from "@heroicons/react/solid";
+import { H3 } from "../../Components/H";
 
 import { GetUserContext } from "../../hooks/UserHook";
+import PaymentMethod from "../chargeBee/PaymentMethod";
+
+import { Modal1 } from "../../Components/Modal";
 
 function Index({ title, value, t }) {
   const { user } = GetUserContext();
+  const [openPM, setOpenPm] = useState(false);
 
   return (
     <div className="w-full px-4 h-full">
@@ -81,16 +89,42 @@ function Index({ title, value, t }) {
         <ButtonP
           className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
           onClick={() => {
+            setOpenPm(true);
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
-            Paddle.Checkout.open({
-              product: value.paddleId,
-              email: user?.email,
-            });
+            // Paddle.Checkout.open({
+            //   product: value.paddleId,
+            //   email: user?.email,
+            // });
           }}
         >
           Select
         </ButtonP>
       </div>
+      <Modal1
+        open={openPM}
+        close={() => {
+          setOpenPm(false);
+        }}
+      >
+        <div className="">
+          <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
+            <H3 className="flex">Payment Method</H3>
+            <Button
+              size="sm"
+              shape="circle"
+              className=" bg-accenti"
+              onClick={() => {
+                setOpenPm(false);
+              }}
+            >
+              <XIcon className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="px-12 py-8">
+            <PaymentMethod />
+          </div>
+        </div>
+      </Modal1>
     </div>
   );
 }

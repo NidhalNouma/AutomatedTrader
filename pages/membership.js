@@ -6,7 +6,7 @@ import Pricing from "../Features/Pricing";
 import { H1 } from "../Components/H";
 import { ButtonGroup, Button } from "react-daisyui";
 
-import PaddleLoader from "../Features/Paddle";
+// import PaddleLoader from "../Features/Paddle";
 
 import { pricingList } from "../utils/pricing";
 
@@ -91,7 +91,7 @@ export default function Membership() {
         </div>
       </MainWithHeader>
 
-      <PaddleLoader />
+      {/* <PaddleLoader /> */}
     </>
   );
 }

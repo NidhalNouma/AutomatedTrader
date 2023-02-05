@@ -17,6 +17,8 @@ import Toasti from "../Features/Toast";
 import { landingUrl } from "../utils/constant";
 import LoadingPage from "../Features/LoadingPage";
 
+import Chargebee from "../Features/Chargebee";
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
@@ -81,40 +83,45 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
-      <Head>
-        <title>Automated trader</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
+      <Chargebee>
+        <Head>
+          <title>Automated trader</title>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+          />
+        </Head>
 
-      {load ? (
-        <LoadingPage />
-      ) : (
-        <Fragment>
-          <ToastCC value={{ newAlert }}>
-            <UserCC value={{ user, setUser }}>
-              <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>
-                <WebHookCC
-                  value={{
-                    webhooks,
-                    getAllWebhooks,
-                    setWebhooks,
-                    changeWebhookData,
-                  }}
-                >
-                  <AlertsCC value={{ alertsHook }}>
-                    <MTAccountsCC
-                      value={{ mtAccounts, setMTAccounts, getData }}
-                    >
-                      <Component {...pageProps} />
-                    </MTAccountsCC>
-                  </AlertsCC>
-                </WebHookCC>
-              </FullUserCC>
-            </UserCC>
-          </ToastCC>
-          <Toasti alerts={alerts} setAlerts={setAlerts} />
-        </Fragment>
-      )}
+        {load ? (
+          <LoadingPage />
+        ) : (
+          <Fragment>
+            <ToastCC value={{ newAlert }}>
+              <UserCC value={{ user, setUser }}>
+                <FullUserCC value={{ fullUser, setFullUser, getFullUser }}>
+                  <WebHookCC
+                    value={{
+                      webhooks,
+                      getAllWebhooks,
+                      setWebhooks,
+                      changeWebhookData,
+                    }}
+                  >
+                    <AlertsCC value={{ alertsHook }}>
+                      <MTAccountsCC
+                        value={{ mtAccounts, setMTAccounts, getData }}
+                      >
+                        <Component {...pageProps} />
+                      </MTAccountsCC>
+                    </AlertsCC>
+                  </WebHookCC>
+                </FullUserCC>
+              </UserCC>
+            </ToastCC>
+            <Toasti alerts={alerts} setAlerts={setAlerts} />
+          </Fragment>
+        )}
+      </Chargebee>
     </Fragment>
   );
 }

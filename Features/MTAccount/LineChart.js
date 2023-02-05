@@ -221,7 +221,7 @@ export default function App({ accounts }) {
               }`}
               onClick={() => setType(2)}
             >
-              Drawdown
+              Loss
             </Button>
           </ButtonGroup>
 
