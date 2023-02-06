@@ -17,7 +17,7 @@ import Toasti from "../Features/Toast";
 import { landingUrl } from "../utils/constant";
 import LoadingPage from "../Features/LoadingPage";
 
-import Chargebee from "../Features/Chargebee";
+import Chargebee from "../Features/chargeBee/ChargeBee";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
