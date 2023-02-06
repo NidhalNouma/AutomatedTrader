@@ -11,10 +11,10 @@ function PaymentMethod() {
   const cardRef = useRef(null);
   return (
     <Fragment>
-      <CardComponent ref={cardRef} className="rounded-xl text-text-h">
-        <CardNumber className="text-text-p mb-2 text-xl bg-bga p-2 rounded-xl" />
-        <CardExpiry className="text-text-p mb-2 text-xl bg-bga p-2 rounded-xl" />
-        <CardCVV className="text-text-p mt-1 text-xl bg-bga p-2 rounded-xl" />
+      <CardComponent ref={cardRef} className="rounded-xl " styles={{}}>
+        <CardNumber className="mb-2 text-xl bg-text-h p-3 pb-2 rounded-xl" />
+        <CardExpiry className="mb-2 text-xl bg-text-h p-3 pb-2 rounded-xl" />
+        <CardCVV className="mt-1 text-xl bg-text-h p-3 pb-2 rounded-xl" />
       </CardComponent>
       <div className="flex items-center justify-center mt-6">
         <ButtonP className="">Next</ButtonP>
