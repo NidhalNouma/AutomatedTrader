@@ -10,10 +10,12 @@ import { GetUserContext } from "../../hooks/UserHook";
 import PaymentMethod from "../chargeBee/PaymentMethod";
 
 import { Modal1 } from "../../Components/Modal";
+import { GetChargeBee, GetChargeBeeContext } from "../../hooks/ChargeBee";
 
 function Index({ title, value, t }) {
   const { user } = GetUserContext();
   const [openPM, setOpenPm] = useState(false);
+  const { openCheckout } = GetChargeBeeContext();
 
   return (
     <div className="w-full px-4 h-full">
@@ -89,7 +91,8 @@ function Index({ title, value, t }) {
         <ButtonP
           className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
           onClick={() => {
-            setOpenPm(true);
+            openCheckout();
+            // setOpenPm(true);
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
             // Paddle.Checkout.open({
             //   product: value.paddleId,

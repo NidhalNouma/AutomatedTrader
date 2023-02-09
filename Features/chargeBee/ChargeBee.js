@@ -1,8 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Script from "next/script";
+import { GetChargeBeeContext } from "../../hooks/ChargeBee";
 
 function Index({ children }) {
   const [load, setLoad] = useState(false);
+  const { setChargeBee } = GetChargeBeeContext();
 
   return (
     <Fragment>
@@ -17,6 +19,7 @@ function Index({ children }) {
           // get cb Instance
           let cbInstance = window?.Chargebee?.getInstance();
           console.log(cbInstance);
+          setChargeBee(cbInstance);
           setLoad(true);
         }}
       ></Script>

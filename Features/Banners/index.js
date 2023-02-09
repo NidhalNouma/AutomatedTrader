@@ -50,7 +50,7 @@ function B2() {
       </div>
 
       <p className="text-text-h text-xs font-semibold">
-        Leaders boards comming soon <br />
+        Leaders boards coming soon <br />
         $5000 Giveaway to best BOT.
       </p>
     </div>
