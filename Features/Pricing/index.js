@@ -15,10 +15,22 @@ import {
 // import { Modal1 } from "../../Components/Modal";
 import { OpenCheckout, GetChargeBeeContext } from "../../hooks/ChargeBee";
 
-function Index({ title, value, t, setSuccess }) {
+function Index({ title, value, t, setSuccess, i }) {
   const { fullUser, setFullUser } = GetFullUserContext();
   // const [openPM, setOpenPm] = useState(false);
   // const { openCheckout } = GetChargeBeeContext();
+
+  function btnText() {
+    let r = "Select";
+    if (fullUser.subObj) {
+      const sub = fullUser.subObj;
+      // if (sub.no === i && sub.time === t) r = "Current";
+      if (sub.no === i) r = "Current";
+      else if (sub.no < i) r = "Upgrade";
+      else if (sub.no > i) r = "Downgrade";
+    }
+    return r;
+  }
 
   const onSuccess = async (r) => {
     if (r.subscription && r.customer) {
@@ -105,20 +117,26 @@ function Index({ title, value, t, setSuccess }) {
             </p>
           )}
         </div>
-        <ButtonP
-          className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
-          onClick={() => {
-            OpenCheckout(value.chargeBeeId, onSuccess);
-            // setOpenPm(true);
-            // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
-            // Paddle.Checkout.open({
-            //   product: value.paddleId,
-            //   email: user?.email,
-            // });
-          }}
-        >
-          Select
-        </ButtonP>
+        {btnText() !== "Current" ? (
+          <ButtonP
+            className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
+            onClick={() => {
+              OpenCheckout(value.chargeBeeId, onSuccess);
+              // setOpenPm(true);
+              // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
+              // Paddle.Checkout.open({
+              //   product: value.paddleId,
+              //   email: user?.email,
+              // });
+            }}
+          >
+            {btnText()}
+          </ButtonP>
+        ) : (
+          <span className="mt-auto w-full text-text-h font-bold text-center">
+            Current
+          </span>
+        )}
       </div>
       {/* <Modal1
         open={openPM}

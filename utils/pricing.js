@@ -43,6 +43,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      manualTrade: true,
     },
   },
   annual: {
@@ -78,6 +79,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: false,
       more: false,
+      manualTrade: true,
     },
     "Premium plan": {
       chargeBeeId: "Premium-Membership-USD-Yearly",
@@ -89,6 +91,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      manualTrade: true,
     },
   },
   lifetime: {
@@ -102,6 +105,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      manualTrade: true,
     },
   },
 };
@@ -114,7 +118,7 @@ export function getPlanById(id) {
   for (let i = 0; i < keys.length; i++) {
     const data = m[keys[i]];
     if (id === data.chargeBeeId) {
-      r = { ...data, name: keys[i], no: i, time: "monthly" };
+      r = { ...data, name: keys[i], no: i, time: "mo" };
     }
   }
 
@@ -124,7 +128,7 @@ export function getPlanById(id) {
   for (let i = 0; i < keyy.length; i++) {
     const data = m[keyy[i]];
     if (id === data.chargeBeeId) {
-      r = { ...data, name: keyy[i], no: i, time: "annual" };
+      r = { ...data, name: keyy[i], no: i, time: "yearly" };
     }
   }
 

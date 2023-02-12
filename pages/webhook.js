@@ -14,12 +14,16 @@ import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
 import { GetMTAccountsContext } from "../hooks/MTAccounts";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
+import UpgradeMsg from "../Features/UpgradeMsg";
+
 export default function Webhook() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
   const { webhooks } = GetWebhookContext();
   const { mtAccounts } = GetMTAccountsContext();
   const [open, setOpen] = useState(false);
+  const [openUpg, setOpenUpg] = useState(false);
+
   return (
     <>
       <Modal1
@@ -30,13 +34,19 @@ export default function Webhook() {
       >
         <ManageWebhook close={() => setOpen(false)} />
       </Modal1>
+      <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
+
       <Sidenav cpath="webhook" />
       <MainWithHeader>
         <div className="flex justify-between items-center">
           <H1>Webhooks</H1>
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              const sub = fullUser.subObj;
+              if (sub && sub.webhooks >= webhooks.length) setOpen(true);
+              else setOpenUpg(true);
+            }}
             icon={<PlusIcon className="h-4 w-4" />}
           >
             New

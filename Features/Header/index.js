@@ -11,14 +11,18 @@ import { LeftMenu } from "./LeftMenu";
 import { Modal1 } from "../../Components/Modal";
 import ManageWebhook from "../ManageWebhook";
 import OpenTrade from "../tradesManual/Open";
+import UpgradeMsg from "../UpgradeMsg";
 
 import { SignOut } from "../../hooks/SignHook";
 
-import { GetUserContext } from "../../hooks/UserHook";
+import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 
 function Index() {
   const [open, setOpen] = useState(false);
+  const [openUpg, setOpenUpg] = useState(false);
+
   const { user } = GetUserContext();
+  const { fullUser } = GetFullUserContext();
 
   return (
     <Fragment>
@@ -30,6 +34,8 @@ function Index() {
       >
         <OpenTrade close={() => setOpen(false)} />
       </Modal1>
+      <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
+
       <div
         className="px-4 md:px-6 py-2 md:py-3 bg-bg w-full sticky top-0 z-50 border-b2 border-b-bga"
         style={{ zIndex: 100 }}
@@ -40,7 +46,9 @@ function Index() {
             <ButtonP
               className="!bg-transparent !border-bga !border-[2px] !text-text-h hover:!text-text-h hiddeni md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
               onClick={() => {
-                setOpen(true);
+                const sub = fullUser.subObj;
+                if (sub && sub.manualTrade) setOpen(true);
+                else setOpenUpg(true);
               }}
               icon={
                 <svg

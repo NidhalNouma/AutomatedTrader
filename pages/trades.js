@@ -2,6 +2,7 @@ import { useState } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import { GetMTAccountsContext, CalculateData } from "../hooks/MTAccounts";
+import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import { H1 } from "../Components/H";
 // import { PlusIcon, PlayIcon } from "@heroicons/react/outline";
@@ -10,12 +11,15 @@ import { ButtonP } from "../Components/Button";
 import Table from "../Features/DataAndCharts/Table";
 import { Modal1 } from "../Components/Modal";
 import OpenTrade from "../Features/tradesManual/Open";
+import UpgradeMsg from "../Features/UpgradeMsg";
 
 export default function TradesPage() {
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
+  const { fullUser } = GetFullUserContext();
 
   const [open, setOpen] = useState(false);
+  const [openUpg, setOpenUpg] = useState(false);
 
   return (
     <>
@@ -27,6 +31,7 @@ export default function TradesPage() {
       >
         <OpenTrade close={() => setOpen(false)} />
       </Modal1>
+      <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
 
       <Sidenav cpath="trades" />
       <MainWithHeader>
@@ -35,7 +40,9 @@ export default function TradesPage() {
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
             onClick={() => {
-              setOpen(true);
+              const sub = fullUser.subObj;
+              if (sub && sub.manualTrade) setOpen(true);
+              else setOpenUpg(true);
             }}
             icon={
               <svg

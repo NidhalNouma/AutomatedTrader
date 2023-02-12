@@ -130,12 +130,12 @@ export function OpenCheckout(planPriceId, onSuccess, onFailure) {
   const product = chargeBee.initializeProduct(planPriceId, planPriceQuantity);
   cart.replaceProduct(product);
 
-  cart.setCustomer({
-    email: "vivek@chargebee.com",
-    cf_test: "customer custom field",
-    cf_date: "1991-09-16",
-  });
-  console.log("cart", cart);
+  //   cart.setCustomer({
+  //     email: "vivek@chargebee.com",
+  //     cf_test: "customer custom field",
+  //     cf_date: "1991-09-16",
+  //   });
+  //   console.log("cart", cart);
 
   cart.proceedToCheckout();
 }

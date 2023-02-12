@@ -82,24 +82,26 @@ export default function Membership() {
 
           {ty === 1 ? (
             <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
-              {Object.keys(pricingList.monthly).map((key) => (
+              {Object.keys(pricingList.monthly).map((key, i) => (
                 <Pricing
                   key={key}
                   title={key}
                   value={pricingList.monthly[key]}
                   t="mo"
+                  i={i}
                   setSuccess={setSuccess}
                 />
               ))}
             </section>
           ) : ty === 2 ? (
             <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
-              {Object.keys(pricingList.annual).map((key) => (
+              {Object.keys(pricingList.annual).map((key, i) => (
                 <Pricing
                   key={key}
                   title={key}
                   value={pricingList.annual[key]}
                   t="yearly"
+                  i={i}
                   setSuccess={setSuccess}
                 />
               ))}
