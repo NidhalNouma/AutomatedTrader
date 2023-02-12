@@ -11,6 +11,7 @@
   "dependencies": {
     "@chargebee/chargebee-js-react-wrapper": "^0.6.3",
     "@heroicons/react": "^1.0.6",
+    "@lottiefiles/react-lottie-player": "^3.5.2",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "chartjs-plugin-datalabels": "^2.1.0",

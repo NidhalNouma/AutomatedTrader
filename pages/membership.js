@@ -2,22 +2,52 @@ import { useState } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
+import { Player, Controls } from "@lottiefiles/react-lottie-player";
+
 import Pricing from "../Features/Pricing";
-import { H1 } from "../Components/H";
+import { H1, Hi4 } from "../Components/H";
 import { ButtonGroup, Button } from "react-daisyui";
 
 // import PaddleLoader from "../Features/Paddle";
+import { GetFullUserContext } from "../hooks/UserHook";
 
 import { pricingList } from "../utils/pricing";
 
 export default function Membership() {
   const [ty, setTy] = useState(1);
+  const [success, setSuccess] = useState(false);
+  const { fullUser } = GetFullUserContext();
+
   return (
     <>
       <Sidenav cpath="membership" />
       <MainWithHeader>
-        <H1>Membership</H1>
-        <div className="mt-6">
+        <H1>Membership</H1>{" "}
+        <div className="mt-4">
+          {/* {success && (
+            <div className="flex mb-6 justify-center">
+              <p className="text-bg text-sm font-bold bg-success rounded-lg px-8 py-1 ">
+                Congratulations! You have now the membership.
+                <br />
+                You have joined the team.
+              </p>
+            </div>
+          )} */}
+
+          {fullUser.subscription && fullUser.subObj ? (
+            <div className="flex justify-center mb-6">
+              <div className="bg-accent px-3 py-1 rounded-lg">
+                <Hi4 className="!text-bg font-semibold">
+                  You got the{" "}
+                  <span className="font-extrabold">{fullUser.subObj.name}</span>{" "}
+                  membership.
+                </Hi4>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-2"></div>
+          )}
+
           <div className="w-full flex justify-center mb-6">
             <ButtonGroup>
               <Button
@@ -58,6 +88,7 @@ export default function Membership() {
                   title={key}
                   value={pricingList.monthly[key]}
                   t="mo"
+                  setSuccess={setSuccess}
                 />
               ))}
             </section>
@@ -69,6 +100,7 @@ export default function Membership() {
                   title={key}
                   value={pricingList.annual[key]}
                   t="yearly"
+                  setSuccess={setSuccess}
                 />
               ))}
             </section>
@@ -81,6 +113,7 @@ export default function Membership() {
                     title={key}
                     value={pricingList.lifetime[key]}
                     t="lifetime"
+                    setSuccess={setSuccess}
                   />
                 </div>
               ))}
@@ -88,10 +121,38 @@ export default function Membership() {
           ) : (
             <></>
           )}
+          {success && (
+            <div className="relative">
+              <Play l={0} />
+              <Play l={1} />
+            </div>
+          )}
         </div>
       </MainWithHeader>
 
       {/* <PaddleLoader /> */}
     </>
+  );
+}
+
+function Play({ l }) {
+  // const src = "https://assets7.lottiefiles.com/packages/lf20_lg6lh7fp.json";
+  const src = "https://assets9.lottiefiles.com/packages/lf20_wjGXUyYZSf.json";
+  const style = {
+    position: "absolute",
+    bottom: "0px",
+    left: `${l === 0 ? 0 : "auto"}`,
+    right: `${l === 1 ? 0 : "auto"}`,
+    zIndex: 0,
+    pointerEvents: "none",
+  };
+
+  return (
+    <Player autoplay loop src={src} style={style}>
+      <Controls
+        visible={false}
+        buttons={["play", "repeat", "frame", "debug"]}
+      />
+    </Player>
   );
 }

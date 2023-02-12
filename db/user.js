@@ -62,6 +62,8 @@ export async function addNewUser(
         displayName,
         metadata: { ...metadata },
         photoURL,
+        subscriptionId: "",
+        cbCustomerId: "",
         created_at: serverTimestamp(),
       }
       // { merge: true }
@@ -129,6 +131,19 @@ export async function updateUserData(id, key, value) {
 
   await updateDoc(msgDoc, {
     [key]: value,
+  });
+
+  const nwh = await getUser(id);
+  return nwh;
+}
+
+export async function updateSubsciption(id, subId, cusId) {
+  console.log("Update user subscription ... ", id, subId);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    subscriptionId: subId,
+    cbCustomerId: cusId,
   });
 
   const nwh = await getUser(id);

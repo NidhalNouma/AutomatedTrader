@@ -4,7 +4,10 @@ import {
   updateUserData,
   updateUserDatas,
   searchByDisplayName,
+  updateSubsciption,
 } from "../db/user";
+import { getPlanById } from "../utils/pricing";
+import axios from "axios";
 
 export const UserC = createContext(null);
 
@@ -28,6 +31,15 @@ export const GetFullUser = () => {
   const getFullUser = async (userId, onComplete) => {
     if (!userId) return;
     const r = await getUser(userId);
+    if (r.subscriptionId) {
+      const sub = await axios.get("/api/chargebee/get?id=" + r.subscriptionId);
+      r["subscription"] = sub.data;
+      if (sub.data?.subscription_items?.length > 0) {
+        const subItemId = sub.data?.subscription_items[0].item_price_id;
+        r["subObj"] = getPlanById(subItemId);
+      }
+      // console.log(getPlanById(subItemId));
+    }
     // console.log(r);
     setFullUser(r);
     onComplete();
@@ -157,4 +169,22 @@ export const SearchByDisplayName = () => {
   }, [displayName]);
 
   return { users, displayName, setDisplayName };
+};
+
+export const UpdateUserSubscription = async (
+  userId,
+  subId,
+  cusId,
+  subscription
+) => {
+  const r = await updateSubsciption(userId, subId, cusId);
+  r["subscription"] = subscription;
+
+  if (subscription.subscription_items?.length > 0) {
+    const subItemId = subscription?.subscription_items[0].item_price_id;
+    r["subObj"] = getPlanById(subItemId);
+  }
+
+  console.log(r);
+  return r;
 };

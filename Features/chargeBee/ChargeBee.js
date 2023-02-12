@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Script from "next/script";
-import { GetChargeBeeContext } from "../../hooks/ChargeBee";
+// import { GetChargeBeeContext } from "../../hooks/ChargeBee";
 
 function Index({ children }) {
   const [load, setLoad] = useState(false);
-  const { setChargeBee } = GetChargeBeeContext();
+  // const { setChargeBee } = GetChargeBeeContext();
 
   return (
     <Fragment>
@@ -14,12 +14,14 @@ function Index({ children }) {
           window?.Chargebee?.init({
             site: process.env.NEXT_PUBLIC_CHARGEBEE_SITE,
             publishableKey: process.env.NEXT_PUBLIC_CHARGEBEE_API_KEY,
+
+            isItemsModel: true,
           });
 
           // get cb Instance
           let cbInstance = window?.Chargebee?.getInstance();
-          console.log(cbInstance);
-          setChargeBee(cbInstance);
+          // console.log(cbInstance);
+          // setChargeBee(cbInstance);
           setLoad(true);
         }}
       ></Script>

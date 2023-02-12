@@ -16,9 +16,7 @@ function PaymentMethod() {
         <CardExpiry className="mb-2 text-xl bg-text-h p-3 pb-2 rounded-xl" />
         <CardCVV className="mt-1 text-xl bg-text-h p-3 pb-2 rounded-xl" />
       </CardComponent>
-      {/* <a href="javascript:void(0)" data-cb-type="portal">
-        Manage account
-      </a> */}
+
       <div className="flex items-center justify-center mt-6">
         <ButtonP className="">Next</ButtonP>
       </div>

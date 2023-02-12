@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import { CheckCircleIcon } from "@heroicons/react/solid";
 import { ButtonP } from "../../Components/Button";
-import { Button } from "react-daisyui";
+// import { Button } from "react-daisyui";
 
-import { XIcon } from "@heroicons/react/solid";
-import { H3 } from "../../Components/H";
+// import { XIcon } from "@heroicons/react/solid";
+// import { H3 } from "../../Components/H";
 
-import { GetUserContext } from "../../hooks/UserHook";
-import PaymentMethod from "../chargeBee/PaymentMethod";
+import {
+  GetFullUserContext,
+  UpdateUserSubscription,
+} from "../../hooks/UserHook";
+// import PaymentMethod from "../chargeBee/PaymentMethod";
 
-import { Modal1 } from "../../Components/Modal";
-import { GetChargeBee, GetChargeBeeContext } from "../../hooks/ChargeBee";
+// import { Modal1 } from "../../Components/Modal";
+import { OpenCheckout, GetChargeBeeContext } from "../../hooks/ChargeBee";
 
-function Index({ title, value, t }) {
-  const { user } = GetUserContext();
-  const [openPM, setOpenPm] = useState(false);
-  const { openCheckout } = GetChargeBeeContext();
+function Index({ title, value, t, setSuccess }) {
+  const { fullUser, setFullUser } = GetFullUserContext();
+  // const [openPM, setOpenPm] = useState(false);
+  // const { openCheckout } = GetChargeBeeContext();
+
+  const onSuccess = async (r) => {
+    if (r.subscription && r.customer) {
+      const nu = await UpdateUserSubscription(
+        fullUser.id,
+        r.subscription.id,
+        r.customer.id,
+        r.subscription
+      );
+
+      setFullUser(nu);
+    }
+    setSuccess(true);
+  };
 
   return (
     <div className="w-full px-4 h-full">
@@ -91,7 +108,7 @@ function Index({ title, value, t }) {
         <ButtonP
           className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
           onClick={() => {
-            openCheckout();
+            OpenCheckout(value.chargeBeeId, onSuccess);
             // setOpenPm(true);
             // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
             // Paddle.Checkout.open({
@@ -103,7 +120,7 @@ function Index({ title, value, t }) {
           Select
         </ButtonP>
       </div>
-      <Modal1
+      {/* <Modal1
         open={openPM}
         close={() => {
           setOpenPm(false);
@@ -127,7 +144,7 @@ function Index({ title, value, t }) {
             <PaymentMethod />
           </div>
         </div>
-      </Modal1>
+      </Modal1> */}
     </div>
   );
 }

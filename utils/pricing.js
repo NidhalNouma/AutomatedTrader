@@ -1,7 +1,7 @@
 export const pricingList = {
   monthly: {
     "Basic plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_B),
+      chargeBeeId: "Basic-Membership-USD-Monthly",
       price: 29,
       save: 0,
       accounts: 1,
@@ -12,7 +12,7 @@ export const pricingList = {
       more: false,
     },
     "Standard plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_S),
+      chargeBeeId: "Standard-Membership-USD-Monthly",
       price: 49,
       save: 0,
       accounts: 3,
@@ -23,7 +23,7 @@ export const pricingList = {
       more: false,
     },
     "Professional plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRO),
+      chargeBeeId: "Professional-Membership-USD-Monthly",
       price: 99,
       save: 0,
       accounts: 5,
@@ -34,7 +34,7 @@ export const pricingList = {
       more: false,
     },
     "Premium plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRIM),
+      chargeBeeId: "Premium-Membership-USD-Monthly",
       price: 159,
       save: 0,
       accounts: 20,
@@ -47,7 +47,7 @@ export const pricingList = {
   },
   annual: {
     "Basic plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_B_Y),
+      chargeBeeId: "Basic-Membership-USD-Yearly",
       price: 243,
       save: 30,
       accounts: 1,
@@ -58,7 +58,7 @@ export const pricingList = {
       more: false,
     },
     "Standard plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_S_Y),
+      chargeBeeId: "Standard-Membership-USD-Yearly",
       price: 411,
       save: 30,
       accounts: 3,
@@ -69,7 +69,7 @@ export const pricingList = {
       more: false,
     },
     "Professional plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRO_Y),
+      chargeBeeId: "Professional-Membership-USD-Yearly",
       price: 712,
       save: 40,
       accounts: 5,
@@ -80,7 +80,7 @@ export const pricingList = {
       more: false,
     },
     "Premium plan": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_PRIM_Y),
+      chargeBeeId: "Premium-Membership-USD-Yearly",
       price: 954,
       save: 50,
       accounts: 20,
@@ -93,7 +93,7 @@ export const pricingList = {
   },
   lifetime: {
     "Lifetime access": {
-      paddleId: Number(process.env.NEXT_PUBLIC_PADDLE_PLAN_1),
+      chargeBeeId: "Life-Time-Membership",
       price: 2500,
       save: 50,
       accounts: 100,
@@ -105,3 +105,28 @@ export const pricingList = {
     },
   },
 };
+
+export function getPlanById(id) {
+  let r = null;
+  const m = pricingList.monthly;
+
+  const keys = Object.keys(m);
+  for (let i = 0; i < keys.length; i++) {
+    const data = m[keys[i]];
+    if (id === data.chargeBeeId) {
+      r = { ...data, name: keys[i], no: i, time: "monthly" };
+    }
+  }
+
+  const y = pricingList.annual;
+
+  const keyy = Object.keys(y);
+  for (let i = 0; i < keyy.length; i++) {
+    const data = m[keyy[i]];
+    if (id === data.chargeBeeId) {
+      r = { ...data, name: keyy[i], no: i, time: "annual" };
+    }
+  }
+
+  return r;
+}

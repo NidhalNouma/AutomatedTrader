@@ -144,9 +144,15 @@ export default function Settings() {
             <div className="mt-6 p-4 bg-bg rounded-xl">
               <H3 className="mb-4">Membership</H3>
               <div className="mt-4">
-                <Hi4 className="">
-                  You have no active membership, click here to get one.
-                </Hi4>
+                {fullUser.subscription && fullUser.subObj ? (
+                  <div className="bg-accent px-3 py-1 rounded-lg">
+                    <Hi4 className="!text-bg">{fullUser.subObj.name}</Hi4>
+                  </div>
+                ) : (
+                  <Hi4 className="">
+                    You have no active membership, click here to get one.
+                  </Hi4>
+                )}
               </div>
             </div>
 
