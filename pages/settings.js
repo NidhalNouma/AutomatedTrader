@@ -145,8 +145,13 @@ export default function Settings() {
               <H3 className="mb-4">Membership</H3>
               <div className="mt-4">
                 {fullUser.subscription && fullUser.subObj ? (
-                  <div className="bg-accent px-3 py-1 rounded-lg">
-                    <Hi4 className="!text-bg">{fullUser.subObj.name}</Hi4>
+                  <div className="bg-accent px-3 py-2 rounded-lg">
+                    <Hi4 className="!text-bg">
+                      {fullUser.subObj.name}
+                      <span className="text-text-h ml-2 text-sm font-normal px-2 py-1 bg-bg rounded-full">
+                        {fullUser.subscription?.status}
+                      </span>
+                    </Hi4>
                   </div>
                 ) : (
                   <Hi4 className="">

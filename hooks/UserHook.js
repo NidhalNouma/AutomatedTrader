@@ -36,7 +36,7 @@ export const GetFullUser = () => {
       r["subscription"] = sub.data;
       if (sub.data?.subscription_items?.length > 0) {
         const subItemId = sub.data?.subscription_items[0].item_price_id;
-        r["subObj"] = getPlanById(subItemId);
+        r["subObj"] = getPlanById(subItemId, sub.data);
       }
       // console.log(getPlanById(subItemId));
     }
@@ -182,7 +182,7 @@ export const UpdateUserSubscription = async (
 
   if (subscription.subscription_items?.length > 0) {
     const subItemId = subscription?.subscription_items[0].item_price_id;
-    r["subObj"] = getPlanById(subItemId);
+    r["subObj"] = getPlanById(subItemId, subscription);
   }
 
   console.log(r);

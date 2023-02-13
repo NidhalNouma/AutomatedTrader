@@ -45,7 +45,7 @@ export default function Webhook() {
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
             onClick={() => {
-              if (sub && sub.webhooks >= webhooks.length) setOpen(true);
+              if (sub && sub.webhooks > webhooks.length) setOpen(true);
               else setOpenUpg(true);
             }}
             icon={<PlusIcon className="h-4 w-4" />}

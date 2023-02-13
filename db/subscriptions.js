@@ -41,3 +41,22 @@ export async function getSubscription(id) {
 
   return r;
 }
+
+export async function deleteSubscription(id) {
+  const purl = "/api/v2/subscriptions/" + id + "/del";
+  let r = null;
+  try {
+    r = await axios({
+      method: "POST",
+      url: purl,
+      baseURL: URL,
+      headers: { Authorization: authorization },
+    });
+
+    r = r.data;
+  } catch (e) {
+    console.log("get subscription error => ", e);
+  }
+
+  return r;
+}

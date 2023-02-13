@@ -110,8 +110,10 @@ export const pricingList = {
   },
 };
 
-export function getPlanById(id) {
+export function getPlanById(id, subscription) {
   let r = null;
+  if (subscription.status !== "active") return r;
+
   const m = pricingList.monthly;
 
   const keys = Object.keys(m);

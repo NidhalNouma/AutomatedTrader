@@ -42,8 +42,8 @@ function SignUp() {
         <Input1
           className="mx-auto mb-3"
           classNameInput="bg-transparent "
-          placeholder="Username"
-          name="Username"
+          placeholder="Name"
+          name="Name"
           type="username"
           value={username}
           setValue={setUsername}
