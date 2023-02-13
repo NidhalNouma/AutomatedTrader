@@ -24,8 +24,12 @@ function Index({ title, value, t, setSuccess, i }) {
     let r = "Select";
     if (fullUser.subObj) {
       const sub = fullUser.subObj;
-      // if (sub.no === i && sub.time === t) r = "Current";
-      if (sub.no === i) r = "Current";
+      if (sub.no === i && sub.time === t) r = "Current";
+      else if (sub.no === i && sub.time !== t) {
+        if (t == "mo") r = "Downgrade";
+        else r = "Upgrade";
+      }
+      // if (sub.no === i) r = "Current";
       else if (sub.no < i) r = "Upgrade";
       else if (sub.no > i) r = "Downgrade";
     }

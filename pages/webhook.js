@@ -15,10 +15,12 @@ import { GetMTAccountsContext } from "../hooks/MTAccounts";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import UpgradeMsg from "../Features/UpgradeMsg";
+import UpgradeWebhook from "../Features/UpgradeMsg/UpgradeWebhook";
 
 export default function Webhook() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
+  const sub = fullUser.subObj;
   const { webhooks } = GetWebhookContext();
   const { mtAccounts } = GetMTAccountsContext();
   const [open, setOpen] = useState(false);
@@ -43,7 +45,6 @@ export default function Webhook() {
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
             onClick={() => {
-              const sub = fullUser.subObj;
               if (sub && sub.webhooks >= webhooks.length) setOpen(true);
               else setOpenUpg(true);
             }}
@@ -66,6 +67,7 @@ export default function Webhook() {
                     />
                   </Fragment>
                 ))}
+              {sub && sub.webhooks <= webhooks.length && <UpgradeWebhook />}
             </div>
           ) : (
             <div className="mt-3">

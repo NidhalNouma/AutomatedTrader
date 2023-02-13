@@ -126,7 +126,7 @@ export function getPlanById(id) {
 
   const keyy = Object.keys(y);
   for (let i = 0; i < keyy.length; i++) {
-    const data = m[keyy[i]];
+    const data = y[keyy[i]];
     if (id === data.chargeBeeId) {
       r = { ...data, name: keyy[i], no: i, time: "yearly" };
     }
