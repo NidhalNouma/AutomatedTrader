@@ -31,7 +31,7 @@ export const GetFullUser = () => {
   const getFullUser = async (userId, onComplete) => {
     if (!userId) return;
     const r = await getUser(userId);
-    if (r.subscriptionId) {
+    if (r?.subscriptionId) {
       const sub = await axios.get("/api/chargebee/get?id=" + r.subscriptionId);
       r["subscription"] = sub.data;
       if (sub.data?.subscription_items?.length > 0) {

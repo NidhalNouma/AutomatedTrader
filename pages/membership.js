@@ -34,7 +34,7 @@ export default function Membership() {
             </div>
           )} */}
 
-          {fullUser.subscription && fullUser.subObj ? (
+          {fullUser?.subscription && fullUser?.subObj ? (
             <div className="flex justify-center mb-6">
               <div className="bg-accent px-3 py-1 rounded-lg">
                 <Hi4 className="!text-bg font-semibold">

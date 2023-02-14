@@ -1,9 +1,15 @@
+import { useState } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
+import { Button, Dropdown } from "react-daisyui";
 
 import { ButtonFile, ButtonP } from "../Components/Button";
-import { H1, H3, Hi4 } from "../Components/H";
+import { H1, H3, Hi4, H5 } from "../Components/H";
 import { EditInput, Input1 } from "../Components/Input";
+
+import { Modal1 } from "../Components/Modal";
+import { DeleteMessage } from "../Components/ModalMsg";
+
 import {
   GetUserContext,
   GetFullUserContext,
@@ -38,6 +44,8 @@ export default function Settings() {
     setWebsite,
     submit,
   } = UpdateUser(fullUser);
+
+  const [openDel, setOpenDel] = useState(false);
 
   return (
     <>
@@ -145,13 +153,42 @@ export default function Settings() {
               <H3 className="mb-4">Membership</H3>
               <div className="mt-4">
                 {fullUser.subscription && fullUser.subObj ? (
-                  <div className="bg-accent px-3 py-2 rounded-lg">
+                  <div className="bg-accent px-3 py-2 rounded-lg flex justify-between items-center">
                     <Hi4 className="!text-bg">
                       {fullUser.subObj.name}
                       <span className="text-text-h ml-2 text-sm font-normal px-2 py-1 bg-bg rounded-full">
                         {fullUser.subscription?.status}
                       </span>
                     </Hi4>
+
+                    <Dropdown vertical="end" horizontal="center">
+                      {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
+                      {/* <Button className=""> */}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                        className="w-6 h-6 cursor-pointer text-bg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                        />
+                      </svg>
+                      <Dropdown.Menu
+                        className="w-40 bg-bg shadow-2xl shadow-bg"
+                        // style={{ backgroundColor: account.color }}
+                      >
+                        <Dropdown.Item onClick={() => setOpenDel(true)}>
+                          <span className="text-error text-sm font-bold">
+                            Cancel
+                          </span>
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   </div>
                 ) : (
                   <Hi4 className="">
@@ -183,6 +220,31 @@ export default function Settings() {
           </div>
         </div>
       </MainWithHeader>
+
+      <Modal1
+        open={openDel}
+        close={() => {
+          setOpenDel(false);
+        }}
+        backclose={() => {
+          setOpenDel(false);
+        }}
+      >
+        <DeleteMessage
+          btnDelText="Agree"
+          close={() => setOpenDel(false)}
+          title="Cancel membership"
+          onDelete={async () => {
+            // const r = await DeleteMTAccount(userId, account.id);
+            // setMTAccounts(r);
+          }}
+        >
+          <H5 className="px-8">
+            Are you sure you want to cancel your membership, once you agree you
+            will no longer have access to our services!
+          </H5>
+        </DeleteMessage>
+      </Modal1>
     </>
   );
 }

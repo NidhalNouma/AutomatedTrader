@@ -65,9 +65,17 @@ export default function TradesPage() {
           </ButtonP>
         </div>
 
-        <div className="mt-12">
-          <Table data={data} accounts={mtAccounts} />
-        </div>
+        {data?.length > 0 ? (
+          <div className="mt-12">
+            <Table data={data} accounts={mtAccounts} />
+          </div>
+        ) : (
+          <div className="mt-6">
+            <p>
+              No available trades yet, click Open Trade to place a new trade.
+            </p>
+          </div>
+        )}
       </MainWithHeader>
     </>
   );

@@ -30,8 +30,8 @@ function Index({ open, close }) {
         <div className="flex flex-col justify-center items-center w-full mt-2">
           <div className="px-7">
             <p className="text-sm">
-              You don&apos;t have access to this feature, Click bellow to
-              upgrade your membership.{" "}
+              You don&apos;t have access to this feature, Click below to upgrade
+              your membership.{" "}
             </p>
           </div>
 

@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps }) {
           firstPath === "/signup" ||
           firstPath === "/forgetpassword"
         )
-          router.push("/profile");
+          router.push("/home");
         else router.push(firstPath);
       }
     } else if (!user) {

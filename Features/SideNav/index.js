@@ -51,11 +51,11 @@ function Index({ cpath, fixed = true }) {
         <Fragment>
           <div className="pl-4">
             <Linksn
-              href="/profile"
-              icon={<UserIcon className="h-5 w-5" />}
-              isActive={cpath === "profile"}
+              href="/home"
+              icon={<HomeIcon className="h-5 w-5" />}
+              isActive={cpath === "home"}
             >
-              <span className="capitalize ml-2 text-base">Profile</span>
+              <span className="capitalize ml-2 text-base">Home</span>
             </Linksn>
             <Linksn
               href="/webhook"
@@ -148,7 +148,7 @@ function Index({ cpath, fixed = true }) {
                 </svg>
               </span>
               <span className="text-base font-semibold ">Apps</span>
-              {openApps ? (
+              {!openApps ? (
                 <ChevronDownIcon className="h-4 w-4 ml-auto" />
               ) : (
                 <ChevronUpIcon className="h-4 w-4 ml-auto" />
@@ -203,6 +203,14 @@ function Index({ cpath, fixed = true }) {
           </div>
 
           <div className="pl-4">
+            {/* <Linksn
+              href="/profile"
+              icon={<UserIcon className="h-5 w-5" />}
+              isActive={cpath === "profile"}
+            >
+              <span className="capitalize ml-2 text-base">Profile</span>
+            </Linksn> */}
+
             <Linksn
               icon={<UserGroupIcon className="h-5 w-5" />}
               href="/membership"

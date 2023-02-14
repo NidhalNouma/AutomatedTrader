@@ -60,7 +60,7 @@ function Mt4({ account, userId }) {
               style={{ color: txtColor }}
               className="flex items-center font-bold"
             >
-              {openNumbers ? (
+              {!openNumbers ? (
                 <ChevronDownIcon
                   className="h-4 w-4 ml-auto cursor-pointer"
                   onClick={() => setOpenNumbers(!openNumbers)}

@@ -1,7 +1,13 @@
 import { Button } from "react-daisyui";
 import { H3 } from "./H";
 
-export const DeleteMessage = ({ close, title, children, onDelete }) => {
+export const DeleteMessage = ({
+  close,
+  title,
+  children,
+  onDelete,
+  btnDelText = "Delete",
+}) => {
   return (
     <div className="mb-1">
       <div className="sticky top-0 bg-accenti p-4 z-20 flex justify-between items-center">
@@ -38,7 +44,7 @@ export const DeleteMessage = ({ close, title, children, onDelete }) => {
               close();
             }}
           >
-            Delete
+            {btnDelText}
           </Button>
         </div>
       </div>
