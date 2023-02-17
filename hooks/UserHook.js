@@ -34,11 +34,8 @@ export const GetFullUser = () => {
     if (r?.subscriptionId) {
       const sub = await axios.get("/api/chargebee/get?id=" + r.subscriptionId);
       r["subscription"] = sub.data;
-      if (sub.data?.subscription_items?.length > 0) {
-        const subItemId = sub.data?.subscription_items[0].item_price_id;
-        r["subObj"] = getPlanById(subItemId, sub.data);
-      }
-      // console.log(getPlanById(subItemId));
+
+      r["subObj"] = getPlanById(sub.data);
     }
     // console.log(r);
     setFullUser(r);
@@ -180,10 +177,7 @@ export const UpdateUserSubscription = async (
   const r = await updateSubsciption(userId, subId, cusId);
   r["subscription"] = subscription;
 
-  if (subscription.subscription_items?.length > 0) {
-    const subItemId = subscription?.subscription_items[0].item_price_id;
-    r["subObj"] = getPlanById(subItemId, subscription);
-  }
+  r["subObj"] = getPlanById(subscription);
 
   console.log(r);
   return r;

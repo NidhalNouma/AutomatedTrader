@@ -93,7 +93,7 @@ function Index() {
                     <div className="w-10 rounded-full">
                       <img
                         className=""
-                        src={user?.photoURL || "Images/profile.png"}
+                        src={user?.photoURL || "/Images/profile.png"}
                       />
                     </div>
                   </Button>
