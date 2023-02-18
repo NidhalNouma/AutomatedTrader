@@ -82,10 +82,12 @@ export default function BarAndLineChart({ accounts }) {
   const [account, setAccount] = useState(accounts[0]);
   const [data, setData] = useState({});
 
+  const firstTradeOpenTime =
+    account.data?.length > 0 ? new Date(account.data[0]?.openTime) : new Date();
   const ds = getDataFromAccountPerPeriod(
     account,
     // getDaysFromTimeTillNow(moment(account.created_at.seconds * 1000))
-    getDaysFromTimeTillNow(new Date(account.data[0]?.openTime))
+    getDaysFromTimeTillNow(firstTradeOpenTime)
   );
   // console.log(
   //   ds,
