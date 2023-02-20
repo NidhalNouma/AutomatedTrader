@@ -8,6 +8,7 @@ import AboutUs from "../Features/Docs/AboutUs";
 import Webhooks from "../Features/Docs/Webhooks";
 import Metatrader from "../Features/Docs/Metatrader";
 import RoadMap from "../Features/Docs/RoadMap";
+import Faq from "../Features/Docs/Faq";
 
 export default function Help() {
   const [ty, setTy] = useState(0);
@@ -23,6 +24,7 @@ export default function Help() {
             {ty === 0 && <AboutUs />}
             {ty === 1 && <Webhooks />}
             {ty === 2 && <Metatrader />}
+            {ty === 4 && <Faq />}
             {ty === 3 && <RoadMap />}
           </div>
         </div>
@@ -58,6 +60,14 @@ function Side({ ty, setTy }) {
           onClick={() => setTy(2)}
         >
           Metatrader
+        </Button>
+        <Button
+          className={`capitalize !text-sm rounded-xl bg-bgt ${
+            ty === 4 && "text-primary"
+          }`}
+          onClick={() => setTy(4)}
+        >
+          FAQ
         </Button>
         <Button
           className={`capitalize !text-sm rounded-xl bg-bgt ${
