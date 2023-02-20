@@ -114,6 +114,8 @@ export default function BarAndLineChart({ accounts }) {
     // new Date().setDate(new Date().getDate()),
   ]);
 
+  console.log(dm, dy);
+
   const total = Object.values(ds.tPerc).reduce((p, v) => p + v, 0);
   const totaly = Object.values(dy.tPerc).reduce((p, v) => p + v, 0);
   const totalm = Object.values(dm.tPerc).reduce((p, v) => p + v, 0);
@@ -245,7 +247,11 @@ export default function BarAndLineChart({ accounts }) {
               <span className="text-xs text-text-h">year</span>
               <span
                 className={`text-xs ${
-                  total > 0 ? "text-blue-500" : total < 0 ? "text-red-500" : ""
+                  totaly > 0
+                    ? "text-blue-500"
+                    : totaly < 0
+                    ? "text-red-500"
+                    : ""
                 }`}
               >
                 {totaly.toFixed(1) + "%"}

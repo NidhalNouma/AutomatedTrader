@@ -45,7 +45,7 @@ export default function Home() {
               a Signal provider just start looking for the perfect alerts!
             </p>
             <span className="text-sm text-accent mt-auto font-semibold">
-              Comming soon
+              Coming soon
             </span>
           </Cardi>
           <Cardi no={3} title="Copy other trader">
@@ -57,7 +57,7 @@ export default function Home() {
               what to expect when following a signal provider!
             </p>
             <span className="text-sm text-accent mt-auto font-semibold">
-              Comming soon
+              Coming soon
             </span>
           </Cardi>
           <Cardi no={4} title="Top of the line affiliate program">
@@ -69,7 +69,7 @@ export default function Home() {
               media presence.
             </p>
             <span className="text-sm text-accent mt-auto font-semibold">
-              Comming soon
+              Coming soon
             </span>
           </Cardi>
         </div>

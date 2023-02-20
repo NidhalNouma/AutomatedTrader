@@ -30,7 +30,8 @@ function SearchHeader() {
               type="text"
               placeholder="Search for webhooks, profiles and more ..."
               value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
+              // onChange={(e) => setDisplayName(e.target.value)}
+              onChange={(e) => setDisplayName("")}
               autoFocus={true}
               ref={inputRef}
             />
@@ -40,6 +41,7 @@ function SearchHeader() {
             />
           </div>
           <Results users={users} />
+          <H5 className="mt-6 font-semibold text-center">Comming soon </H5>
         </div>
       </Modalt>
 

@@ -22,7 +22,7 @@ export default function Membership() {
     <>
       <Sidenav cpath="membership" />
       <MainWithHeader>
-        <H1>Membership</H1>{" "}
+        <H1>Membership</H1>
         <div className="mt-4">
           {/* {success && (
             <div className="flex mb-6 justify-center">

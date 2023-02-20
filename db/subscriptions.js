@@ -36,7 +36,7 @@ export async function getSubscription(id) {
 
     r = r.data;
   } catch (e) {
-    console.log("get subscription error => ", e);
+    console.log("get subscription error => ", e.message);
   }
 
   return r;
@@ -55,7 +55,7 @@ export async function deleteSubscription(id) {
 
     r = r.data;
   } catch (e) {
-    console.log("get subscription error => ", e);
+    console.log("delete subscription error => ", e.message);
   }
 
   return r;
