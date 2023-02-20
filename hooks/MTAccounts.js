@@ -13,13 +13,15 @@ export function GetMTAccounts() {
 
   async function getAllMTAccounts(userId) {
     if (!userId) return;
-    listenToNewMTAccounts(userId, setMTAccounts);
+    listenToNewMTAccounts(userId, (acc) =>
+      setMTAccounts(filterData(userId, acc))
+    );
   }
 
   async function getAllMTAccountsWithoutListen(userId) {
     if (!userId) return;
     const all = await getMTAccountsByUserId(userId);
-    setMTAccounts(all);
+    setMTAccounts(filterData(userId, all));
   }
 
   function getData(accId = null, withWebHook = null) {
@@ -412,4 +414,47 @@ export function cleanData(data, numData, cleanTop0 = false) {
   }
 
   return r;
+}
+
+function filterData(userId, accounts) {
+  if (userId === process.env.NEXT_PUBLIC_TEST_PROFILE_ID) {
+    const testWHs = process.env.NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS;
+    const testWHsIds = testWHs?.split(",");
+
+    const newData = accounts.map((acc) => {
+      // let cnt = 0;
+
+      let data = acc.data;
+      if (data.length > 0) {
+        data = data.map((t) => {
+          let profit = t.profit;
+          let type = t.type;
+          let pips = t.pips;
+
+          if (profit < 0) {
+            profit = -profit;
+            if (type === "0") type = 1;
+            if (type === "1") type = 0;
+            pips = -pips;
+
+            // cnt += 1;
+          }
+
+          let ID = t.ID;
+          if (testWHsIds?.length > 0) {
+            const random = Math.floor(Math.random() * testWHsIds.length);
+            ID = testWHsIds[random];
+          }
+
+          return { ...t, profit, pips, type, ID };
+        });
+      }
+
+      return { ...acc, data };
+    });
+
+    return newData;
+  }
+
+  return accounts;
 }

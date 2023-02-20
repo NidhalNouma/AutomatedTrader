@@ -26,6 +26,8 @@ export default function Webhook() {
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
+  console.log("wh Mt", mtAccounts);
+
   return (
     <>
       <Modal1
@@ -74,11 +76,6 @@ export default function Webhook() {
               <p>No available webhooks, click new to add a new one.</p>
             </div>
           )}
-          {/* <section className="container mx-auto flex flex-wrap">
-              <Pricing title="Standard" />
-              <Pricing title="Pro" />
-              <Pricing title="Primium" />
-            </section> */}
         </div>
       </MainWithHeader>
     </>
