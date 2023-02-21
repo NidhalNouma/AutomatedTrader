@@ -82,6 +82,10 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-/* .dropdown label {
+.dropdown label {
   display: flex;
-} */
+}
+.dropdown-end .dropdown-content {
+  top: 98%;
+  right: -5px;
+}

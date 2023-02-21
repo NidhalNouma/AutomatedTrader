@@ -17,7 +17,7 @@ function Webhooks() {
         <br />
         <br />
         <span className="font-semibold">1. </span>Log in to your dashboard and
-        click on &quot;Webhooks&quot; on the right side of the screen.
+        click on &quot;Webhooks&quot; on the left side of the screen.
         <br />
         <br />
         <span className="font-semibold">2. </span>Click &quot;New webhook&quot;

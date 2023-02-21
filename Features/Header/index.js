@@ -74,19 +74,31 @@ function Index() {
               </ButtonP> */}
           </div>
           {user ? (
-            <div className="flex items-center ml-auto">
+            <div className="flex items-center justify-center ml-auto">
               <SearchHeader />
-              <Indicator
-                vertical="top"
-                horizontal=""
-                // item={<Badge size="xs" color="accent" />}
-                className="relative ml-3"
-              >
-                <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div>
-                <span className="cursor-pointer text-text-p">
-                  <BellIcon className="h-7 w-7" />
-                </span>
-              </Indicator>
+
+              <Dropdown vertical="end">
+                <Indicator
+                  vertical="top"
+                  horizontal=""
+                  // item={<Badge size="xs" color="accent" />}
+                  className="relative ml-3"
+                >
+                  {/* <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div> */}
+                  <span className="cursor-pointer text-text-p">
+                    <BellIcon className="h-7 w-7" />
+                  </span>
+                </Indicator>
+
+                <Dropdown.Menu className="w-64 menu-compact bg-bga">
+                  <div className="py-4 px-2">
+                    <p className="text-sm font-semibold">
+                      No available notifications!
+                    </p>
+                  </div>
+                </Dropdown.Menu>
+              </Dropdown>
+
               <div className="ml-3">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">

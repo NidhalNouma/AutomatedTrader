@@ -13,6 +13,7 @@ import Telegram from "../Features/Docs/Telegram";
 import Manual from "../Features/Docs/Manual";
 import Trade from "../Features/Docs/Trade";
 import Alerts from "../Features/Docs/Alerts";
+import PropFirm from "../Features/Docs/PropFirm";
 
 export default function Help() {
   const [ty, setTy] = useState(0);
@@ -36,6 +37,7 @@ export default function Help() {
             {ty === 6 && <Manual />}
             {ty === 7 && <Trade />}
             {ty === 8 && <Alerts />}
+            {ty === 9 && <PropFirm />}
           </div>
         </div>
       </MainWithHeader>
@@ -121,6 +123,15 @@ function Side({ ty, setTy }) {
         onClick={() => setTy(4)}
       >
         FAQ
+      </Button>
+      <Button
+        size="sm"
+        className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+          ty === 9 && "text-primary"
+        }`}
+        onClick={() => setTy(9)}
+      >
+        Prop firm
       </Button>
       <Button
         size="sm"

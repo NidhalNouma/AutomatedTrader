@@ -41,7 +41,12 @@ function SearchHeader() {
             />
           </div>
           <Results users={users} />
-          <H5 className="mt-6 font-semibold text-center">Comming soon </H5>
+          <H5 className="mt-6 font-semibold text-center">
+            Coming soon! Lifetime users get first access ,{" "}
+            <span className="underline cursor-pointer">
+              <Link href="/membership">upgrade your membership today</Link>
+            </span>
+          </H5>
         </div>
       </Modalt>
 
