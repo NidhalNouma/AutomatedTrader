@@ -26,7 +26,7 @@ export default function Webhook() {
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
-  console.log("wh Mt", mtAccounts);
+  // console.log("wh Mt", mtAccounts);
 
   return (
     <>

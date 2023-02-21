@@ -3,12 +3,12 @@ import Main from "./Main";
 import Header from "../Header";
 import Banners from "../Banners";
 
-function MainWithHeader({ children }) {
+function MainWithHeader({ children, mainClassName, className }) {
   return (
-    <div className="w-full flex flex-col">
+    <div className={`${className} w-full flex flex-col`}>
       <Header />
       <Banners />
-      <Main>{children}</Main>
+      <Main className={mainClassName}>{children}</Main>
     </div>
   );
 }

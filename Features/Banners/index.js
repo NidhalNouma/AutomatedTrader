@@ -3,7 +3,7 @@ import Image from "next/image";
 
 function Index() {
   return (
-    <div className="grid grid-cols-3 mx-auto mt-4 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 mx-auto mt-4 gap-2 px-4">
       <B1 />
       <B2 />
       {/* <B3 /> */}

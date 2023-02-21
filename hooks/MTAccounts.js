@@ -75,6 +75,7 @@ export function GetMTAccounts() {
 
 export function getDataByWebhook(mtAccounts, withWebHook = null) {
   let data = [];
+
   mtAccounts.forEach(function (v, i) {
     console.log(v);
     if (v.data?.length > 0) data.push(...v.data);
@@ -240,7 +241,7 @@ export function getDataFromAccountPerPeriod(
   const loss = profitPerTime(account?.data, false, withWebHook);
   const profit = profitPerTime(account?.data, true, withWebHook);
 
-  // console.log("period", period);
+  // console.log("period", period, profit, loss);
 
   const r = {
     profit: [],
@@ -433,8 +434,8 @@ function filterData(userId, accounts) {
 
           if (profit < 0) {
             profit = -profit;
-            if (type === "0") type = 1;
-            if (type === "1") type = 0;
+            if (type === "0") type = "1";
+            if (type === "1") type = "0";
             pips = -pips;
 
             // cnt += 1;
@@ -446,10 +447,12 @@ function filterData(userId, accounts) {
             ID = testWHsIds[random];
           }
 
+          // console.log(ID);
+
           return { ...t, profit, pips, type, ID };
         });
       }
-
+      // console.log(data);
       return { ...acc, data };
     });
 

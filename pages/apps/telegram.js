@@ -75,7 +75,7 @@ export default function help() {
               <Input1
                 classNameInput="bg-bga"
                 className=" mb-4 mx-auto"
-                placeholder="Past your chat id here"
+                placeholder="Paste your chat id here"
                 value={chatId}
                 setValue={setChatId}
               />

@@ -78,6 +78,8 @@ function Webhooks() {
         created a webhook
       </p>
 
+      <WebhookTradingView />
+      {/* 
       <H4 className="font-bold mt-6">
         how to add automated trader webhook in Tradingview
       </H4>
@@ -108,9 +110,92 @@ function Webhooks() {
         click list of messages and select the new message you want to use in
         tradingview Copy webhook messsage and paste in message field Follow
         steps above if needed.{" "}
-      </p>
+      </p> */}
     </Index>
   );
 }
 
 export default Webhooks;
+
+function WebhookTradingView() {
+  return (
+    <React.Fragment>
+      <H4 className="font-bold mt-6">Webhook in TradingView</H4>
+
+      <p className="mt-3 text-text-p text-sm">
+        Here&apos;s a step-by-step guide on how to add an Automated Trader
+        webhook in TradingView:
+        <br />
+        <br />
+        <span className="font-semibold">1. </span>Create your webhook in
+        Automated Trader.
+        <br />
+        <br />
+        <span className="font-semibold">2. </span>Find an indicator or alert in
+        TradingView to attach your Automated Trader settings.
+        <br />
+        <br />
+        <span className="font-semibold">3. </span>Visit the Notifications tab in
+        TradingView and go to Automated Trader. Copy the webhook URL.
+        <br />
+        <br />
+        <span className="font-semibold">4. </span>Go back to TradingView and
+        paste your webhook URL in the field.
+        <br />
+        <br />
+        <span className="font-semibold">5. </span>In the TradingView Alert tab,
+        go to Settings.
+        <br />
+        <br />
+        <span className="font-semibold">6. </span>Select your conditions and
+        name the alert anything you want, preferably adding the order type you
+        selected in Automated Trader (buy, buy limit, sell, sell limit, buy
+        stop, sell stop), as well as the pair type and time frame of the chart.
+        <br />
+        <br />
+        <span className="font-semibold">7. </span>Go back to Automated Trader
+        and copy the webhook message.
+        <br />
+        <br />
+        <span className="font-semibold">8. </span>Go back to TradingView and
+        paste the message in the Message fiel
+        <br />
+        <br />
+        <span className="font-semibold">9. </span>Click Create.
+      </p>
+
+      <p className="mt-6 text-text-p text-sm">
+        If you want to set up multiple order types, you need to repeat these
+        steps above by making new messages in Automated Trader:
+        <br />
+        <br />
+        <span className="font-semibold">1. </span>Go back to Automated Trader
+        and select Webhook.
+        <br />
+        <br />
+        <span className="font-semibold">2. </span>Click the three dots next to
+        the list of messages and select New Message.
+        <br />
+        <br />
+        <span className="font-semibold">3. </span>Add the pair name and select
+        another order type (change settings if you would like).
+        <br />
+        <br />
+        <span className="font-semibold">4. </span>Click Save.
+        <br />
+        <br />
+        <span className="font-semibold">5. </span>In Automated Trader, click the
+        list of messages and select the new message you want to use in
+        TradingView.
+        <br />
+        <br />
+        <span className="font-semibold">6. </span>Copy the webhook message and
+        paste it in the Message field.
+        <br />
+        <br />
+        <span className="font-semibold">7. </span>Follow the steps above if
+        needed.
+      </p>
+    </React.Fragment>
+  );
+}

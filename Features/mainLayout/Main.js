@@ -1,8 +1,10 @@
 import React from "react";
 
-function index({ children }) {
+function index({ children, className }) {
   return (
-    <main className="px-5 md:px-10 py-6 overflow-x-hidden">{children}</main>
+    <main className={` ${className} px-5 md:px-10 py-6 overflow-x-hidden`}>
+      {children}
+    </main>
   );
 }
 
