@@ -22,9 +22,8 @@ export default function Help() {
       <Sidenav cpath="help" />
       <MainWithHeader mainClassName="!overflow-x-clip">
         <H1>Documentation</H1>
-        {/* <div className="p-28 bg-gray-200 sticky w-full top-0"></div> */}
         <div className="mt-6 flex">
-          <div className="sticky top-20 sm:top-24 h-[50vh]">
+          <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
             <Side ty={ty} setTy={setTy} />
           </div>
           <div className="flex-1 px-6">

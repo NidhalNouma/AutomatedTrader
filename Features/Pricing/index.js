@@ -96,7 +96,7 @@ function Index({ title, value, t, setSuccess, i }) {
           </p>
           <p className="flex justify-center items-center my-1">
             <CheckCircleIcon className="h-3 w-3 mr-1" />
-            MT4 & MT5 EA
+            MT4 & MT5 (coming soon) EA
           </p>
           {value.telegram && (
             <p className="flex justify-center items-center my-1">
@@ -107,7 +107,13 @@ function Index({ title, value, t, setSuccess, i }) {
           {value.discord && (
             <p className="flex justify-center items-center my-1">
               <CheckCircleIcon className="h-3 w-3 mr-1" />
-              Discord Notifications
+              Discord Notifications (Coming soon)
+            </p>
+          )}
+          {value.manualTrade && (
+            <p className="flex justify-center items-center my-1">
+              <CheckCircleIcon className="h-3 w-3 mr-1" />
+              Manual automation
             </p>
           )}
           <p className="flex justify-center items-center my-1">
@@ -117,7 +123,7 @@ function Index({ title, value, t, setSuccess, i }) {
           {value.shareAlerts && (
             <p className="flex justify-center items-center my-1">
               <CheckCircleIcon className="h-3 w-3 mr-1" />
-              Share Alerts
+              Share Alerts (Coming soon)
             </p>
           )}
         </div>
