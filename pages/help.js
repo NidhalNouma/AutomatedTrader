@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import { H1 } from "../Components/H";
@@ -45,6 +45,10 @@ export default function Help() {
 }
 
 function Side({ ty, setTy }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [ty]);
+
   return (
     <div className="flex flex-col items-start">
       <Button

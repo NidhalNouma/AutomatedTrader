@@ -14,7 +14,7 @@ function Telegram() {
       </p>
 
       <p className="mt-3 text-text-p text-sm">
-        Here&aposs how to add your Automated Trader account to Telegram:
+        Here&apos;s how to add your Automated Trader account to Telegram:
         <br />
         <br />
         <span className="font-semibold">1. </span>Go to the Telegram dashboard

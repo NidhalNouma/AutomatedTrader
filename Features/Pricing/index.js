@@ -75,11 +75,11 @@ function Index({ title, value, t, setSuccess, i }) {
         <hr className="mx-1 mt-2" />
         <div className="mt-2 mb-3 flex flex-col text-sm items-start justify-center">
           <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            <CheckCircleIcon className="h-3 w-3 mr-1 " />
             Automate Tradingview
           </p>
           <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1" />
+            <CheckCircleIcon className="h-3 w-3 mr-1 " />
             {value.accounts > 1
               ? `Up to ${value.accounts} accounts`
               : value.accounts === 1

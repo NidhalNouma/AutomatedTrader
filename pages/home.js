@@ -19,7 +19,7 @@ export default function Home() {
           Hi, <span className="text-text-h">{fullUser.displayName}</span>
         </Hi2>
         <Hi3 className="font-semibold mt-6">
-          There are 4 ways to make passive income using Automated Trader, With
+          There are 4 ways to make passive income using Automated Trader, with
           more ways coming soon!
         </Hi3>
         <div className="mt-6 grid xl:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
@@ -82,7 +82,7 @@ function Cardi({ no, title, children }) {
   return (
     <div className="bg-bg p-4 rounded-lg flex flex-col items-start">
       <H4 className="font-semibold">
-        <span className="mr-2 px-1 bg-text-h text-bg rounded">{no}</span>
+        <span className="mr-2 px-1 bg-primary text-bg rounded">{no}</span>
         {title}
       </H4>
       <div className="text-text-p mt-2"></div>
