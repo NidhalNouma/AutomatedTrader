@@ -426,7 +426,7 @@ function filterData(userId, accounts) {
       // let cnt = 0;
 
       let data = acc.data;
-      if (data.length > 0) {
+      if (data?.length > 0) {
         data = data.map((t) => {
           let profit = t.profit;
           let type = t.type;

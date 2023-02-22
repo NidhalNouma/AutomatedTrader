@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./index";
+import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
@@ -13,22 +13,22 @@ function Trade() {
         Automated Trader:
         <br />
         <br />
-        <span className="font-semibold">1. </span>The Trade section displays all
-        your trades from all the accounts you have added in Automated Trader.
-        <br />
-        <br />
-        <span className="font-semibold">2. </span>You can view the webhook that
-        fired to give you the trade.
-        <br />
-        <br />
-        <span className="font-semibold">3. </span>The section shows the symbol
-        type, order type, lot size, pip amount, and the amount of profit or
-        loss. Additionally, it shows the open/close price and the closed time.
-        <br />
-        <br />
-        <span className="font-semibold">4. </span>By clicking on a trade, you
-        can access more details, such as which account it was taken on and the
-        entry and exit price.
+        <Step num={1} imgSrc="">
+          The Trade section displays all your trades from all the accounts you
+          have added in Automated Trader.
+        </Step>
+        <Step num={2} imgSrc="">
+          You can view the webhook that fired to give you the trade.
+        </Step>
+        <Step num={3} imgSrc="">
+          The section shows the symbol type, order type, lot size, pip amount,
+          and the amount of profit or loss. Additionally, it shows the
+          open/close price and the closed time.
+        </Step>
+        <Step num={4} imgSrc="">
+          By clicking on a trade, you can access more details, such as which
+          account it was taken on and the entry and exit price.
+        </Step>
       </p>
 
       <p className="mt-3 text-text-p text-sm">

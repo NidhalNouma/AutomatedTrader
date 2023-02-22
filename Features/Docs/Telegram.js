@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./index";
+import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
@@ -17,36 +17,32 @@ function Telegram() {
         Here&apos;s how to add your Automated Trader account to Telegram:
         <br />
         <br />
-        <span className="font-semibold">1. </span>Go to the Telegram dashboard
-        in the apps section.
-        <br />
-        <br />
-        <span className="font-semibold">2. </span>Click on the Telegram link to
-        open the Telegram app.
-        <br />
-        <br />
-        <span className="font-semibold">3. </span>Once you&aposre in Telegram,
-        click &quot;send message&quot;.
-        <br />
-        <br />
-        <span className="font-semibold">4. </span>Once you receive the message
-        in Telegram, click &quot;start&quot;.
-        <br />
-        <br />
-        <span className="font-semibold">5. </span>Copy your chat ID from the
-        message.
-        <br />
-        <br />
-        <span className="font-semibold">6. </span>Go back to Automated Trader
-        and paste your chat ID into the ID field.
-        <br />
-        <br />
-        <span className="font-semibold">7. </span>Click &quot;next&quot;.
+        <Step num={1} imgSrc="">
+          Go to the Telegram dashboard in the apps section.
+        </Step>
+        <Step num={2} imgSrc="">
+          Click on the Telegram link to open the Telegram app.
+        </Step>
+        <Step num={3} imgSrc="">
+          Once you&apos;re in Telegram, click &quot;send message&quot;.
+        </Step>
+        <Step num={4} imgSrc="">
+          Once you receive the message in Telegram, click &quot;start&quot;.
+        </Step>
+        <Step num={5} imgSrc="">
+          Copy your chat ID from the message.
+        </Step>
+        <Step num={6} imgSrc="">
+          Go back to Automated Trader and paste your chat ID into the ID field.
+        </Step>
+        <Step num={7} imgSrc="">
+          Click &quot;next&quot;.
+        </Step>
       </p>
 
       <p className="mt-3 text-text-p text-sm">
         You&apos;re all set and will start receiving alerts in your Telegram
-        chat. That&aposs it! With these simple steps, you can easily add your
+        chat. That&aposs; it! With these simple steps, you can easily add your
         Automated Trader account to Telegram and receive your trade alerts on
         the go.
       </p>

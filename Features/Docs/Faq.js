@@ -100,6 +100,18 @@ function Faq() {
         Yes, Automated Trader supports a wide range of assets, including stocks,
         bonds, commodities, and more.
       </p>
+
+      <H5 className="font-bold mt-6">
+        Does Automated trader require a premium membership?
+      </H5>
+      <p className="mt-3 text-text-p text-sm">
+        Yes, To receive webhook alerts for an automated trader, a pro membership
+        is required. This membership provides access to advanced features and
+        tools that allow traders to create and customize automated trading
+        strategies, as well as receive real-time notifications through webhooks.
+        Without a pro membership, traders may not have access to these features
+        and may miss out on key trading opportunities.
+      </p>
     </Index>
   );
 }

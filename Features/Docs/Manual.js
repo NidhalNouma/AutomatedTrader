@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./index";
+import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
@@ -21,29 +21,27 @@ function Manual() {
         Steps:
         <br />
         <br />
-        <span className="font-semibold">1. </span>Set up your accounts and
-        webhooks with your desired trading pairs and preset Automated trader
-        settings/messages.
-        <br />
-        <br />
-        <span className="font-semibold">2. </span>Go to your Automated dashboard
-        and click &quot;Open Trade&quot; in the upper left corner.
-        <br />
-        <br />
-        <span className="font-semibold">3. </span>Select the account you want
-        the trade to execute on.
-        <br />
-        <br />
-        <span className="font-semibold">4. </span>Choose the webhook/preset
-        setting you want to use.
-        <br />
-        <br />
-        <span className="font-semibold">5. </span>Choose the specific message
-        you want, mainly for the order type and settings you have preset in the
-        webhook dashboard.
-        <br />
-        <br />
-        <span className="font-semibold">6. </span>Click &quot;Send&quot;.
+        <Step num={1} imgSrc="">
+          Set up your accounts and webhooks with your desired trading pairs and
+          preset Automated trader settings/messages.
+        </Step>
+        <Step num={2} imgSrc="">
+          Go to your Automated dashboard and click &quot;Open Trade&quot; in the
+          upper left corner.
+        </Step>
+        <Step num={3} imgSrc="">
+          Select the account you want the trade to execute on.
+        </Step>
+        <Step num={4} imgSrc="">
+          Choose the webhook/preset setting you want to use.
+        </Step>
+        <Step num={5} imgSrc="">
+          Choose the specific message you want, mainly for the order type and
+          settings you have preset in the webhook dashboard.
+        </Step>
+        <Step num={6} imgSrc="">
+          Click &quot;Send&quot;.
+        </Step>
       </p>
 
       <p className="mt-3 text-text-p text-sm">

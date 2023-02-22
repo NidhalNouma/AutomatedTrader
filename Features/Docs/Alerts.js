@@ -1,5 +1,5 @@
 import React from "react";
-import Index from "./index";
+import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
@@ -13,17 +13,17 @@ function Alerts() {
         the Automated Trader dashboard:
         <br />
         <br />
-        <span className="font-semibold">1. </span>The Alert section in the
-        dashboard provides you with insight into the Automated Trader settings
-        you are using.
-        <br />
-        <br />
-        <span className="font-semibold">2. </span>It shows live updates whenever
-        you receive a new alert in TradingView.
-        <br />
-        <br />
-        <span className="font-semibold">3. </span>You will be notified of new
-        alerts in this section and in Telegram if you have set up Telegram.
+        <Step num={1} imgSrc="">
+          The Alert section in the dashboard provides you with insight into the
+          Automated Trader settings you are using.
+        </Step>
+        <Step num={2} imgSrc="">
+          It shows live updates whenever you receive a new alert in TradingView.
+        </Step>
+        <Step num={3} imgSrc="">
+          You will be notified of new alerts in this section and in Telegram if
+          you have set up Telegram.
+        </Step>
       </p>
 
       <p className="mt-3 text-text-p text-sm">
