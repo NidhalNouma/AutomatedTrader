@@ -103,6 +103,10 @@ const options = {
       // },
     },
   },
+
+  animation: {
+    duration: 0,
+  },
 };
 
 function WebhookLineChart({ webhook, mtAccounts, messages }) {

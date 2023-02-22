@@ -95,8 +95,6 @@ function Metatrader() {
           Automated Traders dashboard. Your account data will be displayed on
           the MT4 app dashboard.
         </Step>
-        <br />
-        <br />
         By following these steps, you can easily set up your MT4 account in
         Automated Trader and begin using its advanced features to optimize your
         trading strategy.
@@ -140,8 +138,6 @@ function AddingWebhookToMT4() {
           set! You will now start receiving trades on your MT4 account through
           the webhooks you have enabled.
         </Step>
-        <br />
-        <br />
         By following these simple steps, you can easily integrate your webhooks
         from Automated Trader and TradingView to your MT4 account, allowing you
         to receive trades and stay on top of your trading strategy with ease.

@@ -94,6 +94,10 @@ const options = {
       //   text: "Chart.js Line Chart",
     },
   },
+
+  animation: {
+    duration: 0,
+  },
 };
 
 export default function App({ accounts }) {

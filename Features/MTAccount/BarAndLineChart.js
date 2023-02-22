@@ -74,6 +74,10 @@ const options = {
       },
     },
   },
+
+  animation: {
+    duration: 0,
+  },
 };
 
 export default function BarAndLineChart({ accounts }) {
