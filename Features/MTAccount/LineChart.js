@@ -95,9 +95,9 @@ const options = {
     },
   },
 
-  animation: {
-    duration: 0,
-  },
+  // animation: {
+  //   duration: 0,
+  // },
 };
 
 export default function App({ accounts }) {

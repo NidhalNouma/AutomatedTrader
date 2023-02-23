@@ -9,6 +9,8 @@ import {
 import { getPlanById } from "../utils/pricing";
 import axios from "axios";
 
+import checkLifeTime from "../lifetime/check";
+
 export const UserC = createContext(null);
 
 export const UserCC = ({ children, value }) => {
@@ -37,7 +39,9 @@ export const GetFullUser = () => {
 
       r["subObj"] = getPlanById(sub.data);
     }
-    // console.log(r);
+    if (!r["subObj"]) r["subObj"] = checkLifeTime(r.email);
+
+    console.log(r);
     setFullUser(r);
     onComplete();
   };

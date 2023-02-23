@@ -156,9 +156,11 @@ export default function Settings() {
                   <div className="bg-accent px-3 py-2 rounded-lg flex justify-between items-center">
                     <Hi4 className="!text-bg">
                       {fullUser.subObj.name}
-                      <span className="text-text-h ml-2 text-sm font-normal px-2 py-1 bg-bg rounded-full">
-                        {fullUser.subscription?.status}
-                      </span>
+                      {fullUser.subscription?.status && (
+                        <span className="text-text-h ml-2 text-sm font-normal px-2 py-1 bg-bg rounded-full">
+                          {fullUser.subscription?.status}
+                        </span>
+                      )}
                     </Hi4>
 
                     <Dropdown vertical="end" horizontal="center">

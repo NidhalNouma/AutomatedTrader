@@ -118,17 +118,26 @@ function AddingWebhookToMT4() {
         get started:
         <br />
         <br />
-        <Step num={1} imgSrc="">
+        <Step
+          num={1}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover.jpg?alt=media&token=f605d4ff-515f-4101-aca5-d640946260c7"
+        >
           Access the MT4 apps menu and select the account you want to attach the
           webhooks to. This can be done by clicking on the three dots beside the
           account name.
         </Step>
-        <Step num={2} imgSrc="">
+        <Step
+          num={2}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(2).jpg?alt=media&token=0cc7d047-13b9-490b-9804-c9fda666fb11"
+        >
           Next, select &quot;Webhooks&quot; from the available options. This
           will bring up a list of available webhooks that you can use to execute
           trades on your MT4 account.
         </Step>
-        <Step num={3} imgSrc="">
+        <Step
+          num={3}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(3).jpg?alt=media&token=ac04e6a3-3069-482e-a54a-d5d5775ff5ae"
+        >
           Toggle on the webhooks that you want to use on your trading account.
           Make sure to select only the webhooks that you trust and that are
           compatible with your trading strategy.
