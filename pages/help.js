@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import { H1 } from "../Components/H";
@@ -14,6 +14,7 @@ import Manual from "../Features/Docs/Manual";
 import Trade from "../Features/Docs/Trade";
 import Alerts from "../Features/Docs/Alerts";
 import PropFirm from "../Features/Docs/PropFirm";
+import Vps from "../Features/Docs/Vps";
 
 export default function Help() {
   const [ty, setTy] = useState(0);
@@ -38,6 +39,7 @@ export default function Help() {
             {ty === 7 && <Trade />}
             {ty === 8 && <Alerts />}
             {ty === 9 && <PropFirm />}
+            {ty === 10 && <Vps />}
           </div>
         </div>
       </MainWithHeader>
@@ -70,6 +72,28 @@ function Side({ ty, setTy }) {
       >
         Webhooks
       </Button>
+      {ty === 1 && (
+        <Fragment>
+          <Button
+            size="sm"
+            className={`my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+              ty === 1 && "text-primary"
+            }`}
+            onClick={() => setTy(1)}
+          >
+            In AutomateTrader
+          </Button>
+          <Button
+            size="sm"
+            className={`my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+              ty === 1 && "text-primary"
+            }`}
+            onClick={() => setTy(1)}
+          >
+            In TradingView
+          </Button>
+        </Fragment>
+      )}
       <Button
         size="sm"
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
@@ -79,6 +103,28 @@ function Side({ ty, setTy }) {
       >
         Metatrader
       </Button>
+      {ty === 2 && (
+        <Fragment>
+          <Button
+            size="sm"
+            className={`my-0 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+              ty === 2 && "text-primary"
+            }`}
+            onClick={() => setTy(2)}
+          >
+            Adding MT4 account
+          </Button>
+          <Button
+            size="sm"
+            className={`my-0 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+              ty === 2 && "text-primary"
+            }`}
+            onClick={() => setTy(2)}
+          >
+            Webhook in MT4
+          </Button>
+        </Fragment>
+      )}
       <Button
         size="sm"
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
@@ -132,6 +178,15 @@ function Side({ ty, setTy }) {
         onClick={() => setTy(9)}
       >
         Prop firm
+      </Button>
+      <Button
+        size="sm"
+        className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
+          ty === 10 && "text-primary"
+        }`}
+        onClick={() => setTy(10)}
+      >
+        VPS
       </Button>
       <Button
         size="sm"

@@ -9,6 +9,7 @@ export const pricingList = {
       telegram: true,
       discord: false,
       shareAlerts: false,
+      alerts: 10,
       more: false,
     },
     "Standard plan": {
@@ -20,6 +21,7 @@ export const pricingList = {
       telegram: true,
       discord: false,
       shareAlerts: false,
+      alerts: 40,
       more: false,
     },
     "Professional plan": {
@@ -31,6 +33,7 @@ export const pricingList = {
       telegram: true,
       discord: true,
       shareAlerts: false,
+      alerts: 80,
       more: false,
     },
     "Premium plan": {
@@ -43,6 +46,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      alerts: 200,
       manualTrade: true,
     },
   },
@@ -56,6 +60,7 @@ export const pricingList = {
       telegram: true,
       discord: false,
       shareAlerts: false,
+      alerts: 10,
       more: false,
     },
     "Standard plan": {
@@ -67,6 +72,7 @@ export const pricingList = {
       telegram: true,
       discord: false,
       shareAlerts: false,
+      alerts: 40,
       more: false,
     },
     "Professional plan": {
@@ -79,6 +85,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: false,
       more: false,
+      alerts: 80,
       manualTrade: true,
     },
     "Premium plan": {
@@ -91,6 +98,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      alerts: 200,
       manualTrade: true,
     },
   },
@@ -105,6 +113,7 @@ export const pricingList = {
       discord: true,
       shareAlerts: true,
       more: true,
+      alerts: 500,
       manualTrade: true,
     },
   },
