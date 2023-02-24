@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
-function Webhooks() {
+function Webhooks({ ty, setTy }) {
+  const sec2 = useRef(null);
+
+  useEffect(() => {
+    if (ty === 1.2) {
+      sec2.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [ty]);
+
   return (
     <Index>
       {/* <H4 className="font-bold">Setting up Webhook</H4> */}
@@ -185,7 +193,9 @@ function Webhooks() {
         </Step> */}
       </p>
 
-      <WebhookTradingView />
+      <div className="scroll-mt-24" ref={sec2}>
+        <WebhookTradingView />
+      </div>
     </Index>
   );
 }

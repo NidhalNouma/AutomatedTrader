@@ -216,7 +216,7 @@ export default function BarAndLineChart({ accounts }) {
                     : ""
                 }`}
               >
-                {totald.toFixed(1) + "%"}
+                {totald.toFixed(3) + "%"}
               </span>
             </div>
             <div className="flex flex-col items-center">

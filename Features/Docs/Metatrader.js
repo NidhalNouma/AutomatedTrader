@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
-function Metatrader() {
+function Metatrader({ ty, setTy }) {
+  const sec2 = useRef(null);
+
+  useEffect(() => {
+    if (ty === 2.2) {
+      sec2.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [ty]);
+
   return (
     <Index>
       <H4 className="font-bold">How to add MT4 account </H4>
@@ -99,7 +107,10 @@ function Metatrader() {
         Automated Trader and begin using its advanced features to optimize your
         trading strategy.
       </p>
-      <AddingWebhookToMT4 />
+
+      <div className="scroll-mt-20" ref={sec2}>
+        <AddingWebhookToMT4 />
+      </div>
     </Index>
   );
 }

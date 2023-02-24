@@ -255,7 +255,7 @@ function WebhookData({
           <Input1Inline
             name="Partial Close %"
             placeholder=""
-            helper="Information about this input"
+            helper="Close % of the trade after hitting the partial target"
             type="number"
             disabled={!BE.use}
             value={BE.partiel}
@@ -264,7 +264,7 @@ function WebhookData({
           <Input1Inline
             name="Activate Break Even (Pips)"
             placeholder=""
-            helper="Information about this input"
+            helper="Profit pips to activate Breakeven"
             type="number"
             disabled={!BE.use}
             value={BE.activate}
@@ -273,7 +273,7 @@ function WebhookData({
           <Input1Inline
             name="SL into profit (Pips)"
             placeholder=""
-            helper="Information about this input"
+            helper="Move SL into profit"
             type="number"
             disabled={!BE.use}
             value={BE.move}
@@ -284,7 +284,7 @@ function WebhookData({
 
       <Toggle1
         name="Time filter"
-        helper="Information about this input"
+        helper="Allow time filter"
         value={time.use}
         setValue={() => setTime({ ...time, use: !time.use })}
       />
@@ -392,16 +392,16 @@ function WebhookData({
           </ButtonGroup>
           <Input1Inline
             name="Time start"
-            placeholder=""
-            helper="Information about this input"
+            placeholder="08:30"
+            helper="Time ti start accepting the alerts"
             disabled={!time.use}
             value={time.start}
             setValue={(v) => setTime({ ...time, start: v })}
           />
           <Input1Inline
             name="Time end"
-            placeholder=""
-            helper="Information about this input"
+            placeholder="22:30"
+            helper="End time"
             disabled={!time.use}
             value={time.end}
             setValue={(v) => setTime({ ...time, end: v })}
@@ -411,7 +411,7 @@ function WebhookData({
 
       <Toggle1
         name="Hedging"
-        helper="Information about this input"
+        helper="Allow hedging"
         value={hedging.use}
         setValue={() => setHedging({ ...hedging, use: !hedging.use })}
       />
@@ -419,7 +419,7 @@ function WebhookData({
         <Fragment>
           <Select1
             name="Period"
-            helper="Information about this input"
+            helper="Period of the pending order duration"
             options={["Minutes", "Hours", "Days", "Weeks", "Months"]}
             value={hedging.period}
             setValue={(v) => setHedging({ ...hedging, period: v })}
@@ -427,7 +427,7 @@ function WebhookData({
           <Input1Inline
             name="Pending order duration"
             placeholder=""
-            helper="Information about this input"
+            helper="Pending order duration"
             type="number"
             disabled={!hedging.use}
             value={hedging.pending}
@@ -447,7 +447,7 @@ function WebhookData({
 
       <Toggle1
         name="Max spread/ slippage"
-        helper="Information about this input"
+        helper="Allow spread and slippage"
         value={maxSS.use}
         setValue={() => setMaxSS({ ...maxSS, use: !maxSS.use })}
       />
@@ -456,7 +456,7 @@ function WebhookData({
           <Input1Inline
             name="Max spread"
             placeholder=""
-            helper="Information about this input"
+            helper="Maximum spread"
             type="number"
             disabled={!maxSS.use}
             value={maxSS.spread}
@@ -465,7 +465,7 @@ function WebhookData({
           <Input1Inline
             name="Max slippage"
             placeholder=""
-            helper="Information about this input"
+            helper="Maximum slippage"
             type="number"
             disabled={!maxSS.use}
             value={maxSS.slippage}
