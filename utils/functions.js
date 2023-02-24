@@ -61,3 +61,30 @@ export function addAlpha(color, opacity) {
 
   return new_col;
 }
+
+export function numToFixed(num) {
+  let value = Number(num);
+  let res = String(num).split(".");
+
+  // console.log(value, res);
+  if (num === 0) return num.toFixed(1);
+
+  if (res.length > 1) {
+    if (res[0] > 0) return num.toFixed(1);
+    else {
+      let s = 1;
+
+      let str = res[1].toString();
+
+      for (let i in str) {
+        if (str[i] === "0") s += 1;
+        else break;
+        //answer += Math.pow(str[i], Number(i) + 1);
+      }
+
+      return num.toFixed(s);
+    }
+  }
+
+  return value;
+}

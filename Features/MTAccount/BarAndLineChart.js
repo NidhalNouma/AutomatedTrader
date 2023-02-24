@@ -23,6 +23,7 @@ import {
   getDaysFromTimeTillNow,
   cleanData,
 } from "../../hooks/MTAccounts";
+import { numToFixed } from "../../utils/functions";
 
 ChartJS.register(
   LinearScale,
@@ -118,7 +119,7 @@ export default function BarAndLineChart({ accounts }) {
     // new Date().setDate(new Date().getDate()),
   ]);
 
-  console.log(dm, dy);
+  // console.log(dm, dy);
 
   const total = Object.values(ds.tPerc).reduce((p, v) => p + v, 0);
   const totaly = Object.values(dy.tPerc).reduce((p, v) => p + v, 0);
@@ -216,7 +217,7 @@ export default function BarAndLineChart({ accounts }) {
                     : ""
                 }`}
               >
-                {totald.toFixed(3) + "%"}
+                {numToFixed(totald) + "%"}
               </span>
             </div>
             <div className="flex flex-col items-center">
@@ -230,7 +231,7 @@ export default function BarAndLineChart({ accounts }) {
                     : ""
                 }`}
               >
-                {totalw.toFixed(1) + "%"}
+                {numToFixed(totalw) + "%"}
               </span>
             </div>
             <div className="flex flex-col items-center">
@@ -244,7 +245,7 @@ export default function BarAndLineChart({ accounts }) {
                     : ""
                 }`}
               >
-                {totalm.toFixed(1) + "%"}
+                {numToFixed(totalm) + "%"}
               </span>
             </div>
             <div className="flex flex-col items-center">
@@ -258,7 +259,7 @@ export default function BarAndLineChart({ accounts }) {
                     : ""
                 }`}
               >
-                {totaly.toFixed(1) + "%"}
+                {numToFixed(totaly) + "%"}
               </span>
             </div>
           </div>

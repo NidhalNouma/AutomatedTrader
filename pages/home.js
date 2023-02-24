@@ -16,7 +16,7 @@ export default function Home() {
       <Sidenav cpath="home" />
       <MainWithHeader>
         <Hi2 className="font-bold">
-          Hi, <span className="text-text-h">{fullUser.displayName}</span>
+          Hi, <span className="text-text-h">{fullUser?.displayName}</span>
         </Hi2>
         <Hi3 className="font-semibold mt-6">
           There are 4 ways to make passive income using Automated Trader, with
@@ -48,7 +48,7 @@ export default function Home() {
               Coming soon
             </span>
           </Cardi>
-          <Cardi no={3} title="Copy other trader">
+          <Cardi no={3} title="Copy other traders">
             <p className="text-sm text-text-p font-semibold mb-2">
               Don&apos;t worry if you are new to trading with Automated Trader
               you can connect to traders around the world. Passive investing
@@ -81,7 +81,7 @@ export default function Home() {
 function Cardi({ no, title, children }) {
   return (
     <div className="bg-bg p-4 rounded-lg flex flex-col items-start">
-      <H4 className="font-semibold">
+      <H4 className="font-semibold uppercase">
         <span className="mr-2 px-1 bg-primary text-bg rounded">{no}</span>
         {title}
       </H4>

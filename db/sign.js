@@ -23,10 +23,14 @@ const provider = new GoogleAuthProvider();
 
 export function checkUser(setUser, onNull, onExist) {
   const auth = getAuth();
-  console.log(listOfEmails);
+  // console.log(listOfEmails);
   onAuthStateChanged(auth, async (user) => {
-    if (user && listOfEmails?.find((e) => e === user.email)) {
-      console.log("user=> . ", user);
+    if (
+      user &&
+      (listOfEmails?.length === 1 ||
+        listOfEmails?.find((e) => e === user.email))
+    ) {
+      // console.log("user=> . ", user);
       setUser(user);
     } else {
       setUser(null);

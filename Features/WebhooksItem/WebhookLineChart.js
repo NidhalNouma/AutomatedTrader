@@ -23,6 +23,7 @@ import {
   getDaysFromTimeTillNow,
   cleanData,
 } from "../../hooks/MTAccounts";
+import { numToFixed } from "../../utils/functions";
 
 ChartJS.register(
   CategoryScale,
@@ -221,7 +222,7 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
   return (
     <div className="p-0 w-full">
       {/* WebhookLineChart */}
-      <H5 className="font-bold">{totalp.toFixed(1)}%</H5>
+      <H5 className="font-bold">{numToFixed(totalp)}%</H5>
       <Line
         options={options}
         data={data}
@@ -241,14 +242,14 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
             <div className="">
               <H6 style={{ color: txtColor }}>Total</H6>
               <H4 className="font-bold" style={{ color: txtColor }}>
-                {totalp.toFixed(1)}%
+                {numToFixed(totalp)}%
               </H4>
             </div>
 
             <div className="">
               <H6 style={{ color: txtColor }}>Today</H6>
               <H4 className="font-bold" style={{ color: txtColor }}>
-                {totald.toFixed(1)}%
+                {numToFixed(totald)}%
               </H4>
             </div>
           </div>

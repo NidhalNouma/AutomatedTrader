@@ -61,14 +61,14 @@ function Metatrader({ ty, setTy }) {
         </Step>
         <Step
           num={4}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(4).jpg?alt=media&token=ebb0ee23-df6a-42c1-ac8f-ebe93bd74fa7"
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(5).jpg?alt=media&token=3b0f45c1-9d22-40f8-a997-c2064f0429de"
         >
           Open the MQL4 folder in MT4&apos;s data folder and paste the EA in the
           Experts folder.
         </Step>
         <Step
           num={5}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(5).jpg?alt=media&token=3b0f45c1-9d22-40f8-a997-c2064f0429de"
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2F11.jpg?alt=media&token=872109d0-5d37-4079-ba84-81d200afd6c5"
         >
           Refresh the Expert Advisers tab in the navigator and drag the EA to
           any chart.
@@ -79,26 +79,44 @@ function Metatrader({ ty, setTy }) {
         >
           Allow Live Trading and DLL imports in the EA pop-up.
         </Step>
-        <Step num={7} imgSrc="">
+        <Step
+          num={7}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(11).jpg?alt=media&token=6aaff65a-7399-48d6-90ad-5ce445b21d2f"
+        >
           Copy the ID from the Automated Traders dashboard and paste it into the
           user ID value in the MT4 input tab.
         </Step>
-        <Step num={8} imgSrc="">
+        <Step
+          num={8}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(12).jpg?alt=media&token=505399ab-74ea-4113-8cfd-ef80a824cf1a"
+        >
           In Meta trader navigate to the Tools menu, click Options tab.
         </Step>
-        <Step num={9} imgSrc="">
+        <Step
+          num={9}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(13).jpg?alt=media&token=6b86c33c-5c54-4632-8413-d28ca905ce3e"
+        >
           Next choose Experts and make sure allow trading and allow DLL imports
           is selected and turned on Select ok.
         </Step>
-        <Step num={10} imgSrc="">
+        <Step
+          num={10}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(14).jpg?alt=media&token=979f9b87-5714-4802-a4ae-118348b44d82"
+        >
           Then turn on Autotrading by clicking &quot;Auto trading&quot;. above
           your chart Green means it&apos;s turned on.
         </Step>
-        <Step num={11} imgSrc="">
+        <Step
+          num={11}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(15).jpg?alt=media&token=c5abcbe2-577b-472b-a11f-ef4c2ffabc6d"
+        >
           If the Automated Trader text in the right corner displays a smiley
           face, you&apos;re finished. If not, rewatch the video.
         </Step>
-        <Step num={12} imgSrc="">
+        <Step
+          num={12}
+          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FCover%20(16).jpg?alt=media&token=cb6f287c-0d78-4b05-b5ba-dd6015f4c68a"
+        >
           Customize your account name and colors or add webhooks in the
           Automated Traders dashboard. Your account data will be displayed on
           the MT4 app dashboard.
