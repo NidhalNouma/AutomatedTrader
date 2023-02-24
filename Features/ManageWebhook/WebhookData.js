@@ -393,7 +393,7 @@ function WebhookData({
           <Input1Inline
             name="Time start"
             placeholder="08:30"
-            helper="Time ti start accepting the alerts"
+            helper="Time to start accepting the alerts (EST time zone)"
             disabled={!time.use}
             value={time.start}
             setValue={(v) => setTime({ ...time, start: v })}
@@ -401,7 +401,7 @@ function WebhookData({
           <Input1Inline
             name="Time end"
             placeholder="22:30"
-            helper="End time"
+            helper="End time (EST time zone)"
             disabled={!time.use}
             value={time.end}
             setValue={(v) => setTime({ ...time, end: v })}
@@ -515,7 +515,7 @@ function WebhookData({
             </ButtonText>
             <Select1
               className="!border-bgai focus:outline-none"
-              helper="Information about this input"
+              helper="Send a test alert"
               options={mtAccounts.map((v) => v.accountDisplayName)}
               value={mtAccounts.indexOf(testAccount)}
               setValue={(v) => setTestAccount(mtAccounts[v])}

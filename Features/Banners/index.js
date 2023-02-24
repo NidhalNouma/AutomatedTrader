@@ -16,23 +16,29 @@ export default Index;
 
 function B1() {
   return (
-    <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
-      <div className="w-10 h-10 mr-2">
-        <Image
-          src="/Images/banners/bug-detected.png"
-          alt=""
-          width="1w"
-          height="1h"
-          className=""
-          layout="responsive"
-        />
-      </div>
+    <a
+      href="mailto:support@automatedtrader.com"
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+        <div className="w-10 h-10 mr-2">
+          <Image
+            src="/Images/banners/bug-detected.png"
+            alt=""
+            width="1w"
+            height="1h"
+            className=""
+            layout="responsive"
+          />
+        </div>
 
-      <p className="text-text-h text-xs font-medium">
-        Remember this is BETA <br />
-        Report any bugs may find.
-      </p>
-    </div>
+        <p className="text-text-h text-xs font-medium">
+          Remember this is BETA <br />
+          Report any bugs may find.
+        </p>
+      </div>
+    </a>
   );
 }
 

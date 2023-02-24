@@ -53,7 +53,7 @@ export default function Settings() {
       <MainWithHeader>
         <H1>Settings</H1>
         <div className="mt-6 w-full flex">
-          <div className="w-1/2 mx-auto">
+          <div className=" md:w-1/2 mx-auto">
             <div className="p-4 bg-bg rounded-xl">
               <H3 className="mb-4">Profile</H3>
               <div className="flex flex-col w-full items-center ">

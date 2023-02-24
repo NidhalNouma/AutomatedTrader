@@ -20,13 +20,21 @@ function Metatrader({ ty, setTy }) {
         Setup is easy and take just minutes, Automated Trader is compatible with
         any broker, providing traders with the flexibility to choose their
         preferred brokerage platform. However, for traders who want to use a
-        trusted partner, we recommend Hanko Trade. By using the following link
-        to sign up for a Hanko Trade account, traders can enter monthly
-        giveaways and gain access to additional benefits that can help enhance
-        their trading experience.
+        trusted partner, we recommend{" "}
+        <a
+          href="https://login.hankotrade.com/register?franchiseLead=Mzc1OQ=="
+          className="text-text-h underline font-semibold text-sm"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Henko Trade
+        </a>
+        . By using the following link to sign up for a Hanko Trade account,
+        traders can enter monthly giveaways and gain access to additional
+        benefits that can help enhance their trading experience.
         <br />
         <br />
-        How to add Automated Trader EA to mt4:
+        How to add Automated Trader EA to mt\:
         <br />
         <br />
         <Step
