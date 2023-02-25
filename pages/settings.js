@@ -200,7 +200,7 @@ export default function Settings() {
               </div>
             </div>
 
-            <div className="mt-6 p-4 bg-bg rounded-xl">
+            {/* <div className="mt-6 p-4 bg-bg rounded-xl">
               <H3 className="mb-4">Telegram</H3>
               <div className="mt-4">
                 <Hi4 className="">
@@ -208,7 +208,7 @@ export default function Settings() {
                   your telegram account.
                 </Hi4>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex justify-center mt-10">
               <ButtonP

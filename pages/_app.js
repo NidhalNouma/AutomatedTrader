@@ -19,6 +19,7 @@ import LoadingPage from "../Features/LoadingPage";
 
 import Chargebee from "../Features/chargeBee/ChargeBee";
 // import { ChargeBeeCC, GetChargeBee } from "../hooks/ChargeBee";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -86,6 +87,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
+      <GoogleAnalytics trackPageViews />
       {/* <ChargeBeeCC value={{ chargeBee, setChargeBee, openCheckout }}> */}
       <Chargebee>
         <Head>

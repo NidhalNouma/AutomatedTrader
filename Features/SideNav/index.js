@@ -17,12 +17,13 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/solid";
 
-import { GetFullUserContext } from "../../hooks/UserHook";
+import { GetFullUserContext, GetUserContext } from "../../hooks/UserHook";
 import Link from "next/link";
 
 function Index({ cpath, fixed = true }) {
   const [openApps, setOpenApps] = useState(true);
-  const { fullUser } = GetFullUserContext();
+  // const { fullUser } = GetFullUserContext();
+  const { user } = GetUserContext();
 
   return (
     <Content fixed={fixed}>
@@ -37,7 +38,7 @@ function Index({ cpath, fixed = true }) {
             className=""
             layout="responsive"
           />
-          <span className="absolute top-full right-0 text-xs font-bold text-text-p bg-text-h px-3 rounded-full">
+          <span className="absolute top-full right-0 text-xs font-bold text-bgt bg-text-h px-3 rounded-full">
             Beta | Under development
           </span>
         </div>
@@ -47,7 +48,7 @@ function Index({ cpath, fixed = true }) {
         <H5>YOUR WEBHOOKS</H5>
         <div className="h-24 bg-bgai my-2 mr-4 rounded-xl"></div>
       </div> */}
-      {fullUser ? (
+      {user ? (
         <Fragment>
           <div className="pl-4">
             <Linksn

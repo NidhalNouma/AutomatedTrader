@@ -1,12 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Index() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 mx-auto mt-4 gap-2 px-4">
+    <div className="grid grid-cols-2 md:grid-cols-4 mx-auto mt-4 gap-2 px-4">
       <B1 />
       <B2 />
-      {/* <B3 /> */}
+      <B3 />
       <Henko />
     </div>
   );
@@ -66,23 +67,25 @@ function B2() {
 
 function B3() {
   return (
-    <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
-      <div className="w-10 h-10 mr-2">
-        <Image
-          src="/Images/banners/attracting-money.png"
-          alt=""
-          width="1w"
-          height="1h"
-          className=""
-          layout="responsive"
-        />
-      </div>
+    <Link href="/membership">
+      <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+        <div className="w-10 h-10 mr-2">
+          <Image
+            src="/Images/banners/attracting-money.png"
+            alt=""
+            width="1w"
+            height="1h"
+            className=""
+            layout="responsive"
+          />
+        </div>
 
-      <p className="text-text-h text-xs font-medium">
-        Upgrade to Lifetime <br />
-        Memebership
-      </p>
-    </div>
+        <p className="text-text-h text-xs font-medium">
+          Upgrade to Lifetime <br />
+          Memebership
+        </p>
+      </div>
+    </Link>
   );
 }
 

@@ -52,30 +52,33 @@ export default function Membership() {
             <ButtonGroup>
               <Button
                 animation={false}
-                className="bg-bg rounded-xl capitalize md:!px-6"
+                className="bg-bg rounded-xl capitalize px-6"
                 size="sm"
                 active={ty === 1}
                 onClick={() => setTy(1)}
               >
-                Monthly Pricing
+                Monthly
+                <span className="ml-1 hidden md:block">Pricing</span>
               </Button>
               <Button
                 animation={false}
                 size="sm"
-                className="bg-bg rounded-xl capitalize md:!px-6 "
+                className="bg-bg rounded-xl capitalize px-6 "
                 active={ty === 2}
                 onClick={() => setTy(2)}
               >
-                Annual Pricing
+                Annual
+                <span className="ml-1 hidden md:block">Pricing</span>
               </Button>
               <Button
                 animation={false}
                 size="sm"
-                className="bg-bg rounded-xl capitalize md:!px-6"
+                className="bg-bg rounded-xl capitalize px-6"
                 active={ty === 3}
                 onClick={() => setTy(3)}
               >
-                Lifetime Membership
+                Lifetime
+                <span className="ml-1 hidden md:block">Membership</span>
               </Button>
             </ButtonGroup>
           </div>
