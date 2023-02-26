@@ -105,8 +105,8 @@ export const pricingList = {
   lifetime: {
     "Lifetime access": {
       chargeBeeId: "Life-Time-Membership",
-      price: 2500,
-      save: 50,
+      price: 1999,
+      save: 60.02,
       accounts: 100,
       webhooks: 100,
       telegram: true,

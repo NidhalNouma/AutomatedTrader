@@ -65,7 +65,7 @@ function Index({ title, value, t, setSuccess, i }) {
         {value.save ? (
           <div className="text-center">
             <span className="text-red-500 text-sm ">
-              Save {value.save}% was $
+              Save {value.save?.toFixed(0)}% was $
               {(value.price / (1 - value.save / 100)).toFixed(0)}
             </span>
           </div>
