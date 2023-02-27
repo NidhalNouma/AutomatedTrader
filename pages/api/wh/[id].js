@@ -14,43 +14,45 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const message = req.body;
     console.log("msg, ", message);
-    if (id && message) {
+    if (id != undefined && message) {
       const r = await getWebhook(id);
-      const msgData = getMessageData(message);
+      if (r) {
+        const msgData = getMessageData(message);
 
-      const test = msgData.test;
-      if (test && test?.isTest) {
-        const accId = test.account;
-        r.MT4 = accId;
-      }
+        const test = msgData.test;
+        if (test && test?.isTest) {
+          const accId = test.account;
+          r.MT4 = accId;
+        }
 
-      const manual = msgData.manual;
-      if (manual && manual?.isManual) {
-        const accId = manual.account;
-        r.MT4 = accId;
-      }
+        const manual = msgData.manual;
+        if (manual && manual?.isManual) {
+          const accId = manual.account;
+          r.MT4 = accId;
+        }
 
-      if (r && (r.active === true || test || manual)) {
-        const user = await getUser(r.userId);
+        if (r && (r.active === true || test || manual)) {
+          const user = await getUser(r.userId);
 
-        if (msgData.time.use || msgData.time.use === false) {
-          const alert = addAlert(id, message, r.userId, r.name);
-          if (alert) {
-            const time = new Date();
-            newAlert(id, {
-              message: message,
-              messageData: msgData,
-              userId: r.userId,
-              name: r.name,
-              time: time,
-              mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
-              MT4: r.MT4,
-            });
+          if (msgData.time.use || msgData.time.use === false) {
+            const alert = await addAlert(id, message, r.userId, r.name);
+            if (alert) {
+              const time = new Date();
+              newAlert(id, {
+                message: message,
+                messageData: msgData,
+                userId: r.userId,
+                name: r.name,
+                time: time,
+                mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
+                MT4: r.MT4,
+              });
 
-            if (user && user.telegram) {
-              await sendMessage(user.telegram, message, msgData, r);
+              if (user && user.telegram) {
+                await sendMessage(user.telegram, message, msgData, r);
+              }
+              return res.status(200).json({ done: true });
             }
-            return res.status(200).json({ done: true });
           }
         }
       }
