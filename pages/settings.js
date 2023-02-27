@@ -47,13 +47,15 @@ export default function Settings() {
 
   const [openDel, setOpenDel] = useState(false);
 
+  // console.log(fullUser);
+
   return (
     <>
       <Sidenav cpath="settings" />
       <MainWithHeader>
         <H1>Settings</H1>
         <div className="mt-6 w-full flex">
-          <div className=" md:w-1/2 mx-auto">
+          <div className="w-full md:w-1/2 mx-auto">
             <div className="p-4 bg-bg rounded-xl">
               <H3 className="mb-4">Profile</H3>
               <div className="flex flex-col w-full items-center ">
@@ -152,7 +154,7 @@ export default function Settings() {
             <div className="mt-6 p-4 bg-bg rounded-xl">
               <H3 className="mb-4">Membership</H3>
               <div className="mt-4">
-                {fullUser.subscription && fullUser.subObj ? (
+                {fullUser.subObj ? (
                   <div className="bg-accent px-3 py-2 rounded-lg flex justify-between items-center">
                     <Hi4 className="!text-bg">
                       {fullUser.subObj.name}
@@ -162,35 +164,36 @@ export default function Settings() {
                         </span>
                       )}
                     </Hi4>
-
-                    <Dropdown vertical="end" horizontal="center">
-                      {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
-                      {/* <Button className=""> */}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={2}
-                        stroke="currentColor"
-                        className="w-6 h-6 cursor-pointer text-bg"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                        />
-                      </svg>
-                      <Dropdown.Menu
-                        className="w-40 bg-bg shadow-2xl shadow-bg"
-                        // style={{ backgroundColor: account.color }}
-                      >
-                        <Dropdown.Item onClick={() => setOpenDel(true)}>
-                          <span className="text-error text-sm font-bold">
-                            Cancel
-                          </span>
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    {fullUser.subscription?.status && (
+                      <Dropdown vertical="end" horizontal="center">
+                        {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
+                        {/* <Button className=""> */}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={2}
+                          stroke="currentColor"
+                          className="w-6 h-6 cursor-pointer text-bg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                          />
+                        </svg>
+                        <Dropdown.Menu
+                          className="w-40 bg-bg shadow-2xl shadow-bg"
+                          // style={{ backgroundColor: account.color }}
+                        >
+                          <Dropdown.Item onClick={() => setOpenDel(true)}>
+                            <span className="text-error text-sm font-bold">
+                              Cancel
+                            </span>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
                   </div>
                 ) : (
                   <Hi4 className="">
