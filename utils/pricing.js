@@ -130,6 +130,8 @@ export function getPlanById(subscription) {
   if (!id) return r;
   if (subscription.status !== "active") return r;
 
+  // console.log(subscription, id);
+
   const m = pricingList.monthly;
 
   const keys = Object.keys(m);
@@ -148,6 +150,15 @@ export function getPlanById(subscription) {
     if (id === data.chargeBeeId) {
       r = { ...data, name: keyy[i], no: i, time: "yearly" };
     }
+  }
+
+  if (id === pricingList.lifetime["Lifetime access"].chargeBeeId) {
+    r = {
+      ...pricingList.lifetime["Lifetime access"],
+      name: "Lifetime",
+      no: 0,
+      time: "",
+    };
   }
 
   return r;

@@ -38,6 +38,7 @@ export const GetFullUser = () => {
       r["subscription"] = sub.data;
 
       r["subObj"] = getPlanById(sub.data);
+      // console.log("sub, ", sub, r["subObj"]);
     }
     if (!r["subObj"]) r["subObj"] = checkLifeTime(r.email);
 

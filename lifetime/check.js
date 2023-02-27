@@ -3,7 +3,7 @@ import { pricingList } from "../utils/pricing";
 
 export default function checkLifeTime(email) {
   const data = lifetime;
-  console.log(email, data);
+  // console.log(email, data);
 
   for (let i = 0; i < data.length; i++) {
     const v = data[i];
