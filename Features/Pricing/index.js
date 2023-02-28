@@ -28,10 +28,12 @@ function Index({ title, value, t, setSuccess, i }) {
       else if (sub.no === i && sub.time !== t) {
         if (t == "mo") r = "Downgrade";
         else r = "Upgrade";
+      } else if (sub.time !== "lifetime") {
+        if (sub.no < i) r = "Upgrade";
+        else if (sub.no > i) r = "Downgrade";
+        if (t === "lifetime") r = "Upgrade";
       }
       // if (sub.no === i) r = "Current";
-      else if (sub.no < i) r = "Upgrade";
-      else if (sub.no > i) r = "Downgrade";
 
       if (sub.time == "lifetime" && sub.time !== t) r = "Downgrade";
     }
