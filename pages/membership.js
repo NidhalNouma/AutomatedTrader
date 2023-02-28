@@ -111,13 +111,14 @@ export default function Membership() {
             </section>
           ) : ty === 3 ? (
             <section className="flex flex-wrap justify-center container">
-              {Object.keys(pricingList.lifetime).map((key) => (
+              {Object.keys(pricingList.lifetime).map((key, i) => (
                 <div key={key} className="lg:w-1/3 md:w-1/2 w-full">
                   <Pricing
                     key={key}
                     title={key}
                     value={pricingList.lifetime[key]}
                     t="lifetime"
+                    i={i}
                     setSuccess={setSuccess}
                   />
                 </div>

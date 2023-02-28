@@ -32,6 +32,8 @@ function Index({ title, value, t, setSuccess, i }) {
       // if (sub.no === i) r = "Current";
       else if (sub.no < i) r = "Upgrade";
       else if (sub.no > i) r = "Downgrade";
+
+      if (sub.time == "lifetime" && sub.time !== t) r = "Downgrade";
     }
     return r;
   }

@@ -182,3 +182,43 @@ export async function searchByDisplayName(displayName) {
   console.log(r);
   return r;
 }
+
+// TS lifetime
+const TScollName = "tslifetime";
+
+export async function addTSLifetimeUser(data) {
+  console.log("Adding ts lifetime user ... ");
+
+  if (!data.Email) return;
+
+  const d = await checkTSlifetime(data.Email);
+  if (d?.length > 0) return;
+
+  try {
+    const docRef = await addDoc(collection(db, TScollName), data);
+
+    console.log("Document written with: ", docRef);
+    return true;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    return false;
+  }
+}
+
+export async function checkTSlifetime(email) {
+  if (!email) return null;
+
+  console.log("Checking TS lifetime user ...", email);
+
+  const q = query(collection(db, TScollName), where("Email", "==", email));
+
+  const querySnapshot = await getDocs(q);
+  const usrs = [];
+  querySnapshot.forEach((doc) => {
+    //console.log(`${doc.id} => ${doc.data()}`);
+    usrs.push({ id: doc.id, ...doc.data() });
+  });
+
+  console.log(usrs);
+  return usrs;
+}

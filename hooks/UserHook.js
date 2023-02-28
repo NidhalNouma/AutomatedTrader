@@ -5,11 +5,10 @@ import {
   updateUserDatas,
   searchByDisplayName,
   updateSubsciption,
+  checkTSlifetime,
 } from "../db/user";
 import { getPlanById } from "../utils/pricing";
 import axios from "axios";
-
-import checkLifeTime from "../lifetime/check";
 
 export const UserC = createContext(null);
 
@@ -40,7 +39,13 @@ export const GetFullUser = () => {
       r["subObj"] = getPlanById(sub.data);
       // console.log("sub, ", sub, r["subObj"]);
     }
-    if (!r["subObj"]) r["subObj"] = checkLifeTime(r.email);
+    if (!r["subObj"]) {
+      const ts = await checkTSlifetime(r.email);
+      if (ts?.length > 0) {
+        if (ts.find((v) => v.Email === r.email))
+          r["subObj"] = getPlanById(null, true);
+      }
+    }
 
     console.log(r);
     setFullUser(r);
