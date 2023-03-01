@@ -21,7 +21,7 @@ import { errorMessageByCode } from "../utils/errorMessage";
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 
-export function checkUser(setUser, onNull, onExist) {
+export function checkUser(setUser, getFullUser, onNull, onExist) {
   const auth = getAuth();
   // console.log(listOfEmails);
   onAuthStateChanged(auth, async (user) => {
@@ -31,7 +31,30 @@ export function checkUser(setUser, onNull, onExist) {
         listOfEmails?.find((e) => e === user.email))
     ) {
       // console.log("user=> . ", user);
+
+      let userName = user.displayName;
+
+      if (!userName) {
+        userName = user.email.match(/^([^@]*)@/)[1];
+        const useru = await updateProfile(user, {
+          displayName: userName,
+        });
+      }
       setUser(user);
+
+      let userf = await getFullUser(user.uid);
+      if (!userf) {
+        userf = await addNewUser(
+          user.uid,
+          user.email,
+          userName,
+          user.metadata,
+          user.photoURL
+        );
+        userf = await getFullUser(user.uid);
+      }
+
+      onExist();
     } else {
       setUser(null);
       onNull();
@@ -47,7 +70,7 @@ export function checkUser(setUser, onNull, onExist) {
 //   if (user) setUser(user);
 // }
 
-export async function signUp(email, password, username) {
+export async function signUp(email, password) {
   const auth = getAuth();
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -57,18 +80,10 @@ export async function signUp(email, password, username) {
     );
     const user = userCredential.user;
 
-    const useru = await updateProfile(userCredential.user, {
-      displayName: username,
-    });
     console.log("usr", user);
 
-    let userf = null;
-    if (user) {
-      userf = await addNewUser(user.uid, user.email, user.displayName);
-    }
-
     // await sendEmailVerification(auth.currentUser);
-    return { user, error: null, userf };
+    return { user, error: null };
   } catch (error) {
     console.log("SignUp error => . ", error.message, error.code);
     return {
@@ -90,19 +105,8 @@ export async function signIn(email, password) {
     );
     const user = userCredential.user;
     console.log("usr", user);
-    let userf = null;
-    if (user) {
-      userf = await getUser(user.uid);
-      if (!userf)
-        userf = await addNewUser(
-          user.uid,
-          user.email,
-          user.displayName,
-          user.metadata,
-          user.photoURL
-        );
-    }
-    return { user, error: null, userf };
+
+    return { user, error: null };
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
@@ -123,18 +127,7 @@ export async function continueWithGoogle() {
     const token = credential.accessToken;
     const user = result.user;
 
-    let userf = null;
-    if (user) {
-      userf = await addNewUser(
-        user.uid,
-        user.email,
-        user.displayName,
-        user.metadata,
-        user.photoURL
-      );
-    }
-
-    return { user, error: null, userf };
+    return { user, error: null };
   } catch (error) {
     // Handle Errors here.
     const errorCode = error.code;

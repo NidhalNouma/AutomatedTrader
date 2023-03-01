@@ -139,7 +139,7 @@ function Index({ title, value, t, setSuccess, i }) {
             </p>
           )}
         </div>
-        {btnText() !== "Current" ? (
+        {fullUser && btnText() !== "Current" ? (
           <ButtonP
             className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
             onClick={() => {
@@ -154,9 +154,13 @@ function Index({ title, value, t, setSuccess, i }) {
           >
             {btnText()}
           </ButtonP>
-        ) : (
+        ) : fullUser ? (
           <span className="mt-auto w-full text-text-h font-bold text-center">
             Current
+          </span>
+        ) : (
+          <span className="mt-auto w-full text-text-h font-bold text-center">
+            One sec
           </span>
         )}
       </div>

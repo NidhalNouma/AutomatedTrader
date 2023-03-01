@@ -50,10 +50,10 @@ export const SignUpHook = () => {
       return;
     }
 
-    if (!username) {
-      setError("Username must be provided");
-      return;
-    }
+    // if (!username) {
+    //   setError("Username must be provided");
+    //   return;
+    // }
 
     if (!password) {
       setError("Password must be provided");
@@ -67,7 +67,7 @@ export const SignUpHook = () => {
 
     setError("");
 
-    const r = await signUp(email, password, username);
+    const r = await signUp(email, password);
     if (r.err) {
       setError(r.err);
       return;

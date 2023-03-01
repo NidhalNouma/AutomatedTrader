@@ -39,7 +39,7 @@ function SignUp() {
           value={email}
           setValue={setEmail}
         />
-        <Input1
+        {/* <Input1
           className="mx-auto mb-3"
           classNameInput="bg-transparent "
           placeholder="Name"
@@ -47,7 +47,7 @@ function SignUp() {
           type="username"
           value={username}
           setValue={setUsername}
-        />
+        /> */}
         <Input1
           className="mx-auto mb-3"
           classNameInput="bg-transparent "

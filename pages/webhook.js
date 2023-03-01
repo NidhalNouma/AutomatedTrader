@@ -20,7 +20,7 @@ import UpgradeWebhook from "../Features/UpgradeMsg/UpgradeWebhook";
 export default function Webhook() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
-  const sub = fullUser.subObj;
+  const sub = fullUser?.subObj;
   const { webhooks } = GetWebhookContext();
   const { mtAccounts } = GetMTAccountsContext();
   const [open, setOpen] = useState(false);

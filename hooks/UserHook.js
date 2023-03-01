@@ -32,24 +32,31 @@ export const GetFullUser = () => {
   const getFullUser = async (userId, onComplete) => {
     if (!userId) return;
     const r = await getUser(userId);
-    if (r?.subscriptionId) {
-      const sub = await axios.get("/api/chargebee/get?id=" + r.subscriptionId);
-      r["subscription"] = sub.data;
+    if (r) {
+      if (r?.subscriptionId) {
+        const sub = await axios.get(
+          "/api/chargebee/get?id=" + r.subscriptionId
+        );
+        r["subscription"] = sub.data;
 
-      r["subObj"] = getPlanById(sub.data);
-      // console.log("sub, ", sub, r["subObj"]);
-    }
-    if (!r["subObj"]) {
-      const ts = await checkTSlifetime(r.email);
-      if (ts?.length > 0) {
-        if (ts.find((v) => v.Email === r.email))
-          r["subObj"] = getPlanById(null, true);
+        r["subObj"] = getPlanById(sub.data);
+        // console.log("sub, ", sub, r["subObj"]);
+      }
+
+      if (!r["subObj"]) {
+        const ts = await checkTSlifetime(r.email);
+        if (ts?.length > 0) {
+          if (ts.find((v) => v.Email === r.email))
+            r["subObj"] = getPlanById(null, true);
+        }
       }
     }
 
-    console.log(r);
+    console.log("fullUser ... ", r);
     setFullUser(r);
-    onComplete();
+    if (onComplete) onComplete();
+
+    return r;
   };
 
   return { fullUser, setFullUser, getFullUser };

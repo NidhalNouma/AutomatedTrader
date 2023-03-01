@@ -40,7 +40,12 @@ function MyApp({ Component, pageProps }) {
   // const { chargeBee, setChargeBee, openCheckout } = GetChargeBee();
 
   useEffect(() => {
-    checkUser(setUser, () => setLoading(false));
+    checkUser(
+      setUser,
+      getFullUser,
+      () => setLoading(false),
+      () => setLoading(false)
+    );
   }, []);
 
   useEffect(() => {
@@ -76,14 +81,19 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (user) {
-      getFullUser(user?.uid, () => setLoading(false));
-      getAllWebhooks(user?.uid);
-      getAllAlertsHook(user?.uid);
-      getAllMTAccounts(user?.uid);
+      // getFullUser(user?.uid, () => setLoading(false));
     } else {
       setAlerts([]);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (fullUser) {
+      getAllWebhooks(user?.uid);
+      getAllAlertsHook(user?.uid);
+      getAllMTAccounts(user?.uid);
+    }
+  }, [fullUser]);
 
   return (
     <Fragment>
