@@ -35,17 +35,27 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
           <table className="table-auto w-full">
             <thead className={`sticky top-0 ${bgColor}`}>
               <tr>
-                <th className="text-text-h text-sm">Date/Time</th>
-                <th className="text-text-h text-sm py-3">Symbol</th>
-                <th className="text-text-h text-sm">Type</th>
+                <th className="text-text-h text-sm px-2 sm:px-0">Date/Time</th>
+                <th className="text-text-h text-sm py-3 px-2 sm:px-0">
+                  Symbol
+                </th>
+                <th className="text-text-h text-sm px-2 sm:px-0">Type</th>
                 {/* <th className="text-text-h text-md">Lot</th> */}
                 {/* <th className="text-text-h text-md">Profit</th> */}
-                <th className="text-text-h text-sm">Open Price</th>
-                <th className="text-text-h text-sm">Close Price</th>
+                <th className="text-text-h text-sm px-2 truncate sm:px-0">
+                  Open Price
+                </th>
+                <th className="text-text-h text-sm px-2 truncate sm:px-0">
+                  Close Price
+                </th>
                 {/* <th className="text-text-h text-xs">Open Time</th> */}
                 {/* <th className="text-text-h text-md">Close Time</th> */}
-                {pips && <th className="text-text-h text-sm">Pips</th>}
-                {profit && <th className="text-text-h text-md">Profit</th>}
+                {pips && (
+                  <th className="text-text-h text-sm px-2 sm:px-0">Pips</th>
+                )}
+                {profit && (
+                  <th className="text-text-h text-md px-2 sm:px-0">Profit</th>
+                )}
               </tr>
             </thead>
             <tbody className="">
@@ -64,10 +74,13 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
                       >
                         <td className="text-xs text-center rounded-l-md">
                           {v.closeTimeGMT
-                            ? moment.utc(v.closeTimeGMT).fromNow()
-                            : // .format("yyyy MM DD HH:mm:ss")
-                              //   format("yyyy MM DD HH:mm:ss")}
-                              moment(v.closeTime).fromNow()}
+                            ? moment
+                                .utc(v?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                                .fromNow()
+                            : moment(
+                                v?.closeTime,
+                                "YYYY.MM.DD HH:mm:ss"
+                              ).fromNow()}
                         </td>
                         <td className="text-xs text-center font-bold">
                           {v.symbol}
@@ -232,16 +245,24 @@ function TradeDetails({ data, close, profit }) {
           <span className="text-sm text-text-p">Open Time</span>
           <span className="text-sm text-text-h">
             {data?.openTimeGMT
-              ? moment.utc(data?.openTimeGMT).format("yyyy MM DD HH:mm:ss")
-              : moment(data?.openTime).format("yyyy MM DD HH:mm:ss")}
+              ? moment
+                  .utc(data?.openTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                  .format("yyyy MM DD HH:mm:ss")
+              : moment(data?.openTime, "YYYY.MM.DD HH:mm:ss").format(
+                  "yyyy MM DD HH:mm:ss"
+                )}
           </span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Close Time</span>
           <span className="text-sm text-text-h">
             {data?.closeTimeGMT
-              ? moment.utc(data?.closeTimeGMT).format("yyyy MM DD HH:mm:ss")
-              : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
+              ? moment
+                  .utc(data?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                  .format("yyyy MM DD HH:mm:ss")
+              : moment(data?.closeTime, "YYYY.MM.DD HH:mm:ss").format(
+                  "yyyy MM DD HH:mm:ss"
+                )}
           </span>
         </div>
 

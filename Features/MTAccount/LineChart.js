@@ -199,35 +199,37 @@ export default function App({ accounts }) {
         </div>
 
         <div className="flex items-center">
-          <ButtonGroup>
-            <Button
-              size="sm"
-              className={`capitalize !text-xs rounded bg-bgt ${
-                type === 0 && "text-primary"
-              }`}
-              onClick={() => setType(0)}
-            >
-              Total
-            </Button>
-            <Button
-              size="sm"
-              className={`capitalize !text-xs bg-bgt ${
-                type === 1 && "text-primary"
-              }`}
-              onClick={() => setType(1)}
-            >
-              Profit
-            </Button>
-            <Button
-              size="sm"
-              className={`capitalize !text-xs rounded bg-bgt ${
-                type === 2 && "text-primary"
-              }`}
-              onClick={() => setType(2)}
-            >
-              Loss
-            </Button>
-          </ButtonGroup>
+          <div className="hidden sm:block">
+            <ButtonGroup>
+              <Button
+                size="sm"
+                className={`capitalize !text-xs rounded bg-bgt ${
+                  type === 0 && "text-primary"
+                }`}
+                onClick={() => setType(0)}
+              >
+                Total
+              </Button>
+              <Button
+                size="sm"
+                className={`capitalize !text-xs bg-bgt ${
+                  type === 1 && "text-primary"
+                }`}
+                onClick={() => setType(1)}
+              >
+                Profit
+              </Button>
+              <Button
+                size="sm"
+                className={`capitalize !text-xs rounded bg-bgt ${
+                  type === 2 && "text-primary"
+                }`}
+                onClick={() => setType(2)}
+              >
+                Loss
+              </Button>
+            </ButtonGroup>
+          </div>
 
           <div className="">
             <Select1

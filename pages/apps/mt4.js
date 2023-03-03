@@ -36,7 +36,10 @@ export default function MT4() {
       <Sidenav cpath="mt4" />
       <MainWithHeader>
         <div className="flex justify-between">
-          <H1>Metatrader 4</H1>
+          <H1 className="">
+            <span className="hidden sm:block">Metatrader 4</span>
+            <span className="sm:hidden">MT4</span>
+          </H1>
           <div className="">
             <Dropdown hover={true} horizontal="left" vertical="middle">
               <ButtonP

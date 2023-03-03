@@ -96,16 +96,24 @@ function Table({ data: datai, accounts }) {
           <table className="table-auto w-full">
             <thead className="sticky top-0 bg-bgt">
               <tr>
-                <th className="text-text-h text-md">Webhook</th>
-                <th className="text-text-h text-md py-3">Symbol</th>
-                <th className="text-text-h text-md">Type</th>
-                <th className="text-text-h text-md">Lot</th>
-                <th className="text-text-h text-md">Pips</th>
-                <th className="text-text-h text-md">Profit</th>
-                <th className="text-text-h text-md">Open Price</th>
-                <th className="text-text-h text-md">Close Price</th>
+                <th className="text-text-h text-md px-2 sm:px-0">Webhook</th>
+                <th className="text-text-h text-md py-3 px-2 sm:px-0">
+                  Symbol
+                </th>
+                <th className="text-text-h text-md px-2 sm:px-0">Type</th>
+                <th className="text-text-h text-md px-2 sm:px-0">Lot</th>
+                <th className="text-text-h text-md px-2 sm:px-0">Pips</th>
+                <th className="text-text-h text-md px-2 sm:px-0">Profit</th>
+                <th className="text-text-h text-md px-2 sm:px-0 truncate">
+                  Open Price
+                </th>
+                <th className="text-text-h text-md px-2 sm:px-0 truncate">
+                  Close Price
+                </th>
                 {/* <th className="text-text-h text-xs">Open Time</th> */}
-                <th className="text-text-h text-md">Close Time</th>
+                <th className="text-text-h text-md px-2 sm:px-0 truncate">
+                  Close Time
+                </th>
               </tr>
             </thead>
             <tbody className="">
@@ -198,9 +206,11 @@ function Table({ data: datai, accounts }) {
                         <td className="text-xs text-center py-3 rounded-r-md">
                           {v.closeTimeGMT
                             ? moment
-                                .utc(v.closeTimeGMT)
+                                .utc(v.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
                                 .format("yyyy MM DD HH:mm:ss")
-                            : moment(v.closeTime).format("yyyy MM DD HH:mm:ss")}
+                            : moment(v.closeTime, "YYYY.MM.DD HH:mm:ss").format(
+                                "yyyy MM DD HH:mm:ss"
+                              )}
                         </td>
                       </tr>
                       {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
@@ -332,16 +342,24 @@ function TradeDetails({ data, close }) {
           <span className="text-sm text-text-p">Open Time</span>
           <span className="text-sm text-text-h">
             {data?.openTimeGMT
-              ? moment.utc(data?.openTimeGMT).format("yyyy MM DD HH:mm:ss")
-              : moment(data?.openTime).format("yyyy MM DD HH:mm:ss")}
+              ? moment
+                  .utc(data?.openTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                  .format("yyyy MM DD HH:mm:ss")
+              : moment(data?.openTime, "YYYY.MM.DD HH:mm:ss").format(
+                  "yyyy MM DD HH:mm:ss"
+                )}
           </span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Close Time</span>
           <span className="text-sm text-text-h">
             {data?.closeTimeGMT
-              ? moment.utc(data?.closeTimeGMT).format("yyyy MM DD HH:mm:ss")
-              : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
+              ? moment
+                  .utc(data?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                  .format("yyyy MM DD HH:mm:ss")
+              : moment(data?.closeTime, "YYYY.MM.DD HH:mm:ss").format(
+                  "yyyy MM DD HH:mm:ss"
+                )}
           </span>
         </div>
       </div>
