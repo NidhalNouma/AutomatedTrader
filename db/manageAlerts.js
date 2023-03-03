@@ -58,3 +58,59 @@ function removeAfterXs(id, sec = 30) {
     alerts[i].data = nd;
   }
 }
+
+export function webhookTime(time) {
+  const timeEst = changeTimeZone(new Date(), "America/New_York");
+  console.log("Checking time ... ", timeEst);
+
+  if (time?.use) {
+    const day = timeEst.getDay();
+    if (day === 0 && !time.day?.find((v) => v === "SUN")) return false;
+    if (day === 1 && !time.day?.find((v) => v === "MON")) return false;
+    if (day === 2 && !time.day?.find((v) => v === "TUE")) return false;
+    if (day === 3 && !time.day?.find((v) => v === "WED")) return false;
+    if (day === 4 && !time.day?.find((v) => v === "THI")) return false;
+    if (day === 5 && !time.day?.find((v) => v === "FRI")) return false;
+    if (day === 6 && !time.day?.find((v) => v === "SAT")) return false;
+
+    if (time?.start) {
+      const t = time.start?.split(":");
+      const stime = new Date(timeEst);
+      stime.setHours(Number(t[0]));
+      if (t.length === 2) stime.setMinutes(Number(t[1]));
+
+      // console.log(stime.getHours(), timeEst.getHours(), stime > timeEst);
+
+      if (stime > timeEst) return false;
+    }
+    if (time?.end) {
+      const t = time.end?.split(":");
+      const etime = new Date(timeEst);
+      etime.setHours(Number(t[0]));
+      if (t.length === 2) etime.setMinutes(Number(t[1]));
+
+      // console.log(etime.getHours(), timeEst.getHours());
+
+      if (etime < timeEst) return false;
+    }
+    return true;
+  } else return true;
+
+  return false;
+}
+
+function changeTimeZone(date, timeZone) {
+  if (typeof date === "string") {
+    return new Date(
+      new Date(date).toLocaleString("en-US", {
+        timeZone,
+      })
+    );
+  }
+
+  return new Date(
+    date.toLocaleString("en-US", {
+      timeZone,
+    })
+  );
+}

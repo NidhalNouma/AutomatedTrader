@@ -5,7 +5,12 @@ import { addAlert } from "../../../db/alerts";
 import { getUser } from "../../../db/user";
 import { sendMessage } from "../../../db/telegram";
 
-import { newAlert, getAlert, getAlertByUserId } from "../../../db/manageAlerts";
+import {
+  newAlert,
+  getAlert,
+  getAlertByUserId,
+  webhookTime,
+} from "../../../db/manageAlerts";
 import { getMessageData } from "../../../hooks/WebHook";
 import moment from "moment";
 
@@ -34,7 +39,10 @@ export default async function handler(req, res) {
           r.MT4 = accId;
         }
 
-        if (r && (r.active === true || test || manual)) {
+        if (
+          r &&
+          ((r.active === true && webhookTime(msgData.time)) || test || manual)
+        ) {
           const user = await getUser(r.userId);
 
           if (msgData.time.use || msgData.time.use === false) {
