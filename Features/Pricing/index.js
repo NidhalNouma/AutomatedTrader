@@ -77,67 +77,37 @@ function Index({ title, value, t, setSuccess, i }) {
           <></>
         )}
         <hr className="mx-1 mt-2" />
-        <div className="mt-2 mb-3 flex flex-col text-sm items-start justify-center font-semibold">
-          <p className="flex justify-center items-center my-1 ">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-            Automate Tradingview
-          </p>
-          <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
+        <div className="mt-2 mb-6 flex flex-col text-sm items-start justify-center font-semibold">
+          <Ppricing>Automate Tradingview</Ppricing>
+          <Ppricing>
             {value.accounts > 1
               ? `Up to ${value.accounts} accounts`
               : value.accounts === 1
               ? "1 account"
               : "N/A"}
-          </p>
-          <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
+          </Ppricing>
+          <Ppricing>
             {value.webhooks > 1
               ? `Up to ${value.webhooks} webhooks`
               : value.webhooks === 1
               ? "1 webhook"
               : "N/A"}
-          </p>
-          <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
+          </Ppricing>
+          <Ppricing>
             {value.alerts > 1
               ? `Up to ${value.alerts} Alerts per day`
               : value.alerts === 1
               ? "1 Alert per day"
               : "N/A"}
-          </p>
-          <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-            MT4 & MT5 (coming soon) EA
-          </p>
-          {value.telegram && (
-            <p className="flex justify-center items-center my-1">
-              <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-              Telegram Notifications
-            </p>
-          )}
+          </Ppricing>
+          <Ppricing>MT4 & MT5 (coming soon) EA</Ppricing>
+          {value.telegram && <Ppricing>Telegram Notifications</Ppricing>}
           {value.discord && (
-            <p className="flex justify-center items-center my-1">
-              <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-              Discord Notifications (Coming soon)
-            </p>
+            <Ppricing>Discord Notifications (Coming soon)</Ppricing>
           )}
-          {value.manualTrade && (
-            <p className="flex justify-center items-center my-1">
-              <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-              Manual automation
-            </p>
-          )}
-          <p className="flex justify-center items-center my-1">
-            <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-            24/7 Support
-          </p>
-          {value.shareAlerts && (
-            <p className="flex justify-center items-center my-1">
-              <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
-              Share Alerts (Coming soon)
-            </p>
-          )}
+          {value.manualTrade && <Ppricing>Manual automation</Ppricing>}
+          <Ppricing>24/7 Support</Ppricing>
+          {value.shareAlerts && <Ppricing>Share Alerts (Coming soon)</Ppricing>}
         </div>
         {fullUser && btnText() !== "Current" ? (
           <ButtonP
@@ -194,3 +164,12 @@ function Index({ title, value, t, setSuccess, i }) {
 }
 
 export default Index;
+
+function Ppricing({ children }) {
+  return (
+    <p className="flex justify-center items-center my-1 text-sm text-text-p">
+      <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
+      {children}
+    </p>
+  );
+}

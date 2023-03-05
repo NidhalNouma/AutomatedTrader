@@ -120,7 +120,7 @@ function WebhookData({
       {type > 1 && (
         <Input1Inline
           name="Pending distance"
-          placeholder=""
+          placeholder="100"
           helper="Pending order distance in pips"
           type="number"
           value={pendingDistance}
@@ -182,7 +182,7 @@ function WebhookData({
 
       <Input1Inline
         name="Stop loss (Pips)"
-        placeholder=""
+        placeholder="200"
         helper="Stop loss value in pips"
         type="number"
         value={stopLoss}
@@ -190,7 +190,7 @@ function WebhookData({
       />
       <Input1Inline
         name="Take profit (Pips)"
-        placeholder=""
+        placeholder="200"
         helper="Take profit value in pips"
         type="number"
         value={takeProfit}
@@ -207,7 +207,7 @@ function WebhookData({
         <Fragment>
           <Input1Inline
             name="Trailing Stop Start"
-            placeholder=""
+            placeholder="100"
             helper="Trailing start value in pips"
             type="number"
             disabled={!TS.use}
@@ -216,7 +216,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Trailing Stop Distance"
-            placeholder=""
+            placeholder="50"
             helper="Trailing stop value in pips"
             type="number"
             disabled={!TS.use}
@@ -225,7 +225,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Trailing Step"
-            placeholder=""
+            placeholder="5"
             helper="Trailing step value in pips"
             type="number"
             disabled={!TS.use}
@@ -245,7 +245,7 @@ function WebhookData({
         <Fragment>
           <Input1Inline
             name="Partial Close Target (Pips)"
-            placeholder=""
+            placeholder="40"
             helper="Profit close target in pips"
             type="number"
             disabled={!BE.use}
@@ -254,7 +254,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Partial Close %"
-            placeholder=""
+            placeholder="50"
             helper="Close % of the trade after hitting the partial target"
             type="number"
             disabled={!BE.use}
@@ -263,7 +263,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Activate Break Even (Pips)"
-            placeholder=""
+            placeholder="80"
             helper="Profit pips to activate Breakeven"
             type="number"
             disabled={!BE.use}
@@ -272,7 +272,7 @@ function WebhookData({
           />
           <Input1Inline
             name="SL into profit (Pips)"
-            placeholder=""
+            placeholder="10"
             helper="Move SL into profit"
             type="number"
             disabled={!BE.use}
@@ -426,7 +426,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Pending order duration"
-            placeholder=""
+            placeholder="10"
             helper="Pending order duration"
             type="number"
             disabled={!hedging.use}
@@ -455,7 +455,7 @@ function WebhookData({
         <Fragment>
           <Input1Inline
             name="Max spread"
-            placeholder=""
+            placeholder="50"
             helper="Maximum spread"
             type="number"
             disabled={!maxSS.use}
@@ -464,7 +464,7 @@ function WebhookData({
           />
           <Input1Inline
             name="Max slippage"
-            placeholder=""
+            placeholder="50"
             helper="Maximum slippage"
             type="number"
             disabled={!maxSS.use}

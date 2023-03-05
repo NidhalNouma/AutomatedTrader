@@ -1,24 +1,40 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Header from "../Features/Landing/Header";
-// import Main from "../Features/Landing/Main";
+import Main from "../Features/Landing/Main";
+import Section1 from "../Features/Landing/Section1";
+import Section2 from "../Features/Landing/Section2";
+import PricingSection from "../Features/Landing/PricingSection";
+import { ArrowSmRightIcon } from "@heroicons/react/outline";
 // import Footer from "../Features/Landing/Footer";
 
+import Aos from "aos";
+import "aos/dist/aos.css";
+
 export default function Home() {
+  useEffect(function () {
+    Aos.init();
+  }, []);
+
   return (
     <div
-      className="overflow-hidden text-black w-full min-h-screen bg-bg"
-      style={{
-        backgroundImage:
-          "radial-gradient( farthest-corner at -150px -150px, rgb(10, 11, 10) 4%, black  35%);",
-      }}
+      className="overflow-hidden text-black w-full min-h-screen bg-bgt px-6 sm:px-2"
+      // style={{
+      //   backgroundImage:
+      //     "radial-gradient( farthest-corner at -150px -150px, rgb(10, 11, 10) 4%, black  35%);",
+      // }}
     >
       <Header />
-      <div className="flex-col justify-between items-center mt-24 h-3/6">
-        <div className="sm:mx-0 mx-2 text-center relative z-10">
+      <Section1 />
+      <Section2 />
+      <PricingSection />
+
+      <div className="flex justify-center items-center mt-0 h-screen">
+        <div className="text-center relative mx-auto">
           <div className="flex justify-center">
             <h5 className="bg-gray-700 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
-              Beta Coming Soon Q4
+              Beta is now open
             </h5>
           </div>
           <div className="container flex flex-col items-center justify-center mx-auto">
@@ -31,58 +47,21 @@ export default function Home() {
           <h1 className=" text-primary text-2xl text-center font-4 lh-6 ld-04 font-bold text-white">
             TRADINGVIEW TO ANY BROKER, ANY INDICATOR, ANY ALERT, INSTANTLY ...
           </h1>
-        </div>
 
-        <div className="my-auto mx-auto sm:flex-row flex flex-col-reverse justify-center items-center w-full h-full max-w-6xl">
-          <div className="sm:w-2/5 w-4/5 p-5 text-center relative z-10">
-            <h4 className="text-primary mb-3 text-xl font-bold">
-              The most innovative trading Dashboard!
-            </h4>
-
-            <div className="flex justify-center">
-              <p className="text-text-h bg-primary rounded-xl p-1 text-lg text-center font-4 lh-6 ld-04 font-bold text-white mb-6">
-                Pre-registration is now available.
-              </p>
-            </div>
-            <p className="text-text-h font-bold mb-5">
-              Make Your own BOT Share your BOTS Copy Other Traders Control your
-              risk per trade Keep Track with Automated Insights
-            </p>
-
+          <div className="text-center mt-16 ">
             <Link href="/signup">
-              <span className="cursor-pointer mr-4 py-1 px-4 text-xl font-bold rounded-lg text-text-h bg-primary border-2 border-primary">
-                JOIN WAITLIST
-              </span>
+              <div className="cursor-pointer !bg-primary text-text-h border-4 border-primary rounded-full inline-flex items-center py-3 font-semibold text-black transition duration-500 ease-in-out transform bg-transparent bg-white px-7 text-md md:mt-0 hover:text-black hover:bg-white focus:shadow-outline">
+                <div className="flex text-lg">
+                  <span className="flex justify-center items-center">
+                    Join Today
+                    <ArrowSmRightIcon className="ml-[0.5rem] h-6 w-7" />
+                  </span>
+                </div>
+              </div>
             </Link>
-          </div>
-
-          <div className="sm:w-3/5 w-4/5 p-0 relative sm:my-auto mt-28 overflow-visible">
-            {/* <img
-              className="absolute -bottom-1/2 right-0 scale-150 z-0"
-              src="/Images/flow.png"
-            /> */}
-            <video
-              className="w-11/12 rounded-xl mx-auto z-0 relative"
-              autoPlay
-              loop
-              muted
-            >
-              <source
-                src="https://looksyummyapp.s3.us-east-2.amazonaws.com/NEW+SCREEN+ONE+TRAINAGLE+.mp4"
-                type="video/mp4"
-              />
-            </video>
-            {/* <img
-              // src="https://looksyummyapp.s3.us-east-2.amazonaws.com/_SCREEN-OPTION-4-angled.gif"
-              src="https://looksyummyapp.s3.us-east-2.amazonaws.com/Transparent-Cropped-NO-SHADOW-SMALL.gif"
-              className="w-full transform-gpu skew-y-2"
-            /> */}
           </div>
         </div>
       </div>
-
-      {/* <Main /> */}
-      {/* <Footer /> */}
     </div>
   );
 }

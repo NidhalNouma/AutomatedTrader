@@ -48,6 +48,7 @@ export const pricingList = {
       more: true,
       alerts: 200,
       manualTrade: true,
+      standout: true,
     },
   },
   annual: {
@@ -100,6 +101,7 @@ export const pricingList = {
       more: true,
       alerts: 200,
       manualTrade: true,
+      standout: true,
     },
   },
   lifetime: {
@@ -115,6 +117,7 @@ export const pricingList = {
       more: true,
       alerts: 500,
       manualTrade: true,
+      standout: true,
     },
   },
 };

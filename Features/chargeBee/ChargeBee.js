@@ -24,6 +24,10 @@ function Index({ children }) {
           // setChargeBee(cbInstance);
           setLoad(true);
         }}
+        onError={(e) => {
+          console.log("Error getting chargebee instance ...", e);
+          setLoad(true);
+        }}
       ></Script>
       {load && children}
     </Fragment>

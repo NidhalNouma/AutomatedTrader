@@ -32,9 +32,9 @@
 }
 
 .clearNav {
-  backdrop-filter: saturate(150%) blur(5px) !important;
+  /* backdrop-filter: saturate(50%) blur(1px) !important; */
   /* background-color: rgba(0, 0, 50, 0.9) !important; */
-  background-color: transparent !important;
+  /* background-color: transparent !important; */
 }
 
 .fsac4 {

@@ -53,7 +53,7 @@ export default function Membership() {
               <Button
                 animation={false}
                 className="bg-bg rounded-xl capitalize px-6"
-                size="sm"
+                size="md"
                 active={ty === 1}
                 onClick={() => setTy(1)}
               >
@@ -62,7 +62,7 @@ export default function Membership() {
               </Button>
               <Button
                 animation={false}
-                size="sm"
+                size="md"
                 className="bg-bg rounded-xl capitalize px-6 "
                 active={ty === 2}
                 onClick={() => setTy(2)}
@@ -72,7 +72,7 @@ export default function Membership() {
               </Button>
               <Button
                 animation={false}
-                size="sm"
+                size="md"
                 className="bg-bg rounded-xl capitalize px-6"
                 active={ty === 3}
                 onClick={() => setTy(3)}

@@ -59,9 +59,9 @@ export default function Main() {
 
       <div className="mt-6">
         <section className="container mx-auto flex flex-wrap">
-          <Pricing title="Standard" />
+          {/* <Pricing title="Standard" />
           <Pricing title="Pro" />
-          <Pricing title="Primium" />
+          <Pricing title="Primium" /> */}
         </section>
       </div>
 
