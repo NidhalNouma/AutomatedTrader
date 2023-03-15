@@ -82,7 +82,7 @@ function B3() {
 
         <p className="text-text-h text-xs font-medium">
           Upgrade to Lifetime <br />
-          Memebership
+          membership
         </p>
       </div>
     </Link>

@@ -16,6 +16,7 @@ import {
   arrayRemove,
 } from "firebase/firestore";
 import { firebaseConfig } from "../utils/constant";
+import axios from "axios";
 const collName = "users";
 
 const app = initializeApp(firebaseConfig);
@@ -70,6 +71,8 @@ export async function addNewUser(
     );
 
     console.log("Document written with: ", docRef);
+
+    await axios.post("/klavio/" + userId);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);
@@ -86,6 +89,7 @@ export async function getUser(id) {
 
   if (docSnap.exists()) {
     const user = docSnap.data();
+
     return { id, ...user };
   } else {
     console.log("No such document!");
@@ -125,39 +129,44 @@ export async function getUserByTelegram(chatId) {
   return whs;
 }
 
-export async function updateUserData(id, key, value) {
+export async function updateUserData(id, key, value, getuser = true) {
   console.log("Update user data ... ", key, value, id);
   const msgDoc = doc(db, collName, id);
 
-  await updateDoc(msgDoc, {
+  const u = await updateDoc(msgDoc, {
     [key]: value,
   });
 
-  const nwh = await getUser(id);
-  return nwh;
+  if (getuser) {
+    const nwh = await getUser(id);
+    return nwh;
+  } else return u;
 }
 
-export async function updateSubsciption(id, subId, cusId) {
+export async function updateSubsciption(id, subId, cusId, getuser = true) {
   console.log("Update user subscription ... ", id, subId);
   const msgDoc = doc(db, collName, id);
 
-  await updateDoc(msgDoc, {
+  const u = await updateDoc(msgDoc, {
     subscriptionId: subId,
     cbCustomerId: cusId,
   });
 
-  const nwh = await getUser(id);
-  return nwh;
+  if (getuser) {
+    const nwh = await getUser(id);
+    return nwh;
+  } else return u;
 }
 
-export async function updateUserDatas(id, data) {
+export async function updateUserDatas(id, data, getuser = true) {
   console.log("Update user datas ... ", id, data);
   const msgDoc = doc(db, collName, id);
 
-  await updateDoc(msgDoc, data);
-
-  const nwh = await getUser(id);
-  return nwh;
+  const u = await updateDoc(msgDoc, data);
+  if (getuser) {
+    const nwh = await getUser(id);
+    return nwh;
+  } else return u;
 }
 
 export async function searchByDisplayName(displayName) {
@@ -221,4 +230,113 @@ export async function checkTSlifetime(email) {
 
   console.log(usrs);
   return usrs;
+}
+
+// Users
+
+export async function getAllUsers() {
+  const q = query(collection(db, collName));
+  console.log("Getting users ...");
+
+  const querySnapshot = await getDocs(q);
+  const whs = [];
+  querySnapshot.forEach((doc) => {
+    //console.log(`${doc.id} => ${doc.data()}`);
+    whs.push({ id: doc.id, ...doc.data() });
+  });
+
+  console.log(whs);
+  return whs;
+}
+
+// Klavio Emails
+
+export async function userKlavio(userId, user) {
+  if (!user?.klavio) {
+    const r = await createKlavioProfile(userId.id, user.email, user?.photoURL);
+    if (r.data?.id) {
+      const l = await addingKlavioProfileToaList(r.data?.id);
+    }
+    return r;
+  } else {
+    console.log("Klavio exist ", userId);
+  }
+}
+
+async function createKlavioProfile(userId, email, img) {
+  const url = "https://a.klaviyo.com/api/profiles/";
+  const options = {
+    headers: {
+      // "Access-Control-Allow-Origin": "*",
+      accept: "application/json",
+      revision: "2023-02-22",
+      "content-type": "application/json",
+      Authorization: `Klaviyo-API-Key ${process.env.NEXT_PUBLIC_KLAVIO_PRIVATE_KEY}`,
+    },
+  };
+
+  const data = {
+    data: {
+      type: "profile",
+      attributes: {
+        email: email,
+        // phone_number: "",
+        external_id: userId,
+        // first_name: "",
+        // last_name: "",
+        // organization: "",
+        // title: "",
+        image: img,
+        // location: {
+        //   address1: "",
+        //   address2: "",
+        //   city: "",
+        //   country: "",
+        //   region: "",
+        //   zip: "",
+        //   timezone: "",
+        // },
+        // properties: { newKey: "New Value" },
+      },
+    },
+  };
+
+  try {
+    const r = await axios.post(url, data, options);
+    console.log("Klavio ... ", r?.data);
+    return r?.data;
+  } catch (e) {
+    console.error("error adding email to klavio,   ", e.message, email);
+    return false;
+  }
+}
+
+async function addingKlavioProfileToaList(profileId) {
+  const listId = "RYwwwL";
+  const url =
+    "https://a.klaviyo.com/api/lists/" + listId + "/relationships/profiles/";
+
+  const options = {
+    headers: {
+      accept: "application/json",
+      revision: "2023-02-22",
+      "content-type": "application/json",
+      Authorization: `Klaviyo-API-Key ${process.env.NEXT_PUBLIC_KLAVIO_PRIVATE_KEY}`,
+    },
+  };
+
+  const data = { data: [{ type: "profile", id: profileId }] };
+
+  try {
+    const r = await axios.post(url, data, options);
+    console.log("Klavio list ... ", r?.data);
+    return r?.data;
+  } catch (e) {
+    console.error(
+      "error adding profile to klavio list,   ",
+      e.message,
+      profileId
+    );
+    return false;
+  }
 }
