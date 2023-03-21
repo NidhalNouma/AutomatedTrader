@@ -16,6 +16,7 @@ import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import UpgradeMsg from "../Features/UpgradeMsg";
 import UpgradeWebhook from "../Features/UpgradeMsg/UpgradeWebhook";
+import WebhooksWelcome from "../Features/WelcomeSection/Webhooks";
 
 export default function Webhook() {
   const { user } = GetUserContext();
@@ -72,8 +73,8 @@ export default function Webhook() {
               {sub && sub.webhooks <= webhooks.length && <UpgradeWebhook />}
             </div>
           ) : (
-            <div className="mt-3">
-              <p>No available webhooks, click new to add a new one.</p>
+            <div className="mt-3 w-full">
+              <WebhooksWelcome />
             </div>
           )}
         </div>

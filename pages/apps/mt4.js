@@ -20,6 +20,8 @@ import { ArrowCircleDownIcon } from "@heroicons/react/outline";
 import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
 
+import Mt4Welcome from "../../Features/WelcomeSection/Mt4";
+
 export default function MT4() {
   const { user } = GetUserContext();
   const { mtAccounts, getData } = GetMTAccountsContext();
@@ -105,7 +107,7 @@ export default function MT4() {
           </span> */}
         </div>
         {/* <H4>Accounts</H4> */}
-        {mtAccounts?.length > 0 && (
+        {mtAccounts?.length > 0 ? (
           <div className="md:flex items-start justify-between w-full">
             <div className="mt-3 w-full md:w-4/12">
               {mtAccounts.map((v, i) => (
@@ -179,6 +181,10 @@ export default function MT4() {
                 </div>
               </div>
             </div>
+          </div>
+        ) : (
+          <div className="mt-6 w-full">
+            <Mt4Welcome />
           </div>
         )}
       </MainWithHeader>

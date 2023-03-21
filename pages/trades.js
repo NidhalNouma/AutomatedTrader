@@ -14,6 +14,8 @@ import { Modal1 } from "../Components/Modal";
 import OpenTrade from "../Features/tradesManual/Open";
 import UpgradeMsg from "../Features/UpgradeMsg";
 
+import TradesWelcome from "../Features/WelcomeSection/Trades";
+
 export default function TradesPage() {
   const { mtAccounts, getData } = GetMTAccountsContext();
   const data = getData();
@@ -56,10 +58,8 @@ export default function TradesPage() {
             <Table data={data} accounts={mtAccounts} />
           </div>
         ) : (
-          <div className="mt-6">
-            <p>
-              No available trades yet, click Open Trade to place a new trade.
-            </p>
+          <div className="mt-6 w-full">
+            <TradesWelcome />
           </div>
         )}
       </MainWithHeader>

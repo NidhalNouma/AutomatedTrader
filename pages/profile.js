@@ -57,7 +57,7 @@ export default function Home() {
             </div>
           ) : (
             <div className="mt-3">
-              <p>No available public webhooks, click here to add one.</p>
+              <p>No available public webhooks.</p>
             </div>
           )}
         </div>

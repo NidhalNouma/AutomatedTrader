@@ -5,6 +5,7 @@ import Alerts from "../Features/AlertsCom";
 import { H1, Hi6, H4 } from "../Components/H";
 
 import { GetAlertsContext } from "../hooks/AlertsHook";
+import AlertsWelcome from "../Features/WelcomeSection/Alerts";
 
 export default function AlertsPage() {
   const { alertsHook } = GetAlertsContext();
@@ -13,9 +14,15 @@ export default function AlertsPage() {
       <Sidenav cpath="alerts" />
       <MainWithHeader>
         <H1>Alerts</H1>
-        <div className="w-full lg:w-1/2 mt-4">
-          <Alerts alertsHook={alertsHook} />
-        </div>
+        {alertsHook?.length > 0 ? (
+          <div className="w-full lg:w-1/2 mt-4">
+            <Alerts alertsHook={alertsHook} />
+          </div>
+        ) : (
+          <div className="mt-6 w-full">
+            <AlertsWelcome />
+          </div>
+        )}
       </MainWithHeader>
     </>
   );
