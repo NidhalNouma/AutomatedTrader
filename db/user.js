@@ -72,7 +72,7 @@ export async function addNewUser(
 
     console.log("Document written with: ", docRef);
 
-    await axios.post("/klavio/" + userId);
+    await axios.post("/api/klavio/" + userId);
     return true;
   } catch (e) {
     console.error("Error adding document: ", e);

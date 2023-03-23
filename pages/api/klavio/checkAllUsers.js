@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     if (users && l > 0) {
       for (let i in users) {
         const user = users[i];
-        // console.log(user);
+        // console.log(users.length);
         const r = await userKlavio(user.id, user);
 
         if (r) {
