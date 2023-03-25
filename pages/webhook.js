@@ -74,7 +74,7 @@ export default function Webhook() {
             </div>
           ) : (
             <div className="mt-3 w-full">
-              <WebhooksWelcome />
+              <WebhooksWelcome sub={sub} />
             </div>
           )}
         </div>

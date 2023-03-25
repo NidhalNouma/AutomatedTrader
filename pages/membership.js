@@ -11,10 +11,11 @@ import { ButtonGroup, Button } from "react-daisyui";
 // import PaddleLoader from "../Features/Paddle";
 import { GetFullUserContext } from "../hooks/UserHook";
 
+import { GiPrimitiveTorch } from "react-icons/gi";
 import { pricingList } from "../utils/pricing";
 
 export default function Membership() {
-  const [ty, setTy] = useState(1);
+  const [ty, setTy] = useState(2);
   const [success, setSuccess] = useState(false);
   const { fullUser } = GetFullUserContext();
 
@@ -73,12 +74,14 @@ export default function Membership() {
               <Button
                 animation={false}
                 size="md"
-                className="bg-bg rounded-xl capitalize px-6"
+                className="bg-bg rounded-xl capitalize px-6 border-2 border-primary text-text-h text-md"
                 active={ty === 3}
                 onClick={() => setTy(3)}
+                // endIcon={}
               >
                 Lifetime
                 <span className="ml-1 hidden md:block">Membership</span>
+                <GiPrimitiveTorch className="h-6 w-6 ml-1 text-text-h" />
               </Button>
             </ButtonGroup>
           </div>

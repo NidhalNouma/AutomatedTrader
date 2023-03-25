@@ -55,7 +55,13 @@ function Index({ title, value, t, setSuccess, i }) {
   };
 
   return (
-    <div className="w-full px-4 h-full">
+    // <div className="w-full px-4 h-full">
+
+    <div
+      className={`w-full px-2 h-full ${
+        value?.standout && "bg-primary rounded-xl"
+      }`}
+    >
       <div className="p-8 rounded-xl h-full flex flex-col">
         <div className="flex w-full justify-center">
           <h4 className="bg-text-h rounded-xl text-bg px-4 py-1 !text-xs !font-semibold uppercase">
@@ -167,7 +173,7 @@ export default Index;
 
 function Ppricing({ children }) {
   return (
-    <p className="flex justify-center items-center my-1 text-sm text-text-p">
+    <p className="flex justify-center items-center my-1 text-sm text-text-h">
       <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
       {children}
     </p>

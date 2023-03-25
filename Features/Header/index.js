@@ -1,4 +1,5 @@
 import { useState, Fragment } from "react";
+import { useRouter } from "next/router";
 
 import { Dropdown, Button, Drawer, Indicator } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
@@ -6,6 +7,7 @@ import { ButtonP } from "../../Components/Button";
 import Link from "next/link";
 import { BellIcon } from "@heroicons/react/outline";
 import { MdWaterfallChart, MdOutlineCandlestickChart } from "react-icons/md";
+import { GiUpgrade } from "react-icons/gi";
 import SearchHeader from "./SearchHeader";
 import { LeftMenu } from "./LeftMenu";
 
@@ -19,6 +21,7 @@ import { SignOut } from "../../hooks/SignHook";
 import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 
 function Index() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
@@ -68,7 +71,7 @@ function Index() {
                   vertical="top"
                   horizontal=""
                   // item={<Badge size="xs" color="accent" />}
-                  className="relative ml-3"
+                  className="relative ml-2"
                 >
                   {/* <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div> */}
                   <span className="cursor-pointer text-text-p">
@@ -85,7 +88,16 @@ function Index() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              <div className="ml-3">
+              <ButtonP
+                className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hiddeni md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+                onClick={() => {
+                  router.push("/membership");
+                }}
+                icon={<GiUpgrade className="h-4 w-4" />}
+              >
+                <span className="hidden md:block">Upgrade</span>
+              </ButtonP>
+              <div className="ml-2">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">
                     <div className="w-10 rounded-full">
