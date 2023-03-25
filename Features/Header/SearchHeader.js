@@ -53,7 +53,7 @@ function SearchHeader() {
       <div className="relative">
         <div
           onClick={() => setOpen(true)}
-          className="flex items-center bg-bg border-[2px] border-bga px-4 py-2 rounded-full cursor-pointer"
+          className="flex items-center bg-bgt border-[2px] border-bga px-4 py-2 rounded-full cursor-pointer"
         >
           <SearchIcon className="h-5 w-5 text-text-p" />
           <span className="ml-1 text-sm truncate text-text-p hidden md:block">

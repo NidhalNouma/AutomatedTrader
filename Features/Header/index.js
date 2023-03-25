@@ -41,7 +41,7 @@ function Index() {
       <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
 
       <div
-        className="px-4 md:px-6 py-2 md:py-3 bg-bg w-full sticky top-0 z-50 border-b2 border-b-bga"
+        className="px-4 md:px-6 py-2 md:py-3 bg-bgt w-full sticky top-0 z-50 border-b2 border-b-bga"
         style={{ zIndex: 100 }}
       >
         <div className="flex justify-between items-center w-full">
@@ -94,6 +94,7 @@ function Index() {
                   router.push("/membership");
                 }}
                 icon={<GiUpgrade className="h-4 w-4" />}
+                animation={false}
               >
                 <span className="hidden md:block">Upgrade</span>
               </ButtonP>

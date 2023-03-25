@@ -50,7 +50,7 @@ export default function help() {
 
         <div className="mt-10 w-full flex justify-center">
           {step === 1 && (
-            <div className="text-center max-w-md bg-bga rounded-md p-3">
+            <div className="text-center max-w-md bg-bg rounded-md p-3">
               <p className="text-center mb-4">
                 Add AutomatedTraderT1_bot or click this link
                 <a
@@ -68,7 +68,7 @@ export default function help() {
           )}
 
           {step === 2 && (
-            <div className="text-center max-w-md bg-bga rounded-md p-3">
+            <div className="text-center max-w-md bg-bg rounded-md p-3">
               <p className="text-center mb-1">
                 Copy your chat id and past it bellow, then click next.
               </p>
@@ -84,7 +84,7 @@ export default function help() {
           )}
 
           {step === 3 && (
-            <div className="text-center max-w-md bg-bga rounded-md p-3">
+            <div className="text-center max-w-md bg-bg rounded-md p-3">
               <p className="text-center mb-1">
                 All set you will start getting alert message to your telegram
                 account.

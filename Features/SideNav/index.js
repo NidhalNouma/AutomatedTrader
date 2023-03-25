@@ -28,7 +28,7 @@ function Index({ cpath, fixed = true }) {
   return (
     <Content fixed={fixed}>
       {/* {fixed && ( */}
-      <div className="py-4 px-2 m-3 sticky top-3 left-0 bg-transparent">
+      <div className="py-4 px-2 m-3 sticky top-3 left-0 ">
         <div className="relative">
           <Image
             src="/Logo/dark-logo.png"
@@ -271,7 +271,7 @@ function Content({ children, fixed }) {
   return (
     <Fragment>
       {fixed ? (
-        <div className="sidenav md:flex hidden bg-bg z-50 sticky top-0 left-0 overflow-y-scroll hideScrollbar">
+        <div className="sidenav md:flex hidden bg-bgt z-50 sticky top-0 left-0 overflow-y-scroll hideScrollbar">
           {children}
         </div>
       ) : (
