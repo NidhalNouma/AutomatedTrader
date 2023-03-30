@@ -89,7 +89,7 @@ function Index() {
               </Dropdown>
 
               <ButtonP
-                className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hiddeni md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+                className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
                 onClick={() => {
                   router.push("/membership");
                 }}

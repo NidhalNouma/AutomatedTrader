@@ -38,7 +38,7 @@ function Index({ cpath, fixed = true }) {
             className=""
             layout="responsive"
           />
-          <span className="absolute top-full right-0 text-xs font-bold text-bgt bg-text-h px-3 rounded-full">
+          <span className="truncate absolute top-full right-0 text-xs font-bold text-bgt bg-text-h px-3 rounded-full">
             Beta | Under development
           </span>
         </div>

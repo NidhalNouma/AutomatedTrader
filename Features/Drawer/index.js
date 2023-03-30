@@ -12,11 +12,11 @@ export default function Drawer({ children, isOpen, setIsOpen }) {
     >
       <section
         className={
-          " w-screen max-w-[250px] left-0 absolute bg-bg h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
+          " w-screen max-w-[250px] left-0 absolute bg-bgt h-full shadow-xl delay-400 duration-500 ease-in-out transition-all transform  " +
           (isOpen ? " translate-x-0 " : " translate-x-[-250px] ")
         }
       >
-        <article className="bg-bg relative w-screen max-w-[250px] pb-10 flex flex-col space-y-6 h-full">
+        <article className="bg-bgt relative w-screen max-w-[250px] pb-10 flex flex-col space-y-6 h-full">
           {/* <header className="p-4 font-bold text-lg">Header</header> */}
           {children}
         </article>

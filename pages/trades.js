@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import { GetMTAccountsContext, CalculateData } from "../hooks/MTAccounts";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
+import { GetWebhookContext } from "../hooks/WebHook";
 
 import { MdWaterfallChart, MdOutlineCandlestickChart } from "react-icons/md";
 import { H1 } from "../Components/H";
@@ -10,7 +11,10 @@ import { H1 } from "../Components/H";
 
 import { ButtonP } from "../Components/Button";
 import Table from "../Features/DataAndCharts/Table";
+import BestWorseTrades from "../Features/DataAndCharts/BestWorseTrades";
+import CalendarTrades from "../Features/DataAndCharts/Calander";
 import { Modal1 } from "../Components/Modal";
+import { Select1 } from "../Components/Input";
 import OpenTrade from "../Features/tradesManual/Open";
 import UpgradeMsg from "../Features/UpgradeMsg";
 
@@ -23,6 +27,32 @@ export default function TradesPage() {
 
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
+
+  const { webhooks } = GetWebhookContext();
+  const [filtredData, setFilteredData] = useState([]);
+
+  const options = [
+    "All",
+    ...mtAccounts.map((account) => account.accountDisplayName),
+  ];
+  const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
+  const [account, setAccount] = useState(options[0]);
+  const [wh, setWh] = useState(optionsWh[0]);
+
+  useEffect(() => {
+    // console.log(account, datai);
+    if (account === "All" && wh === "All") setFilteredData(data);
+    else {
+      let fdata = data;
+      if (account !== "All")
+        fdata = fdata.filter((v) => v.accountDisplayName === account);
+      if (wh !== "All")
+        fdata = fdata.filter(
+          (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+        );
+      setFilteredData(fdata);
+    }
+  }, [account, wh]);
 
   return (
     <>
@@ -39,7 +69,36 @@ export default function TradesPage() {
       <Sidenav cpath="trades" />
       <MainWithHeader>
         <div className="flex justify-between items-center">
-          <H1>Trades</H1>
+          <div className="flex items-start">
+            <H1>Trades</H1>
+            <div className="flex flex-col ml-3">
+              <span className="text-xs text-text-p pl-1">Webhook</span>
+
+              <Select1
+                className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                name=""
+                helper=""
+                size="xs"
+                options={optionsWh}
+                value={wh}
+                setValue={(i) => setWh(optionsWh[i])}
+              />
+            </div>
+            <div className="flex flex-col ml-4">
+              <span className="text-xs text-text-p pl-1">Account</span>
+
+              <Select1
+                className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                name=""
+                helper=""
+                size="xs"
+                options={options}
+                value={account}
+                setValue={(i) => setAccount(options[i])}
+              />
+            </div>
+          </div>
+
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
             onClick={() => {
@@ -53,9 +112,15 @@ export default function TradesPage() {
           </ButtonP>
         </div>
 
-        {data?.length > 0 ? (
+        {filtredData?.length > 0 ? (
           <div className="mt-12">
-            <Table data={data} accounts={mtAccounts} />
+            <BestWorseTrades data={filtredData} />
+            <div className="mt-6">
+              <CalendarTrades data={filtredData} />
+            </div>
+            <div className="mt-6">
+              <Table data={filtredData} accounts={mtAccounts} />
+            </div>
           </div>
         ) : (
           <div className="mt-6 w-full">
