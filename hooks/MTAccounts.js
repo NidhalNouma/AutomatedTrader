@@ -192,7 +192,7 @@ export const CalculateData = (data, withWebHook = null) => {
   };
 };
 
-const profitPerTime = (data, getProfit = true, wh) => {
+const profitPerTime = (data, getProfit = true, wh, getAll = false) => {
   let r = {};
 
   data?.forEach((v) => {
@@ -207,7 +207,7 @@ const profitPerTime = (data, getProfit = true, wh) => {
     if (v.commission) profit += Number(v.commission);
 
     if (v.ID === wh || !wh)
-      if ((getProfit && profit >= 0) || (!getProfit && profit < 0)) {
+      if ((getProfit && profit >= 0) || (!getProfit && profit < 0) || getAll) {
         if (r[year] !== undefined) {
           r[year].profit = Number(r[year].profit) + Number(profit);
 
@@ -232,6 +232,13 @@ const profitPerTime = (data, getProfit = true, wh) => {
   });
   return r;
 };
+
+export function totalProfitPerTime(data, withWebHook) {
+  const total = profitPerTime(data, false, withWebHook, true);
+
+  console.log(total);
+  return total;
+}
 
 export function getDataFromAccountPerPeriod(
   account,

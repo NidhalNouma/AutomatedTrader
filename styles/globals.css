@@ -109,4 +109,5 @@ input[type="number"] {
 }
 .react-calendar__navigation button {
   color: #fff !important;
+  background-color: transparent !important;
 }
