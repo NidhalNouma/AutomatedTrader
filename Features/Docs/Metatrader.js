@@ -34,7 +34,7 @@ function Metatrader({ ty, setTy }) {
         benefits that can help enhance their trading experience.
         <br />
         <br />
-        How to add Automated Trader EA to mt\:
+        How to add Automated Trader EA to MT4
         <br />
         <br />
         <Step

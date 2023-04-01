@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
@@ -15,7 +16,24 @@ import { GiPrimitiveTorch } from "react-icons/gi";
 import { pricingList } from "../utils/pricing";
 
 export default function Membership() {
-  const [ty, setTy] = useState(2);
+  const router = useRouter();
+  const { m } = router.query;
+  let queryMembership = 2;
+
+  if (m) {
+    const arr = Object.values(pricingList);
+
+    for (let i = 0; i < arr.length; i++) {
+      const d = arr[i];
+
+      Object.values(d).forEach((v) => {
+        if (v.chargeBeeId === m) queryMembership = i + 1;
+      });
+    }
+  }
+
+  const [ty, setTy] = useState(queryMembership);
+
   const [success, setSuccess] = useState(false);
   const { fullUser } = GetFullUserContext();
 
@@ -35,7 +53,7 @@ export default function Membership() {
             </div>
           )} */}
 
-          {fullUser?.subObj ? (
+          {/* {fullUser?.subObj ? (
             <div className="flex justify-center mb-6">
               <div className="bg-accent px-3 py-1 rounded-lg">
                 <Hi4 className="!text-bg font-semibold">
@@ -45,11 +63,11 @@ export default function Membership() {
                 </Hi4>
               </div>
             </div>
-          ) : (
-            <div className="mt-2"></div>
-          )}
+          ) : ( */}
+          <div className="mt-2"></div>
+          {/* )} */}
 
-          <div className="w-full flex justify-center mb-6">
+          <div className="w-full flex justify-center mb-8">
             <ButtonGroup>
               <Button
                 animation={false}
@@ -87,7 +105,7 @@ export default function Membership() {
           </div>
 
           {ty === 1 ? (
-            <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
+            <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-4">
               {Object.keys(pricingList.monthly).map((key, i) => (
                 <Pricing
                   key={key}
@@ -100,7 +118,7 @@ export default function Membership() {
               ))}
             </section>
           ) : ty === 2 ? (
-            <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center">
+            <section className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-4">
               {Object.keys(pricingList.annual).map((key, i) => (
                 <Pricing
                   key={key}

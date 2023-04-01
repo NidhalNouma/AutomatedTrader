@@ -5,16 +5,18 @@ import { useRouter } from "next/router";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import { Hi2, Hi3, Hi4, H4 } from "../Components/H";
+import MegaSale from "../Features/Banners/MegaSale";
 
 export default function Home() {
-  const { user } = GetUserContext();
+  // const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
   const router = useRouter();
 
   return (
     <>
       <Sidenav cpath="home" />
-      <MainWithHeader>
+      <MainWithHeader withBanners={false}>
+        <MegaSale />
         <Hi2 className="font-bold">
           Hi, <span className="text-text-h">{fullUser?.displayName}</span>
         </Hi2>

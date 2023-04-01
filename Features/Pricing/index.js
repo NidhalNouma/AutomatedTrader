@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { CheckCircleIcon } from "@heroicons/react/solid";
 import { ButtonP } from "../../Components/Button";
 // import { Button } from "react-daisyui";
-
-// import { XIcon } from "@heroicons/react/solid";
-// import { H3 } from "../../Components/H";
 
 import {
   GetFullUserContext,
@@ -14,6 +10,18 @@ import {
 
 // import { Modal1 } from "../../Components/Modal";
 import { OpenCheckout, GetChargeBeeContext } from "../../hooks/ChargeBee";
+
+import { GiRobotLeg, GiChart } from "react-icons/gi";
+import { AiOutlineFundProjectionScreen, AiOutlineAlert } from "react-icons/ai";
+import { RiExternalLinkFill } from "react-icons/ri";
+import {
+  TbBrandTelegram,
+  TbBrandDiscord,
+  TbManualGearbox,
+} from "react-icons/tb";
+import { GrManual } from "react-icons/gr";
+import { MdOutlineScreenShare } from "react-icons/md";
+import { BiSupport } from "react-icons/bi";
 
 function Index({ title, value, t, setSuccess, i }) {
   const { fullUser, setFullUser } = GetFullUserContext();
@@ -58,8 +66,10 @@ function Index({ title, value, t, setSuccess, i }) {
     // <div className="w-full px-4 h-full">
 
     <div
-      className={`w-full px-2 h-full ${
-        value?.standout && "bg-primary rounded-xl"
+      className={`w-full px-2 h-full bg-bg  rounded-xl${
+        value?.standout
+          ? " bg-gradient-to-b from-primary from-10% via-secondary via-80% to-accent to-90% "
+          : " bg-gradient-to-b from-bgt from-10% via-bgt via-50% to-bg to-90% "
       }`}
     >
       <div className="p-8 rounded-xl h-full flex flex-col">
@@ -82,10 +92,17 @@ function Index({ title, value, t, setSuccess, i }) {
         ) : (
           <></>
         )}
-        <hr className="mx-1 mt-2" />
-        <div className="mt-2 mb-6 flex flex-col text-sm items-start justify-center font-semibold">
-          <Ppricing>Automate Tradingview</Ppricing>
+        <div className="mx-0 my-4 bg-bga pt-1 rounded-full" />
+        <div className="mb-6 flex flex-col text-sm items-start justify-center">
           <Ppricing>
+            <GiRobotLeg className="h-4 w-4 mr-1 text-accent" strokeWidth="10" />
+            Automate Tradingview
+          </Ppricing>
+          <Ppricing>
+            <AiOutlineFundProjectionScreen
+              className="h-4 w-4 mr-2 text-accent"
+              strokeWidth="10"
+            />
             {value.accounts > 1
               ? `Up to ${value.accounts} accounts`
               : value.accounts === 1
@@ -93,6 +110,10 @@ function Index({ title, value, t, setSuccess, i }) {
               : "N/A"}
           </Ppricing>
           <Ppricing>
+            <RiExternalLinkFill
+              className="h-4 w-4 mr-2 text-accent"
+              strokeWidth="0"
+            />
             {value.webhooks > 1
               ? `Up to ${value.webhooks} webhooks`
               : value.webhooks === 1
@@ -100,20 +121,62 @@ function Index({ title, value, t, setSuccess, i }) {
               : "N/A"}
           </Ppricing>
           <Ppricing>
+            <AiOutlineAlert
+              className="h-4 w-4 mr-2 text-accent"
+              strokeWidth="10"
+            />
             {value.alerts > 1
               ? `Up to ${value.alerts} Alerts per day`
               : value.alerts === 1
               ? "1 Alert per day"
               : "N/A"}
           </Ppricing>
-          <Ppricing>MT4 & MT5 (coming soon) EA</Ppricing>
-          {value.telegram && <Ppricing>Telegram Notifications</Ppricing>}
-          {value.discord && (
-            <Ppricing>Discord Notifications (Coming soon)</Ppricing>
+          <Ppricing>
+            <GiChart className="h-4 w-4 mr-2 text-accent" strokeWidth="20" />
+            MT4 & MT5 (coming soon) EA
+          </Ppricing>
+
+          {value.telegram && (
+            <Ppricing>
+              {" "}
+              <TbBrandTelegram
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="3"
+              />
+              Telegram Notifications
+            </Ppricing>
           )}
-          {value.manualTrade && <Ppricing>Manual automation</Ppricing>}
-          <Ppricing>24/7 Support</Ppricing>
-          {value.shareAlerts && <Ppricing>Share Alerts (Coming soon)</Ppricing>}
+          {value.discord && (
+            <Ppricing>
+              <TbBrandDiscord
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="5"
+              />
+              Discord Notifications (Coming soon)
+            </Ppricing>
+          )}
+          {value.manualTrade && (
+            <Ppricing>
+              <TbManualGearbox
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="3"
+              />
+              Manual automation
+            </Ppricing>
+          )}
+          <Ppricing>
+            <BiSupport className="h-4 w-4 mr-2 text-accent" strokeWidth="1" />
+            24/7 Support
+          </Ppricing>
+          {value.shareAlerts && (
+            <Ppricing>
+              <MdOutlineScreenShare
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="0"
+              />
+              Share Alerts (Coming soon)
+            </Ppricing>
+          )}
         </div>
         {fullUser && btnText() !== "Current" ? (
           <ButtonP
@@ -173,8 +236,7 @@ export default Index;
 
 function Ppricing({ children }) {
   return (
-    <p className="flex justify-center items-center my-1 text-sm text-text-h">
-      <CheckCircleIcon className="h-3 w-3 mr-1 text-text-h" />
+    <p className="flex justify-center items-center my-2 text-md text-text-h">
       {children}
     </p>
   );

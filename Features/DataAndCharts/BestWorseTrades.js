@@ -43,7 +43,7 @@ function BestWorseTrades({ data }) {
         <H4 className="text-red-400">{worse?.profit}</H4>
       </div>
       <div className="p-5 bg-bg rounded-lg w-full mr-2">
-        <H4 className="font-bold">Best Strike</H4>
+        <H4 className="font-bold">Best Streak</H4>
         <H4 className="text-text-h">{strike}</H4>
       </div>
     </div>

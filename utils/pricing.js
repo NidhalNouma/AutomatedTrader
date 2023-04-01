@@ -131,6 +131,8 @@ export function getPlanById(subscription, isTSlifetime = false) {
   let r = null;
   let id = null;
 
+  if (!subscription) return r;
+
   if (subscription.subscription_items?.length > 0) {
     id = subscription?.subscription_items[0].item_price_id;
   }

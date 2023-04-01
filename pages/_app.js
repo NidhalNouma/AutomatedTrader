@@ -23,6 +23,9 @@ import { GoogleAnalytics } from "nextjs-google-analytics";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
+  const { subscription } = router.query;
+  // console.log(subscription || "NA", router.query);
+
   const [user, setUser] = useState(null);
   const { fullUser, getFullUser, setFullUser } = GetFullUser();
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
@@ -63,9 +66,13 @@ function MyApp({ Component, pageProps }) {
           firstPath === "/signin" ||
           firstPath === "/signup" ||
           firstPath === "/forgetpassword"
-        )
-          router.push("/home");
-        else router.push(firstPath);
+        ) {
+          if (!subscription) router.push("/home");
+          else router.push("/membership?m=" + subscription);
+        } else {
+          if (!subscription) router.push(firstPath);
+          else router.push("/membership?m=" + subscription);
+        }
       }
     } else if (!user) {
       if (
@@ -97,7 +104,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Fragment>
-      <GoogleAnalytics trackPageViews />
+      {/* <GoogleAnalytics trackPageViews /> */}
       {/* <ChargeBeeCC value={{ chargeBee, setChargeBee, openCheckout }}> */}
       <Chargebee>
         <Head>
