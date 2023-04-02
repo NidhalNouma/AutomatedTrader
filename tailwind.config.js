@@ -9,7 +9,11 @@ module.exports = {
     "node_modules/daisyui/dist/**/*.js",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        // "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
+      },
+    },
     colors: {
       gray: colors.gray,
       green: colors.green,
@@ -18,8 +22,9 @@ module.exports = {
       // primaryi: "rgb(39, 69, 235)",
       // secondaryi: "rgb(174, 168, 216)",
       // accenti: "rgb(28, 28, 31)",
-      bgt: "#000",
-      bg: "#070809",
+      // bg: "#000",
+      bg: "#171819",
+      bgt: "#070809",
       bga: "#272829",
       // bgai: "rgb(66, 70, 79)",
       // bgl: "rgb(0, 0, 50)",

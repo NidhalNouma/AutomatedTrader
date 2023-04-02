@@ -68,7 +68,7 @@ function Index({ title, value, t, setSuccess, i }) {
     <div
       className={`w-full px-2 h-full bg-bg  rounded-xl${
         value?.standout
-          ? " bg-gradient-to-b from-primary from-10% via-secondary via-80% to-accent to-90% "
+          ? " bg-gradient-to-b from-bgt from-10% via-secondary via-80% to-primary to-90% "
           : " bg-gradient-to-b from-bgt from-10% via-bgt via-50% to-bg to-90% "
       }`}
     >
@@ -236,7 +236,7 @@ export default Index;
 
 function Ppricing({ children }) {
   return (
-    <p className="flex justify-center items-center my-2 text-md text-text-h">
+    <p className="flex justify-center items-center my-2 text-md text-text-h font-semibold">
       {children}
     </p>
   );
