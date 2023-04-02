@@ -7,7 +7,7 @@ function MegaSale() {
   const router = useRouter();
 
   return (
-    <div className="w-full relative h-[60vh] z-0">
+    <div className="w-full relative min-h-[60vh] z-0">
       {/* <div className="absolute top-[-135%] left-0 right-0 aspect-square bg-gradient-to-b from-accent to-primary rounded-full"></div> */}
       <div
         className="absolute bottom-[0] left-0 right-0 h-full w-full bg-gradient-to-b from-bgt to-primary"
