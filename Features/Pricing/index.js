@@ -62,19 +62,19 @@ function Index({ title, value, t, setSuccess, i }) {
     setSuccess(true);
   };
 
-  return (
-    // <div className="w-full px-4 h-full">
+  const [expend, setExpend] = useState(true);
 
+  return (
     <div
       className={`w-full px-2 h-full bg-bg  rounded-xl${
         value?.standout
-          ? " bg-gradient-to-b from-bgt from-10% via-secondary via-80% to-primary to-90% "
-          : " bg-gradient-to-b from-bgt from-10% via-bgt via-50% to-bg to-90% "
+          ? " bg-gradient-to-b from-primary from-10% via-bg via-80% to-bgt to-90% "
+          : " bg-gradient-to-b from-bga from-10% via-bg via-50% to-bgt to-90% "
       }`}
     >
       <div className="p-8 rounded-xl h-full flex flex-col">
         <div className="flex w-full justify-center">
-          <h4 className="bg-text-h rounded-xl text-bg px-4 py-1 !text-xs !font-semibold uppercase">
+          <h4 className="bg-text-p rounded-xl text-bg px-4 py-1 !text-xs !font-semibold uppercase">
             {title}
           </h4>
         </div>
@@ -91,96 +91,11 @@ function Index({ title, value, t, setSuccess, i }) {
           </div>
         ) : (
           <></>
-        )}
-        <div className="mx-0 my-4 bg-bga pt-1 rounded-full" />
-        <div className="mb-6 flex flex-col text-sm items-start justify-center">
-          <Ppricing>
-            <GiRobotLeg className="h-4 w-4 mr-1 text-accent" strokeWidth="10" />
-            Automate Tradingview
-          </Ppricing>
-          <Ppricing>
-            <AiOutlineFundProjectionScreen
-              className="h-4 w-4 mr-2 text-accent"
-              strokeWidth="10"
-            />
-            {value.accounts > 1
-              ? `Up to ${value.accounts} accounts`
-              : value.accounts === 1
-              ? "1 account"
-              : "N/A"}
-          </Ppricing>
-          <Ppricing>
-            <RiExternalLinkFill
-              className="h-4 w-4 mr-2 text-accent"
-              strokeWidth="0"
-            />
-            {value.webhooks > 1
-              ? `Up to ${value.webhooks} webhooks`
-              : value.webhooks === 1
-              ? "1 webhook"
-              : "N/A"}
-          </Ppricing>
-          <Ppricing>
-            <AiOutlineAlert
-              className="h-4 w-4 mr-2 text-accent"
-              strokeWidth="10"
-            />
-            {value.alerts > 1
-              ? `Up to ${value.alerts} Alerts per day`
-              : value.alerts === 1
-              ? "1 Alert per day"
-              : "N/A"}
-          </Ppricing>
-          <Ppricing>
-            <GiChart className="h-4 w-4 mr-2 text-accent" strokeWidth="20" />
-            MT4 & MT5 (coming soon) EA
-          </Ppricing>
-
-          {value.telegram && (
-            <Ppricing>
-              {" "}
-              <TbBrandTelegram
-                className="h-4 w-4 mr-2 text-accent"
-                strokeWidth="3"
-              />
-              Telegram Notifications
-            </Ppricing>
-          )}
-          {value.discord && (
-            <Ppricing>
-              <TbBrandDiscord
-                className="h-4 w-4 mr-2 text-accent"
-                strokeWidth="5"
-              />
-              Discord Notifications (Coming soon)
-            </Ppricing>
-          )}
-          {value.manualTrade && (
-            <Ppricing>
-              <TbManualGearbox
-                className="h-4 w-4 mr-2 text-accent"
-                strokeWidth="3"
-              />
-              Manual automation
-            </Ppricing>
-          )}
-          <Ppricing>
-            <BiSupport className="h-4 w-4 mr-2 text-accent" strokeWidth="1" />
-            24/7 Support
-          </Ppricing>
-          {value.shareAlerts && (
-            <Ppricing>
-              <MdOutlineScreenShare
-                className="h-4 w-4 mr-2 text-accent"
-                strokeWidth="0"
-              />
-              Share Alerts (Coming soon)
-            </Ppricing>
-          )}
-        </div>
+        )}{" "}
         {fullUser && btnText() !== "Current" ? (
           <ButtonP
-            className="w-full max-w-xs mt-auto !bg-transparent !border-bga"
+            animation={false}
+            className="w-full max-w-xs mt-8 !bg-text-h !text-bgt !border-none mx-auto"
             onClick={() => {
               OpenCheckout(value.chargeBeeId, onSuccess);
               // setOpenPm(true);
@@ -194,13 +109,104 @@ function Index({ title, value, t, setSuccess, i }) {
             {btnText()}
           </ButtonP>
         ) : fullUser ? (
-          <span className="mt-auto w-full text-text-h font-bold text-center">
+          <span className="mt-8 w-full py-1 text-text-h font-bold text-center">
             Current
           </span>
         ) : (
-          <span className="mt-auto w-full text-text-h font-bold text-center">
+          <span className="mt-8 w-full text-text-h font-bold text-center">
             One sec
           </span>
+        )}
+        <div className="mx-0 my-4 bg-bga pt-1 rounded-full" />
+        {expend && (
+          <div className="mb-6 flex flex-col text-sm items-start justify-center">
+            <Ppricing>
+              <GiRobotLeg
+                className="h-4 w-4 mr-1 text-accent"
+                strokeWidth="10"
+              />
+              Automate Tradingview
+            </Ppricing>
+            <Ppricing>
+              <AiOutlineFundProjectionScreen
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="10"
+              />
+              {value.accounts > 1
+                ? `Up to ${value.accounts} accounts`
+                : value.accounts === 1
+                ? "1 account"
+                : "N/A"}
+            </Ppricing>
+            <Ppricing>
+              <RiExternalLinkFill
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="0"
+              />
+              {value.webhooks > 1
+                ? `Up to ${value.webhooks} webhooks`
+                : value.webhooks === 1
+                ? "1 webhook"
+                : "N/A"}
+            </Ppricing>
+            <Ppricing>
+              <AiOutlineAlert
+                className="h-4 w-4 mr-2 text-accent"
+                strokeWidth="10"
+              />
+              {value.alerts > 1
+                ? `Up to ${value.alerts} Alerts per day`
+                : value.alerts === 1
+                ? "1 Alert per day"
+                : "N/A"}
+            </Ppricing>
+            <Ppricing>
+              <GiChart className="h-4 w-4 mr-2 text-accent" strokeWidth="20" />
+              MT4 & MT5 (coming soon) EA
+            </Ppricing>
+
+            {value.telegram && (
+              <Ppricing>
+                {" "}
+                <TbBrandTelegram
+                  className="h-4 w-4 mr-2 text-accent"
+                  strokeWidth="3"
+                />
+                Telegram Notifications
+              </Ppricing>
+            )}
+            {value.discord && (
+              <Ppricing>
+                <TbBrandDiscord
+                  className="h-4 w-4 mr-2 text-accent"
+                  strokeWidth="5"
+                />
+                Discord Notifications (Coming soon)
+              </Ppricing>
+            )}
+            {value.manualTrade && (
+              <Ppricing>
+                <TbManualGearbox
+                  className="h-4 w-4 mr-2 text-accent"
+                  strokeWidth="3"
+                />
+                Manual automation
+              </Ppricing>
+            )}
+            <Ppricing>
+              <BiSupport className="h-4 w-4 mr-2 text-accent" strokeWidth="1" />
+              24/7 Support
+            </Ppricing>
+            {value.shareAlerts && (
+              <Ppricing>
+                <MdOutlineScreenShare
+                  className="h-4 w-4 mr-2 text-accent"
+                  strokeWidth="0"
+                />
+                Share Alerts (Coming soon)
+              </Ppricing>
+            )}
+          </div>
         )}
       </div>
       {/* <Modal1

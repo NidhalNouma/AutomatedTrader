@@ -173,7 +173,7 @@ function Pricing({ title, value, t, i }) {
         <ButtonP
           className="mx-auto w-full max-w-xs mt-auto text-xl !bg-transparent !border-bga !rounded-full"
           onClick={() => {
-            router.push("/signin");
+            router.push("/signup?subscription=" + value.chargeBeeId);
           }}
           size="md"
         >

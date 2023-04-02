@@ -19,6 +19,7 @@ import UpgradeMsg from "../UpgradeMsg";
 import { SignOut } from "../../hooks/SignHook";
 
 import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
+import { pricingList } from "../../utils/pricing";
 
 function Index() {
   const router = useRouter();
@@ -88,16 +89,22 @@ function Index() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              <ButtonP
-                className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
-                onClick={() => {
-                  router.push("/membership");
-                }}
-                icon={<GiUpgrade className="h-4 w-4" />}
-                animation={false}
-              >
-                <span className="hidden md:block">Upgrade</span>
-              </ButtonP>
+              {fullUser.subObj?.chargeBeeId !==
+                pricingList.lifetime["Lifetime access"].chargeBeeId && (
+                <ButtonP
+                  className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+                  onClick={() => {
+                    router.push(
+                      "/membership?m=" +
+                        pricingList.lifetime["Lifetime access"].chargeBeeId
+                    );
+                  }}
+                  icon={<GiUpgrade className="h-4 w-4" />}
+                  animation={false}
+                >
+                  <span className="hidden md:block">Upgrade</span>
+                </ButtonP>
+              )}
               <div className="ml-2">
                 <Dropdown vertical="end">
                   <Button color="ghost" className="avatar" shape="circle">

@@ -20,8 +20,9 @@ function MegaSale() {
           BETA SALE
         </p>
         <p className="text-text-p text-3xl text-center mt-4">
-          Save <span className="font-extrabold text-text-h">%60</span> with
-          lifetime membership and get access
+          Save <span className="font-extrabold text-text-h">60%</span> with{" "}
+          <span className="font-extrabold text-text-h">LIFETIME</span>{" "}
+          membership and get access
           <br />
           to all of our features.
         </p>

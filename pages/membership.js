@@ -40,7 +40,7 @@ export default function Membership() {
   return (
     <>
       <Sidenav cpath="membership" />
-      <MainWithHeader>
+      <MainWithHeader withBanners={false}>
         <H1>Membership</H1>
         <div className="mt-4">
           {/* {success && (
@@ -67,11 +67,11 @@ export default function Membership() {
           <div className="mt-2"></div>
           {/* )} */}
 
-          <div className="w-full flex justify-center mb-8">
+          <div className="w-full flex justify-center mb-8 bg-bgt">
             <ButtonGroup>
               <Button
                 animation={false}
-                className="bg-bg rounded-xl capitalize px-6"
+                className="bg-bgt rounded-xl capitalize px-6"
                 size="md"
                 active={ty === 1}
                 onClick={() => setTy(1)}
@@ -82,7 +82,7 @@ export default function Membership() {
               <Button
                 animation={false}
                 size="md"
-                className="bg-bg rounded-xl capitalize px-6 "
+                className="bg-bgt rounded-xl capitalize px-6 "
                 active={ty === 2}
                 onClick={() => setTy(2)}
               >
@@ -92,7 +92,7 @@ export default function Membership() {
               <Button
                 animation={false}
                 size="md"
-                className="bg-bg rounded-xl capitalize px-6 border-2 border-primary text-text-h text-md"
+                className="bg-bgt rounded-xl capitalize px-6 border-2 border-primary text-text-h text-md"
                 active={ty === 3}
                 onClick={() => setTy(3)}
                 // endIcon={}
@@ -172,6 +172,7 @@ function Play({ l }) {
     right: `${l === 1 ? 0 : "auto"}`,
     zIndex: 0,
     pointerEvents: "none",
+    height: "100vh",
   };
 
   return (

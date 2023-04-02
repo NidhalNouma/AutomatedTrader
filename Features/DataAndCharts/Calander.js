@@ -31,7 +31,7 @@ function CalendarTrades({ data }) {
             }
           }
 
-          console.log(r);
+          // console.log(r);
 
           return view === "month" && r > 0 ? (
             <p className="text-green-400 font-semibold mt-1">{r.toFixed(1)}</p>
