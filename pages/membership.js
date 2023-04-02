@@ -13,7 +13,10 @@ import { ButtonGroup, Button } from "react-daisyui";
 import { GetFullUserContext } from "../hooks/UserHook";
 
 import { GiPrimitiveTorch } from "react-icons/gi";
+import { AiTwotoneFire } from "react-icons/ai";
 import { pricingList } from "../utils/pricing";
+
+import MegaSale1 from "../Features/Banners/MegaSale1";
 
 export default function Membership() {
   const router = useRouter();
@@ -42,6 +45,7 @@ export default function Membership() {
       <Sidenav cpath="membership" />
       <MainWithHeader withBanners={false}>
         <H1>Membership</H1>
+        <MegaSale1 />
         <div className="mt-4">
           {/* {success && (
             <div className="flex mb-6 justify-center">
@@ -99,7 +103,7 @@ export default function Membership() {
               >
                 Lifetime
                 <span className="ml-1 hidden md:block">Membership</span>
-                <GiPrimitiveTorch className="h-6 w-6 ml-1 text-text-h" />
+                <AiTwotoneFire className="h-6 w-6 ml-1 text-text-h" />
               </Button>
             </ButtonGroup>
           </div>
