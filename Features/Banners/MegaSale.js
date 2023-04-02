@@ -7,15 +7,15 @@ function MegaSale() {
   const router = useRouter();
 
   return (
-    <div className="w-full relative min-h-[60vh] z-0">
+    <div className="w-full relative min-h-[50vh] z-0 flex flex-col">
       {/* <div className="absolute top-[-135%] left-0 right-0 aspect-square bg-gradient-to-b from-accent to-primary rounded-full"></div> */}
       <div
-        className="absolute bottom-[0] left-0 right-0 h-full w-full bg-gradient-to-b from-bgt to-primary"
+        className="absolute bottom-0 top-0 left-0 right-0 h-full w-full bg-gradient-to-b from-bgt via-primary to-bgt"
         style={{
-          clipPath: "circle(50% at 50% 0)",
+          clipPath: "circle(50% at 50% 50%)",
         }}
       ></div>
-      <div className="z-10 relative w-full h-full flex flex-col items-center justify-start pt-11">
+      <div className="z-10 relative w-full h-full flex flex-col items-center  my-auto">
         <p className="text-transparent text-6xl font-extrabold bg-clip-text bg-gradient-to-r from-accent to-primary">
           BETA SALE
         </p>

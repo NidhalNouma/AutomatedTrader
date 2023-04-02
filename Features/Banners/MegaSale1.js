@@ -70,37 +70,34 @@ const CountDown = ({ endTime }) => {
   const [da, setDa] = useState(0);
 
   useEffect(() => {
+    const start = new Date().getTime();
+    const end = endTime.getTime();
+
+    const time = getTimeDiff(start, end);
+
+    setSec(time.seconds);
+    setMin(time.minutes);
+    setHo(time.hours);
+    setDa(time.days);
+  }, [endTime]);
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       const start = new Date().getTime();
       const end = endTime.getTime();
 
-      const diff = end - start;
+      const time = getTimeDiff(start, end);
 
-      let seconds = Math.floor(diff / 1000),
-        minutes = Math.floor(seconds / 60),
-        hours = Math.floor(minutes / 60),
-        days = Math.floor(hours / 24),
-        months = Math.floor(days / 30),
-        years = Math.floor(days / 365);
-
-      seconds %= 60;
-      minutes %= 60;
-      hours %= 24;
-      days %= 30;
-      months %= 12;
-
-      setSec(seconds);
-      setMin(minutes);
-      setHo(hours);
-      setDa(days);
-
-      //   setValue((v) => (v <= 0 ? args.value : v - 1));
+      setSec(time.seconds);
+      setMin(time.minutes);
+      setHo(time.hours);
+      setDa(time.days);
     }, 1000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [sec]);
+  }, [sec, endTime]);
 
   return (
     <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
@@ -123,3 +120,29 @@ const CountDown = ({ endTime }) => {
     </div>
   );
 };
+
+function getTimeDiff(start, end) {
+  const diff = end - start;
+
+  let seconds = Math.floor(diff / 1000),
+    minutes = Math.floor(seconds / 60),
+    hours = Math.floor(minutes / 60),
+    days = Math.floor(hours / 24),
+    months = Math.floor(days / 30),
+    years = Math.floor(days / 365);
+
+  seconds %= 60;
+  minutes %= 60;
+  hours %= 24;
+  days %= 30;
+  months %= 12;
+
+  return {
+    seconds,
+    minutes,
+    hours,
+    days,
+    months,
+    years,
+  };
+}
