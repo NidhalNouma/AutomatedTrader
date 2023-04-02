@@ -6,6 +6,7 @@ import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import { Hi2, Hi3, Hi4, H4 } from "../Components/H";
 import MegaSale from "../Features/Banners/MegaSale";
+import { pricingList } from "../utils/pricing";
 
 export default function Home() {
   // const { user } = GetUserContext();
@@ -16,7 +17,8 @@ export default function Home() {
     <>
       <Sidenav cpath="home" />
       <MainWithHeader withBanners={false}>
-        <MegaSale />
+        {fullUser.subObj?.chargeBeeId !==
+          pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale />}
         <Hi2 className="font-bold">
           Hi, <span className="text-text-h">{fullUser?.displayName}</span>
         </Hi2>

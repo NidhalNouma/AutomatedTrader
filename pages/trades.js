@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import { GetMTAccountsContext, CalculateData } from "../hooks/MTAccounts";
@@ -69,35 +69,8 @@ export default function TradesPage() {
       <Sidenav cpath="trades" />
       <MainWithHeader>
         <div className="flex justify-between items-center">
-          <div className="flex items-start">
-            <H1>Trades</H1>
-            <div className="flex flex-col ml-3">
-              <span className="text-xs text-text-p pl-1">Webhook</span>
-
-              <Select1
-                className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
-                name=""
-                helper=""
-                size="xs"
-                options={optionsWh}
-                value={wh}
-                setValue={(i) => setWh(optionsWh[i])}
-              />
-            </div>
-            <div className="flex flex-col ml-4">
-              <span className="text-xs text-text-p pl-1">Account</span>
-
-              <Select1
-                className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
-                name=""
-                helper=""
-                size="xs"
-                options={options}
-                value={account}
-                setValue={(i) => setAccount(options[i])}
-              />
-            </div>
-          </div>
+          {/* <div className="flex items-start"> */}
+          <H1>Trades</H1>
 
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
@@ -113,15 +86,46 @@ export default function TradesPage() {
         </div>
 
         {filtredData?.length > 0 ? (
-          <div className="mt-12">
-            <BestWorseTrades data={filtredData} />
-            <div className="mt-6">
-              <CalendarTrades data={filtredData} />
+          <Fragment>
+            <div className="flex mt-4 w-full items-center justify-start">
+              <div className="flex flex-col ">
+                <span className="text-sm text-text-p pl-1">Webhook</span>
+
+                <Select1
+                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                  name=""
+                  helper=""
+                  size="sm"
+                  options={optionsWh}
+                  value={wh}
+                  setValue={(i) => setWh(optionsWh[i])}
+                />
+              </div>
+              <div className="flex flex-col ml-4">
+                <span className="text-sm text-text-p pl-1">Account</span>
+
+                <Select1
+                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+                  name=""
+                  helper=""
+                  size="sm"
+                  options={options}
+                  value={account}
+                  setValue={(i) => setAccount(options[i])}
+                />
+              </div>
             </div>
-            <div className="mt-6">
-              <Table data={filtredData} accounts={mtAccounts} />
+
+            <div className="mt-4">
+              <BestWorseTrades data={filtredData} />
+              <div className="mt-6">
+                <CalendarTrades data={filtredData} />
+              </div>
+              <div className="mt-6">
+                <Table data={filtredData} accounts={mtAccounts} />
+              </div>
             </div>
-          </div>
+          </Fragment>
         ) : (
           <div className="mt-6 w-full">
             <TradesWelcome />

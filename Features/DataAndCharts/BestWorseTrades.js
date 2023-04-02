@@ -36,11 +36,11 @@ function BestWorseTrades({ data }) {
     <div className="flex w-full">
       <div className="p-5 bg-bg rounded-lg w-full mr-2">
         <H4 className="font-bold">Best trade</H4>
-        <H4 className="text-green-400">+{best?.profit}</H4>
+        <H4 className="text-green-400">${best?.profit}</H4>
       </div>
       <div className="p-5 bg-bg rounded-lg w-full mr-2">
         <H4 className="font-bold">Worse trade</H4>
-        <H4 className="text-red-400">{worse?.profit}</H4>
+        <H4 className="text-red-400">${worse?.profit}</H4>
       </div>
       <div className="p-5 bg-bg rounded-lg w-full mr-2">
         <H4 className="font-bold">Best Streak</H4>
