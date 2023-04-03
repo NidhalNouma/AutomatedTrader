@@ -7,7 +7,7 @@ import { Countdown } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
 import { pricingList } from "../../utils/pricing";
 
-const endDate = new Date("2023-04-09");
+const endDate = new Date("2023-04-10");
 
 function MegaSale1() {
   const router = useRouter();
@@ -64,7 +64,7 @@ function MegaSale1() {
 export default MegaSale1;
 
 const CountDown = ({ endTime }) => {
-  const [sec, setSec] = useState(0);
+  const [sec, setSec] = useState(null);
   const [min, setMin] = useState(0);
   const [ho, setHo] = useState(0);
   const [da, setDa] = useState(0);
@@ -100,24 +100,26 @@ const CountDown = ({ endTime }) => {
   }, [sec, endTime]);
 
   return (
-    <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
-      <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <Countdown className="font-mono text-5xl" value={da} />
-        days
+    sec !== null && (
+      <div className="grid grid-flow-col gap-5 text-center auto-cols-max">
+        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+          <Countdown className="font-mono text-5xl" value={da} />
+          days
+        </div>
+        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+          <Countdown className="font-mono text-5xl" value={ho} />
+          hours
+        </div>
+        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+          <Countdown className="font-mono text-5xl" value={min} />
+          min
+        </div>
+        <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+          <Countdown className="font-mono text-5xl" value={sec} />
+          sec
+        </div>
       </div>
-      <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <Countdown className="font-mono text-5xl" value={ho} />
-        hours
-      </div>
-      <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <Countdown className="font-mono text-5xl" value={min} />
-        min
-      </div>
-      <div className="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-        <Countdown className="font-mono text-5xl" value={sec} />
-        sec
-      </div>
-    </div>
+    )
   );
 };
 
