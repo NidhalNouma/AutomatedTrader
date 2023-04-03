@@ -119,11 +119,11 @@ export default function TradesPage() {
             <div className="mt-4">
               <BestWorseTrades data={filtredData} />
               <div className="mt-6">
-                <CalendarTrades data={filtredData} />
-              </div>
-              <div className="mt-6">
                 <Table data={filtredData} accounts={mtAccounts} />
               </div>
+              {/* <div className="mt-6">
+                <CalendarTrades data={filtredData} />
+              </div> */}
             </div>
           </Fragment>
         ) : (
