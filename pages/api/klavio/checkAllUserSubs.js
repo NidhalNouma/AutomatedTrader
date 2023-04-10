@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
         let profile = user?.klavio?.data || user?.klavio;
         if (user?.subscriptionId && profile) {
-          console.log("Profile ", i);
+          console.log("Profile ", i, " .subId ", user.subscriptionId);
           let sub = await getSubscription(user.subscriptionId);
           sub = sub?.subscription;
 

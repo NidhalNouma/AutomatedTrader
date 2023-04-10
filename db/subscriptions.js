@@ -27,6 +27,7 @@ export async function getHostedPage(id) {
 export async function getSubscription(id) {
   const purl = "/api/v2/subscriptions/" + id;
   let r = null;
+
   try {
     r = await axios({
       url: purl,
