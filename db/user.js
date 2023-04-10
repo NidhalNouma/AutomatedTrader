@@ -245,7 +245,7 @@ export async function getAllUsers() {
     whs.push({ id: doc.id, ...doc.data() });
   });
 
-  console.log(whs);
+  //console.log(whs);
   return whs;
 }
 
@@ -260,6 +260,46 @@ export async function userKlavio(userId, user) {
     return r;
   } else {
     console.log("Klavio exist ", userId);
+  }
+}
+
+export async function updateKlavioProfileMembership(
+  userId,
+  profileId,
+  attributes,
+  membership
+) {
+  const url = "https://a.klaviyo.com/api/profiles/" + profileId;
+  const options = {
+    headers: {
+      // "Access-Control-Allow-Origin": "*",
+      accept: "application/json",
+      revision: "2023-02-22",
+      "content-type": "application/json",
+      Authorization: `Klaviyo-API-Key ${process.env.NEXT_PUBLIC_KLAVIO_PRIVATE_KEY}`,
+    },
+  };
+
+  const data = {
+    data: {
+      type: "profile",
+      id: profileId,
+      attributes: {
+        // ...attributes,
+        properties: {
+          membership: membership,
+        },
+      },
+    },
+  };
+
+  try {
+    const r = await axios.patch(url, data, options);
+    console.log("update Klavio profile ... ", r?.data);
+    return r?.data;
+  } catch (e) {
+    console.error("error updating klavio profile,   ", e.message);
+    return false;
   }
 }
 

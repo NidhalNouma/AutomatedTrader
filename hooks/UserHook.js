@@ -192,9 +192,18 @@ export const UpdateUserSubscription = async (
   subscription
 ) => {
   const r = await updateSubsciption(userId, subId, cusId);
+
   r["subscription"] = subscription;
 
   r["subObj"] = getPlanById(subscription);
+
+  try {
+    const updateKlavioEmail = await axios.post(
+      "/api/klavio/update/" + userId + "?membership=" + r["subObj"].chargeBeeId
+    );
+  } catch (e) {
+    console.log("API UPDATE KLAVIO PROFILE ", e);
+  }
 
   console.log(r);
   return r;
