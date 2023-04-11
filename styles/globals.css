@@ -112,3 +112,25 @@ input[type="number"] {
   color: #fff !important;
   background-color: transparent !important;
 }
+
+/* Video */
+.video-react.video-react-fluid,
+.video-react.video-react-16-9,
+.video-react.video-react-4-3 {
+  border-radius: 0.75rem;
+}
+.video-react .video-react-video {
+  border-radius: 0.75rem;
+}
+.video-react-has-started .video-react-control-bar {
+  border-radius: 0.75rem;
+}
+.video-react .video-react-big-play-button {
+  border: none !important;
+  /* border-radius: 50% !important;
+  height: 60px !important;
+  width: 60px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+}

@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
+import Video from "../../Components/Video";
 
 function Webhooks({ sub }) {
   return (
@@ -12,16 +13,13 @@ function Webhooks({ sub }) {
           Alerts will fire on automatedTrader and on your trading accounts.
         </p>
 
-        {/* <div className="pt-8 w-full">
-        <iframe
-          className="rounded-xl border-2 border-text-h aspect-video w-[80%] mx-auto"
-          src="https://www.youtube.com/embed/kMWJYE-7pp0"
-          title="How to Create your OWN trading robot! (TRADINGVIEW TO METATRADER)"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
-      </div> */}
+        <div className="pt-8 w-full">
+          <Video
+            controls={true}
+            className="aspect-video w-[80%] mx-auto rounded-xl border-2 border-text-p"
+            src="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/files%2Fvideos%2Fwebhooks-AT.mp4?alt=media&token=f8bf7b15-9084-4211-9bfe-0004c0b40aa9"
+          />
+        </div>
 
         <p className="mt-4">
           For more details click{" "}
