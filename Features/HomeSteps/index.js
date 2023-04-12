@@ -1,20 +1,34 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { Steps } from "react-daisyui";
 import { ButtonText } from "../../Components/Button";
-import { Hi3 } from "../../Components/H";
+import { Hi3, H3 } from "../../Components/H";
+
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
 
 function Index() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(
+    Number(localStorage.getItem("homeStep")) || 1
+  );
 
   function nextStep() {
     if (step >= 5) setStep(1);
     else setStep(step + 1);
   }
 
+  function prevStep() {
+    if (step <= 1) setStep(1);
+    else setStep(step - 1);
+  }
+
+  useEffect(() => {
+    localStorage.setItem("homeStep", step);
+  }, [step]);
+
   return (
     <Fragment>
       <Hi3 className="font-semibold mt-0">
-        Those are the steps to get started.
+        These are the steps to get started.
       </Hi3>
       <div className="w-full mt-8">
         <Steps className="w-full">
@@ -44,60 +58,74 @@ function Index() {
 
       <div className="mt-10 w-full flex justify-center">
         {step === 1 && (
-          <div className="text-center max-w-md bg-bg rounded-md p-3">
-            <p className="text-center mb-4">
-              Add AutomatedTraderT1_bot or click this link
-              <a
-                target="_blank"
-                rel="noreferrer"
-                className="mx-1 font-semibold underline"
-                href="https://t.me/AutomatedTraderT1_bot"
-              >
-                t.me/AutomatedTraderT1_bot
-              </a>
-              and click start
+          <StepCom
+            title="Create a webhook"
+            nextStep={nextStep}
+            videoSrc={videosUrls.webhooksAT}
+          >
+            <p className="text-center mb-1">
+              The first step is creating a webhook. navigate to the webhook page
+              and create your first webhook.
             </p>
-            <ButtonText onClick={nextStep}>Next</ButtonText>
-          </div>
+          </StepCom>
         )}
 
         {step === 2 && (
-          <div className="text-center max-w-md bg-bg rounded-md p-3">
+          <StepCom
+            title="Connect webhook with tradingview"
+            nextStep={nextStep}
+            prevStep={prevStep}
+            videoSrc={videosUrls.webhooksTradingView}
+          >
             <p className="text-center mb-1">
-              Copy your chat id and past it bellow, then click next.
+              The second step is to connect your webhook to tradingview to start
+              receiving alerts.
             </p>
-            <ButtonText onClick={nextStep}>Next</ButtonText>
-          </div>
+          </StepCom>
         )}
 
         {step === 3 && (
-          <div className="text-center max-w-md bg-bg rounded-md p-3">
+          <StepCom
+            title="Add a metatrader account"
+            nextStep={nextStep}
+            prevStep={prevStep}
+            videoSrc={videosUrls.metatraderAddAccount}
+          >
             <p className="text-center mb-1">
-              All set you will start getting alert message to your telegram
-              account.
+              Next is adding a metatrader account to do that you need to
+              download our EA. navigate to the MT4 page to get your account
+              ready.
             </p>
-            <ButtonText onClick={nextStep}>Next</ButtonText>
-          </div>
+          </StepCom>
         )}
 
         {step === 4 && (
-          <div className="text-center max-w-md bg-bg rounded-md p-3">
+          <StepCom
+            title="Enable webhooks on the metatrader account"
+            nextStep={nextStep}
+            prevStep={prevStep}
+            videoSrc={videosUrls.metatraderAddWebhooks}
+          >
             <p className="text-center mb-1">
-              All set you will start getting alert message to your telegram
-              account.
+              After adding your metatrader accounts you need to enable which
+              webhooks you want to use on them.
             </p>
-            <ButtonText onClick={nextStep}>Next</ButtonText>
-          </div>
+          </StepCom>
         )}
 
         {step === 5 && (
-          <div className="text-center max-w-md bg-bg rounded-md p-3">
+          <StepCom
+            title="All set"
+            // nextStep={nextStep}
+            prevStep={prevStep}
+            // videoSrc={videosUrls.metatraderAddWebhooks}
+          >
             <p className="text-center mb-1">
-              All set you will start getting alert message to your telegram
-              account.
+              After doing all the previous steos now you are ready to go. All
+              the webhooks alerts will be fire on the alerts page as well as on
+              your metatrader accounts that you added.
             </p>
-            <ButtonText onClick={nextStep}>Next</ButtonText>
-          </div>
+          </StepCom>
         )}
       </div>
     </Fragment>
@@ -105,3 +133,27 @@ function Index() {
 }
 
 export default Index;
+
+function StepCom({ children, title, nextStep, prevStep, videoSrc }) {
+  return (
+    <div className="text-center max-w-md bg-bg rounded-md px-6 py-4">
+      <H3 className="flex items-center text-bold justify-center mb-2">
+        {title}
+        {videoSrc && <PlayVideoPopup src={videoSrc} pulse={true} />}
+      </H3>
+      {children}
+      <div className="mt-3 flex px-3">
+        {prevStep && (
+          <ButtonText className="mr-aut !text-secondary" onClick={prevStep}>
+            Prev
+          </ButtonText>
+        )}
+        {nextStep && (
+          <ButtonText className="ml-auto" onClick={nextStep}>
+            Next
+          </ButtonText>
+        )}
+      </div>
+    </div>
+  );
+}

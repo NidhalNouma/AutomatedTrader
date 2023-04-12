@@ -134,3 +134,8 @@ input[type="number"] {
   align-items: center;
   justify-content: center; */
 }
+.video-react .video-react-big-play-button {
+  border-radius: 100% !important;
+  height: 1.5em !important;
+  width: 1.5em !important;
+}

@@ -26,8 +26,10 @@ export default function Home() {
           Hi, <span className="text-text-h">{fullUser?.displayName}</span>
         </Hi2>
         <div className="my-4">
-          {/* <HomeSteps /> */}
-          <IncomeSteps />
+          <HomeSteps />
+          <div className="mt-16">
+            <IncomeSteps />
+          </div>
         </div>
       </MainWithHeader>
     </>

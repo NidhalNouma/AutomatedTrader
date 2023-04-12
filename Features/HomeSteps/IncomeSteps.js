@@ -4,7 +4,7 @@ import { H4, Hi3 } from "../../Components/H";
 function IncomeSteps() {
   return (
     <React.Fragment>
-      <Hi3 className="font-semibold mt-0">
+      <Hi3 className="font-semibold">
         There are 4 ways to make passive income using Automated Trader, with
         more ways coming soon!
       </Hi3>
@@ -58,8 +58,7 @@ function IncomeSteps() {
             Coming soon
           </span>
         </Cardi>
-      </div>{" "}
-      *
+      </div>
     </React.Fragment>
   );
 }
