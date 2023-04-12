@@ -10,6 +10,25 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        pulsei: {
+          "0%": {
+            transform: "scale(1, 1)",
+          },
+          // "25%": {
+          //   transform: "scale(1.2, 1.2)",
+          // },
+          "50%": {
+            transform: "scale(1.4, 1.4)",
+          },
+          "100%": {
+            transform: "scale(1, 1)",
+          },
+        },
+      },
+      animation: {
+        "pulse-1": "pulsei 2s infinite",
+      },
       backgroundImage: {
         // "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
       },

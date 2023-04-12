@@ -3,10 +3,16 @@ import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 function Telegram() {
   return (
     <Index>
-      <H4 className="font-bold">Adding Telegram </H4>
+      <div className="flex items-center mt-0">
+        <H4 className="font-bold">Adding Telegram </H4>
+        <PlayVideoPopup src={videosUrls.telegramPage} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         Telegram alerts are instant and will notify you as soon as a trade alert

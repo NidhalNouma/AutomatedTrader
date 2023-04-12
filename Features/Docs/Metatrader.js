@@ -3,6 +3,9 @@ import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 function Metatrader({ ty, setTy }) {
   const sec2 = useRef(null);
 
@@ -14,7 +17,10 @@ function Metatrader({ ty, setTy }) {
 
   return (
     <Index>
-      <H4 className="font-bold">How to add MT4 account </H4>
+      <div className="flex items-center mt-0">
+        <H4 className="font-bold">How to add MT4 account </H4>
+        <PlayVideoPopup src={videosUrls.metatraderAddAccount} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         Setup is easy and take just minutes, Automated Trader is compatible with
@@ -146,7 +152,10 @@ export default Metatrader;
 function AddingWebhookToMT4() {
   return (
     <React.Fragment>
-      <H4 className="font-bold pt-6">Adding webhook to MT4 </H4>
+      <div className="flex items-center mt-6 mb-3">
+        <H4 className="font-bold ">Adding webhook to MT4 </H4>
+        <PlayVideoPopup src={videosUrls.metatraderAddWebhooks} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         If you have already set up webhooks on your Automated Trader and

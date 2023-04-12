@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
-import Video from "../../Components/Video";
+import Video, { PlayVideoPopup } from "../../Components/Video";
 
 function Webhooks({ sub }) {
   return (

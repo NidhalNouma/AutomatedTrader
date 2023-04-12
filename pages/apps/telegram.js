@@ -7,6 +7,9 @@ import { Input1 } from "../../Components/Input";
 import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
 import { Steps } from "react-daisyui";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 export default function help() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
@@ -18,7 +21,13 @@ export default function help() {
       <Sidenav cpath="telegram" />
       <MainWithHeader>
         <div className="flex justify-between">
-          <H1>Telegram</H1>
+          <div className="flex items-center">
+            <H1>Telegram</H1>
+            <PlayVideoPopup
+              className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
+              src={videosUrls.telegramPage}
+            />
+          </div>
           {/* <ButtonText
               onClick={(e) => {
                 e.preventDefault();

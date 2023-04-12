@@ -19,6 +19,8 @@ import OpenTrade from "../Features/tradesManual/Open";
 import UpgradeMsg from "../Features/UpgradeMsg";
 
 import TradesWelcome from "../Features/WelcomeSection/Trades";
+import { PlayVideoPopup } from "../Components/Video";
+import { videosUrls } from "../utils/constant";
 
 export default function TradesPage() {
   const { mtAccounts, getData } = GetMTAccountsContext();
@@ -70,7 +72,16 @@ export default function TradesPage() {
       <MainWithHeader>
         <div className="flex justify-between items-center">
           {/* <div className="flex items-start"> */}
-          <H1>Trades</H1>
+          <div className="flex items-center">
+            <H1>Trades</H1>
+
+            {data?.length > 0 && (
+              <PlayVideoPopup
+                className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
+                src={videosUrls.tradePage}
+              />
+            )}
+          </div>
 
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "

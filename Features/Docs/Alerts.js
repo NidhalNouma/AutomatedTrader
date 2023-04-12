@@ -3,10 +3,16 @@ import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 function Alerts() {
   return (
     <Index>
-      <H4 className="font-bold">Alerts section </H4>
+      <div className="flex items-center mt-0">
+        <H4 className="font-bold">Alerts section </H4>
+        <PlayVideoPopup src={videosUrls.manualTrade} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         Here&apos;s the simplified guide for understanding the Alert section in

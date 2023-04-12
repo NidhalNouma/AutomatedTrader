@@ -3,6 +3,9 @@ import Index, { Step } from "./index";
 
 import { H4, H5 } from "../../Components/H";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 function Webhooks({ ty, setTy }) {
   const sec2 = useRef(null);
 
@@ -15,8 +18,10 @@ function Webhooks({ ty, setTy }) {
   return (
     <Index>
       {/* <H4 className="font-bold">Setting up Webhook</H4> */}
-
-      <H4 className="font-bold mt-6">Webhook in AutomatedTrader</H4>
+      <div className="flex items-center mt-0">
+        <H4 className="font-bold">Webhook in AutomatedTrader</H4>
+        <PlayVideoPopup src={videosUrls.webhooksAT} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         Creating a webhook can help you automate your trading strategy.
@@ -205,7 +210,10 @@ export default Webhooks;
 function WebhookTradingView() {
   return (
     <React.Fragment>
-      <H4 className="font-bold mt-6">Webhook in TradingView</H4>
+      <div className="flex items-center mt-6">
+        <H4 className="font-bold ">Webhook in TradingView</H4>
+        <PlayVideoPopup src={videosUrls.webhooksTradingView} pulse={true} />
+      </div>
 
       <p className="mt-3 text-text-p text-sm">
         Here&apos;s a step-by-step guide on how to add an Automated Trader

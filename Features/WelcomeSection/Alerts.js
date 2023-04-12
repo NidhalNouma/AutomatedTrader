@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Video from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
 
 function Alerts() {
   return (
@@ -15,7 +16,7 @@ function Alerts() {
         <Video
           controls={true}
           className="aspect-video w-[80%] mx-auto rounded-xl border-2 border-text-p"
-          src="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/files%2Fvideos%2Falerts.mp4?alt=media&token=a6db0f73-00fd-4e99-9f51-c0c39bd25184"
+          src={videosUrls.alertsPage}
         />
       </div>
 

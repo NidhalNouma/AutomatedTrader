@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Video from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
 
 function Trades() {
   return (
@@ -15,7 +16,7 @@ function Trades() {
         <Video
           controls={true}
           className="aspect-video w-[80%] mx-auto rounded-xl border-2 border-text-p"
-          src="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/files%2Fvideos%2Ftrade.mp4?alt=media&token=67420266-d010-46b4-b31c-d18bd1185bd6"
+          src={videosUrls.tradePage}
         />
       </div>
 

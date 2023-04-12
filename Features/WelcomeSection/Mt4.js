@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Video from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
 
 function Mt4() {
   return (
@@ -15,7 +16,7 @@ function Mt4() {
         <Video
           controls={true}
           className="aspect-video w-[80%] mx-auto rounded-xl border-2 border-text-p"
-          src="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/files%2Fvideos%2Fmetatrader-addaccount.mp4?alt=media&token=9c4a82b6-4474-46ba-b102-df1a8e0c9fb4"
+          src={videosUrls.metatraderAddAccount}
         />
       </div>
 

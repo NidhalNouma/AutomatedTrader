@@ -22,6 +22,9 @@ import { copyTextToClipboard } from "../../utils/functions";
 
 import Mt4Welcome from "../../Features/WelcomeSection/Mt4";
 
+import { PlayVideoPopup } from "../../Components/Video";
+import { videosUrls } from "../../utils/constant";
+
 export default function MT4() {
   const { user } = GetUserContext();
   const { mtAccounts, getData } = GetMTAccountsContext();
@@ -38,10 +41,18 @@ export default function MT4() {
       <Sidenav cpath="mt4" />
       <MainWithHeader>
         <div className="flex justify-between">
-          <H1 className="">
-            <span className="hidden sm:block">Metatrader 4</span>
-            <span className="sm:hidden">MT4</span>
-          </H1>
+          <div className="flex items-center">
+            <H1 className="">
+              <span className="hidden sm:block">Metatrader 4</span>
+              <span className="sm:hidden">MT4</span>
+            </H1>
+            {mtAccounts?.length > 0 && (
+              <PlayVideoPopup
+                className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
+                src={videosUrls.metatraderAddWebhooks}
+              />
+            )}
+          </div>
           <div className="">
             <Dropdown hover={true} horizontal="left" vertical="middle">
               <ButtonP
