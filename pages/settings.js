@@ -66,7 +66,11 @@ export default function Settings() {
                   />
                   <ButtonFile
                     onSelect={async (e) => {
-                      const r = await uploadImg(user?.uid, e.target.files[0]);
+                      const r = await uploadImg(
+                        user?.uid,
+                        e.target.files[0],
+                        "prifile"
+                      );
                       if (r) {
                         const nu = await updateProfilePicture(r);
                         const nu1 = await updatePhotoURL(user?.uid, r);
