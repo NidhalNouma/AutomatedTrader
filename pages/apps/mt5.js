@@ -18,7 +18,7 @@ export default function MT5() {
         </div>
         <div className="mt-16 w-full">
           <H1 className="font-extrabold text-center !text-secondary !text-5xl">
-            COMMING SOON ...
+            COMING SOON ...
           </H1>
         </div>
       </MainWithHeader>

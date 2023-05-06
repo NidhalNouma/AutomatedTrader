@@ -15,7 +15,7 @@ export default function Binance() {
         </div>
         <div className="mt-16 w-full">
           <H1 className="font-extrabold text-center !text-secondary !text-5xl">
-            COMMING SOON ...
+            COMING SOON ...
           </H1>
         </div>
       </MainWithHeader>
