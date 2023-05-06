@@ -178,6 +178,44 @@ function Index({ cpath, fixed = true }) {
                   <span className="capitalize ml-2 text-base">MT4</span>
                 </Linksn>
                 <Linksn
+                  href="/apps/mt5"
+                  isActive={cpath === "mt5"}
+                  className="mt-2"
+                  icon={
+                    <div className="w-5 h-5 ml-1">
+                      <Image
+                        className=""
+                        src="/Images/mt5-icon.png"
+                        alt=""
+                        width="1w"
+                        height="1h"
+                        layout="responsive"
+                      />
+                    </div>
+                  }
+                >
+                  <span className="capitalize ml-2 text-base">MT5</span>
+                </Linksn>
+                <Linksn
+                  href="/apps/binance"
+                  isActive={cpath === "binance"}
+                  className="mt-2"
+                  icon={
+                    <div className="w-5 h-5 ml-1">
+                      <Image
+                        className=""
+                        src="/Images/Binance_Logo.png"
+                        alt=""
+                        width="1w"
+                        height="1h"
+                        layout="responsive"
+                      />
+                    </div>
+                  }
+                >
+                  <span className="capitalize ml-2 text-base">Binance</span>
+                </Linksn>
+                <Linksn
                   href="/apps/telegram"
                   isActive={cpath === "telegram"}
                   // className="my-0"
@@ -236,13 +274,13 @@ function Index({ cpath, fixed = true }) {
             >
               <span className="capitalize ml-2 text-base">Help & FAQ</span>
             </Linksn>
-            <Linksn
+            {/* <Linksn
               icon={<BiSupport className="h-5 w-5" />}
               href="/support"
               isActive={cpath === "support"}
             >
               <span className="capitalize ml-2 text-base">Support</span>
-            </Linksn>
+            </Linksn> */}
 
             {/* <div className="mx-4 flex items-center my-4">
           <MoonIcon className="h-5 w-5 text-text-p" />
