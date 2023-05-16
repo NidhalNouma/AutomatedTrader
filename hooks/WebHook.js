@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext, createContext } from "react";
 import {
   addWebhook,
+  addAdvancedWebhook,
   addMessage,
   deleteMessage,
   getWebhooksByUserId,
@@ -11,6 +12,36 @@ import {
   updateWebhookColor,
 } from "../db/webhooks";
 import axios from "axios";
+
+export const WebhookAdvanced = (userId) => {
+  const [error, setError] = useState("");
+  const [name, setName] = useState("");
+  const [pair, setPair] = useState("");
+
+  async function add() {
+    if (!name) {
+      setError("Webhook name must be provided!");
+      return;
+    }
+    if (!pair) {
+      setError("Pair must be provided!");
+      return;
+    }
+
+    if (!userId) {
+      setError("User ID must be provided!");
+      return;
+    }
+
+    setError("");
+    // const msg = formatMsg();
+    // console.log(msg);
+    const r = await addAdvancedWebhook(name, pair, "/api/", userId);
+    return r;
+  }
+
+  return { error, name, setName, pair, setPair, add };
+};
 
 export const WebHook = (userId) => {
   const [error, setError] = useState("");
@@ -424,7 +455,10 @@ export function getMessageData(message) {
   if (!message) return;
   let datai = message.split(" ");
 
-  let r = {};
+  let r = {
+    advanced: false,
+  };
+
   if (datai.length > 1) {
     if (datai[0] === "test") {
       const testData = JSON.parse(datai[1]);
@@ -556,4 +590,80 @@ export function getMessageData(message) {
   // console.log(r, message);
 
   return r;
+}
+
+export function getMessageAdvancedData(msg) {
+  let r = {
+    advanced: true,
+    alertType: "",
+    id: "",
+    type: null,
+    symbol: "",
+    riskPercentage: 0,
+    stopLoss: 0,
+    takeProfit1: 0,
+    parcielClose1: 0,
+    takeProfit2: 0,
+    parcielClose2: 0,
+    takeProfit3: 0,
+    parcielClose3: 0,
+
+    breakEvenStart: 0,
+    breakEvenMove: 0,
+  };
+  const dataArray = msg.split(",");
+
+  dataArray.forEach((v) => {
+    const data = v.split("=");
+    if (data.length === 2) {
+      const key = data[0];
+      const value = data[1];
+
+      switch (key) {
+        case "alert-type":
+          r.alertType = value;
+          break;
+
+        case "id":
+          r.id = value;
+          break;
+        case "type":
+          r.type = value;
+          break;
+        case "symbol":
+          r.symbol = value;
+          break;
+
+        case "risk":
+          r.riskPercentage = value;
+          break;
+
+        case "sl":
+          r.stopLoss = value;
+          break;
+
+        case "tp1":
+          r.takeProfit1 = value;
+          break;
+        case "tp1_ps":
+          r.parcielClose1 = value;
+          break;
+
+        case "tp2":
+          r.takeProfit2 = value;
+          break;
+        case "tp2_ps":
+          r.parcielClose2 = value;
+          break;
+        case "tp3":
+          r.takeProfit3 = value;
+          break;
+        case "tp3_ps":
+          r.parcielClose3 = value;
+          break;
+      }
+    }
+  });
+
+  return r.alertType ? r.alertType : null;
 }

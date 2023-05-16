@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { Button } from "react-daisyui";
+import { Button, ButtonGroup } from "react-daisyui";
 
 import { XIcon } from "@heroicons/react/solid";
 import { H3 } from "../../Components/H";
 import WebhookData from "./WebhookData";
+import WebhookDataAdvanced from "./WebhookDataAdvanced";
 
 function Index({ close }) {
+  const [type, setType] = useState(0);
+
   return (
     <div className="">
       <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
@@ -22,7 +25,35 @@ function Index({ close }) {
         </Button>
       </div>
       <div className="flex flex-col justify-center items-center w-full mt-2">
-        <WebhookData includeName={true} close={close} typeWh="index" />
+        <ButtonGroup>
+          <Button
+            // size="sm"
+            className={`capitalize !text-sm rounded-xl bg-bga mb-3 w-24 hover:!bg-bgt ${
+              type === 0 && "text-primary bg-bgt"
+            }`}
+            onClick={() => setType(0)}
+          >
+            Basic
+          </Button>
+          <Button
+            // size="sm"
+            className={`capitalize !text-sm rounded-xl bg-bga w-24 hover:!bg-bgt ${
+              type === 1 && "text-primary bg-bgt"
+            }`}
+            onClick={() => setType(1)}
+          >
+            Advanced
+          </Button>
+        </ButtonGroup>
+        {type === 0 ? (
+          <WebhookData includeName={true} close={close} typeWh="index" />
+        ) : (
+          <WebhookDataAdvanced
+            includeName={true}
+            close={close}
+            typeWh="index"
+          />
+        )}
       </div>
     </div>
   );

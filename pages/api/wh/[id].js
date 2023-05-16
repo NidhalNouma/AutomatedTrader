@@ -11,7 +11,7 @@ import {
   getAlertByUserId,
   webhookTime,
 } from "../../../db/manageAlerts";
-import { getMessageData } from "../../../hooks/WebHook";
+import { getMessageData, getMessageAdvancedData } from "../../../hooks/WebHook";
 import moment from "moment";
 
 export default async function handler(req, res) {
@@ -25,7 +25,10 @@ export default async function handler(req, res) {
     } else if (id != undefined && message) {
       const r = await getWebhook(id);
       if (r) {
-        const msgData = getMessageData(message);
+        let msgData = getMessageAdvancedData(message);
+        if (msgData === null) msgData = getMessageData(message);
+
+        const advanced = msgData.advanced;
 
         const test = msgData.test;
         if (test && test?.isTest) {
@@ -41,11 +44,14 @@ export default async function handler(req, res) {
 
         if (
           r &&
-          ((r.active === true && webhookTime(msgData.time)) || test || manual)
+          (advanced ||
+            (r.active === true && webhookTime(msgData.time)) ||
+            test ||
+            manual)
         ) {
           const user = await getUser(r.userId);
 
-          if (msgData.time.use || msgData.time.use === false) {
+          if (advanced || msgData.time.use || msgData.time.use === false) {
             const alert = await addAlert(id, message, r.userId, r.name);
             if (alert) {
               const time = new Date();

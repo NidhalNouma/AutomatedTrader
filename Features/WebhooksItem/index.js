@@ -202,8 +202,13 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
               className="bg-bgt w-full rounded-lg border-t-[3px]"
             >
               <div className="pt-2 px-3 pb-1">
-                <div className="flex items-center justify-between">
-                  <H4 className="font-bold">{webhook.name}</H4>
+                <div className="flex items-start justify-between">
+                  <div className="">
+                    <H4 className="font-bold">{webhook.name} </H4>
+                    {webhook.pair && (
+                      <span className="text-xs">({webhook.pair})</span>
+                    )}
+                  </div>
                   <div className="flex items-center justify-center">
                     <ButtonInfo
                       helper={urlcopy}
@@ -308,11 +313,13 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     }}
                   />
                 </div>
-                <div className="mt-2">
-                  <div className="flex items-center justify-between">
-                    <Hi6>List of messages</Hi6>
-                    <div className="flex items-center">
-                      {/* <ButtonInfo
+                {!webhook.advanced && (
+                  <Fragment>
+                    <div className="mt-2">
+                      <div className="flex items-center justify-between">
+                        <Hi6>List of messages</Hi6>
+                        <div className="flex items-center">
+                          {/* <ButtonInfo
                         helper="Add new message"
                         className="ml-2"
                         onClick={() => setOpen(true)}
@@ -326,109 +333,114 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                       >
                         <PencilAltIcon className="h-5 w-5 text-secondaryi" />
                       </ButtonInfo> */}
-                      {messages?.length > 0 && (
-                        <ButtonInfo
-                          helper={msgcopy}
-                          className="ml-2"
-                          onMouseLeave={() =>
-                            setMsgcopy("Click to copy webhook message!")
-                          }
-                          onClick={() =>
-                            copyTextToClipboard(
-                              msg.msg,
-                              () => setMsgcopy("Message copied to clipboard!"),
-                              () => newAlert("Message copied", "error")
-                            )
-                          }
-                        >
-                          <ClipboardCopyIcon className="h-5 w-5 text-primary" />
-                        </ButtonInfo>
-                      )}
-
-                      <Dropdown vertical="end" horizontal="center">
-                        {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
-                        {/* <Button className=""> */}
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={2}
-                          stroke="currentColor"
-                          className="w-5 h-5 cursor-pointer"
-                          // style={{ color: txtColor }}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-                          />
-                        </svg>
-                        {/* </Button> */}
-                        <Dropdown.Menu className="w-40 bg-bg shadow-2xl shadow-bgt">
-                          <Dropdown.Item onClick={() => setOpen(true)}>
-                            <span className="text-secondary text-sm font-bold">
-                              New message
-                            </span>
-                          </Dropdown.Item>
                           {messages?.length > 0 && (
-                            <Dropdown.Item onClick={() => setOpenEdit(true)}>
-                              <span className="text-secondary text-sm font-bold">
-                                Edit messages
-                              </span>
-                            </Dropdown.Item>
+                            <ButtonInfo
+                              helper={msgcopy}
+                              className="ml-2"
+                              onMouseLeave={() =>
+                                setMsgcopy("Click to copy webhook message!")
+                              }
+                              onClick={() =>
+                                copyTextToClipboard(
+                                  msg.msg,
+                                  () =>
+                                    setMsgcopy("Message copied to clipboard!"),
+                                  () => newAlert("Message copied", "error")
+                                )
+                              }
+                            >
+                              <ClipboardCopyIcon className="h-5 w-5 text-primary" />
+                            </ButtonInfo>
                           )}
-                          {/* <Dropdown.Item onClick={() => setOpenDel(true)}>
+
+                          <Dropdown vertical="end" horizontal="center">
+                            {/* <Dropdown.Toggle className="h-4 w-4">i</Dropdown.Toggle> */}
+                            {/* <Button className=""> */}
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={2}
+                              stroke="currentColor"
+                              className="w-5 h-5 cursor-pointer"
+                              // style={{ color: txtColor }}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+                              />
+                            </svg>
+                            {/* </Button> */}
+                            <Dropdown.Menu className="w-40 bg-bg shadow-2xl shadow-bgt">
+                              <Dropdown.Item onClick={() => setOpen(true)}>
+                                <span className="text-secondary text-sm font-bold">
+                                  New message
+                                </span>
+                              </Dropdown.Item>
+                              {messages?.length > 0 && (
+                                <Dropdown.Item
+                                  onClick={() => setOpenEdit(true)}
+                                >
+                                  <span className="text-secondary text-sm font-bold">
+                                    Edit messages
+                                  </span>
+                                </Dropdown.Item>
+                              )}
+                              {/* <Dropdown.Item onClick={() => setOpenDel(true)}>
                             <span className="text-text-p text-sm font-bold">
                               Delete
                             </span>
                           </Dropdown.Item> */}
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </div>
-                  </div>
-
-                  <div className="mt-2">
-                    {messages?.length > 0 ? (
-                      <Select
-                        value={msg?.msg}
-                        onChange={(v) => {
-                          setMsg(messages[v]);
-                        }}
-                        size="sm"
-                        className="bg-transparent w-full border-primary focus:outline-none rounded-lg font-normal text-text-p"
-                      >
-                        {messages?.map((v, i) => (
-                          <option
-                            key={i}
-                            value={i}
-                            selected={v.msg === msg.msg}
-                          >
-                            {v.data.pair}
-                            {" - "}
-                            {v.data.type}
-                          </option>
-                        ))}
-                      </Select>
-                    ) : (
-                      <div className="py-1 mb-2">
-                        <p className="text-xs">No message available!</p>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-                <div className="mt-2">
-                  {messages?.map(
-                    (v, i) =>
-                      i < 3 && (
-                        <span
-                          key={i}
-                          className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1"
-                        >
-                          {v.data.pair}
-                        </span>
-                      )
-                  )}
-                </div>
+
+                      <div className="mt-2">
+                        {messages?.length > 0 ? (
+                          <Select
+                            value={msg?.msg}
+                            onChange={(v) => {
+                              setMsg(messages[v]);
+                            }}
+                            size="sm"
+                            className="bg-transparent w-full border-primary focus:outline-none rounded-lg font-normal text-text-p"
+                          >
+                            {messages?.map((v, i) => (
+                              <option
+                                key={i}
+                                value={i}
+                                selected={v.msg === msg.msg}
+                              >
+                                {v.data.pair}
+                                {" - "}
+                                {v.data.type}
+                              </option>
+                            ))}
+                          </Select>
+                        ) : (
+                          <div className="py-1 mb-2">
+                            <p className="text-xs">No message available!</p>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="mt-2">
+                      {messages?.map(
+                        (v, i) =>
+                          i < 3 && (
+                            <span
+                              key={i}
+                              className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1"
+                            >
+                              {v.data.pair}
+                            </span>
+                          )
+                      )}
+                    </div>
+                  </Fragment>
+                )}
 
                 <ButtonText
                   className="mt-1"

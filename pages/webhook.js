@@ -1,7 +1,7 @@
-import { useState, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import Sidenav from "../Features/SideNav";
 
-import { H1 } from "../Components/H";
+import { H1, H3 } from "../Components/H";
 import { PlusIcon } from "@heroicons/react/outline";
 
 import { ButtonP } from "../Components/Button";
@@ -29,6 +29,18 @@ export default function Webhook() {
   const { mtAccounts } = GetMTAccountsContext();
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
+
+  const [advanced, setAdvanced] = useState([]);
+
+  useEffect(() => {
+    let r = [];
+    for (let i = 0; i < webhooks.length; i++) {
+      let e = webhooks[i];
+      if (e.advanced) r.push(e);
+    }
+
+    setAdvanced(r);
+  }, [webhooks]);
 
   // console.log("wh Mt", mtAccounts);
 
@@ -69,21 +81,49 @@ export default function Webhook() {
           </ButtonP>
         </div>
         <div className="mt-6">
+          {advanced.length > 0 && (
+            <Fragment>
+              <H3 className="font-bold">Advanced webhook</H3>
+              <div className="p-2 mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
+                {advanced
+                  .sort((a, b) => b.created_at - a.created_at)
+                  .map((v, i) => (
+                    <Fragment key={v.id}>
+                      <WebhooksItem
+                        webhook={v}
+                        user={user}
+                        mtAccounts={mtAccounts}
+                      />
+                    </Fragment>
+                  ))}
+                {/* {sub && sub.webhooks <= webhooks.length && <UpgradeWebhook />} */}
+              </div>
+            </Fragment>
+          )}
+
           {webhooks?.length > 0 ? (
-            <div className="p-2 mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-              {webhooks
-                .sort((a, b) => b.created_at - a.created_at)
-                .map((v, i) => (
-                  <Fragment key={v.id}>
-                    <WebhooksItem
-                      webhook={v}
-                      user={user}
-                      mtAccounts={mtAccounts}
-                    />
-                  </Fragment>
-                ))}
-              {sub && sub.webhooks <= webhooks.length && <UpgradeWebhook />}
-            </div>
+            <Fragment>
+              {advanced.length > 0 && webhooks.length > advanced.length && (
+                <H3 className="font-bold mt-8">Basic webhook</H3>
+              )}
+              <div className="p-2 mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
+                {webhooks
+                  .sort((a, b) => b.created_at - a.created_at)
+                  .map(
+                    (v, i) =>
+                      !v.advanced && (
+                        <Fragment key={v.id}>
+                          <WebhooksItem
+                            webhook={v}
+                            user={user}
+                            mtAccounts={mtAccounts}
+                          />
+                        </Fragment>
+                      )
+                  )}
+                {/* {sub && sub.webhooks <= webhooks.length && <UpgradeWebhook />} */}
+              </div>
+            </Fragment>
           ) : (
             <div className="mt-3 w-full">
               <WebhooksWelcome sub={sub} />

@@ -32,6 +32,30 @@ export async function addWebhook(name, message, url, userId) {
       name,
       url,
       messages: [message],
+      advanced: false,
+      active: true,
+      public: false,
+      color: getRandomColor(),
+      created_at: serverTimestamp(),
+    });
+    console.log("Document written with: ", docRef);
+    return true;
+  } catch (e) {
+    console.error("Error adding document: ", e);
+    return false;
+  }
+}
+
+export async function addAdvancedWebhook(name, pair, url, userId) {
+  console.log("Adding new advanced webhook ...");
+
+  try {
+    const docRef = await addDoc(collection(db, collName), {
+      userId,
+      name,
+      url,
+      pair,
+      advanced: true,
       active: true,
       public: false,
       color: getRandomColor(),
