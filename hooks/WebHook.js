@@ -452,6 +452,7 @@ export const WebHookCC = ({ children, value }) => {
 export const GetWebhookContext = () => useContext(WebHooksC);
 
 export function getMessageData(message) {
+  console.log("New basic webhook alert: ", message);
   if (!message) return;
   let datai = message.split(" ");
 
@@ -592,9 +593,11 @@ export function getMessageData(message) {
   return r;
 }
 
-export function getMessageAdvancedData(msg) {
+export function getMessageAdvancedData(msg, pair) {
+  console.log("New advanced webhook alert: ", pair, msg);
   let r = {
     advanced: true,
+    pair,
     alertType: "",
     id: "",
     type: null,
@@ -609,61 +612,69 @@ export function getMessageAdvancedData(msg) {
     parcielClose3: 0,
 
     breakEvenStart: 0,
-    breakEvenMove: 0,
+    breakEvenOffset: 0,
+    breakEvenPClose: 0,
   };
   const dataArray = msg.split(",");
 
   dataArray.forEach((v) => {
-    const data = v.split("=");
+    const data = v.split(":");
     if (data.length === 2) {
       const key = data[0];
       const value = data[1];
 
       switch (key) {
-        case "alert-type":
+        case "ALERT_TYPE":
           r.alertType = value;
           break;
 
-        case "id":
+        case "ID":
           r.id = value;
           break;
         case "type":
           r.type = value;
-          break;
-        case "symbol":
-          r.symbol = value;
           break;
 
         case "risk":
           r.riskPercentage = value;
           break;
 
-        case "sl":
+        case "SL":
           r.stopLoss = value;
           break;
 
-        case "tp1":
+        case "TP1":
           r.takeProfit1 = value;
           break;
-        case "tp1_ps":
+        case "TP1_PCLOSE":
           r.parcielClose1 = value;
           break;
 
-        case "tp2":
+        case "TP2":
           r.takeProfit2 = value;
           break;
-        case "tp2_ps":
+        case "TP2_PCLOSE":
           r.parcielClose2 = value;
           break;
-        case "tp3":
+        case "TP3":
           r.takeProfit3 = value;
           break;
-        case "tp3_ps":
+        case "TP3_PCLOSE":
           r.parcielClose3 = value;
+          break;
+
+        case "BE":
+          r.breakEvenStart = value;
+          break;
+        case "BE_OFFSET":
+          r.breakEvenOffset = value;
+          break;
+        case "BE_PCLOSE":
+          r.breakEvenPClose = value;
           break;
       }
     }
   });
 
-  return r.alertType ? r.alertType : null;
+  return r.alertType ? r : null;
 }

@@ -18,15 +18,15 @@ export default async function handler(req, res) {
   const { id } = req.query;
   if (req.method === "POST") {
     const message = req.body;
-    console.log("msg, ", message);
     if (id != undefined && message?.get) {
       const r = getAlertByUserId(id);
       return res.status(200).json(r);
     } else if (id != undefined && message) {
       const r = await getWebhook(id);
       if (r) {
-        let msgData = getMessageAdvancedData(message);
-        if (msgData === null) msgData = getMessageData(message);
+        let msgData = null;
+        if (r.advanced) msgData = getMessageAdvancedData(message, r.pair);
+        else msgData = getMessageData(message);
 
         const advanced = msgData.advanced;
 
