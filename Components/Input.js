@@ -187,6 +187,7 @@ export const Select1 = ({
           value={options[value]}
           onChange={(e) => setValue(e)}
         >
+          {/* <optgroup label=""> */}
           {options?.map((v, i) => (
             <option
               key={i}
@@ -196,6 +197,7 @@ export const Select1 = ({
               {v}
             </option>
           ))}
+          {/* </optgroup> */}
         </Select>
         <Helper message={helper} />
       </div>

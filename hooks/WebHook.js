@@ -632,7 +632,8 @@ export function getMessageAdvancedData(msg, pair) {
           r.id = value;
           break;
         case "type":
-          r.type = value;
+          if (value === "BUY") r.type = 0;
+          else if (value === "SELL") r.type = 1;
           break;
 
         case "risk":

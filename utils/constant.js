@@ -19,6 +19,7 @@ export function WebhhokURL() {
 }
 
 export const MT4EAPath = process.env.NEXT_PUBLIC_MT4_EA;
+export const MT5EAPath = process.env.NEXT_PUBLIC_MT5_EA;
 
 export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;
 const urlForTelegram = () =>

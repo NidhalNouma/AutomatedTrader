@@ -31,8 +31,14 @@ function MyApp({ Component, pageProps }) {
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
   const { getAllAlertsHook, alertsHook } = GetAlerts();
-  const { mtAccounts, setMTAccounts, getAllMTAccounts, getData } =
-    GetMTAccounts();
+  const {
+    mtAccounts,
+    setMTAccounts,
+    mt5Accounts,
+    setMT5Accounts,
+    getAllMTAccounts,
+    getData,
+  } = GetMTAccounts();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
   // const { openDrawer, toggleOpenDrawer } = GetDrawer();
@@ -132,7 +138,13 @@ function MyApp({ Component, pageProps }) {
                   >
                     <AlertsCC value={{ alertsHook }}>
                       <MTAccountsCC
-                        value={{ mtAccounts, setMTAccounts, getData }}
+                        value={{
+                          mtAccounts,
+                          setMTAccounts,
+                          mt5Accounts,
+                          setMT5Accounts,
+                          getData,
+                        }}
                       >
                         <Component {...pageProps} />
                       </MTAccountsCC>

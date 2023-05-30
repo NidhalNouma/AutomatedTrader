@@ -10,38 +10,35 @@ import moment from "moment";
 
 export function GetMTAccounts() {
   const [mtAccounts, setMTAccounts] = useState([]);
+  const [mt5Accounts, setMT5Accounts] = useState([]);
 
   async function getAllMTAccounts(userId) {
     if (!userId) return;
-    listenToNewMTAccounts(userId, (acc) =>
-      setMTAccounts(filterData(userId, acc))
-    );
+    listenToNewMTAccounts(userId, (acc) => {
+      const mt5s = acc.filter((v) => v.type === "MT5");
+      const mt4s = acc.filter((v) => v.type === "MT4");
+      setMTAccounts(filterData(userId, mt4s));
+      setMT5Accounts(filterData(userId, mt5s));
+    });
   }
 
   async function getAllMTAccountsWithoutListen(userId) {
     if (!userId) return;
     const all = await getMTAccountsByUserId(userId);
-    setMTAccounts(filterData(userId, all));
+
+    const mt5s = all.filter((v) => v.type === "MT5");
+
+    setMTAccounts(filterData(userId, mt5s));
   }
 
-  function getData(accId = null, withWebHook = null) {
+  function getData(accId = null, withWebHook = null, type = "MT4") {
     let data = [];
     mtAccounts.forEach(function (v, i) {
       if (accId === null || accId === v.id) {
         if (v.data?.length > 0) {
           if (!withWebHook) {
-            v.data.forEach((d) => {
-              data.push({
-                ...d,
-                accountName: v.accountName,
-                accountDisplayName: v.accountDisplayName,
-                accountId: v.id,
-                accountColor: v.color,
-              });
-            });
-          } else if (withWebHook) {
-            v.data.forEach((d) => {
-              if (d.Id == withWebHook)
+            if (v.type == type)
+              v.data.forEach((d) => {
                 data.push({
                   ...d,
                   accountName: v.accountName,
@@ -49,7 +46,19 @@ export function GetMTAccounts() {
                   accountId: v.id,
                   accountColor: v.color,
                 });
-            });
+              });
+          } else if (withWebHook) {
+            if (v.type == type)
+              v.data.forEach((d) => {
+                if (d.Id == withWebHook)
+                  data.push({
+                    ...d,
+                    accountName: v.accountName,
+                    accountDisplayName: v.accountDisplayName,
+                    accountId: v.id,
+                    accountColor: v.color,
+                  });
+              });
           }
         }
       }
@@ -66,7 +75,9 @@ export function GetMTAccounts() {
 
   return {
     mtAccounts,
+    mt5Accounts,
     setMTAccounts,
+    setMT5Accounts,
     getAllMTAccounts,
     getAllMTAccountsWithoutListen,
     getData,
