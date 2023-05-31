@@ -205,6 +205,46 @@ export const Select1 = ({
   );
 };
 
+export const Select1Wgroup = ({
+  className,
+  name,
+  helper,
+  options,
+  value,
+  setValue,
+  size = "sm",
+  defaultValue = 0,
+}) => {
+  return (
+    <div className="p-1 w-full max-w-xs flex items-center justify-between">
+      <span className="label-text text-text-h flex items-center">{name}</span>
+      <div>
+        <Select
+          defaultValue={defaultValue}
+          color="primary"
+          size={size}
+          className={`bg-transparent mx-2 w-24 ${className}`}
+          value={options[value]}
+          onChange={(e) => setValue(e)}
+        >
+          {/* <optgroup label=""> */}
+          {options?.map((v, i) => (
+            <option
+              key={i}
+              value={i}
+              selected={i?.toString() === value?.toString()}
+            >
+              {v}
+            </option>
+          ))}
+          {/* </optgroup> */}
+        </Select>
+        <Helper message={helper} />
+      </div>
+    </div>
+  );
+};
+
 export function Range1({ name, value, setValue }) {
   return (
     <div className="p-1 w-full max-w-xs">

@@ -1,10 +1,27 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
-  const [sAccount, setSAccount] = useState(
-    mtAccounts?.length > 0 ? mtAccounts[0] : null
+export const PlaceWebhookTrade = (mtAccounts, mt5Accounts, webhooks) => {
+  const brokers = ["MT4", "MT5"];
+  const [sbroker, setSBroker] = useState(
+    mtAccounts.length > 0
+      ? brokers[0]
+      : mt5Accounts.length > 0
+      ? brokers[1]
+      : brokers[0]
   );
+
+  const [accounts, setAccounts] = useState(mt5Accounts);
+
+  const [sAccount, setSAccount] = useState(
+    accounts?.length > 0 ? accounts[0] : null
+  );
+
+  useEffect(() => {
+    if (sbroker === brokers[0]) setAccounts(mtAccounts);
+    else if (sbroker === brokers[1]) setAccounts(mt5Accounts);
+  }, [sbroker]);
+
   const [sWebhook, setSWebhook] = useState(
     webhooks?.length > 0 ? webhooks[0] : null
   );
@@ -58,5 +75,10 @@ export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
     setSMessage,
     error,
     send,
+
+    brokers,
+    sbroker,
+    setSBroker,
+    accounts,
   };
 };

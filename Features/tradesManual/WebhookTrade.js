@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Select1 } from "../../Components/Input";
 import { Alert } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
@@ -9,9 +9,12 @@ import { PlaceWebhookTrade } from "../../hooks/ManualTrade";
 import { GetToastContext } from "../../hooks/ToastHook";
 
 function WebhookTrade({ close }) {
-  const { mtAccounts } = GetMTAccountsContext();
-  const { webhooks } = GetWebhookContext();
+  const { mtAccounts, mt5Accounts } = GetMTAccountsContext();
+  let { webhooks } = GetWebhookContext();
   const { newAlert } = GetToastContext();
+  webhooks = webhooks.filter(
+    (v) => v.advanced === false || v.advanced === undefined
+  );
 
   const {
     sAccount,
@@ -22,17 +25,32 @@ function WebhookTrade({ close }) {
     setSMessage,
     error,
     send,
-  } = PlaceWebhookTrade(mtAccounts, webhooks);
+
+    brokers,
+    sbroker,
+    setSBroker,
+    accounts,
+  } = PlaceWebhookTrade(mtAccounts, mt5Accounts, webhooks);
 
   return (
     <div className="w-full mx-auto flex flex-col items-center max-w-md">
+      {mt5Accounts?.length > 0 && mtAccounts.length > 0 && (
+        <Select1
+          className="my-1"
+          name="Choose a broker"
+          helper="Choose a broker"
+          options={brokers}
+          value={brokers.indexOf(sbroker)}
+          setValue={(v) => setSBroker(brokers[v])}
+        />
+      )}
       <Select1
         className="my-1"
         name="Choose an account"
         helper="Choose an active account to place the trade"
-        options={mtAccounts.map((v) => v.accountDisplayName)}
-        value={mtAccounts.indexOf(sAccount)}
-        setValue={(v) => setSAccount(mtAccounts[v])}
+        options={accounts.map((v) => v.accountDisplayName)}
+        value={accounts.indexOf(sAccount)}
+        setValue={(v) => setSAccount(accounts[v])}
       />
       <Select1
         className="my-1"
