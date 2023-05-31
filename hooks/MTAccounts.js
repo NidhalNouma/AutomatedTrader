@@ -33,11 +33,13 @@ export function GetMTAccounts() {
 
   function getData(accId = null, withWebHook = null, type = "MT4") {
     let data = [];
-    mtAccounts.forEach(function (v, i) {
+
+    const accounts = type === "MT4" ? mtAccounts : mt5Accounts;
+    accounts.forEach(function (v, i) {
       if (accId === null || accId === v.id) {
         if (v.data?.length > 0) {
           if (!withWebHook) {
-            if (v.type == type)
+            if (v.type === type)
               v.data.forEach((d) => {
                 data.push({
                   ...d,
@@ -48,7 +50,7 @@ export function GetMTAccounts() {
                 });
               });
           } else if (withWebHook) {
-            if (v.type == type)
+            if (v.type === type)
               v.data.forEach((d) => {
                 if (d.Id == withWebHook)
                   data.push({
