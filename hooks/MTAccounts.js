@@ -241,15 +241,31 @@ const profitPerTime = (data, getProfit = true, wh, getAll = false) => {
           r[year][month] = { profit };
           r[year][month][day] = { profit };
         }
+
+        if (
+          getAll &&
+          r[year] !== undefined &&
+          r[year][month] !== undefined &&
+          r[year][month][day] !== undefined
+        ) {
+          if (r[year][month][day].trades === undefined)
+            r[year][month][day] = { ...r[year][month][day], trades: [v] };
+          else
+            r[year][month][day] = {
+              ...r[year][month][day],
+              trades: [...r[year][month][day].trades, v],
+            };
+        }
       }
   });
+
   return r;
 };
 
 export function totalProfitPerTime(data, withWebHook) {
   const total = profitPerTime(data, false, withWebHook, true);
 
-  console.log(total);
+  // console.log(total);
   return total;
 }
 

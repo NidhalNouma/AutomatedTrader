@@ -7,11 +7,11 @@ function Index({ user }) {
       window.intercomSettings = {
         api_base: "https://api-iam.intercom.io",
         app_id: "erbaop8g",
-        // name: user?.displayName, // Full name
-        // email: user?.email, // Email address
+        name: user?.displayName, // Full name
+        email: user?.email, // Email address
         // created_at: user?.created_at?.seconds, // Signup date as a Unix timestamp
 
-        // user_id: user.id,
+        user_id: user.id,
       };
 
       (function () {
@@ -48,7 +48,7 @@ function Index({ user }) {
         }
       })();
     }
-    console.log("Intercom ", user, window.intercom);
+    // console.log("Intercom ", user, window.intercom);
   }, [user]);
 
   return (

@@ -2,12 +2,16 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { GetFullUserContext } from "../../hooks/UserHook";
+
 function Index() {
+  const { fullUser } = GetFullUserContext();
+  const sub = fullUser.subObj;
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 mx-auto mt-4 gap-2 px-4">
       <B1 />
       <B2 />
-      <B3 />
+      {sub.time !== "lifetime" && <B3 />}
       <Henko />
     </div>
   );
