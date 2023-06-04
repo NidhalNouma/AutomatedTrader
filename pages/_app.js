@@ -19,7 +19,9 @@ import LoadingPage from "../Features/LoadingPage";
 
 import Chargebee from "../Features/chargeBee/ChargeBee";
 // import { ChargeBeeCC, GetChargeBee } from "../hooks/ChargeBee";
-import { GoogleAnalytics } from "nextjs-google-analytics";
+// import { GoogleAnalytics } from "nextjs-google-analytics";
+
+import IntercomSupport from "../Features/IntercomSupporrt";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -121,8 +123,12 @@ function MyApp({ Component, pageProps }) {
           />
         </Head>
 
+        <IntercomSupport user={fullUser} />
+
         {load ? (
-          <LoadingPage />
+          <Fragment>
+            <LoadingPage />
+          </Fragment>
         ) : (
           <Fragment>
             <ToastCC value={{ newAlert }}>

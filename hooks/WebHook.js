@@ -452,7 +452,7 @@ export const WebHookCC = ({ children, value }) => {
 export const GetWebhookContext = () => useContext(WebHooksC);
 
 export function getMessageData(message) {
-  console.log("New basic webhook alert: ", message);
+  // console.log("New basic webhook alert: ", message);
   if (!message) return;
   let datai = message.split(" ");
 
