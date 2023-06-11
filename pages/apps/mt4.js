@@ -27,7 +27,7 @@ import { videosUrls } from "../../utils/constant";
 
 export default function MT4() {
   const { user } = GetUserContext();
-  const { mtAccounts, getData } = GetMTAccountsContext();
+  const { mt4Accounts , getData } = GetMTAccountsContext();
   const data = getData();
 
   const { totalProfit, profitPerPair } = CalculateData(data);
@@ -46,7 +46,7 @@ export default function MT4() {
               <span className="hidden sm:block">Metatrader 4</span>
               <span className="sm:hidden">MT4</span>
             </H1>
-            {mtAccounts?.length > 0 && (
+            {mt4Accounts?.length > 0 && (
               <PlayVideoPopup
                 className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
                 src={videosUrls.metatraderAddWebhooks}
@@ -118,16 +118,16 @@ export default function MT4() {
           </span> */}
         </div>
         {/* <H4>Accounts</H4> */}
-        {mtAccounts?.length > 0 ? (
+        {mt4Accounts?.length > 0 ? (
           <div className="md:flex items-start justify-between w-full">
             <div className="mt-3 w-full md:w-4/12">
-              {mtAccounts.map((v, i) => (
+              {mt4Accounts.map((v, i) => (
                 <Mt4 key={v.id} account={v} userId={user?.uid} />
               ))}
               <div className="my-4">
                 {/* <div className="flex"> */}
                 <div className="w-full bg-bgt shadow-sm shadow-bga p-4 rounded-xl">
-                  <BarAndLineChart accounts={mtAccounts} />
+                  <BarAndLineChart accounts={mt4Accounts} />
                 </div>
                 {/* </div> */}
               </div>
@@ -141,7 +141,7 @@ export default function MT4() {
 
             <div className="mt-3 w-full md:w-8/12 pl-4">
               <div className="w-full">
-                <LineChart accounts={mtAccounts} />
+                <LineChart accounts={mt4Accounts} />
               </div>
 
               <div className="md:flex w-full bg-bgt shadow-sm shadow-bga p-2 rounded-xl mt-6">

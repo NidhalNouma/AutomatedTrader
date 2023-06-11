@@ -11,16 +11,23 @@ import moment from "moment";
 export function GetMTAccounts() {
   const [mtAccounts, setMTAccounts] = useState([]);
   const [mt5Accounts, setMT5Accounts] = useState([]);
+  const [mt4Accounts, setMT4Accounts] = useState([]);
 
   async function getAllMTAccounts(userId) {
     if (!userId) return;
     listenToNewMTAccounts(userId, (acc) => {
-      const mt5s = acc.filter((v) => v.type === "MT5");
-      const mt4s = acc.filter((v) => v.type === "MT4");
-      setMTAccounts(filterData(userId, mt4s));
-      setMT5Accounts(filterData(userId, mt5s));
+      setMTAccounts(filterData(userId, acc));
     });
   }
+  
+  useEffect(() => {
+    if(mtAccounts.length>0) {
+      const mt5s = mtAccounts.filter((v) => v.type === "MT5");
+      const mt4s = mtAccounts.filter((v) => v.type === "MT4");
+      setMT4Accounts(mt4s);
+      setMT5Accounts(mt5s);
+    }
+  }, [mtAccounts]);
 
   async function getAllMTAccountsWithoutListen(userId) {
     if (!userId) return;
@@ -34,7 +41,7 @@ export function GetMTAccounts() {
   function getData(accId = null, withWebHook = null, type = "MT4") {
     let data = [];
 
-    const accounts = type === "MT4" ? mtAccounts : mt5Accounts;
+    const accounts = type === "MT4" ? mt4Accounts : mt5Accounts;
     accounts.forEach(function (v, i) {
       if (accId === null || accId === v.id) {
         if (v.data?.length > 0) {
@@ -78,7 +85,9 @@ export function GetMTAccounts() {
   return {
     mtAccounts,
     mt5Accounts,
+    mt4Accounts,
     setMTAccounts,
+    setMT4Accounts,
     setMT5Accounts,
     getAllMTAccounts,
     getAllMTAccountsWithoutListen,

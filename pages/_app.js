@@ -36,6 +36,8 @@ function MyApp({ Component, pageProps }) {
   const {
     mtAccounts,
     setMTAccounts,
+    mt4Accounts,
+    setMT4Accounts,
     mt5Accounts,
     setMT5Accounts,
     getAllMTAccounts,
@@ -149,6 +151,8 @@ function MyApp({ Component, pageProps }) {
                           setMTAccounts,
                           mt5Accounts,
                           setMT5Accounts,
+                          mt4Accounts,
+                          setMT4Accounts,
                           getData,
                         }}
                       >

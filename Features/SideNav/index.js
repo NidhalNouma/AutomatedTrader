@@ -16,7 +16,7 @@ import {
   ChevronDownIcon,
   UserGroupIcon,
 } from "@heroicons/react/solid";
-import { BiSupport } from "react-icons/bi";
+import { BiSupport, BiNews } from "react-icons/bi";
 
 import { GetFullUserContext, GetUserContext } from "../../hooks/UserHook";
 import Link from "next/link";
@@ -111,11 +111,13 @@ function Index({ cpath, fixed = true }) {
               <span className="capitalize ml-2 text-base">Alerts</span>
             </Linksn>
             {/* <Linksn
-              href="/actions"
-              isActive={cpath === "actions"}
-              icon={<LightBulbIcon className="h-5 w-5" />}
+              href="/news"
+              isActive={cpath === "news"}
+              icon={
+                <BiNews className="h-5 w-5" />
+              }
             >
-              <span className="capitalize ml-2 text-base">Actions</span>
+              <span className="capitalize ml-2 text-base">News</span>
             </Linksn> */}
           </div>
 
