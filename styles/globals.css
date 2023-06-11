@@ -40,6 +40,23 @@ a {
   max-width: 100vw;
 }
 
+.flip-animation {
+  animation: flip 1s normal;
+  transform-style: preserve-3d;
+}
+
+@keyframes flip {
+  0% {
+    transform: perspective(400px) rotateX(0);
+  }
+  /* 50% {
+    transform: perspective(400px) rotateX(180deg);
+  } */
+  100% {
+    transform: perspective(400px) rotateX(360deg);
+  }
+}
+
 /* .modali {
   max-height: 90vh;
 } */

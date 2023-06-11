@@ -1,4 +1,4 @@
-import React from "react";
+import  {useEffect, useState} from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,12 +7,30 @@ import { GetFullUserContext } from "../../hooks/UserHook";
 function Index() {
   const { fullUser } = GetFullUserContext();
   const sub = fullUser.subObj;
+
+  const [div, setDiv] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDiv((prev) => {
+        if(prev > 3)
+        return 0
+        else return prev + 1;
+      });
+    }, 10000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 mx-auto mt-4 gap-2 px-4">
-      <B1 />
-      <B2 />
+    <div className="">
+     {div ===0 ? <B1 /> : div === 1? <B2 /> : div === 2? <B3 /> : <Henko />}
+      {/* <B2 />
       {sub.time !== "lifetime" && <B3 />}
-      <Henko />
+      <Henko /> */}
     </div>
   );
 }
@@ -26,7 +44,7 @@ function B1() {
       target="_blank"
       rel="noreferrer"
     >
-      <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+      <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
           <Image
             src="/Images/banners/bug-detected.png"
@@ -49,7 +67,7 @@ function B1() {
 
 function B2() {
   return (
-    <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+    <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
       <div className="w-10 h-10 mr-2">
         <Image
           src="/Images/banners/trophy.png"
@@ -72,7 +90,7 @@ function B2() {
 function B3() {
   return (
     <Link href="/membership">
-      <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+      <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
           <Image
             src="/Images/banners/attracting-money.png"
@@ -100,7 +118,7 @@ function Henko() {
       target="_blank"
       rel="noreferrer"
     >
-      <div className="cursor-pointer flex items-center justify-center bg-bga rounded-xl p-2">
+      <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
           <Image
             src="/Images/banners/henko-logo.png"
