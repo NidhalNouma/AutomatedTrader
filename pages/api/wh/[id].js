@@ -28,6 +28,8 @@ export default async function handler(req, res) {
         if (r.advanced) msgData = getMessageAdvancedData(message, r.pair);
         else msgData = getMessageData(message);
 
+        // console.log(msgData);
+
         const advanced = msgData.advanced;
 
         const test = msgData.test;

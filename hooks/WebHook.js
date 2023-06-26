@@ -600,7 +600,7 @@ export function getMessageAdvancedData(msg, pair) {
     pair,
     alertType: "",
     id: "",
-    type: null,
+    type: -1,
     symbol: "",
     riskPercentage: 0,
     stopLoss: 0,
@@ -621,7 +621,8 @@ export function getMessageAdvancedData(msg, pair) {
     const data = v.split(":");
     if (data.length === 2) {
       const key = data[0];
-      const value = data[1];
+      let value = data[1];
+      value = value.replace(/\s+/g, '');
 
       switch (key) {
         case "ALERT_TYPE":
@@ -632,8 +633,8 @@ export function getMessageAdvancedData(msg, pair) {
           r.id = value;
           break;
         case "type":
-          if (value === "BUY") r.type = 0;
-          else if (value === "SELL") r.type = 1;
+          if (value?.toLowerCase() === "buy") r.type = 0;
+          else if (value?.toLowerCase() === "sell") r.type = 1;
           break;
 
         case "risk":
