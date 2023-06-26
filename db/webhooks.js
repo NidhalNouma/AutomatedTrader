@@ -197,6 +197,21 @@ export async function updateWebhookName(userId, id, name) {
   // return nwh;
 }
 
+export async function updateWebhookPair(userId, id, pair) {
+  console.log("Update webhook pair name ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    pair,
+  });
+
+  const r = getWebhooksByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
 export async function updateWebhookColor(userId, id, color) {
   console.log("Update webhook color ... ", id);
   const msgDoc = doc(db, collName, id);

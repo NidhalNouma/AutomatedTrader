@@ -9,6 +9,7 @@ import {
   publicWebhook,
   deleteWebhook,
   updateWebhookName,
+  updateWebhookPair,
   updateWebhookColor,
 } from "../db/webhooks";
 import axios from "axios";
@@ -333,6 +334,18 @@ export function EditWebhookName(userId, whId, defaultName) {
   return { whname, setWHname, editWhName };
 }
 
+export function EditWebhookPair(userId, whId, defaultPair) {
+  const [whpair, setWHpair] = useState(defaultPair || "");
+
+  async function editWhPair() {
+    if (!userId || !whId) return;
+    const r = await updateWebhookPair(userId, whId, whpair);
+    return r;
+  }
+
+  return { whpair, setWHpair, editWhPair };
+}
+
 export function EditWebhookColor(userId, whId, defaultColor) {
   const [whcolor, setWHcolor] = useState(defaultColor || "");
 
@@ -620,9 +633,11 @@ export function getMessageAdvancedData(msg, pair) {
   dataArray.forEach((v) => {
     const data = v.split(":");
     if (data.length === 2) {
-      const key = data[0];
+      let key = data[0];
       let value = data[1];
-      value = value.replace(/\s+/g, '');
+      key = key.replace(/\s+/g, "");
+      key = key.toUpperCase();
+      value = value.replace(/\s+/g, "");
 
       switch (key) {
         case "ALERT_TYPE":
@@ -632,47 +647,47 @@ export function getMessageAdvancedData(msg, pair) {
         case "ID":
           r.id = value;
           break;
-        case "type":
+        case "TYPE":
           if (value?.toLowerCase() === "buy") r.type = 0;
           else if (value?.toLowerCase() === "sell") r.type = 1;
           break;
 
-        case "risk":
-          r.riskPercentage = value;
+        case "RISK":
+          r.riskPercentage = Number(value);
           break;
 
         case "SL":
-          r.stopLoss = value;
+          r.stopLoss = Number(value);
           break;
 
         case "TP1":
-          r.takeProfit1 = value;
+          r.takeProfit1 = Number(value);
           break;
         case "TP1_PCLOSE":
-          r.parcielClose1 = value;
+          r.parcielClose1 = Number(value);
           break;
 
         case "TP2":
-          r.takeProfit2 = value;
+          r.takeProfit2 = Number(value);
           break;
         case "TP2_PCLOSE":
-          r.parcielClose2 = value;
+          r.parcielClose2 = Number(value);
           break;
         case "TP3":
-          r.takeProfit3 = value;
+          r.takeProfit3 = Number(value);
           break;
         case "TP3_PCLOSE":
-          r.parcielClose3 = value;
+          r.parcielClose3 = Number(value);
           break;
 
         case "BE":
-          r.breakEvenStart = value;
+          r.breakEvenStart = Number(value);
           break;
         case "BE_OFFSET":
-          r.breakEvenOffset = value;
+          r.breakEvenOffset = Number(value);
           break;
         case "BE_PCLOSE":
-          r.breakEvenPClose = value;
+          r.breakEvenPClose = Number(value);
           break;
       }
     }

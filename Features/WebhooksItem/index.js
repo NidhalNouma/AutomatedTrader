@@ -27,6 +27,7 @@ import {
   GetWebhookContext,
   EditWebhookName,
   EditWebhookColor,
+  EditWebhookPair,
 } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
 
@@ -46,6 +47,12 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
     webhook.name
   );
 
+  const { whpair, setWHpair, editWhPair } = EditWebhookPair(
+    user?.uid,
+    webhook.id,
+    webhook.pair
+  );
+
   const { whcolor, setWHcolor, editWhColor } = EditWebhookColor(
     user?.uid,
     webhook.id,
@@ -56,6 +63,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openChangeName, setOpenChangeName] = useState(false);
+  const [openChangePair, setOpenChangePair] = useState(false);
   const [openChangeColor, setOpenChangeColor] = useState(false);
 
   const [duplicateMsg, setDuplicateMsg] = useState(null);
@@ -174,6 +182,37 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
             </Modal1>
 
             <Modal1
+              open={openChangePair}
+              close={() => {
+                setOpenChangePair(false);
+              }}
+              backclose={() => {
+                setOpenChangePair(false);
+              }}
+            >
+              <EditMessage
+                close={() => setOpenChangePair(false)}
+                title="Change pair name"
+                onEdit={async () => {
+                  const r = await editWhPair();
+                  setWebhooks(r);
+                }}
+              >
+                <div className="">
+                  <Input1
+                    className="mb-4 "
+                    // name="Your name"
+                    type="text"
+                    placeholder="Pair name"
+                    value={whpair}
+                    setValue={(v) => setWHpair(v)}
+                    // focus={openEdit}
+                  />
+                </div>
+              </EditMessage>
+            </Modal1>
+
+            <Modal1
               open={openChangeColor}
               close={() => {
                 setOpenChangeColor(false);
@@ -251,6 +290,15 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             Change name
                           </span>
                         </Dropdown.Item>
+                        {webhook.advanced && (
+                          <Dropdown.Item
+                            onClick={() => setOpenChangePair(true)}
+                          >
+                            <span className="text-secondary text-sm font-bold">
+                              Change pair
+                            </span>
+                          </Dropdown.Item>
+                        )}
                         <Dropdown.Item onClick={() => setOpenChangeColor(true)}>
                           <span className="text-secondary text-sm font-bold">
                             Change color
