@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowSmRightIcon } from "@heroicons/react/outline";
 
+import { FaBitcoin, FaEthereum } from "react-icons/fa";
+import {
+  AiFillEuroCircle,
+  AiFillDollarCircle,
+  AiFillPoundCircle,
+  AiFillAmazonCircle,
+  AiFillSliders,
+  AiFillApple,
+} from "react-icons/ai";
+
+import { HiCurrencyYen } from "react-icons/hi";
+
 function Section1() {
+  const [changeText, setChangeText] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setChangeText((v) => (v > 3 ? 0 : v + 1));
+    }, 1500);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
-    <section className="flex-col items-center justify-center">
-      <div className="max-w-5xl mt-[25vh] pb-32 mx-auto">
-        <div className="container flex flex-col items-center justify-center mx-auto">
+    <section className="flex-col items-center justify-center max-h-[135vh] overflow-hidden">
+      <div className="max-w-5xl mt-[20vh] pb-32 mx-auto">
+        {/* <div className="container flex flex-col items-center justify-center mx-auto">
           <img
             data-aos="fade-up"
             data-aos-duration="1000"
@@ -15,14 +38,25 @@ function Section1() {
             alt="Placeholder Image"
             src="/Logo/dark-logo.png"
           />
-        </div>
+        </div> */}
         <h1
           data-aos="fade-up"
           data-aos-duration="1000"
           data-aos-delay="200"
-          className="text-80 text-center font-4 lh-6 ld-04 font-bold text-text-p mb-6"
+          className="text-8xl text-center font-bold text-text-h mb-6"
         >
-          Automate your trades
+          Automate your
+          {changeText === 0 ? (
+            <FlippingText text={"Trades"} />
+          ) : changeText === 1 ? (
+            <FlippingText text={"Alerts"} />
+          ) : changeText === 2 ? (
+            <FlippingText text={"TradingView"} />
+          ) : changeText === 3 ? (
+            <FlippingText text={"Indicators"} />
+          ) : (
+            <FlippingText text={"Strategies"} />
+          )}
         </h1>
         <h2
           data-aos="fade-up"
@@ -30,7 +64,7 @@ function Section1() {
           data-aos-delay="200"
           className="text-2xl font-4 font-semibold lh-6 ld-04 pb-11 text-text-p text-center"
         >
-          TradingView to any broker, any indicator, any alert, instantly ...
+          The easiest way to automate your ALL your trades even the manual ones!
         </h2>
         <div
           data-aos="fade-up"
@@ -39,7 +73,7 @@ function Section1() {
           className="ml-6 text-center"
         >
           <Link href="/signup">
-            <div className="cursor-pointer text-text-h border-4 border-primary rounded-full inline-flex items-center py-3 font-semibold text-black transition duration-500 ease-in-out transform bg-transparent bg-white px-7 text-md md:mt-0 hover:text-black hover:bg-white focus:shadow-outline">
+            <div className="cursor-pointer text-text-h border-4 bg-gradient-to-rx from-primary to-secondary border-primary rounded-full inline-flex items-center py-3 font-semibold text-black transition duration-500 ease-in-out transform bg-transparent bg-white px-7 text-md md:mt-0 hover:text-black hover:bg-white focus:shadow-outline">
               <div className="flex text-lg">
                 <span className="flex justify-center items-center">
                   Get started
@@ -55,16 +89,36 @@ function Section1() {
         data-aos="fade-up"
         data-aos-duration="1200"
         data-aos-delay="300"
-        className="container flex flex-col items-center justify-center mx-auto"
+        className="relative container flex flex-col items-center justify-center mx-auto"
       >
+        <div className="absolute top-[0%] left-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
+        <div className="absolute top-[0%] right-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
         <img
-          className="object-cover object-center w-full mb-10 rounded-3xl border-2"
+          className="object-cover object-center w-[85%] mb-10 rounded-xl border-0 z-0"
           alt="Placeholder Image"
           src="/Images/landing/profilepage.png"
         />
+
+        <FaBitcoin className="absolute w-14 h-14 right-[0%] top-[-10%] text-primary opacity-40" />
+        <FaEthereum className="absolute w-14 h-14 right-[10%] top-[-22%] text-primary opacity-40" />
+        <AiFillAmazonCircle className="absolute w-14 h-14 right-[40%] top-[-10%] text-primary opacity-40" />
+        <AiFillApple className="absolute w-14 h-14 right-[26%] top-[-18%] text-primary opacity-40" />
+
+        <AiFillEuroCircle className="absolute w-14 h-14 left-[-0%] top-[-1%] text-primary opacity-40" />
+        <AiFillDollarCircle className="absolute w-14 h-14 left-[33%] top-[-19%] text-primary opacity-40" />
+        <AiFillPoundCircle className="absolute w-14 h-14 left-[23%] top-[-10%] text-primary opacity-40" />
+        <HiCurrencyYen className="absolute w-14 h-14 left-[12%] top-[-19%] text-primary opacity-40" />
       </div>
     </section>
   );
 }
 
 export default Section1;
+
+function FlippingText({ text }) {
+  return (
+    <h1 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent">
+      {text}
+    </h1>
+  );
+}

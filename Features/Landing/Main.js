@@ -15,7 +15,7 @@ export default function Main() {
           Automate your trades
         </h1>
         <h2 className="text-2xl font-4 font-semibold lh-6 ld-04 pb-11 text-gray-700 text-center">
-          TradingView to MT4, any indicator, any alert, instantly ...
+          The easiest way to automate your ALL your trades even the manual ones!
           {/* <br /> */}
           {/* with Next.js and styled with Tailwind CSS */}
         </h2>

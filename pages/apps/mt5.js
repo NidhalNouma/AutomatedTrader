@@ -81,7 +81,7 @@ export default function MT5() {
             </ButtonP>
           </div>
         </div>
-        <div className="mt-16 w-full">
+        <div className="mt-6 w-full">
           {mt5Accounts?.length > 0 ? (
             <div className="md:flex items-start justify-between w-full">
               <div className="mt-3 w-full md:w-4/12">

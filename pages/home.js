@@ -20,7 +20,7 @@ export default function Home() {
     <>
       <Sidenav cpath="home" />
       <MainWithHeader withBanners={false}>
-        {fullUser.subObj?.chargeBeeId !==
+        {fullUser?.subObj?.chargeBeeId !==
           pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale />}
         <Hi2 className="font-bold">
           Hi, <span className="text-text-h">{fullUser?.displayName}</span>

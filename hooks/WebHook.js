@@ -607,7 +607,7 @@ export function getMessageData(message) {
 }
 
 export function getMessageAdvancedData(msg, pair) {
-  console.log("New advanced webhook alert: ", pair, msg);
+  // console.log("New advanced webhook alert: ", pair, msg);
   let r = {
     advanced: true,
     pair,
@@ -642,6 +642,10 @@ export function getMessageAdvancedData(msg, pair) {
       switch (key) {
         case "ALERT_TYPE":
           r.alertType = value;
+          break;
+
+        case "PAIR":
+          r.pair = value;
           break;
 
         case "ID":

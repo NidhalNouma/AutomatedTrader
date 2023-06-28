@@ -7,40 +7,9 @@ import { Dropdown, Button } from "react-daisyui";
 import { BsYoutube, BsDiscord } from "react-icons/bs";
 
 export default function Header() {
-  const [show, setShow] = useState(false);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  const controlNavbar = () => {
-    if (typeof window !== "undefined") {
-      if (window.scrollY > window.innerHeight / 1.2) {
-        // if scroll down hide the navbar
-        setShow(true);
-      } else {
-        setShow(false);
-        // if scroll up show the navbar
-      }
-
-      // remember current page location to use in the next move
-      setLastScrollY(window.scrollY);
-    }
-  };
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.addEventListener("scroll", controlNavbar);
-
-      // cleanup function
-      return () => {
-        window.removeEventListener("scroll", controlNavbar);
-      };
-    }
-  }, [lastScrollY]);
-
   return (
     <header
-      className={`${
-        show ? "fixed" : "hidden"
-      }  top-0 w-full clearNav z-50 bg-bgt pt-6 pb-4`}
+      className={`fixed top-0 w-full clearNav z-50 bg-bgt/25 pt-6 pb-4 backdrop-blur-2xl`}
     >
       <div className="max-w-7xl mx-auto flex flex-wrap sm:px-5 px-0 flex-col md:flex-row">
         <div className="flex flex-row items-center justify-between p-3 md:p-1 w-full">

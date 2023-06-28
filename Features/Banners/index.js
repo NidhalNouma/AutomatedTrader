@@ -1,4 +1,4 @@
-import  {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,15 +6,14 @@ import { GetFullUserContext } from "../../hooks/UserHook";
 
 function Index() {
   const { fullUser } = GetFullUserContext();
-  const sub = fullUser.subObj;
+  // const sub = fullUser?.subObj;
 
   const [div, setDiv] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setDiv((prev) => {
-        if(prev > 3)
-        return 0
+        if (prev > 3) return 0;
         else return prev + 1;
       });
     }, 10000);
@@ -24,10 +23,9 @@ function Index() {
     };
   }, []);
 
-
   return (
     <div className="">
-     {div ===0 ? <B1 /> : div === 1? <B2 /> : div === 2? <B3 /> : <Henko />}
+      {div === 0 ? <B1 /> : div === 1 ? <B2 /> : div === 2 ? <B3 /> : <Henko />}
       {/* <B2 />
       {sub.time !== "lifetime" && <B3 />}
       <Henko /> */}

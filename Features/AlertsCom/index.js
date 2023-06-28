@@ -20,7 +20,7 @@ const Index = ({ alertsHook }) => {
         {alertsHook.map((v, i) => {
           let msg = getMessageData(v.message);
           const wh = webhooks?.find((w) => w.id === v.webhookId);
-          if (wh.advanced) msg = getMessageAdvancedData(v.message, wh.pair);
+          if (wh?.advanced) msg = getMessageAdvancedData(v.message, wh.pair);
 
           return i < length ? (
             <div key={i} className={"p-1 mx-1" + (10 - 1 === i ? "" : "pb-0")}>
@@ -39,10 +39,15 @@ const Index = ({ alertsHook }) => {
               >
                 <div className="flex items-center justify-between">
                   <H6>
-                    {msg.advanced && (
-                      <span className=" text-bg rounded-xl font-bold px-2 py-0 bg-accent mr-2">
-                        advanced
-                      </span>
+                    {msg?.advanced && (
+                      <Fragment>
+                        <span className=" text-bg rounded-xl font-bold px-2 py-0 bg-accent mr-2">
+                          advanced
+                        </span>
+                        <span className=" text-bg rounded-xl font-bold px-2 py-0 bg-info mr-2">
+                          {msg.alertType}
+                        </span>
+                      </Fragment>
                     )}
                     {msg.test?.isTest && (
                       <span className=" text-bg rounded-xl px-2 py-0 bg-info mr-2">
@@ -105,7 +110,7 @@ const Index = ({ alertsHook }) => {
                       </span> */}
                     </span>
 
-                    {msg.advanced && (
+                    {msg?.advanced && msg?.alertType === "ENTRY" && (
                       <Fragment>
                         <span className="text-xs">
                           Take profit 1:

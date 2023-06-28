@@ -5,8 +5,8 @@ import React from "react";
 function Section2() {
   return (
     <section className="flex-col items-center justify-center">
-      <div className="max-w-5xl mt-[25vh] pb-32 mx-auto">
-        <h1 className="text-80 text-center font-4 lh-6 ld-04 font-bold text-text-p mb-6">
+      <div className="max-w-5xl mt-[15vh] pb-32 mx-auto">
+        <h1 className="text-80 text-center font-4 lh-6 ld-04 font-bold text-text-h mb-6">
           Automate ALL your Trades... <br />
           Even the Manual Ones!
         </h1>

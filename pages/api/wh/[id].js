@@ -17,7 +17,7 @@ import moment from "moment";
 export default async function handler(req, res) {
   const { id } = req.query;
   if (req.method === "POST") {
-    const message = req.body;
+    let message = req.body;
     if (id != undefined && message?.get) {
       const r = getAlertByUserId(id);
       return res.status(200).json(r);
@@ -25,8 +25,10 @@ export default async function handler(req, res) {
       const r = await getWebhook(id);
       if (r) {
         let msgData = null;
-        if (r.advanced) msgData = getMessageAdvancedData(message, r.pair);
-        else msgData = getMessageData(message);
+        if (r.advanced) {
+          msgData = getMessageAdvancedData(message, r.pair);
+          message = "pair: " + r.pair + "," + message;
+        } else msgData = getMessageData(message);
 
         // console.log(msgData);
 

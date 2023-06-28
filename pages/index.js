@@ -5,6 +5,7 @@ import Header from "../Features/Landing/Header";
 import Main from "../Features/Landing/Main";
 import Section1 from "../Features/Landing/Section1";
 import Section2 from "../Features/Landing/Section2";
+import Section3 from "../Features/Landing/Section3";
 import PricingSection from "../Features/Landing/PricingSection";
 import { ArrowSmRightIcon } from "@heroicons/react/outline";
 // import Footer from "../Features/Landing/Footer";
@@ -27,6 +28,7 @@ export default function Home() {
     >
       <Header />
       <Section1 />
+      <Section3 />
       <Section2 />
       <PricingSection />
 
