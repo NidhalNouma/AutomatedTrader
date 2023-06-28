@@ -62,7 +62,7 @@ function Section1() {
           data-aos="fade-up"
           data-aos-duration="1000"
           data-aos-delay="200"
-          className="text-2xl font-4 font-semibold lh-6 ld-04 pb-11 text-text-p text-center"
+          className="text-xl font-4 font-semibold mt-2 pb-3 text-text-p text-center"
         >
           The easiest way to automate your ALL your trades even the manual ones!
         </h2>
@@ -117,7 +117,7 @@ export default Section1;
 
 function FlippingText({ text }) {
   return (
-    <h1 className="font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent">
+    <h1 className="pt-0 pb-3 font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent">
       {text}
     </h1>
   );

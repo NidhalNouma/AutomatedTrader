@@ -118,7 +118,10 @@ function MyApp({ Component, pageProps }) {
       {/* <ChargeBeeCC value={{ chargeBee, setChargeBee, openCheckout }}> */}
       <Chargebee>
         <Head>
-          <title>Automated trader</title>
+          <title>
+            Automated Trader – Automate Tradingview… Tradingview to any broker ,
+            any alert, any indicator, instantly!
+          </title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
