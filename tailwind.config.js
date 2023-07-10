@@ -9,6 +9,9 @@ module.exports = {
     "node_modules/daisyui/dist/**/*.js",
   ],
   theme: {
+    fontFamily: {
+      // sans: ["Helvetica", "Arial", "sans-serif"],
+    },
     extend: {
       keyframes: {
         pulsei: {
@@ -42,14 +45,14 @@ module.exports = {
       // secondaryi: "rgb(174, 168, 216)",
       // accenti: "rgb(28, 28, 31)",
       // bg: "#000",
-      bg: "#171819",
+      bg: "#161616",
       bgt: "#070707",
       bga: "#272829",
       // bgai: "rgb(66, 70, 79)",
       // bgl: "rgb(0, 0, 50)",
-      "text-h": "rgb(255, 255, 255)",
+      "text-h": "rgb(245, 239, 245)",
       // "text-p": "rgb(135, 135, 135)",
-      "text-p": "hsl(220, 13%, 69%)",
+      "text-p": "hsl(200, 3%, 75%)",
     },
   },
   plugins: [require("daisyui")],
@@ -60,7 +63,7 @@ module.exports = {
         dark: {
           ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
           // primary: "rgb(39, 69, 235)",
-          primary: "#473BF0",
+          primary: "#4731FF",
           // secondary: "rgb(174, 168, 216)",
           secondary: "#6665DD",
           // accent: "rgb(28, 28, 31)",

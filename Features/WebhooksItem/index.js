@@ -240,7 +240,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
               }}
               className="bg-bgt w-full rounded-lg border-t-[3px]"
             >
-              <div className="pt-2 px-3 pb-1">
+              <div className="py-4 px-4">
                 <div className="flex items-start justify-between">
                   <div className="">
                     <H4 className="font-bold">{webhook.name} </H4>
@@ -490,12 +490,12 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                   </Fragment>
                 )}
 
-                <ButtonText
+                {/* <ButtonText
                   className="mt-1"
                   onClick={() => setViewChart(!viewChart)}
                 >
                   {viewChart ? "Hide" : "View"} chart
-                </ButtonText>
+                </ButtonText> */}
               </div>
             </div>
           </Fragment>

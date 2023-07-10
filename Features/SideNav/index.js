@@ -29,7 +29,7 @@ function Index({ cpath, fixed = true }) {
   return (
     <Content fixed={fixed}>
       {/* {fixed && ( */}
-      <div className="py-4 px-2 m-3 sticky top-3 left-0 ">
+      <div className="py-4 px-4 m-3 sticky top-3 left-0 ">
         <div className="relative">
           <Image
             src="/Logo/dark-logo.png"
@@ -39,7 +39,7 @@ function Index({ cpath, fixed = true }) {
             className=""
             layout="responsive"
           />
-          <span className="truncate absolute top-full right-0 text-xs font-bold text-bgt bg-text-h px-3 rounded-full">
+          <span className="truncate absolute top-full right-0 text-xs font-bold text-text-h px-1 rounded-full">
             Beta | Under development
           </span>
         </div>
@@ -50,8 +50,8 @@ function Index({ cpath, fixed = true }) {
         <div className="h-24 bg-bgai my-2 mr-4 rounded-xl"></div>
       </div> */}
       {user ? (
-        <Fragment>
-          <div className="pl-4">
+        <div className="p-4 pt-0">
+          <div className="">
             <Linksn
               href="/home"
               icon={<HomeIcon className="h-5 w-5" />}
@@ -121,13 +121,13 @@ function Index({ cpath, fixed = true }) {
             </Linksn> */}
           </div>
 
-          <div className="my-1 px-4">
+          <div className="my-1">
             <div className="border-t-2 border-bga"></div>
           </div>
 
-          <div className="text-text-p pl-4 my-2">
+          <div className="text-text-p pl-4 my-4">
             <div
-              className="flex items-center pl-4 mr-3 cursor-pointer my-2"
+              className="flex items-center mr-3 cursor-pointer my-2"
               onClick={() => setOpenApps(!openApps)}
             >
               <span
@@ -240,11 +240,11 @@ function Index({ cpath, fixed = true }) {
             )}
           </div>
 
-          <div className="my-1 px-4 /mt-auto">
+          <div className="my-1 /mt-auto">
             <div className="border-t-2 border-bga"></div>
           </div>
 
-          <div className="pl-4">
+          <div className="">
             {/* <Linksn
               href="/profile"
               icon={<UserIcon className="h-5 w-5" />}
@@ -271,7 +271,7 @@ function Index({ cpath, fixed = true }) {
 
             <Linksn
               icon={<InformationCircleIcon className="h-5 w-5" />}
-              href="/help"
+              href="/docs/aboutus"
               isActive={cpath === "help"}
             >
               <span className="capitalize ml-2 text-base">Help & FAQ</span>
@@ -295,7 +295,7 @@ function Index({ cpath, fixed = true }) {
           />
         </div> */}
           </div>
-        </Fragment>
+        </div>
       ) : (
         <Fragment>
           <div className=" w-full flex items-center justify-center h-full ">

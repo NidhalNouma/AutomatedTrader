@@ -16,7 +16,10 @@ export function Step({ children, imgSrc, num }) {
       <span className="font-semibold">{num}. </span>
       {children}
       {imgSrc && (
-        <img className="aspect-video object-contain my-2" src={imgSrc} />
+        <img
+          className="aspect-video object-contain mt-4 mb-2 max-w-4xl rounded"
+          src={imgSrc}
+        />
       )}
       <br />
       <br />

@@ -19,7 +19,7 @@ function CalendarTrades({ data }) {
   const [open, setOpen] = useState(null);
 
   return (
-    <div className="w-full">
+    <div className="w-full border-y-4 border-y-bga">
       <Modal1
         open={!!open}
         close={() => {
@@ -49,7 +49,7 @@ function CalendarTrades({ data }) {
             }
           }
         }}
-        className="!w-full !bg-bg !border-none rounded-xl py-6 px-4"
+        className="!w-full !bg-bgt !border-none rounded-xl py-6 px-4"
         tileClassName="text-text-p text-sm !hover:bg-bga !p-5"
         calendarType="US"
         onChange={onChange}
@@ -114,16 +114,8 @@ function TradeDetails({ data, close }) {
         {data?.length > 0 ? (
           data
             .sort((a, b) => {
-              const pa = (
-                Number(a.profit) +
-                Number(a.commission) +
-                Number(a.swap)
-              ).toFixed(2);
-              const pb = (
-                Number(b.profit) +
-                Number(b.commission) +
-                Number(b.swap)
-              ).toFixed(2);
+              const pa = Number(a.profit).toFixed(2);
+              const pb = Number(b.profit).toFixed(2);
 
               return pb - pa;
             })

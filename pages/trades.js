@@ -23,7 +23,7 @@ import { PlayVideoPopup } from "../Components/Video";
 import { videosUrls } from "../utils/constant";
 
 export default function TradesPage() {
-  const { mtAccounts, getData } = GetMTAccountsContext();
+  const { mt4Accounts, getData } = GetMTAccountsContext();
   const data = getData();
   const { fullUser } = GetFullUserContext();
 
@@ -35,7 +35,7 @@ export default function TradesPage() {
 
   const options = [
     "All",
-    ...mtAccounts.map((account) => account.accountDisplayName),
+    ...mt4Accounts.map((account) => account.accountDisplayName),
   ];
   const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
   const [account, setAccount] = useState(options[0]);
@@ -134,7 +134,7 @@ export default function TradesPage() {
               <CalendarTrades data={filtredData} />
             </div>
             <div className="mt-6">
-              <Table data={filtredData} accounts={mtAccounts} />
+              <Table data={filtredData} accounts={mt4Accounts} />
             </div>
           </Fragment>
         ) : (

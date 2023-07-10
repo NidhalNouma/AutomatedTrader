@@ -19,9 +19,9 @@ export function GetMTAccounts() {
       setMTAccounts(filterData(userId, acc));
     });
   }
-  
+
   useEffect(() => {
-    if(mtAccounts.length>0) {
+    if (mtAccounts.length > 0) {
       const mt5s = mtAccounts.filter((v) => v.type === "MT5");
       const mt4s = mtAccounts.filter((v) => v.type === "MT4");
       setMT4Accounts(mt4s);
@@ -159,7 +159,7 @@ export const CalculateData = (data, withWebHook = null) => {
     let r = { profit: 0, loss: 0, total: 0, profitCnt: 0, lossCnt: 0 };
     data.forEach((v) => {
       if (!withWebHook || v.withWebHook === v.ID) {
-        let p = Number(v?.profit);
+        let p = Number(v?.profit) + Number(v?.commission) + Number(v?.swap);
         r.total += p;
         if (p >= 0) {
           r.profit += p;
@@ -464,6 +464,7 @@ export function cleanData(data, numData, cleanTop0 = false) {
 }
 
 function filterData(userId, accounts) {
+  // return accounts;
   if (userId === process.env.NEXT_PUBLIC_TEST_PROFILE_ID) {
     const testWHs = process.env.NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS;
     const testWHsIds = testWHs?.split(",");

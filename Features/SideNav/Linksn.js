@@ -4,7 +4,7 @@ import Link from "next/link";
 function Linksn({ icon, children, isActive, className, href = "/" }) {
   return (
     <div
-      className={`${className} pr-3 border-r-4 my-1 rounded ${
+      className={`${className} pr-0 border-r-0 my-[0.4rem] ${
         isActive ? "border-r-secondary" : "border-r-0"
       }`}
     >
@@ -14,8 +14,10 @@ function Linksn({ icon, children, isActive, className, href = "/" }) {
           variant="link"
           startIcon={icon}
           className={`${
-            isActive ? "bg-bgt hover:bg-bgt text-text-h" : "bg-bgt text-text-p"
-          } w-full rounded-xl flex justify-start decoration-transparent hover:text-text-h hover:bg-bgt`}
+            isActive
+              ? "bg-bga hover:bg-bga text-text-h font-bold"
+              : "bg-bgt text-text-p font-normal hover:text-text-h hover:bg-bgt hover:font-bold"
+          } w-full rounded-xl flex justify-start decoration-transparent hover:text-text-h`}
         >
           {children}
         </Button>

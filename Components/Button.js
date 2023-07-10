@@ -45,7 +45,7 @@ export const ButtonP = ({
       animation={true}
       size={size}
       responds={true}
-      className={`${className} py-0 h-7 px-4 capitalize hover:bg-primary bg-primary border-2 border-primary text-text-h rounded-2xl transition-colors ease-in duration-200`}
+      className={`${className}  text-text-h bg-primary hover:bg-primary rounded-full text-sm font-semibold  px-4 capitalize`}
       {...props}
     />
   );

@@ -2,20 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import url("https://fonts.googleapis.com/css2?family=Seymour+One&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@500&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+
+@layer base {
+  html {
+    /* font-family: Proxima Nova, system-ui, sans-serif; */
+  padding: 0;
+  margin: 0;
+  /* font-family: "Be Vietnam Pro", sans-serif; */
+  /* font-family: 'PT Sans', sans-serif; */
+  /* font-family: 'Work Sans', sans-serif; */
+  font-family: 'Oxygen', sans-serif;
+  }
+}
+
 :root {
   /* background-color: rgb(0, 0, 0); */
   background-color: #070707;
 }
 
-/* @import url("https://fonts.googleapis.com/css2?family=Seymour+One&display=swap"); */
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300&display=swap");
 
 html,
 body {
   /* background-color: rgb(0, 0, 0); */
-  padding: 0;
-  margin: 0;
-  font-family: "Be Vietnam Pro", sans-serif;
   /* font-family: myFirstFont, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
     Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
 }
@@ -47,7 +60,7 @@ a {
 
 @keyframes flip {
   0% {
-    transform: perspective(400px) rotateX(0);
+    transform: perspective(400px) rotateX(180deg);
   }
   /* 50% {
     transform: perspective(400px) rotateX(180deg);

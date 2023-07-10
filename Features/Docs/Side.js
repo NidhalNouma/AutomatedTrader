@@ -1,51 +1,6 @@
-import { useState, useEffect, Fragment } from "react";
-import Sidenav from "../Features/SideNav";
-import MainWithHeader from "../Features/mainLayout/MainWithHeader";
-import { H1 } from "../Components/H";
-import { ButtonGroup, Button } from "react-daisyui";
-
-import AboutUs from "../Features/Docs/AboutUs";
-import Webhooks from "../Features/Docs/Webhooks";
-import Metatrader from "../Features/Docs/Metatrader";
-import RoadMap from "../Features/Docs/RoadMap";
-import Faq from "../Features/Docs/Faq";
-import Telegram from "../Features/Docs/Telegram";
-import Manual from "../Features/Docs/Manual";
-import Trade from "../Features/Docs/Trade";
-import Alerts from "../Features/Docs/Alerts";
-import PropFirm from "../Features/Docs/PropFirm";
-import Vps from "../Features/Docs/Vps";
-
-export default function Help() {
-  const [ty, setTy] = useState(0);
-
-  return (
-    <>
-      <Sidenav cpath="help" />
-      <MainWithHeader mainClassName="!overflow-x-clip">
-        <H1>Documentation</H1>
-        <div className="mt-6 flex">
-          <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
-            <Side ty={ty} setTy={setTy} />
-          </div>
-          <div className="flex-1 px-6">
-            {ty === 0 && <AboutUs />}
-            {ty >= 1 && ty < 2 && <Webhooks setTy={setTy} ty={ty} />}
-            {ty >= 2 && ty < 3 && <Metatrader setTy={setTy} ty={ty} />}
-            {ty === 4 && <Faq />}
-            {ty === 3 && <RoadMap />}
-            {ty === 5 && <Telegram />}
-            {ty === 6 && <Manual />}
-            {ty === 7 && <Trade />}
-            {ty === 8 && <Alerts />}
-            {ty === 9 && <PropFirm />}
-            {ty === 10 && <Vps />}
-          </div>
-        </div>
-      </MainWithHeader>
-    </>
-  );
-}
+import { Fragment, useEffect } from "react";
+import { Button } from "react-daisyui";
+import Router from "next/router";
 
 function Side({ ty, setTy }) {
   useEffect(() => {
@@ -59,7 +14,7 @@ function Side({ ty, setTy }) {
         className={`mb-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 0 && "text-primary"
         }`}
-        onClick={() => setTy(0)}
+        onClick={() => Router.push("/docs/aboutus")}
       >
         About Us
       </Button>
@@ -68,7 +23,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty >= 1 && ty < 2 && "text-primary"
         }`}
-        onClick={() => setTy(1)}
+        onClick={() => Router.push("/docs/webhooks")}
       >
         Webhooks
       </Button>
@@ -79,7 +34,7 @@ function Side({ ty, setTy }) {
             className={`truncate my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
               ty === 1.1 && "text-primary"
             }`}
-            onClick={() => setTy(1.1)}
+            // onClick={() => setTy(1.1)}
           >
             In AutomateTrader
           </Button>
@@ -88,7 +43,7 @@ function Side({ ty, setTy }) {
             className={`truncate my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
               ty === 1.2 && "text-primary"
             }`}
-            onClick={() => setTy(1.2)}
+            // onClick={() => setTy(1.2)}
           >
             In TradingView
           </Button>
@@ -99,7 +54,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty >= 2 && ty < 3 && "text-primary"
         }`}
-        onClick={() => setTy(2)}
+        onClick={() => Router.push("/docs/metatrader")}
       >
         Metatrader
       </Button>
@@ -110,7 +65,7 @@ function Side({ ty, setTy }) {
             className={`truncate my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
               ty === 2.1 && "text-primary"
             }`}
-            onClick={() => setTy(2.1)}
+            // onClick={() => setTy(2.1)}
           >
             Adding account
           </Button>
@@ -119,7 +74,7 @@ function Side({ ty, setTy }) {
             className={`truncate my-0 capitalize !text-xs text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
               ty === 2.2 && "text-primary"
             }`}
-            onClick={() => setTy(2.2)}
+            // onClick={() => setTy(2.2)}
           >
             Adding webhook
           </Button>
@@ -130,7 +85,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 6 && "text-primary"
         }`}
-        onClick={() => setTy(6)}
+        onClick={() => Router.push("/docs/manual")}
       >
         Manual
       </Button>
@@ -139,7 +94,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 7 && "text-primary"
         }`}
-        onClick={() => setTy(7)}
+        onClick={() => Router.push("/docs/trade")}
       >
         Trade
       </Button>
@@ -148,7 +103,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 8 && "text-primary"
         }`}
-        onClick={() => setTy(8)}
+        onClick={() => Router.push("/docs/alerts")}
       >
         Alerts
       </Button>
@@ -157,7 +112,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 5 && "text-primary"
         }`}
-        onClick={() => setTy(5)}
+        onClick={() => Router.push("/docs/telegram")}
       >
         Telegram
       </Button>
@@ -166,7 +121,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 4 && "text-primary"
         }`}
-        onClick={() => setTy(4)}
+        onClick={() => Router.push("/docs/faq")}
       >
         FAQ
       </Button>
@@ -175,7 +130,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 9 && "text-primary"
         }`}
-        onClick={() => setTy(9)}
+        onClick={() => Router.push("/docs/propfirm")}
       >
         Prop firm
       </Button>
@@ -184,7 +139,7 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 10 && "text-primary"
         }`}
-        onClick={() => setTy(10)}
+        onClick={() => Router.push("/docs/vps")}
       >
         VPS
       </Button>
@@ -193,10 +148,12 @@ function Side({ ty, setTy }) {
         className={`my-1 capitalize !text-sm text-text-p border-none hover:bg-transparent hover:text-primary rounded-xl bg-bgt ${
           ty === 3 && "text-primary"
         }`}
-        onClick={() => setTy(3)}
+        onClick={() => Router.push("/docs/roadmap")}
       >
         Road map
       </Button>
     </div>
   );
 }
+
+export default Side;

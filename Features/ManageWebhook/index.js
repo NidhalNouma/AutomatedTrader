@@ -27,18 +27,18 @@ function Index({ close }) {
       <div className="flex flex-col justify-center items-center w-full mt-2">
         <ButtonGroup>
           <Button
-            // size="sm"
-            className={`capitalize !text-sm rounded-xl bg-bga mb-3 w-24 hover:!bg-bgt ${
-              type === 0 && "text-primary bg-bgt"
+            size="sm"
+            className={`capitalize !text-sm rounded-xl bg-bg mb-3 w-24 hover:!bg-bgt text-text-p hover:text-text-h ${
+              type === 0 && "text-text-h bg-primary hover:!bg-primary"
             }`}
             onClick={() => setType(0)}
           >
             Basic
           </Button>
           <Button
-            // size="sm"
-            className={`capitalize !text-sm rounded-xl bg-bga w-24 hover:!bg-bgt ${
-              type === 1 && "text-primary bg-bgt"
+            size="sm"
+            className={`capitalize !text-sm rounded-xl bg-bg w-24 hover:!bg-bgt text-text-p hover:text-text-h ${
+              type === 1 && "text-text-h bg-primary hover:!bg-primary"
             }`}
             onClick={() => setType(1)}
           >

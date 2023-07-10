@@ -16,7 +16,7 @@ function Section5() {
           know exactly what to expect when following a signal provider!
         </h2>
         <spam className="mx-auto text-lg mt-6 font-semibold text-text-h px-6 bg-secondary rounded-full ">
-          Comming soon
+          Coming soon
         </spam>
       </div>
 
