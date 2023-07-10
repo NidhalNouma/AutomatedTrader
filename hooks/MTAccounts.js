@@ -178,7 +178,11 @@ export const CalculateData = (data, withWebHook = null) => {
 
     data.forEach((v) => {
       if (r[v.symbol] !== undefined)
-        r[v.symbol] = Number(r[v.symbol]) + Number(v.profit);
+        r[v.symbol] =
+          Number(r[v.symbol]) +
+          Number(v.profit) +
+          Number(v?.commission) +
+          Number(v?.swap);
       else r[v.symbol] = Number(v.profit);
     });
     return r;
