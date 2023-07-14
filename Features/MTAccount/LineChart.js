@@ -1,16 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 import { H2 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
 import { ButtonGroup, Button } from "react-daisyui";
@@ -23,82 +11,10 @@ import {
 
 import { addAlpha } from "../../utils/functions";
 import moment from "moment";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
-
-const options = {
-  responsive: true,
-  elements: {
-    point: {
-      // radius: 0,
-    },
-  },
-
-  scales: {
-    x: {
-      ticks: {
-        font: {
-          size: 12,
-        },
-      },
-    },
-
-    y: {
-      display: false, //this will remove all the x-axis grid lines
-    },
-  },
-
-  hover: {
-    mode: "index",
-    intersect: false,
-  },
-
-  plugins: {
-    tooltip: {
-      // enabled: false,
-      // mode: "index",
-      intersect: false,
-      backgroundColor: "rgba(0, 0, 0, 0.8)",
-      titleFontSize: 14,
-      titleFontColor: "#0066ff",
-      bodyFontColor: "#000",
-      bodyFontSize: 12,
-      displayColors: false,
-      displayY: false,
-
-      callbacks: {
-        // footer: (tooltipItems) => {
-        //   let sum = 0;
-        //   tooltipItems.forEach(function (tooltipItem) {
-        //     sum += tooltipItem.parsed.y;
-        //   });
-        //   return "Sum: " + sum.toFixed(2);
-        // },
-      },
-    },
-    legend: {
-      display: false,
-      position: "bottom",
-    },
-    title: {
-      display: false,
-      //   text: "Chart.js Line Chart",
-    },
-  },
-
-  // animation: {
-  //   duration: 0,
-  // },
-};
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 export default function App({ accounts }) {
   const period = ["Week", "Month", "Year"];
@@ -106,7 +22,8 @@ export default function App({ accounts }) {
   const [sum, setSum] = useState(0.0);
   const [type, setType] = useState(0);
 
-  const [data, setData] = useState({ labels: [], datasets: [] });
+  const [data, setData] = useState({ name: [], data: [] });
+  const [options, setOptions] = useState({});
 
   useEffect(() => {
     setSum(0);
@@ -117,7 +34,7 @@ export default function App({ accounts }) {
     else if (speriod === period[2])
       per = getDaysFromTimeTillNow(moment().subtract(365, "d"));
 
-    const labels = [];
+    let labels = [];
     const datasets = accounts?.map((account) => {
       const di = getDataFromAccountPerPeriod(account, per);
 
@@ -134,61 +51,106 @@ export default function App({ accounts }) {
       setSum((ps) => s + ps);
 
       return {
+        name: account.accountDisplayName,
         data: Object.values(d),
-        borderColor: account.color || "rgb(52, 54, 59)",
-        // backgroundColor: account.color
-        //   ? addAlpha(account.color, 0.3)
-        //   : "rgba(52, 54, 59, 0.3)",
-        lineTension: 0.25,
-        fill: true,
-        label: account.accountDisplayName,
-
-        shadowOffsetX: 3,
-
-        shadowOffsetY: 3,
-
-        shadowBlur: 10,
-
-        shadowColor: account.color,
-
-        pointRadius: 0,
-        pointHoverBackgroundColor: account.color,
-        pointHoverBorderColor: account.color,
-        pointHoverRadius: 3,
-
-        // datalabels: {
-        //   align: function (context) {
-        //     return context.active ? "start" : "center";
-        //   },
-        // },
       };
     });
 
-    const idata = {
-      labels: labels,
-      datasets,
-    };
+    setOptions({
+      chart: {
+        parentHeightOffset: 5,
+        stacked: true,
+        zoom: {
+          enabled: false,
+          type: "x",
+          autoScaleYaxis: true,
+        },
+        toolbar: {
+          show: false,
+        },
+        height: "auto",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+        width: 1.5,
+      },
 
-    setData(idata);
+      xaxis: {
+        labels: {
+          show: true,
+        },
+
+        // type: "datetime",
+        categories: labels,
+        axisBorder: {
+          show: false,
+        },
+
+        axisTicks: {
+          show: false,
+        },
+      },
+
+      yaxis: {
+        show: false,
+        logarithmic: true,
+        // forceNiceScale: true,
+      },
+
+      tooltip: {
+        style: {},
+        x: {
+          show: false,
+          format: "dd/MM/yy HH:mm",
+        },
+        y: {
+          formatter: function (
+            value,
+            { series, seriesIndex, dataPointIndex, w }
+          ) {
+            return value.toFixed(2);
+          },
+        },
+      },
+
+      grid: {
+        show: false,
+      },
+      legend: {
+        show: false,
+      },
+      fill: {
+        colors: undefined,
+        opacity: 0.1,
+        strokeWidth: 1,
+
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "vertical",
+          shadeIntensity: 1,
+          gradientToColors: ["#000", "#000", "#000"],
+          inverseColors: false,
+          opacityFrom: 0.9,
+          opacityTo: 0.7,
+          stops: [0, 90],
+          colorStops: [],
+        },
+      },
+
+      plotOptions: {
+        area: {
+          fillTo: "origin",
+        },
+      },
+      colors: accounts.map((acc) => acc.color),
+    });
+
+    setData(datasets);
   }, [speriod, type]);
-
-  const ShadowPlugin = {
-    beforeDraw: (chart, args, options) => {
-      const { ctx } = chart;
-      // ctx.shadowColor = "rgba(0, 255, 255, 0.5)";
-      // console.log(options, args, chart, chart._options.color);
-      const color = options.color || chart._options.color;
-      // ctx.shadowColor = addAlpha(color, 1);
-      ctx.shadowColor = color;
-      ctx.shadowBlur = 16;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 5;
-    },
-    defaults: {
-      // color: accounts[0].color,
-      color: "rgba(255, 255, 255, 0.2)",
-    },
-  };
 
   return (
     <div className="w-full">
@@ -243,12 +205,15 @@ export default function App({ accounts }) {
           </div>
         </div>
       </div>
-      <Line
-        options={options}
-        data={data}
-        redraw={true}
-        plugins={[ShadowPlugin]}
-      />
+      {typeof window !== "undefined" && (
+        <ReactApexChart
+          className="h-full"
+          options={options}
+          series={data}
+          type="area"
+          // height={350}
+        />
+      )}
     </div>
   );
 }

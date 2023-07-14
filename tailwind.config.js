@@ -53,6 +53,7 @@ module.exports = {
       "text-h": "rgb(245, 239, 245)",
       // "text-p": "rgb(135, 135, 135)",
       "text-p": "hsl(200, 3%, 75%)",
+      primary: "var(--color-primary)",
     },
   },
   plugins: [require("daisyui")],
