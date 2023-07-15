@@ -49,10 +49,13 @@ function MyApp({ Component, pageProps }) {
 
   const [load, setLoading] = useState(true);
   const [firstPath, setFirstPath] = useState(null);
+  const { pathname } = router;
 
   // const { chargeBee, setChargeBee, openCheckout } = GetChargeBee();
 
   useEffect(() => {
+    if (!firstPath) setFirstPath(pathname);
+
     checkUser(
       setUser,
       getFullUser,
@@ -62,55 +65,56 @@ function MyApp({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    const { pathname } = router;
-    if (!firstPath) setFirstPath(pathname);
-    if (user) {
-      if (
-        pathname === "/" ||
-        pathname === "/signin" ||
-        pathname === "/signup" ||
-        pathname === "/forgetpassword"
-      ) {
+    if (!load) {
+      // console.log(user);
+      if (user) {
         if (
-          firstPath === "/" ||
-          firstPath === "/signin" ||
-          firstPath === "/signup" ||
-          firstPath === "/forgetpassword"
+          pathname === "/" ||
+          pathname === "/signin" ||
+          pathname === "/signup" ||
+          pathname === "/forgetpassword"
         ) {
-          if (!subscription) router.push("/home");
-          else router.push("/membership?m=" + subscription);
-        } else {
-          if (!subscription) router.push(firstPath);
-          else router.push("/membership?m=" + subscription);
+          if (
+            firstPath === "/" ||
+            firstPath === "/signin" ||
+            firstPath === "/signup" ||
+            firstPath === "/forgetpassword"
+          ) {
+            if (!subscription) router.push("/home");
+            else router.push("/membership?m=" + subscription);
+          } else {
+            if (!subscription) router.push(firstPath);
+            else router.push("/membership?m=" + subscription);
+          }
         }
+      } else if (!user) {
+        if (
+          pathname !== "/signin" &&
+          pathname !== "/signup" &&
+          // pathname !== "/" &&
+          pathname !== "/forgetpassword" &&
+          pathname.search("/profile/") === -1 &&
+          pathname.search("/webhook/") === -1
+          // "/" !== landingUrl
+        )
+          router.push(landingUrl);
       }
-    } else if (!user) {
-      if (
-        pathname !== "/signin" &&
-        pathname !== "/signup" &&
-        // pathname !== "/" &&
-        pathname !== "/forgetpassword" &&
-        pathname.search("/profile/") === -1 &&
-        pathname.search("/webhook/") === -1
-        // "/" !== landingUrl
-      )
-        router.push(landingUrl);
-    }
 
-    if (user) {
-      // getFullUser(user?.uid, () => setLoading(false));
-    } else {
-      setAlerts([]);
+      if (user) {
+        // getFullUser(user?.uid, () => setLoading(false));
+      } else {
+        setAlerts([]);
+      }
     }
-  }, [user]);
+  }, [load, user]);
 
   useEffect(() => {
-    if (fullUser) {
+    if (fullUser && !load) {
+      getAllMTAccounts(user?.uid);
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
-      getAllMTAccounts(user?.uid);
     }
-  }, [fullUser]);
+  }, [fullUser, load]);
 
   return (
     <Fragment>

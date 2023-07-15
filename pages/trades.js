@@ -54,7 +54,7 @@ export default function TradesPage() {
         );
       setFilteredData(fdata);
     }
-  }, [account, wh]);
+  }, [account, wh, mt4Accounts]);
 
   return (
     <>
