@@ -1,9 +1,10 @@
 import React from "react";
 
 import { H2, H4, Hi5 } from "../../Components/H";
-
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Pie, Doughnut } from "react-chartjs-2";
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 function HalfDoughChart({ total }) {
   const clrs = [
@@ -15,50 +16,77 @@ function HalfDoughChart({ total }) {
     // "rgba(255, 159, 64, 1)",
   ];
 
-  const data = {
-    // labels: Object.keys(adata),
-    labels: ["profit", "loss"],
-    datasets: [
-      {
-        label: "# of Votes",
-        data: [total.profitCnt, total.lossCnt],
-        // data: Object.values(adata),
-        backgroundColor: clrs,
-        borderColor: clrs,
-        borderWidth: 1,
-      },
-    ],
-  };
-
+  const data = [total.profitCnt, total.lossCnt];
   const options = {
-    cutout: 50,
-    responsive: true,
-
-    rotation: -90,
-    circumference: 180,
-    maintainAspectRatio: false,
-
-    fillStyle: "#000",
-
-    layout: {
-      padding: -30,
+    chart: {
+      type: "donut",
+      dropShadow: {
+        enabled: true,
+        color: "#111",
+        top: -1,
+        left: 3,
+        blur: 3,
+        opacity: 0.2,
+      },
+      toolbar: {
+        show: false,
+      },
     },
-
-    plugins: {
-      legend: {
-        display: false,
-        position: "bottom",
-      },
-
-      tooltip: {
-        enabled: false,
-      },
-      title: {
-        display: false,
-        //   text: "Chart.js Line Chart",
-      },
-      bezierCurve: true,
+    dataLabels: {
+      enabled: false,
     },
+    stroke: {
+      width: 0,
+    },
+    plotOptions: {
+      pie: {
+        startAngle: -90,
+        endAngle: 90,
+        offsetY: 10,
+        donut: {
+          size: "75%",
+          name: {
+            show: false,
+          },
+          labels: {
+            show: false,
+            total: {
+              showAlways: false,
+              show: true,
+            },
+            value: {
+              show: false,
+            },
+          },
+        },
+      },
+    },
+    labels: ["profit", "loss"],
+    fill: {
+      type: "gradient",
+      opacity: 1,
+      // pattern: {
+      //   enabled: true,
+      //   style: ["verticalLines"],
+      // },
+    },
+    grid: {
+      padding: {
+        bottom: -120,
+      },
+    },
+    states: {
+      hover: {
+        filter: "none",
+      },
+    },
+    // theme: {
+    //   palette: "palette1",
+    // },
+    legend: {
+      show: false,
+    },
+    colors: clrs,
   };
 
   // console.log(total);
@@ -67,21 +95,19 @@ function HalfDoughChart({ total }) {
     <div className="flex flex-col items-center justify-center">
       <H2 className="mr-auto">Profitability</H2>
       <div className="relative my-auto mt-3">
-        <Doughnut
-          className="flex justify-center items-cente"
-          // className="relative mt-auto"
-          data={data}
+        <ReactApexChart
+          className="flex justify-center items-cente w-full"
           options={options}
-          borderWidth={6}
-          //   height="150"
-          //   width="150"
-        ></Doughnut>
+          series={data}
+          type="donut"
+          // width={400}
+        />
         <div
           style={{ backgroundColor: clrs[0] }}
-          className="w-24 h-24 absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-accent flex justify-center items-center"
+          className="w-20 h-20 absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 rounded-full bg-accent flex justify-center items-center"
         >
           <div className="text-center">
-            <H4>
+            <H4 className="!text-sm">
               {(
                 (total.profitCnt / (total.profitCnt + total.lossCnt)) *
                 100

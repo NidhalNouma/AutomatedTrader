@@ -82,9 +82,9 @@ export function numToFixed(num) {
         //answer += Math.pow(str[i], Number(i) + 1);
       }
 
-      return num.toFixed(s);
+      return Number(num).toFixed(s);
     }
   }
 
-  return value;
+  return Number(value);
 }

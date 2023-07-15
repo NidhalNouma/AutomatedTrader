@@ -464,6 +464,7 @@ export function cleanData(data, numData, cleanTop0 = false) {
     r = { ...ar, ...r };
   }
 
+  // console.log("r", r);
   return r;
 }
 

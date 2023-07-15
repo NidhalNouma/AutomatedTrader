@@ -1,18 +1,4 @@
 import React, { useState, useEffect } from "react";
-import {
-  Chart as ChartJS,
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  LineController,
-  BarController,
-} from "chart.js";
-import { Chart } from "react-chartjs-2";
-import ChartDataLabels from "chartjs-plugin-datalabels";
 import { H3, H2 } from "../../Components/H";
 import { Select1 } from "../../Components/Input";
 import moment from "moment";
@@ -24,68 +10,17 @@ import {
   cleanData,
 } from "../../hooks/MTAccounts";
 import { numToFixed } from "../../utils/functions";
-
-ChartJS.register(
-  LinearScale,
-  CategoryScale,
-  BarElement,
-  PointElement,
-  LineElement,
-  Legend,
-  Tooltip,
-  LineController,
-  BarController
-);
-
-const options = {
-  responsive: true,
-
-  scales: {
-    x: {
-      ticks: {
-        font: {
-          size: 10,
-        },
-      },
-    },
-
-    y: {
-      display: false, //this will remove all the x-axis grid lines
-    },
-  },
-  plugins: {
-    legend: {
-      display: false,
-      position: "bottom",
-    },
-    title: {
-      display: false,
-      //   text: "Chart.js Line Chart",
-    },
-
-    datalabels: {
-      display: false,
-      formatter: (v) => v.toFixed(1),
-      anchor: "end",
-      offset: -18,
-      align: "start",
-
-      font: {
-        size: 10,
-      },
-    },
-  },
-
-  // animation: {
-  //   duration: 0,
-  // },
-};
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 export default function BarAndLineChart({ accounts }) {
   const period = ["Week", "Month", "Year"];
   const [speriod, setSperiod] = useState(period[2]);
   const [account, setAccount] = useState(accounts[0]);
   const [data, setData] = useState({});
+  const [options, setOptions] = useState({});
 
   const firstTradeOpenTime =
     account.data?.length > 0
@@ -133,7 +68,7 @@ export default function BarAndLineChart({ accounts }) {
   const colors = tailwindConfig.theme.colors;
 
   useEffect(() => {
-    const sep = 12;
+    const sep = 11;
     // let sepTime = moment().startOf("week");
     let sepTime = moment().subtract(7, "d");
     if (speriod === period[1]) sepTime = moment().startOf("month");
@@ -144,47 +79,130 @@ export default function BarAndLineChart({ accounts }) {
       getDaysFromTimeTillNow(sepTime)
     );
 
-    const datai = {
-      labels: Object.keys(cleanData(di.tPerc, sep)).map(
-        (v) =>
-          new Date(v).getDate() +
-          " " +
-          new Date(v)
-            .toLocaleString("default", { month: "long" })
-            .substring(0, 3)
-      ),
-      datasets: [
-        {
-          type: "line",
-          label: "Drawdown",
-          borderColor: "rgb(60, 168, 162)",
-          borderWidth: 2,
-          // fill: false,
-          data: Object.values(cleanData(di.tPerc, sep)),
-          lineTension: 0.3,
-          fill: true,
-          backgroundColor: "rgba(60, 168, 162,0.2)",
-          datalabels: {
-            display: false,
-            color: colors["text-p"],
+    const gain = cleanData(di.pPerc, sep);
+    const drawDown = cleanData(di.tPerc, sep);
+
+    const labels = Object.keys(gain).map((v) => {
+      const date = new Date(v);
+
+      return (
+        date.getDate() +
+        " " +
+        date.toLocaleString("default", { month: "short" }).substring(0, 3)
+      );
+    });
+    const datai = [
+      {
+        type: "area",
+        name: "Drawdown",
+        data: Object.values(drawDown).map((v) => numToFixed(v)),
+      },
+      {
+        type: "column",
+        name: "Gain",
+        data: Object.values(gain).map((v) => numToFixed(v)),
+      },
+    ];
+
+    // console.log(gain, drawDown, labels, datai);
+    setOptions({
+      chart: {
+        parentHeightOffset: 5,
+
+        type: "bar",
+        // stacked: true,
+        zoom: {
+          enabled: false,
+          type: "x",
+          autoScaleYaxis: true,
+        },
+        toolbar: {
+          show: false,
+        },
+        height: "auto",
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+        width: 2,
+      },
+
+      xaxis: {
+        labels: {
+          show: true,
+        },
+
+        // type: "datetime",
+        categories: labels,
+        axisBorder: {
+          show: false,
+        },
+
+        axisTicks: {
+          show: false,
+        },
+      },
+
+      yaxis: {
+        show: false,
+        logarithmic: true,
+        // forceNiceScale: true,
+      },
+
+      tooltip: {
+        style: {},
+        x: {
+          show: false,
+          format: "dd/MM/yy HH:mm",
+        },
+        y: {
+          formatter: function (
+            value,
+            { series, seriesIndex, dataPointIndex, w }
+          ) {
+            return value.toFixed(2);
           },
         },
-        {
-          type: "bar",
-          label: "Gain",
-          borderColor: "rgb(53, 162, 235)",
-          borderWidth: 1,
-          backgroundColor: "rgb(53, 162, 235)",
-          data: Object.values(cleanData(di.pPerc, sep)),
-          barPercentage: 0.35,
-          categoryPercentage: 1,
-          borderRadius: 25,
-          datalabels: {
-            color: colors["text-p"],
-          },
+      },
+
+      grid: {
+        show: false,
+      },
+      legend: {
+        show: false,
+      },
+      fill: {
+        colors: undefined,
+        // opacity: 0.1,
+        strokeWidth: 2,
+
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "vertical",
+          shadeIntensity: 1,
+          gradientToColors: ["#000", "#000"],
+          inverseColors: false,
+          opacityFrom: 0.9,
+          opacityTo: 0.7,
+          stops: [0, 90],
+          colorStops: [],
         },
-      ],
-    };
+      },
+
+      plotOptions: {
+        bar: {
+          borderRadius: 5,
+          columnWidth: "35%",
+        },
+        area: {
+          fillTo: "origin",
+        },
+      },
+      colors: ["rgb(53, 162, 235)", "rgb(60, 168, 162)"],
+    });
 
     setData(datai);
   }, [speriod, account]);
@@ -285,13 +303,15 @@ export default function BarAndLineChart({ accounts }) {
             />
           </div>
         </div>
-        {data.datasets && (
-          <Chart
-            className=""
-            type="bar"
-            data={data}
+
+        {data && typeof window !== "undefined" && (
+          <ReactApexChart
+            className="h-full"
             options={options}
-            plugins={[ChartDataLabels]}
+            series={data}
+            width={"100%"}
+            // type="line"
+            // height={350}
           />
         )}
       </div>

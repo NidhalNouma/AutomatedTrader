@@ -51,6 +51,7 @@ export default function App({ accounts }) {
       setSum((ps) => s + ps);
 
       return {
+        color: account.color,
         name: account.accountDisplayName,
         data: Object.values(d),
       };
@@ -59,7 +60,7 @@ export default function App({ accounts }) {
     setOptions({
       chart: {
         parentHeightOffset: 5,
-        stacked: true,
+        // stacked: true,
         zoom: {
           enabled: false,
           type: "x",
@@ -146,11 +147,11 @@ export default function App({ accounts }) {
           fillTo: "origin",
         },
       },
-      colors: accounts.map((acc) => acc.color),
+      colors: Object.values(datasets).map((v) => v.color),
     });
 
     setData(datasets);
-  }, [speriod, type]);
+  }, [speriod, type, accounts]);
 
   return (
     <div className="w-full">
