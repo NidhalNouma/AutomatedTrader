@@ -19,8 +19,8 @@ export default function BarAndLineChart({ accounts }) {
   const period = ["Week", "Month", "Year"];
   const [speriod, setSperiod] = useState(period[2]);
   const [account, setAccount] = useState(accounts[0]);
-  const [data, setData] = useState({});
-  const [options, setOptions] = useState({});
+  const [data, setData] = useState(null);
+  const [options, setOptions] = useState(null);
 
   const firstTradeOpenTime =
     account.data?.length > 0
@@ -214,7 +214,7 @@ export default function BarAndLineChart({ accounts }) {
           <H3>Gains</H3>
           <div className="ml-2">
             <Select1
-              className="!ml-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
+              className="!ml-0 !outline-none !focus:outline-none !border-transparent !focus:border-bgt "
               name=""
               helper=""
               size="xs"
@@ -225,7 +225,7 @@ export default function BarAndLineChart({ accounts }) {
           </div>
         </div>
         <div className="flex justify-between items-center w-full">
-          <H2>{total.toFixed(1) + "%"}</H2>
+          <H2>{Number(total).toFixed(1) + "%"}</H2>
           <div className="grid grid-cols-4 gap-2">
             <div className="flex flex-col items-center">
               <span className="text-xs text-text-h">Today</span>
@@ -304,7 +304,7 @@ export default function BarAndLineChart({ accounts }) {
           </div>
         </div>
 
-        {data && typeof window !== "undefined" && (
+        {data && options && typeof window !== "undefined" && (
           <ReactApexChart
             className="h-full"
             options={options}

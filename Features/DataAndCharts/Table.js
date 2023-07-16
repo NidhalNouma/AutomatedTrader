@@ -176,7 +176,7 @@ function Table({ data, accounts }) {
 
 export default Table;
 
-function TradeDetails({ data, close }) {
+export function TradeDetails({ data, close }) {
   const { webhooks } = GetWebhookContext();
   const wh = webhooks.find((v) => v.id === data?.ID);
   // console.log(wh, data);

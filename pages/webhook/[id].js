@@ -47,7 +47,7 @@ function Webhook({}) {
         {webData && (
           <Fragment>
             <div className="">
-              <div className="flex flex-col items-start justify-center mx-8 mb-8 pt-8 sticky top-16 bg-bg">
+              <div className="flex flex-col items-start justify-center mx-8 mb-8 pt-8 sticky top-16 bg-bgt">
                 <Title webhook={webData.webhook} user={webData.user} />
               </div>
               <div className=" m-8">

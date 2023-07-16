@@ -5,24 +5,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
 
 @layer base {
-  
   html {
   padding: 0;
   margin: 0;
   font-family: 'Oxygen', sans-serif;
   box-sizing: border-box;
+  
+  background-color: #070707 !important;
   }
 }
 
+
 .apexcharts-tooltip {
-  background-color: black !important;
-  border-color: black !important;
+  background-color: #070707 !important;
+  border-color: #070707 !important;
   color: white;
 }
 .apexcharts-xaxistooltip {
   color: white !important;
-  background-color: black !important;
-  border-color: black !important;
+  background-color: #070707 !important;
+  border-color: #070707 !important;
 }
 
 a {

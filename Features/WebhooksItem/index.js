@@ -11,6 +11,11 @@ import {
   PencilAltIcon,
 } from "@heroicons/react/outline";
 
+import {
+  BsFillArrowRightCircleFill,
+  BsFillArrowDownCircleFill,
+} from "react-icons/bs";
+
 import { H5 } from "../../Components/H";
 import ColorPicker from "../../Components/ColorPicker";
 
@@ -244,9 +249,6 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                 <div className="flex items-start justify-between">
                   <div className="">
                     <H4 className="font-bold">{webhook.name} </H4>
-                    {webhook.pair && (
-                      <span className="text-xs">({webhook.pair})</span>
-                    )}
                   </div>
                   <div className="flex items-center justify-center">
                     <ButtonInfo
@@ -361,6 +363,26 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     }}
                   />
                 </div>
+                {webhook.advanced && (
+                  <div className="mt-3 flex items-center">
+                    <span className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1">
+                      {webhook.pair}
+                    </span>
+                    <div className="mt-0 w-full">
+                      {viewChart ? (
+                        <BsFillArrowDownCircleFill
+                          onClick={() => setViewChart(!viewChart)}
+                          className="ml-auto h-4 w-4 text-primary cursor-pointer"
+                        />
+                      ) : (
+                        <BsFillArrowRightCircleFill
+                          onClick={() => setViewChart(!viewChart)}
+                          className="ml-auto h-4 w-4 text-primary cursor-pointer"
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
                 {!webhook.advanced && (
                   <Fragment>
                     <div className="mt-2">
@@ -474,25 +496,40 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                         )}
                       </div>
                     </div>
-                    <div className="mt-2">
-                      {messages?.map(
-                        (v, i) =>
-                          i < 3 && (
-                            <span
-                              key={i}
-                              className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1"
-                            >
-                              {v.data.pair}
-                            </span>
-                          )
-                      )}
+                    <div className="mt-2 flex items-center">
+                      <div className="">
+                        {messages?.map(
+                          (v, i) =>
+                            i < 3 && (
+                              <span
+                                key={i}
+                                className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1"
+                              >
+                                {v.data.pair}
+                              </span>
+                            )
+                        )}
+                      </div>
+                      <div className="mt-0 w-full">
+                        {viewChart ? (
+                          <BsFillArrowDownCircleFill
+                            onClick={() => setViewChart(!viewChart)}
+                            className="ml-auto h-4 w-4 text-primary cursor-pointer"
+                          />
+                        ) : (
+                          <BsFillArrowRightCircleFill
+                            onClick={() => setViewChart(!viewChart)}
+                            className="ml-auto h-4 w-4 text-primary cursor-pointer"
+                          />
+                        )}
+                      </div>
                     </div>
                   </Fragment>
                 )}
 
                 {/* <ButtonText
                   className="mt-1"
-                  onClick={() => setViewChart(!viewChart)}
+                  onClick={}
                 >
                   {viewChart ? "Hide" : "View"} chart
                 </ButtonText> */}

@@ -16,7 +16,7 @@ function BarLine({ w1, w2, title1, title2 }) {
           style={{ width: `${w1}%` }}
         >
           {hover1 && (
-            <div className="text-center absolute bottom-[120%] bg-bga rounded-xl p-2">
+            <div className="text-center absolute bottom-[120%] right-[70%] min-w-[6rem] bg-bga rounded-xl p-2">
               <span className="text-xs text-text-p">
                 {Number(w1).toFixed(1)}% {title1}
               </span>
@@ -32,7 +32,7 @@ function BarLine({ w1, w2, title1, title2 }) {
           style={{ width: `${w2}%` }}
         >
           {hover2 && (
-            <div className="text-center absolute bottom-[120%] bg-bga rounded-xl p-2">
+            <div className="text-center absolute bottom-[120%] right-[70%] min-w-[6rem] bg-bga rounded-xl p-2">
               <span className="text-xs text-text-p">
                 {Number(w2).toFixed(1)}% {title2}
               </span>

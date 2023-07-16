@@ -18,12 +18,12 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 
 export default function App({ accounts }) {
   const period = ["Week", "Month", "Year"];
-  const [speriod, setSperiod] = useState(period[0]);
+  const [speriod, setSperiod] = useState(period[2]);
   const [sum, setSum] = useState(0.0);
   const [type, setType] = useState(0);
 
-  const [data, setData] = useState({ name: [], data: [] });
-  const [options, setOptions] = useState({});
+  const [data, setData] = useState(null);
+  const [options, setOptions] = useState(null);
 
   useEffect(() => {
     setSum(0);
@@ -51,15 +51,27 @@ export default function App({ accounts }) {
       setSum((ps) => s + ps);
 
       return {
-        color: account.color,
         name: account.accountDisplayName,
-        data: Object.values(d),
+        data: Object.values(d).map((v, i) => Number(v.toFixed(2))),
+        // data: [31, 40, 28, 51, 42, 109, 100],
       };
     });
+
+    let fullArr = [];
+    datasets.forEach((e) => {
+      fullArr = [...fullArr, ...e.data];
+    });
+
+    const maxArr = Math.max(...fullArr);
+    const minArr = Math.min(...fullArr);
+
+    const max = maxArr > -minArr ? maxArr : -minArr;
+    const min = -maxArr > minArr ? minArr : -maxArr;
 
     setOptions({
       chart: {
         parentHeightOffset: 5,
+
         // stacked: true,
         zoom: {
           enabled: false,
@@ -77,6 +89,7 @@ export default function App({ accounts }) {
       stroke: {
         curve: "smooth",
         width: 1.5,
+        lineCap: "square",
       },
 
       xaxis: {
@@ -97,7 +110,10 @@ export default function App({ accounts }) {
 
       yaxis: {
         show: false,
-        logarithmic: true,
+        max: max,
+        min: min,
+
+        // logarithmic: true,
         // forceNiceScale: true,
       },
 
@@ -124,7 +140,7 @@ export default function App({ accounts }) {
         show: false,
       },
       fill: {
-        colors: undefined,
+        colors: accounts?.map((account) => account.color),
         opacity: 0.1,
         strokeWidth: 1,
 
@@ -133,11 +149,11 @@ export default function App({ accounts }) {
           shade: "dark",
           type: "vertical",
           shadeIntensity: 1,
-          gradientToColors: ["#000", "#000", "#000"],
+          gradientToColors: accounts?.map((account) => "#070707"),
           inverseColors: false,
-          opacityFrom: 0.9,
-          opacityTo: 0.7,
-          stops: [0, 90],
+          opacityFrom: 1,
+          opacityTo: 0,
+          stops: [0, 100],
           colorStops: [],
         },
       },
@@ -147,18 +163,22 @@ export default function App({ accounts }) {
           fillTo: "origin",
         },
       },
-      colors: Object.values(datasets).map((v) => v.color),
+      colors: accounts?.map((account) => account.color),
     });
 
     setData(datasets);
   }, [speriod, type, accounts]);
+
+  // useEffect(() => {
+  //   console.log(options, data);
+  // }, [data, options]);
 
   return (
     <div className="w-full">
       <div className="w-full flex justify-between items-end mb-2">
         <div className="ml-3">
           <H2>Overall</H2>
-          <H2>$ {sum.toFixed(2)}</H2>
+          <H2>$ {Number(sum).toFixed(2)}</H2>
         </div>
 
         <div className="flex items-center">
@@ -166,7 +186,7 @@ export default function App({ accounts }) {
             <ButtonGroup>
               <Button
                 size="sm"
-                className={`capitalize !text-xs rounded bg-bgt ${
+                className={`capitalize !text-xs rounded bg-bgt !border-transparent ${
                   type === 0 && "text-primary"
                 }`}
                 onClick={() => setType(0)}
@@ -175,7 +195,7 @@ export default function App({ accounts }) {
               </Button>
               <Button
                 size="sm"
-                className={`capitalize !text-xs bg-bgt ${
+                className={`capitalize !text-xs bg-bgt !border-transparent  ${
                   type === 1 && "text-primary"
                 }`}
                 onClick={() => setType(1)}
@@ -184,7 +204,7 @@ export default function App({ accounts }) {
               </Button>
               <Button
                 size="sm"
-                className={`capitalize !text-xs rounded bg-bgt ${
+                className={`capitalize !text-xs rounded bg-bgt !border-transparent  ${
                   type === 2 && "text-primary"
                 }`}
                 onClick={() => setType(2)}
@@ -196,23 +216,25 @@ export default function App({ accounts }) {
 
           <div className="">
             <Select1
-              className="!outline-none !focus:outline-none !border-bga !focus:border-bga bg-bg"
+              className="!outline-none !focus:outline-none !border-bgt !focus:border-bgt bg-bgt"
               name=""
               helper=""
               options={period}
               value={speriod}
+              defaultValue={period.indexOf(speriod)}
               setValue={(i) => setSperiod(period[i])}
             />
           </div>
         </div>
       </div>
-      {typeof window !== "undefined" && (
+      {typeof window !== "undefined" && data?.length > 0 && options && (
         <ReactApexChart
           className="h-full"
           options={options}
           series={data}
           type="area"
-          // height={350}
+          width={"100%"}
+          // height={"100%"}
         />
       )}
     </div>

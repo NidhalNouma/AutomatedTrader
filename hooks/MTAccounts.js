@@ -319,8 +319,9 @@ export function getDataFromAccountPerPeriod(
       if (loss[year] !== undefined) {
         if (loss[year][month] !== undefined) {
           if (loss[year][month][day] !== undefined) {
-            if (r.loss[v]) r.loss[v] += loss[year][month][day].profit;
-            else r.loss[v] = loss[year][month][day].profit;
+            if (r.loss[v])
+              r.loss[v] += Number(loss[year][month][day].profit.toFixed(2));
+            else r.loss[v] = Number(loss[year][month][day].profit.toFixed(2));
           }
         }
       }
@@ -328,8 +329,10 @@ export function getDataFromAccountPerPeriod(
       if (profit[year] !== undefined) {
         if (profit[year][month] !== undefined) {
           if (profit[year][month][day] !== undefined) {
-            if (r.profit[v]) r.profit[v] += profit[year][month][day].profit;
-            else r.profit[v] = profit[year][month][day].profit;
+            if (r.profit[v])
+              r.profit[v] += Number(profit[year][month][day].profit.toFixed(2));
+            else
+              r.profit[v] = Number(profit[year][month][day].profit.toFixed(2));
           }
         }
       }
@@ -369,9 +372,9 @@ export function getDataFromAccountPerPeriod(
           lp = (l / sb) * mult;
         }
 
-        r.tPerc[v] = tp;
-        r.pPerc[v] = pp;
-        r.lPerc[v] = lp;
+        r.tPerc[v] = Number(tp.toFixed(2));
+        r.pPerc[v] = Number(pp.toFixed(2));
+        r.lPerc[v] = Number(lp.toFixed(2));
       }
 
       // console.log(v);
