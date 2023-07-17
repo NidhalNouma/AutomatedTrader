@@ -21,7 +21,7 @@ import { SignOut } from "../../hooks/SignHook";
 import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 import { pricingList } from "../../utils/pricing";
 
-import Banners from "../Banners"
+import Banners from "../Banners";
 
 function Index() {
   const router = useRouter();
@@ -61,9 +61,8 @@ function Index() {
             >
               Open Trade
             </ButtonP>
-            < div className="hidden sm:block ml-4">
-
-              <Banners/>
+            <div className="hidden sm:block ml-4">
+              <Banners />
             </div>
             {/* <ButtonP className="ml-6" onClick={() => setOpen(true)}>
                 <span className="text-xs">+ New</span>
@@ -95,7 +94,7 @@ function Index() {
                 </Dropdown.Menu>
               </Dropdown>
 
-              {fullUser.subObj?.chargeBeeId !==
+              {fullUser?.subObj?.chargeBeeId !==
                 pricingList.lifetime["Lifetime access"].chargeBeeId && (
                 <ButtonP
                   className="ml-2 !bg-accent !border-bga !border-[2px] !text-bgt hover:!text-bgt hidden md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "

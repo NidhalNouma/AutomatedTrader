@@ -65,8 +65,13 @@ export default function App({ accounts }) {
     const maxArr = Math.max(...fullArr);
     const minArr = Math.min(...fullArr);
 
-    const max = maxArr > -minArr ? maxArr : -minArr;
-    const min = -maxArr > minArr ? minArr : -maxArr;
+    let max = maxArr > -minArr ? maxArr : -minArr;
+    let min = -maxArr > minArr ? minArr : -maxArr;
+
+    if (maxArr === 0 && minArr === 0) {
+      max = 100;
+      min = -100;
+    }
 
     setOptions({
       chart: {
@@ -148,13 +153,13 @@ export default function App({ accounts }) {
         gradient: {
           shade: "dark",
           type: "vertical",
-          shadeIntensity: 1,
+          shadeIntensity: 0.1,
           gradientToColors: accounts?.map((account) => "#070707"),
           inverseColors: false,
           opacityFrom: 1,
           opacityTo: 0,
-          stops: [0, 100],
-          colorStops: [],
+          stops: [0, 90],
+          // colorStops: accounts?.map((account) => "#070707"),
         },
       },
 

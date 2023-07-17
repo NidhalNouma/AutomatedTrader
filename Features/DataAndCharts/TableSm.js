@@ -142,7 +142,7 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
             </tbody>
           </table>
         </div>
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-7 bg-bgt opacity-30 rounded-b-md z-10"></div>
+        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-7 bg-bgt opacity-30 rounded-b-md z-10"></div> */}
       </div>
     </Fragment>
   );

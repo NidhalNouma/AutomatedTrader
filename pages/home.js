@@ -1,6 +1,5 @@
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
-import { useRouter } from "next/router";
 
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
@@ -14,7 +13,6 @@ import IncomeSteps from "../Features/HomeSteps/IncomeSteps";
 export default function Home() {
   // const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
-  const router = useRouter();
 
   return (
     <>

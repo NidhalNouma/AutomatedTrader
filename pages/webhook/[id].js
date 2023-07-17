@@ -58,25 +58,27 @@ function Webhook({}) {
                   />
                 </div>
 
-                <div className="flex w-full bg-bg p-2 rounded-xl mt-6">
-                  <div className="w-3/5">
-                    <H3 className="m-2">Transaction</H3>
-                    <div className="px-3">
-                      {/* <DataTable data={data} /> */}
-                      <TableSm
-                        data={data}
-                        bgColor="bg-bg"
-                        profit={false}
-                        pips={true}
-                      />
+                {data?.length > 0 && (
+                  <div className="flex w-full bg-bg p-2 rounded-xl mt-6">
+                    <div className="w-3/5">
+                      <H3 className="m-2">Transaction</H3>
+                      <div className="px-3">
+                        {/* <DataTable data={data} /> */}
+                        <TableSm
+                          data={data}
+                          bgColor="bg-bg"
+                          profit={false}
+                          pips={true}
+                        />
+                      </div>
                     </div>
+                    {Object.keys(pairProfit).length > 0 && (
+                      <div className="w-2/5 mt-8">
+                        <DoughChart adata={pairProfit} total={tp} />
+                      </div>
+                    )}
                   </div>
-                  {Object.keys(pairProfit).length > 0 && (
-                    <div className="w-2/5 mt-8">
-                      <DoughChart adata={pairProfit} total={tp} />
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </Fragment>

@@ -74,7 +74,7 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
     colors["text-h"]
   );
 
-  const datai = [
+  const data = [
     {
       name: "",
       data: values,
@@ -84,10 +84,15 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
   const maxArr = Math.max(...values);
   const minArr = Math.min(...values);
 
-  const max = maxArr > -minArr ? maxArr : -minArr;
-  const min = -maxArr > minArr ? minArr : -maxArr;
+  let max = maxArr > -minArr ? maxArr : -minArr;
+  let min = -maxArr > minArr ? minArr : -maxArr;
 
-  const optionsi = {
+  if (maxArr === 0 && minArr === 0) {
+    max = 100;
+    min = -100;
+  }
+
+  const options = {
     chart: {
       type: "area",
       height: 80,
@@ -160,8 +165,8 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
       {typeof window !== "undefined" && values?.length > 0 && (
         <ReactApexChart
           className="h-full"
-          options={optionsi}
-          series={datai}
+          options={options}
+          series={data}
           type="area"
           width={"100%"}
           // height={"100%"}

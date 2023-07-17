@@ -95,16 +95,16 @@ export default function BarAndLineChart({ accounts }) {
       {
         type: "area",
         name: "Drawdown",
-        data: Object.values(drawDown).map((v) => numToFixed(v)),
+        data: Object.values(drawDown).map((v) => Number(numToFixed(v))),
       },
       {
         type: "column",
         name: "Gain",
-        data: Object.values(gain).map((v) => numToFixed(v)),
+        data: Object.values(gain).map((v) => Number(numToFixed(v))),
       },
     ];
 
-    // console.log(gain, drawDown, labels, datai);
+    // console.log(labels, options);
     setOptions({
       chart: {
         parentHeightOffset: 5,
@@ -147,7 +147,7 @@ export default function BarAndLineChart({ accounts }) {
 
       yaxis: {
         show: false,
-        logarithmic: true,
+        // logarithmic: true,
         // forceNiceScale: true,
       },
 
@@ -304,7 +304,7 @@ export default function BarAndLineChart({ accounts }) {
           </div>
         </div>
 
-        {data && options && typeof window !== "undefined" && (
+        {data?.length > 0 && options && typeof window !== "undefined" && (
           <ReactApexChart
             className="h-full"
             options={options}

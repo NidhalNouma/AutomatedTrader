@@ -43,7 +43,7 @@ function DoughChart({ adata, total }) {
     plotOptions: {
       pie: {
         donut: {
-          size: "97%",
+          size: "95%",
           name: {
             show: false,
           },

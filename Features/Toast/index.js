@@ -10,7 +10,7 @@ function Toasti({ alerts, setAlerts }) {
   // const alert = alerts[alerts.length - 1];
 
   return (
-    <Toast horizontal="end" vertical="bottom">
+    <Toast horizontal="start" vertical="bottom" className="z-[999]">
       {alerts?.map((alert, index) => (
         <DAlert
           key={index}
