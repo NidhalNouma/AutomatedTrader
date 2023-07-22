@@ -55,26 +55,28 @@ export default async function handler(req, res) {
         ) {
           const user = await getUser(r.userId);
 
-          if (advanced || msgData.time.use || msgData.time.use === false) {
-            const alert = await addAlert(id, message, r.userId, r.name);
-            if (alert) {
-              const time = new Date();
-              newAlert(id, {
-                message: message,
-                messageData: msgData,
-                userId: r.userId,
-                name: r.name,
-                time: time,
-                mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
-                MT4: r.MT4,
-              });
+          if (advanced || msgData.time.use || msgData.time.use === false)
+            if (msgData.isValid) {
+              const alert = await addAlert(id, message, r.userId, r.name);
+              if (alert) {
+                const time = new Date();
+                newAlert(id, {
+                  message: message,
+                  messageData: msgData,
+                  userId: r.userId,
+                  name: r.name,
+                  time: time,
+                  mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
+                  MT4: r.MT4,
+                  alertId: alert,
+                });
 
-              if (user && user.telegram) {
-                await sendMessage(user.telegram, message, msgData, r);
+                if (user && user.telegram) {
+                  await sendMessage(user.telegram, message, msgData, r);
+                }
+                return res.status(200).json({ done: true });
               }
-              return res.status(200).json({ done: true });
             }
-          }
         }
       }
     }

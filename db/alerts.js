@@ -33,10 +33,10 @@ export async function addAlert(webhookId, message, userId, webhookName) {
       created_at: serverTimestamp(),
     });
     console.log("Document written with: ", docRef.id);
-    return true;
+    return docRef.id;
   } catch (e) {
     console.error("Error adding document: ", e);
-    return false;
+    return null;
   }
 }
 

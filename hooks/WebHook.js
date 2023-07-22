@@ -601,7 +601,16 @@ export function getMessageData(message) {
   r.hedging = hedgingi;
   r.maxSS = maxSSi;
 
+  if (
+    Number(r.type) >= 0 &&
+    Number(r.positionValue) > 0 &&
+    Number(r.stopLoss) >= 0 &&
+    Number(r.takeProfit) >= 0
+  )
+    r.isValid = true;
+  else r.isValid = false;
   // console.log(r, message);
+  // console.log(r.type, r.isValid);
 
   return r;
 }
@@ -627,6 +636,8 @@ export function getMessageAdvancedData(msg, pair) {
     breakEvenStart: 0,
     breakEvenOffset: 0,
     breakEvenPClose: 0,
+
+    isValid: false,
   };
   const dataArray = msg.split(",");
 
@@ -696,6 +707,14 @@ export function getMessageAdvancedData(msg, pair) {
       }
     }
   });
+
+  if (
+    Number(r.type) >= 0 &&
+    Number(r.riskPercentage) > 0 &&
+    Number(r.stopLoss) >= 0 &&
+    Number(r.takeProfit3) >= 0
+  )
+    r.isValid = true;
 
   return r.alertType ? r : null;
 }
