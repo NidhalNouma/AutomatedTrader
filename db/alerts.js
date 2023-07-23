@@ -109,7 +109,7 @@ export async function listenToAlerts(userId, func) {
 }
 
 export async function updateAlertAccount(id, accountId, textObj) {
-  textObj["server_time"] = serverTimestamp();
+  // textObj["server_time"] = serverTimestamp();
   const alert = await getAlert(id);
 
   let accounts = alert.accounts;

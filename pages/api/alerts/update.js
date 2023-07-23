@@ -11,7 +11,7 @@ export default async function handler(req, res) {
         const splitTxt = txt.split(":");
         if (splitTxt.length > 0) {
           const key = splitTxt[0];
-          const value = splitTxt.slice(1, splitTxt.length).join("");
+          const value = splitTxt.slice(1, splitTxt.length).join(":");
           objText[key] = value;
         }
       });
