@@ -57,7 +57,13 @@ export default async function handler(req, res) {
 
           if (advanced || msgData.time.use || msgData.time.use === false)
             if (msgData.isValid) {
-              const alert = await addAlert(id, message, r.userId, r.name);
+              const alert = await addAlert(
+                id,
+                message,
+                r.userId,
+                r.name,
+                r.MT4
+              );
               if (alert) {
                 const time = new Date();
                 newAlert(id, {

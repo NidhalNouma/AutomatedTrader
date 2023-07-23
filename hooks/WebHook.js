@@ -708,13 +708,7 @@ export function getMessageAdvancedData(msg, pair) {
     }
   });
 
-  if (
-    Number(r.type) >= 0 &&
-    Number(r.riskPercentage) > 0 &&
-    Number(r.stopLoss) >= 0 &&
-    Number(r.takeProfit3) >= 0
-  )
-    r.isValid = true;
+  if (Number(r.type) >= 0 && Number(r.riskPercentage) > 0) r.isValid = true;
 
   return r.alertType ? r : null;
 }

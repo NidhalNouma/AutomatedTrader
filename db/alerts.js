@@ -21,8 +21,19 @@ const collName = "alerts";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-export async function addAlert(webhookId, message, userId, webhookName) {
+export async function addAlert(
+  webhookId,
+  message,
+  userId,
+  webhookName,
+  mtAccounts
+) {
   console.log("Adding new alert ...");
+  let accounts = {};
+
+  mtAccounts.forEach((accountId) => {
+    accounts[accountId] = [];
+  });
 
   try {
     const docRef = await addDoc(collection(db, collName), {
@@ -31,6 +42,8 @@ export async function addAlert(webhookId, message, userId, webhookName) {
       userId,
       webhookName,
       created_at: serverTimestamp(),
+      updated_at: serverTimestamp(),
+      accounts,
     });
     console.log("Document written with: ", docRef.id);
     return docRef.id;
@@ -93,4 +106,19 @@ export async function listenToAlerts(userId, func) {
   });
 
   return unsubscribe;
+}
+
+export async function updateAlertAccount(id, accountId, text) {
+  const alert = await getAlert(id);
+
+  let accounts = alert.accounts;
+  if (accounts[accountId]) accounts[accountId].push(text);
+  else accounts[accountId] = [text];
+
+  const docRef = doc(db, collName, id);
+  await updateDoc(docRef, { accounts });
+
+  console.log("Updating alert accunts ...", id);
+
+  return true;
 }
