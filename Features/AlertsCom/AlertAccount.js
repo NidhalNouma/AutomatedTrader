@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { GetMTAccountsContext } from "../../hooks/MTAccounts";
 import { BsArrowRightCircleFill } from "react-icons/bs";
 
-import { H4, H3 } from "../../Components/H";
+import { H4, H3, Hi4 } from "../../Components/H";
 
 import { Modal1 } from "../../Components/Modal";
 import { Button } from "react-daisyui";
@@ -84,7 +84,66 @@ function Details({ data, close, account }) {
           <XIcon className="h-4 w-4" />
         </Button>
       </div>
-      <div className=" w-full px-10 mt-2 mb-4">No Data</div>
+      {data.length > 0 ? (
+        <div className="px-4 pb-4">
+          {data.map((msg, i) => <Data key={i} msg={msg} />).reverse()}
+        </div>
+      ) : (
+        <div className=" w-full px-10 mt-2 mb-4">
+          <Hi4 className="text-center">No response yet!</Hi4>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Data({ msg }) {
+  return (
+    <div
+      className={`text-xs mb-2 px-2 rounded-lg py-1 font-semibold ${
+        msg.t === "error"
+          ? "bg-red-500 text-red-900"
+          : "bg-green-500 text-green-900"
+      }`}
+    >
+      <div
+        className={`pb-1 border-b-2 ${
+          msg.t === "error" ? " border-red-900" : " border-green-900"
+        }`}
+      >
+        <span
+          className={`px-2 rounded-lg border-2 ${
+            msg.t === "error" ? " border-red-900" : " border-green-900"
+          }`}
+        >
+          {msg.type}
+        </span>{" "}
+        {msg.pair} {msg.msg}
+      </div>
+      <div className="pt-1">
+        <div className="">
+          <span className="mr-2">broker time: {msg.at}</span>
+          <span className="mr-2">Price: {msg.price}</span>
+        </div>
+        <div className="">
+          <span className="mr-2">
+            Lot size:{" "}
+            {msg.new_lot_size !== "0" ? msg.new_lot_size : msg.lot_size}
+          </span>
+        </div>
+        <div className="">
+          <span className="mr-2">Stop Loss: {msg.new_sl}</span>
+          {msg.new_sl !== msg.old_sl && (
+            <span className="mr-2">Old Stop Loss: {msg.old_sl}</span>
+          )}
+        </div>
+        <div className="">
+          <span className="mr-2">Take Profit: {msg.new_tp}</span>
+          {msg.new_tp !== msg.old_tp && (
+            <span className="mr-2">Old Take Profit: {msg.old_tp}</span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
