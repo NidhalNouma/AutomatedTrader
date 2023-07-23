@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import { H4, Hi6, H6 } from "../../Components/H";
 import moment from "moment";
 import { ButtonText } from "../../Components/Button";
+import AlertAccount from "./AlertAccount";
 
 import {
   typeToStr,
@@ -71,6 +72,20 @@ const Index = ({ alertsHook }) => {
                   </H6>
                   <Hi6>{moment(v.created_at.toDate()).fromNow()}</Hi6>
                 </div>
+                {v.accounts && (
+                  <div className="flex">
+                    <Hi6 className="!text-xs !font-semibold mr-2">Sent to </Hi6>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 items-center gap-2">
+                      {Object.keys(v.accounts).map((acc, i) => (
+                        <AlertAccount
+                          key={i}
+                          accountId={acc}
+                          data={v.accounts[acc]}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <div className="collapse-content m-0 pt-4 px-2">
                   <div className="grid grid-cols-3 gap-3 justify-between w-full">
                     <span className="text-xs">

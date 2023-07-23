@@ -108,15 +108,16 @@ export async function listenToAlerts(userId, func) {
   return unsubscribe;
 }
 
-export async function updateAlertAccount(id, accountId, text) {
+export async function updateAlertAccount(id, accountId, textObj) {
+  textObj["server_time"] = serverTimestamp();
   const alert = await getAlert(id);
 
   let accounts = alert.accounts;
-  if (accounts[accountId]) accounts[accountId].push(text);
-  else accounts[accountId] = [text];
+  if (accounts[accountId]) accounts[accountId].push(textObj);
+  else accounts[accountId] = [textObj];
 
   const docRef = doc(db, collName, id);
-  await updateDoc(docRef, { accounts });
+  await updateDoc(docRef, { accounts, updated_at: serverTimestamp() });
 
   console.log("Updating alert accunts ...", id);
 

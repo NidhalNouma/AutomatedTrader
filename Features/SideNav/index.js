@@ -29,7 +29,7 @@ function Index({ cpath, fixed = true }) {
   return (
     <Content fixed={fixed}>
       {/* {fixed && ( */}
-      <div className="py-4 px-4 m-3 sticky top-3 left-0 ">
+      <div className="py-4 px-4 m-2 sticky top-3 left-0 ">
         <div className="relative">
           <Image
             src="/Logo/dark-logo.png"
