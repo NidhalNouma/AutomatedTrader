@@ -67,7 +67,14 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!load) {
       // console.log(user);
-      if (user) {
+      if (user && fullUser) {
+        const subObj = fullUser?.subObj;
+
+        console.log(subObj);
+
+        // if (!subObj) {
+        //   router.push("/welcome");
+        // } else
         if (
           pathname === "/" ||
           pathname === "/signin" ||
@@ -87,7 +94,7 @@ function MyApp({ Component, pageProps }) {
             else router.push("/membership?m=" + subscription);
           }
         }
-      } else if (!user) {
+      } else if (!user && !fullUser) {
         if (
           pathname !== "/signin" &&
           pathname !== "/signup" &&
@@ -106,13 +113,17 @@ function MyApp({ Component, pageProps }) {
         setAlerts([]);
       }
     }
-  }, [load, user]);
+  }, [load, user, fullUser]);
 
   useEffect(() => {
     if (fullUser && !load) {
       getAllMTAccounts(user?.uid);
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
+    } else if (!fullUser) {
+      setMTAccounts([]);
+      setWebhooks([]);
+      setAlerts([]);
     }
   }, [fullUser, load]);
 

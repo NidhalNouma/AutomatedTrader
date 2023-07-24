@@ -7,11 +7,12 @@ function MainWithHeader({
   children,
   mainClassName,
   className,
+  header = true,
   withBanners = true,
 }) {
   return (
     <div className={`${className} w-full flex flex-col`}>
-      <Header />
+      {header && <Header />}
       {/* {withBanners && <Banners />} */}
       <Main className={mainClassName}>{children}</Main>
     </div>

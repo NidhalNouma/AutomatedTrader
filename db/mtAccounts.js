@@ -48,7 +48,7 @@ export async function addMTAccount(
       accountNumber
     );
     if (find) {
-      const msgDoc = doc(db, collName, id);
+      const msgDoc = doc(db, collName, find.id);
       await updateDoc(msgDoc, { version, accountBalance, accountEquity });
       console.log("account already exist ... ");
       return { id: find.id, exist: true };
