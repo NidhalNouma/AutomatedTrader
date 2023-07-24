@@ -13,6 +13,7 @@ export default async function handler(req, res) {
       accountCurrency,
       accountCredit,
       accountCompany,
+      version,
     } = req.body;
 
     if (userId && accountName && accountNumber && accountServer) {
@@ -27,7 +28,8 @@ export default async function handler(req, res) {
         accountCurrency,
         accountCredit,
         accountCompany,
-        "MT4"
+        "MT4",
+        version
       );
       if (r.id)
         return res.status(200).json({ id: r.id, exist: r.exist, done: true });

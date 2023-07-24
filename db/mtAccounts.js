@@ -35,7 +35,8 @@ export async function addMTAccount(
   accountCurrency,
   accountCredit,
   accountCompany,
-  type
+  type,
+  version
 ) {
   console.log("Adding new MT account ...");
 
@@ -47,6 +48,8 @@ export async function addMTAccount(
       accountNumber
     );
     if (find) {
+      const msgDoc = doc(db, collName, id);
+      await updateDoc(msgDoc, { version, accountBalance, accountEquity });
       console.log("account already exist ... ");
       return { id: find.id, exist: true };
     }
@@ -64,6 +67,7 @@ export async function addMTAccount(
       accountCredit,
       accountCompany,
       type,
+      version,
       lastUpdated: "",
       color: getRandomColor(),
       created_at: serverTimestamp(),

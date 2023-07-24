@@ -115,7 +115,7 @@ function Index() {
 
         {step === 5 && (
           <StepCom
-            title="All set"
+            title="You're ALL set!"
             // nextStep={nextStep}
             prevStep={prevStep}
             // videoSrc={videosUrls.metatraderAddWebhooks}

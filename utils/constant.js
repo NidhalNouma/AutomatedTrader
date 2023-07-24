@@ -18,8 +18,14 @@ export function WebhhokURL() {
   return window.location.protocol + "//" + window.location.host + "/api/wh/";
 }
 
-export const MT4EAPath = process.env.NEXT_PUBLIC_MT4_EA;
-export const MT5EAPath = process.env.NEXT_PUBLIC_MT5_EA;
+export const MT4EA = {
+  path: process.env.NEXT_PUBLIC_MT4_EA,
+  version: process.env.NEXT_PUBLIC_MT4_EA_VERSION,
+};
+export const MT5EA = {
+  path: process.env.NEXT_PUBLIC_MT5_EA,
+  version: process.env.NEXT_PUBLIC_MT5_EA_VERSION,
+};
 
 export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;
 const urlForTelegram = () =>

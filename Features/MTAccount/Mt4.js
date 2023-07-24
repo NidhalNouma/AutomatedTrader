@@ -22,7 +22,7 @@ import { txtColorFromBg } from "../../utils/functions";
 
 import tailwindConfig from "../../tailwind.config.js";
 
-function Mt4({ account, userId }) {
+function Mt4({ account, userId, version }) {
   const [openNumbers, setOpenNumbers] = useState(true);
   const [open, setOpen] = useState(false);
   const [openDel, setOpenDel] = useState(false);
@@ -140,6 +140,15 @@ function Mt4({ account, userId }) {
                 {account.accountEquity}
               </H5>
             </div>
+          </div>
+        )}
+
+        {(!account.version ||
+          account.version.toString() !== version.toString()) && (
+          <div className="">
+            <span className="text-xs font-semibold rounded-lg bg-red-400 text-red-900 px-2 py-1">
+              Account doesn&apos;t have the latest EA!
+            </span>
           </div>
         )}
       </div>

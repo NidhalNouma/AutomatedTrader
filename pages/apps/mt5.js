@@ -9,7 +9,7 @@ import { ArrowCircleDownIcon } from "@heroicons/react/outline";
 import { GetUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 
-import { MT5EAPath } from "../../utils/constant";
+import { MT5EA } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
 
 import Mt4 from "../../Features/MTAccount/Mt4";
@@ -73,7 +73,7 @@ export default function MT5() {
             <ButtonP
               onClick={(e) => {
                 e.preventDefault();
-                window.location = MT5EAPath;
+                window.location = MT5EA.path;
               }}
               icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >
@@ -86,7 +86,12 @@ export default function MT5() {
             <div className="md:flex items-start justify-between w-full">
               <div className="mt-3 w-full md:w-4/12">
                 {mt5Accounts.map((v, i) => (
-                  <Mt4 key={v.id} account={v} userId={user?.uid} />
+                  <Mt4
+                    key={v.id}
+                    account={v}
+                    userId={user?.uid}
+                    version={MT5EA.version}
+                  />
                 ))}
                 <div className="my-4">
                   {/* <div className="flex"> */}

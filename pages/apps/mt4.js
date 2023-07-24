@@ -17,17 +17,16 @@ import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
 import { Dropdown } from "react-daisyui";
 import { ArrowCircleDownIcon } from "@heroicons/react/outline";
 
-import { MT4EAPath } from "../../utils/constant";
 import { copyTextToClipboard } from "../../utils/functions";
 
 import Mt4Welcome from "../../Features/WelcomeSection/Mt4";
 
 import { PlayVideoPopup } from "../../Components/Video";
-import { videosUrls } from "../../utils/constant";
+import { videosUrls, MT4EA } from "../../utils/constant";
 
 export default function MT4() {
   const { user } = GetUserContext();
-  const { mt4Accounts , getData } = GetMTAccountsContext();
+  const { mt4Accounts, getData } = GetMTAccountsContext();
   const data = getData();
 
   const { totalProfit, profitPerPair } = CalculateData(data);
@@ -82,7 +81,7 @@ export default function MT4() {
             <ButtonP
               onClick={(e) => {
                 e.preventDefault();
-                window.location = MT4EAPath;
+                window.location = MT4EA.path;
               }}
               icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >
@@ -122,7 +121,12 @@ export default function MT4() {
           <div className="md:flex items-start justify-between w-full">
             <div className="mt-3 w-full md:w-4/12">
               {mt4Accounts.map((v, i) => (
-                <Mt4 key={v.id} account={v} userId={user?.uid} />
+                <Mt4
+                  key={v.id}
+                  account={v}
+                  userId={user?.uid}
+                  version={MT4EA.version}
+                />
               ))}
               <div className="my-4">
                 {/* <div className="flex"> */}
