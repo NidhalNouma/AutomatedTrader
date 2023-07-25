@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
@@ -42,37 +42,28 @@ export default function Membership() {
 
   return (
     <>
-      {/* <Sidenav cpath="membership" /> */}
-      <MainWithHeader withBanners={false} header={false}>
-        {/* <H1>Membership</H1> */}
-        {fullUser.subObj?.chargeBeeId !==
-          pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale1 />}
-        <div className="mt-4">
-          {/* {success && (
-            <div className="flex mb-6 justify-center">
-              <p className="text-bg text-sm font-bold bg-success rounded-lg px-8 py-1 ">
-                Congratulations! You have now the membership.
+      {success && <Sidenav cpath="membership" />}
+      <MainWithHeader withBanners={false} header={success}>
+        <div className="mt-4 max-w-6xl mx-auto">
+          {success ? (
+            <H1>Membership</H1>
+          ) : (
+            <Fragment>
+              <H1>Subscribe to a plan!</H1>
+              <p className="text-text-p font-medium text-sm">
+                You can cancel anytime.
                 <br />
-                You have joined the team.
+                Please note that there are no refunds. If you have any questions
+                please feel free to contact us.
               </p>
-            </div>
-          )} */}
+            </Fragment>
+          )}
+          {fullUser?.subObj?.chargeBeeId !==
+            pricingList.lifetime["Lifetime access"].chargeBeeId && (
+            <MegaSale1 />
+          )}
 
-          {/* {fullUser?.subObj ? (
-            <div className="flex justify-center mb-6">
-              <div className="bg-accent px-3 py-1 rounded-lg">
-                <Hi4 className="!text-bg font-semibold">
-                  You got the{" "}
-                  <span className="font-extrabold">{fullUser.subObj.name}</span>{" "}
-                  membership.
-                </Hi4>
-              </div>
-            </div>
-          ) : ( */}
-          <div className="mt-2"></div>
-          {/* )} */}
-
-          <div className="w-full flex justify-center mb-8 bg-bgt">
+          <div className="w-full flex justify-center mb-8 mt-10 bg-bgt">
             <ButtonGroup>
               <Button
                 animation={false}

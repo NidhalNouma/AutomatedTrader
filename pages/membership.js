@@ -45,7 +45,7 @@ export default function Membership() {
       <Sidenav cpath="membership" />
       <MainWithHeader withBanners={false}>
         <H1>Membership</H1>
-        {fullUser.subObj?.chargeBeeId !==
+        {fullUser?.subObj?.chargeBeeId !==
           pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale1 />}
         <div className="mt-4">
           {/* {success && (

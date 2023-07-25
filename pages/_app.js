@@ -72,10 +72,9 @@ function MyApp({ Component, pageProps }) {
 
         console.log(subObj);
 
-        // if (!subObj) {
-        //   router.push("/welcome");
-        // } else
-        if (
+        if (!subObj) {
+          router.push("/welcome");
+        } else if (
           pathname === "/" ||
           pathname === "/signin" ||
           pathname === "/signup" ||
