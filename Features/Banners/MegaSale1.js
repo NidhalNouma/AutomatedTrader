@@ -7,9 +7,7 @@ import { Countdown } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
 import { pricingList } from "../../utils/pricing";
 
-const endDate = new Date("2023-04-10");
-
-function MegaSale1() {
+function MegaSale1({ endDate = new Date("2023-04-10") }) {
   const router = useRouter();
 
   return (

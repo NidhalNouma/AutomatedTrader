@@ -9,11 +9,11 @@ import { BsYoutube, BsDiscord } from "react-icons/bs";
 export default function Header() {
   return (
     <header
-      className={`fixed top-0 w-full clearNav z-50 bg-bgt/25 pt-6 pb-4 backdrop-blur-2xl`}
+      className={`fixed top-0 w-full clearNav z-50 bg-bgt/25 pt-1 md:pt-6 pb-2 md:pb-4 backdrop-blur-2xl`}
     >
-      <div className="max-w-7xl mx-auto flex flex-wrap sm:px-5 px-0 flex-col md:flex-row">
-        <div className="flex flex-row items-center justify-between p-3 md:p-1 w-full">
-          <div className="h-full w-3/12">
+      <div className="max-w-7xl mx-auto w-full flex flex-wrap sm:px-5 px-4 items-center md:flex-row">
+        <div className="flex flex-row items-center justify-between p-0 md:p-1 w-full">
+          <div className="h-full w-3/12 max-w-[25%]">
             <Image
               src="/Logo/dark-logo.png"
               alt=""

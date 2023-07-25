@@ -16,6 +16,8 @@ import { GiPrimitiveTorch } from "react-icons/gi";
 import { AiTwotoneFire } from "react-icons/ai";
 import { pricingList } from "../utils/pricing";
 
+import { SignOut } from "../hooks/SignHook";
+
 import MegaSale1 from "../Features/Banners/MegaSale1";
 
 export default function Membership() {
@@ -49,7 +51,18 @@ export default function Membership() {
             <H1>Membership</H1>
           ) : (
             <Fragment>
-              <H1>Subscribe to a plan!</H1>
+              <div className="flex items-center justify-between">
+                <H1>Subscribe to a plan!</H1>
+                <button
+                  className="text-text-p underline hover:text-text-h !text-sm"
+                  onClick={async () => {
+                    await SignOut();
+                    router.push("/");
+                  }}
+                >
+                  Sign out
+                </button>{" "}
+              </div>
               <p className="text-text-p font-medium text-sm">
                 You can cancel anytime.
                 <br />
@@ -60,7 +73,7 @@ export default function Membership() {
           )}
           {fullUser?.subObj?.chargeBeeId !==
             pricingList.lifetime["Lifetime access"].chargeBeeId && (
-            <MegaSale1 />
+            <MegaSale1 endDate={new Date("2022-08-10")} />
           )}
 
           <div className="w-full flex justify-center mb-8 mt-10 bg-bgt">

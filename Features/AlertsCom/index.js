@@ -192,7 +192,9 @@ function Alert({ v, wh, key, msg }) {
         )}
         {v.accounts && (
           <div className="flex">
-            <Hi6 className="!text-xs !font-semibold mr-2">Sent to </Hi6>
+            <Hi6 className="!text-xs !font-semibold mr-2 whitespace-nowrap">
+              Sent to{" "}
+            </Hi6>
             <div className="grid grid-cols-2 sm:grid-cols-4 items-center gap-2">
               {Object.keys(v.accounts).map((acc, i) => (
                 <AlertAccount key={i} accountId={acc} data={v.accounts[acc]} />

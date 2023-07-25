@@ -48,7 +48,7 @@ function AlertAccount({ accountId, data }) {
           style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
         >
           <H4
-            className="!text-xs !font-bold flex items-center justify-center"
+            className="!text-xs !font-bold flex items-center justify-center truncate"
             style={{ color: txtColor }}
           >
             {account.accountDisplayName}
@@ -128,7 +128,7 @@ function Data({ msg }) {
         <div className="">
           <span className="mr-2">
             Lot size:{" "}
-            {msg.new_lot_size !== "0" ? msg.new_lot_size : msg.lot_size}
+            {Number(msg.new_lot_size) !== 0 ? msg.new_lot_size : msg.lot_size}
           </span>
         </div>
         <div className="">

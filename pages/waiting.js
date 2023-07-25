@@ -1,7 +1,9 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { SignOut } from "../hooks/SignHook";
 
 export default function Home() {
+  const router = useRouter();
   return (
     <div className="text-black w-full h-screen flex flex-col justify-center items-center">
       <div className="container flex flex-col items-center justify-center mx-auto">
@@ -20,7 +22,10 @@ export default function Home() {
           Click{" "}
           <button
             className="text-text-p underline hover:text-text-h"
-            onClick={() => SignOut()}
+            onClick={async () => {
+              await SignOut();
+              router.push("/");
+            }}
           >
             here
           </button>{" "}

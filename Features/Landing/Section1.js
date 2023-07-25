@@ -89,7 +89,7 @@ function Section1() {
         data-aos="fade-up"
         data-aos-duration="1200"
         data-aos-delay="300"
-        className="relative container flex flex-col items-center justify-center mx-auto"
+        className="hidden sm:flex relative container flex-col items-center justify-center mx-auto"
       >
         <div className="absolute top-[0%] left-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
         <div className="absolute top-[0%] right-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>

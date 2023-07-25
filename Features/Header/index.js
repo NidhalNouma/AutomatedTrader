@@ -131,7 +131,12 @@ function Index() {
                         Settings
                       </Link>
                     </li>
-                    <Dropdown.Item onClick={() => SignOut()}>
+                    <Dropdown.Item
+                      onClick={async () => {
+                        await SignOut();
+                        router.push("/");
+                      }}
+                    >
                       Logout
                     </Dropdown.Item>
                   </Dropdown.Menu>
