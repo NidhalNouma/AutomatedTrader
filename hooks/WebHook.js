@@ -637,6 +637,10 @@ export function getMessageAdvancedData(msg, pair) {
     breakEvenOffset: 0,
     breakEvenPClose: 0,
 
+    digits: 0,
+    points: 0,
+    price: 0,
+
     isValid: false,
   };
   const dataArray = msg.split(",");
@@ -703,6 +707,15 @@ export function getMessageAdvancedData(msg, pair) {
           break;
         case "BE_PCLOSE":
           r.breakEvenPClose = Number(value);
+          break;
+        case "POINTS":
+          r.points = Number(value);
+          break;
+        case "DIGITS":
+          r.digits = Number(value);
+          break;
+        case "PRICE":
+          r.price = Number(value);
           break;
       }
     }

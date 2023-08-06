@@ -189,9 +189,16 @@ export const UpdateUserSubscription = async (
   userId,
   subId,
   cusId,
-  subscription
+  subscription,
+  oldSubscription
 ) => {
-  const r = await updateSubsciption(userId, subId, cusId);
+  const r = await updateSubsciption(
+    userId,
+    subId,
+    cusId,
+    true,
+    oldSubscription
+  );
 
   r["subscription"] = subscription;
 

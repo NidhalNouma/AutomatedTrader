@@ -66,7 +66,7 @@ function AlertAccount({ accountId, data }) {
 export default AlertAccount;
 
 function Details({ data, close, account }) {
-  if (account) console.log(account, data);
+  // if (account) console.log(account, data);
   return (
     <div className="">
       <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
@@ -101,19 +101,19 @@ function Data({ msg }) {
   return (
     <div
       className={`text-xs mb-2 px-2 rounded-lg py-1 font-semibold ${
-        msg.t === "error"
+        msg.d === "error"
           ? "bg-red-500 text-red-900"
           : "bg-green-500 text-green-900"
       }`}
     >
       <div
         className={`pb-1 border-b-2 ${
-          msg.t === "error" ? " border-red-900" : " border-green-900"
+          msg.d === "error" ? " border-red-900" : " border-green-900"
         }`}
       >
         <span
           className={`px-2 rounded-lg border-2 ${
-            msg.t === "error" ? " border-red-900" : " border-green-900"
+            msg.d === "error" ? " border-red-900" : " border-green-900"
           }`}
         >
           {msg.type}

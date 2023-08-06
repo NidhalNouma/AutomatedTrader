@@ -15,6 +15,7 @@ import {
   arrayUnion,
   arrayRemove,
 } from "firebase/firestore";
+import { deleteSubscription } from "./subscriptions";
 import { firebaseConfig } from "../utils/constant";
 import axios from "axios";
 const collName = "users";
@@ -143,9 +144,19 @@ export async function updateUserData(id, key, value, getuser = true) {
   } else return u;
 }
 
-export async function updateSubsciption(id, subId, cusId, getuser = true) {
+export async function updateSubsciption(
+  id,
+  subId,
+  cusId,
+  getuser = true,
+  oldSubscription = null
+) {
   console.log("Update user subscription ... ", id, subId);
   const msgDoc = doc(db, collName, id);
+
+  if (oldSubscription) {
+    await deleteSubscription(oldSubscription);
+  }
 
   const u = await updateDoc(msgDoc, {
     subscriptionId: subId,

@@ -44,6 +44,29 @@ export async function getSubscription(id) {
 }
 
 export async function deleteSubscription(id) {
+  const purl = "/api/v2/subscriptions/" + id + "/cancel_for_items";
+  let r = null;
+  try {
+    r = await axios({
+      method: "POST",
+      url: purl,
+      baseURL: URL,
+      data: {
+        credit_option_for_current_term_charges: "prorate",
+        nd_of_term: "false",
+      },
+      headers: { Authorization: authorization },
+    });
+
+    r = r.data;
+  } catch (e) {
+    console.log("delete subscription error => ", e.message);
+  }
+
+  return r;
+}
+
+export async function cancelSubscriptionImmidiatly(id) {
   const purl = "/api/v2/subscriptions/" + id + "/del";
   let r = null;
   try {
