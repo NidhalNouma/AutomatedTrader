@@ -638,6 +638,7 @@ export function getMessageAdvancedData(msg, pair) {
     breakEvenPClose: 0,
 
     digits: 0,
+    pointValue: 0,
     points: 0,
     price: 0,
 
@@ -709,10 +710,11 @@ export function getMessageAdvancedData(msg, pair) {
           r.breakEvenPClose = Number(value);
           break;
         case "POINTS":
-          r.points = Number(value);
+          r.pointValue = Number(value);
           break;
         case "DIGITS":
           r.digits = Number(value);
+          r.points = calculatePoints(Number(value));
           break;
         case "PRICE":
           r.price = Number(value);
@@ -724,4 +726,12 @@ export function getMessageAdvancedData(msg, pair) {
   if (Number(r.type) >= 0 && Number(r.riskPercentage) > 0) r.isValid = true;
 
   return r.alertType ? r : null;
+}
+
+function calculatePoints(digits) {
+  if (digits < 1) {
+    return 1;
+  }
+
+  return (1 / Math.pow(10, digits)) * 10;
 }
