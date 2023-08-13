@@ -30,9 +30,18 @@ function WebhookDataAdvanced({
   const { newAlert } = GetToastContext();
   const { user } = GetUserContext();
 
-  const { name, setName, pair, setPair, error, add } = WebhookAdvanced(
-    user?.uid
-  );
+  const {
+    name,
+    setName,
+    pair,
+    setPair,
+    error,
+    add,
+    digits,
+    setDigits,
+    useDigits,
+    setUseDigits,
+  } = WebhookAdvanced(user?.uid);
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
   const { fullUser } = GetFullUserContext();
@@ -60,7 +69,24 @@ function WebhookDataAdvanced({
             value={pair}
             setValue={setPair}
           />
-          <div className="my-1"></div>
+          <div className="my-1.5"></div>
+          <Toggle1
+            name="Custom digits"
+            helper="Set digits manually"
+            value={useDigits}
+            setValue={() => setUseDigits(!useDigits)}
+          />
+          {useDigits && (
+            <Input1Inline
+              name="Digits"
+              placeholder="2"
+              helper="Digits number"
+              type="number"
+              disabled={!useDigits}
+              value={digits}
+              setValue={(v) => setDigits(v)}
+            />
+          )}
 
           <hr className="my-2" />
 

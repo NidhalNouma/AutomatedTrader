@@ -18,6 +18,8 @@ export const WebhookAdvanced = (userId) => {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
+  const [useDigits, setUseDigits] = useState(false);
+  const [digits, setDigits] = useState("");
 
   async function add() {
     if (!name) {
@@ -37,11 +39,28 @@ export const WebhookAdvanced = (userId) => {
     setError("");
     // const msg = formatMsg();
     // console.log(msg);
-    const r = await addAdvancedWebhook(name, pair, "/api/", userId);
+    const r = await addAdvancedWebhook(
+      name,
+      pair,
+      "/api/",
+      userId,
+      useDigits ? digits : null
+    );
     return r;
   }
 
-  return { error, name, setName, pair, setPair, add };
+  return {
+    error,
+    name,
+    setName,
+    pair,
+    setPair,
+    add,
+    digits,
+    setDigits,
+    useDigits,
+    setUseDigits,
+  };
 };
 
 export const WebHook = (userId) => {
@@ -733,5 +752,5 @@ function calculatePoints(digits) {
     return 1;
   }
 
-  return (1 / Math.pow(10, digits)) * 10;
+  return 1 / Math.pow(10, digits); // * 10;
 }

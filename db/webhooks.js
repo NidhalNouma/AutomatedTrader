@@ -46,7 +46,7 @@ export async function addWebhook(name, message, url, userId) {
   }
 }
 
-export async function addAdvancedWebhook(name, pair, url, userId) {
+export async function addAdvancedWebhook(name, pair, url, userId, digits) {
   console.log("Adding new advanced webhook ...");
 
   try {
@@ -58,6 +58,7 @@ export async function addAdvancedWebhook(name, pair, url, userId) {
       advanced: true,
       active: true,
       public: false,
+      digits,
       color: getRandomColor(),
       created_at: serverTimestamp(),
     });
