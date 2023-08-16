@@ -69,7 +69,7 @@ function WebhookDataAdvanced({
             value={pair}
             setValue={setPair}
           />
-          <div className="my-1.5"></div>
+          {/* <div className="my-1.5"></div>
           <Toggle1
             name="Custom digits"
             helper="Set digits manually"
@@ -86,7 +86,7 @@ function WebhookDataAdvanced({
               value={digits}
               setValue={(v) => setDigits(v)}
             />
-          )}
+          )} */}
 
           <hr className="my-2" />
 
