@@ -752,5 +752,5 @@ function calculatePoints(digits) {
     return 1;
   }
 
-  return 1 / Math.pow(10, digits); // * 10;
+  return (1 / Math.pow(10, digits)) * 10;
 }
