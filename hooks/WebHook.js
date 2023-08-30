@@ -733,10 +733,13 @@ export function getMessageAdvancedData(msg, pair) {
           break;
         case "DIGITS":
           r.digits = Number(value);
-          r.points = calculatePoints(Number(value));
+          // r.points = calculatePoints(Number(value));
           break;
         case "PRICE":
           r.price = Number(value);
+          break;
+        case "PIPS":
+          r.points = Number(value);
           break;
       }
     }
