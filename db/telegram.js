@@ -13,7 +13,13 @@ export async function sendMessage(chatId, message, msgData, wh) {
   } pips.\n${msgData.TS?.use ? `Trailing Stop is ON` : "Trailing Stop is OFF"}`;
 
   if (wh.advanced)
-    text = `AutomatedTrader: ${wh.name} advanced webhook\nNew Trade: ${wh.pair} with ${msgData.riskPercentage}% Lot size.\nStopLoss: ${msgData.stopLoss} pips, TakeProfit 1: ${msgData.takeProfit1} pips.\n TakeProfit 2: ${msgData.takeProfit2} pips.\n TakeProfit 3: ${msgData.takeProfit3} pips.`;
+    text = `AutomatedTrader: ${wh.name} advanced webhook\nNew ${
+      wh.type === 0 ? "buy" : "sell"
+    } Trade: ${wh.pair} with ${msgData.riskPercentage}% Lot size.\nStopLoss: ${
+      msgData.stopLoss
+    } pips, TakeProfit 1: ${msgData.takeProfit1} pips.\n TakeProfit 2: ${
+      msgData.takeProfit2
+    } pips.\n TakeProfit 3: ${msgData.takeProfit3} pips.`;
 
   try {
     r = await axios.post(`${telegramWebhookAPI}/sendMessage`, {

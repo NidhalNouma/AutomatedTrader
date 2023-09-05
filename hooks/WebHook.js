@@ -661,6 +661,9 @@ export function getMessageAdvancedData(msg, pair) {
     points: 0,
     price: 0,
 
+    parcialClose: 0,
+    comment: "",
+
     isValid: false,
   };
   const dataArray = msg.split(",");
@@ -728,6 +731,14 @@ export function getMessageAdvancedData(msg, pair) {
         case "BE_PCLOSE":
           r.breakEvenPClose = Number(value);
           break;
+
+        case "PARTIAL_CLOSE":
+          r.parcialClose = Number(value);
+          break;
+        case "COMMENT":
+          r.comment = value;
+          break;
+
         case "POINTS":
           r.pointValue = Number(value);
           break;
@@ -748,12 +759,4 @@ export function getMessageAdvancedData(msg, pair) {
   if (Number(r.type) >= 0 && Number(r.riskPercentage) > 0) r.isValid = true;
 
   return r.alertType ? r : null;
-}
-
-function calculatePoints(digits) {
-  if (digits < 1) {
-    return 1;
-  }
-
-  return (1 / Math.pow(10, digits)) * 10;
 }

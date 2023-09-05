@@ -24,12 +24,12 @@ export function getAlertByUserId(id) {
   // removeAfterXs(id);
   const r = [];
   alerts.forEach(function (v, i) {
-    removeAfterXs(v.id);
     const s = v.data.length;
     for (let j = 0; j < s; j++) {
       const d = v.data[j];
       if (d.userId === id) r.push({ ...d, id: v.id });
     }
+    removeAfterXs(v.id);
   });
 
   return r;
@@ -44,7 +44,7 @@ export function getAlert(id) {
   return f;
 }
 
-function removeAfterXs(id, sec = 30) {
+function removeAfterXs(id, sec = 50) {
   const i = alerts.findIndex((obj) => obj.id === id);
   let t = new Date();
   t = new Date(t.getTime() - 1000 * sec);
