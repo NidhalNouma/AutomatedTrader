@@ -661,7 +661,7 @@ export function getMessageAdvancedData(msg, pair) {
     points: 0,
     price: 0,
 
-    parcialClose: 0,
+    partialClose: 0,
     comment: "",
 
     isValid: false,
@@ -733,7 +733,7 @@ export function getMessageAdvancedData(msg, pair) {
           break;
 
         case "PARTIAL_CLOSE":
-          r.parcialClose = Number(value);
+          r.partialClose = Number(value);
           break;
         case "COMMENT":
           r.comment = value;
