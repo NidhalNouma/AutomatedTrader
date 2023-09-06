@@ -644,6 +644,7 @@ export function getMessageAdvancedData(msg, pair) {
     type: -1,
     symbol: "",
     riskPercentage: 0,
+    fixedLotSize: 0,
     stopLoss: 0,
     takeProfit1: 0,
     parcielClose1: 0,
@@ -695,6 +696,13 @@ export function getMessageAdvancedData(msg, pair) {
           break;
 
         case "RISK":
+          if(value.indexOf("%"">=0)
+             {
+                const val = value.replace('%', '');
+                r.riskPercentage = Number(val);
+             }
+          else r.fixedLotSize = 0;// Number(value);
+          
           r.riskPercentage = Number(value);
           break;
 
