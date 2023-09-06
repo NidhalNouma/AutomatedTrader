@@ -696,7 +696,7 @@ export function getMessageAdvancedData(msg, pair) {
           break;
 
         case "RISK":
-          if(value.indexOf("%"">=0)
+          if(value.indexOf("%")>=0)
              {
                 const val = value.replace('%', '');
                 r.riskPercentage = Number(val);
