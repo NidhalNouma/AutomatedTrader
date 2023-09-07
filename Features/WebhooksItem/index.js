@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from "react";
 
 import { H6, Hi6, H4 } from "../../Components/H";
 import { ButtonInfo, ButtonText } from "../../Components/Button";
-import { Togglew, Input1 } from "../../Components/Input";
+import { Togglew, Input1, Toggle1, Input1Inline } from "../../Components/Input";
 import { Toggle, Select, Dropdown } from "react-daisyui";
 import {
   PlusCircleIcon,
@@ -33,6 +33,7 @@ import {
   EditWebhookName,
   EditWebhookColor,
   EditWebhookPair,
+  EditWebhookData,
 } from "../../hooks/WebHook";
 import { GetToastContext } from "../../hooks/ToastHook";
 
@@ -58,6 +59,21 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
     webhook.pair
   );
 
+  const {
+    whpair: whpairdata,
+    setWHpair: setWhPairData,
+    useFixedLotSize,
+    setUseFixedLotSize,
+    fixedLotSize,
+    setFixedLotSize,
+    editWhData,
+  } = EditWebhookData(
+    user?.uid,
+    webhook.id,
+    webhook.pair,
+    webhook.fixedLotSize
+  );
+
   const { whcolor, setWHcolor, editWhColor } = EditWebhookColor(
     user?.uid,
     webhook.id,
@@ -69,6 +85,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   const [openEdit, setOpenEdit] = useState(false);
   const [openChangeName, setOpenChangeName] = useState(false);
   const [openChangePair, setOpenChangePair] = useState(false);
+  const [openChangeData, setOpenChangeData] = useState(false);
   const [openChangeColor, setOpenChangeColor] = useState(false);
 
   const [duplicateMsg, setDuplicateMsg] = useState(null);
@@ -218,6 +235,55 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
             </Modal1>
 
             <Modal1
+              open={openChangeData}
+              close={() => {
+                setOpenChangeData(false);
+              }}
+              backclose={() => {
+                setOpenChangeData(false);
+              }}
+            >
+              <EditMessage
+                close={() => setOpenChangeData(false)}
+                title="Change data"
+                onEdit={async () => {
+                  const r = await editWhData();
+                  setWebhooks(r);
+                }}
+              >
+                <div className="mb-2 w-full max-w-md flex flex-col items-center">
+                  <Input1Inline
+                    className="mb-4 "
+                    name="Pair name"
+                    type="text"
+                    placeholder="Pair name"
+                    value={whpairdata}
+                    setValue={(v) => setWhPairData(v)}
+                    helper="Pair name"
+                    // focus={openEdit}
+                  />
+                  <Toggle1
+                    name="Set fixed position size"
+                    helper="Override lot size by setting a fixed lot size"
+                    value={useFixedLotSize}
+                    setValue={() => setUseFixedLotSize(!useFixedLotSize)}
+                  />
+                  {useFixedLotSize && (
+                    <Input1Inline
+                      name="Fix position size"
+                      placeholder="1"
+                      helper="Fixed lot size"
+                      type="number"
+                      disabled={!useFixedLotSize}
+                      value={fixedLotSize}
+                      setValue={(v) => setFixedLotSize(v)}
+                    />
+                  )}
+                </div>
+              </EditMessage>
+            </Modal1>
+
+            <Modal1
               open={openChangeColor}
               close={() => {
                 setOpenChangeColor(false);
@@ -306,6 +372,15 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             Change color
                           </span>
                         </Dropdown.Item>
+                        {webhook.advanced && (
+                          <Dropdown.Item
+                            onClick={() => setOpenChangeData(true)}
+                          >
+                            <span className="text-secondary text-sm font-bold">
+                              Edit webhook
+                            </span>
+                          </Dropdown.Item>
+                        )}
                         <Dropdown.Item onClick={() => setOpenDel(true)}>
                           <span className="text-text-p text-sm font-bold">
                             Delete

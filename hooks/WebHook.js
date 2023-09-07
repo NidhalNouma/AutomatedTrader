@@ -11,6 +11,7 @@ import {
   updateWebhookName,
   updateWebhookPair,
   updateWebhookColor,
+  updateWebhookData,
 } from "../db/webhooks";
 import axios from "axios";
 
@@ -18,8 +19,8 @@ export const WebhookAdvanced = (userId) => {
   const [error, setError] = useState("");
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
-  const [useDigits, setUseDigits] = useState(false);
-  const [digits, setDigits] = useState("");
+  const [useFixedLotSize, setUseFixedLotSize] = useState(false);
+  const [fixedLotSize, setFixedLotSize] = useState("");
 
   async function add() {
     if (!name) {
@@ -44,7 +45,7 @@ export const WebhookAdvanced = (userId) => {
       pair,
       "/api/",
       userId,
-      useDigits ? digits : null
+      useFixedLotSize ? fixedLotSize : 0
     );
     return r;
   }
@@ -56,10 +57,10 @@ export const WebhookAdvanced = (userId) => {
     pair,
     setPair,
     add,
-    digits,
-    setDigits,
-    useDigits,
-    setUseDigits,
+    fixedLotSize,
+    setFixedLotSize,
+    useFixedLotSize,
+    setUseFixedLotSize,
   };
 };
 
@@ -363,6 +364,38 @@ export function EditWebhookPair(userId, whId, defaultPair) {
   }
 
   return { whpair, setWHpair, editWhPair };
+}
+
+export function EditWebhookData(userId, whId, defaultPair, defaultLotSize) {
+  const [whpair, setWHpair] = useState(defaultPair || "");
+
+  const [useFixedLotSize, setUseFixedLotSize] = useState(
+    defaultLotSize > 0 ? true : false
+  );
+  const [fixedLotSize, setFixedLotSize] = useState(
+    defaultLotSize > 0 ? defaultLotSize : ""
+  );
+
+  async function editWhData() {
+    if (!userId || !whId) return;
+    const r = await updateWebhookData(
+      userId,
+      whId,
+      whpair,
+      useFixedLotSize ? fixedLotSize : 0
+    );
+    return r;
+  }
+
+  return {
+    whpair,
+    setWHpair,
+    useFixedLotSize,
+    setUseFixedLotSize,
+    fixedLotSize,
+    setFixedLotSize,
+    editWhData,
+  };
 }
 
 export function EditWebhookColor(userId, whId, defaultColor) {
@@ -705,7 +738,7 @@ export function getMessageAdvancedData(msg, pair) {
           break;
 
         case "FIXEDLOTSIZE":
-          r.fixedLotSize = Number(val);
+          r.fixedLotSize = Number(value);
           break;
 
         case "SL":

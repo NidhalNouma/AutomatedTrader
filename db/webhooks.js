@@ -46,7 +46,13 @@ export async function addWebhook(name, message, url, userId) {
   }
 }
 
-export async function addAdvancedWebhook(name, pair, url, userId, digits) {
+export async function addAdvancedWebhook(
+  name,
+  pair,
+  url,
+  userId,
+  fixedLotSize
+) {
   console.log("Adding new advanced webhook ...");
 
   try {
@@ -58,7 +64,7 @@ export async function addAdvancedWebhook(name, pair, url, userId, digits) {
       advanced: true,
       active: true,
       public: false,
-      digits,
+      fixedLotSize,
       color: getRandomColor(),
       created_at: serverTimestamp(),
     });
@@ -204,6 +210,22 @@ export async function updateWebhookPair(userId, id, pair) {
 
   await updateDoc(msgDoc, {
     pair,
+  });
+
+  const r = getWebhooksByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
+export async function updateWebhookData(userId, id, pair, fixedLotSize) {
+  console.log("Update webhook data name ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  await updateDoc(msgDoc, {
+    pair,
+    fixedLotSize,
   });
 
   const r = getWebhooksByUserId(userId);

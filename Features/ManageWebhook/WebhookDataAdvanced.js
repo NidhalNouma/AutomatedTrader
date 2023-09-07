@@ -37,10 +37,10 @@ function WebhookDataAdvanced({
     setPair,
     error,
     add,
-    digits,
-    setDigits,
-    useDigits,
-    setUseDigits,
+    fixedLotSize,
+    setFixedLotSize,
+    useFixedLotSize,
+    setUseFixedLotSize,
   } = WebhookAdvanced(user?.uid);
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
@@ -69,24 +69,24 @@ function WebhookDataAdvanced({
             value={pair}
             setValue={setPair}
           />
-          {/* <div className="my-1.5"></div>
+          <div className="my-1.5"></div>
           <Toggle1
-            name="Custom digits"
-            helper="Set digits manually"
-            value={useDigits}
-            setValue={() => setUseDigits(!useDigits)}
+            name="Set fixed position size"
+            helper="Override lot size by setting a fixed lot size"
+            value={useFixedLotSize}
+            setValue={() => setUseFixedLotSize(!useFixedLotSize)}
           />
-          {useDigits && (
+          {useFixedLotSize && (
             <Input1Inline
-              name="Digits"
-              placeholder="2"
-              helper="Digits number"
+              name="Fix position size"
+              placeholder="1"
+              helper="Fixed lot size"
               type="number"
-              disabled={!useDigits}
-              value={digits}
-              setValue={(v) => setDigits(v)}
+              disabled={!useFixedLotSize}
+              value={fixedLotSize}
+              setValue={(v) => setFixedLotSize(v)}
             />
-          )} */}
+          )}
 
           <hr className="my-2" />
 

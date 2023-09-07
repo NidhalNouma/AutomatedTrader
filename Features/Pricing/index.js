@@ -163,7 +163,7 @@ function Index({ title, value, t, setSuccess, i }) {
             </Ppricing>
             <Ppricing>
               <GiChart className="h-4 w-4 mr-2 text-accent" strokeWidth="20" />
-              MT4 & MT5 (coming soon) EA
+              MT4 & MT5 EA
             </Ppricing>
 
             {value.telegram && (
