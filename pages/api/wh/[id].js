@@ -27,6 +27,9 @@ export default async function handler(req, res) {
         let msgData = null;
         if (r.advanced) {
           // if (r.digits) message = message + ",digits: " + r.digits;
+          if (r.fixedLotSize && Number(r.fixedLotSize) > 0)
+            message = message + ", fixedLotSize:" + Number(r.fixedLotSize);
+
           msgData = getMessageAdvancedData(message, r.pair);
           message = "pair: " + r.pair + "," + message;
         } else msgData = getMessageData(message);

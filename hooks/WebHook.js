@@ -696,14 +696,16 @@ export function getMessageAdvancedData(msg, pair) {
           break;
 
         case "RISK":
-          if(value.indexOf("%")>=0)
-             {
-                const val = value.replace('%', '');
-                r.riskPercentage = Number(val);
-             }
-          else r.fixedLotSize = 0;// Number(value);
-          
+          if (value.indexOf("%") >= 0) {
+            const val = value.replace("%", "");
+            r.riskPercentage = Number(val);
+          } else r.fixedLotSize = 0; // Number(value);
+
           r.riskPercentage = Number(value);
+          break;
+
+        case "FIXEDLOTSIZE":
+          r.fixedLotSize = Number(val);
           break;
 
         case "SL":
