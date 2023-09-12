@@ -50,6 +50,8 @@ export default async function handler(req, res) {
           r.MT4 = accId;
         }
 
+        console.log;
+
         if (
           r &&
           (advanced ||
@@ -65,6 +67,8 @@ export default async function handler(req, res) {
                 (advanced && msgData.alertType === "ENTRY") || !advanced
                   ? await addAlert(id, message, r.userId, r.name, r.MT4)
                   : true;
+
+              console.log(alert);
               if (alert) {
                 const time = new Date();
                 newAlert(id, {

@@ -799,7 +799,7 @@ export function getMessageAdvancedData(msg, pair) {
     }
   });
 
-  if (Number(r.type) >= 0 && Number(r.riskPercentage) > 0) r.isValid = true;
+  if (r.alertType) r.isValid = true;
 
   return r.alertType ? r : null;
 }
