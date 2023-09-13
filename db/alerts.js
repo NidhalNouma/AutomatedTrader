@@ -31,7 +31,7 @@ export async function addAlert(
   console.log("Adding new alert ...");
   let accounts = {};
 
-  mtAccounts.forEach((accountId) => {
+  mtAccounts?.forEach((accountId) => {
     accounts[accountId] = [];
   });
 
