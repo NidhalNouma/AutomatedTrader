@@ -48,7 +48,7 @@ export default Section3;
 
 function Part({ children, num, title, bgColor, rightLine = true }) {
   return (
-    <div className="mt-16 px-4 rounded-xl bg-transparent w-4/6 flex flex-col items-center relative">
+    <div className="mt-16 w-4/6 rounded-xl bg-transparent mx-auto flex flex-col items-center relative">
       {rightLine && (
         <div
           className={`md:block hidden absolute bg-gradient-to-r ${bgColor} h-1 rounded-xl top-[51px] left-[calc(50%+4.5rem)] w-[calc(100%-9rem)]`}

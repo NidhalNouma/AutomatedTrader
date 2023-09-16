@@ -89,7 +89,7 @@ function Section1() {
         data-aos="fade-up"
         data-aos-duration="1200"
         data-aos-delay="300"
-        className="hidden sm:flex relative container flex-col items-center justify-center mx-auto"
+        className="hidden sm:flex relative container flex-col mt-16 items-center justify-center mx-auto max-h-[40rem]"
       >
         <div className="absolute top-[0%] left-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
         <div className="absolute top-[0%] right-[55%] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
@@ -101,13 +101,13 @@ function Section1() {
 
         <FaBitcoin className="absolute w-14 h-14 right-[0%] top-[-10%] text-primary opacity-40" />
         <FaEthereum className="absolute w-14 h-14 right-[10%] top-[-22%] text-primary opacity-40" />
-        <AiFillAmazonCircle className="absolute w-14 h-14 right-[40%] top-[-10%] text-primary opacity-40" />
-        <AiFillApple className="absolute w-14 h-14 right-[26%] top-[-18%] text-primary opacity-40" />
+        <AiFillAmazonCircle className="absolute w-14 h-14 right-[40%] top-[-24%] text-primary opacity-40" />
+        <AiFillApple className="absolute w-14 h-14 right-[26%] top-[-22%] text-primary opacity-40" />
 
         <AiFillEuroCircle className="absolute w-14 h-14 left-[-0%] top-[-1%] text-primary opacity-40" />
-        <AiFillDollarCircle className="absolute w-14 h-14 left-[33%] top-[-19%] text-primary opacity-40" />
-        <AiFillPoundCircle className="absolute w-14 h-14 left-[23%] top-[-10%] text-primary opacity-40" />
-        <HiCurrencyYen className="absolute w-14 h-14 left-[12%] top-[-19%] text-primary opacity-40" />
+        <AiFillDollarCircle className="absolute w-14 h-14 left-[33%] top-[-21%] text-primary opacity-40" />
+        <AiFillPoundCircle className="absolute w-14 h-14 left-[23%] top-[-26%] text-primary opacity-40" />
+        <HiCurrencyYen className="absolute w-14 h-14 left-[12%] top-[-22%] text-primary opacity-40" />
       </div>
     </section>
   );

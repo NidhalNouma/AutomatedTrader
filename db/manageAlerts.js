@@ -1,62 +1,60 @@
-let alerts = [];
+import Redis from "ioredis";
+import { REDIS } from "../utils/constant";
 
-export function newAlert(id, data) {
-  let n = { id, data: [data] };
-  console.log("New alert for MT => ", data.MT4, data.messageData);
+const redis = new Redis({
+  host: REDIS.host,
+  port: REDIS.port,
+  password: REDIS.password,
+});
 
-  const f = alerts.find(function (v, i) {
-    return v.id === id;
-  });
+async function newDoc(id, doc, seconds = 10 * 10000) {
+  try {
+    const result = await redis.get(id);
+    if (result) {
+      let existingArray = JSON.parse(result);
 
-  if (f) {
-    alerts = alerts.filter(function (v, i) {
-      return v.id !== id;
-    });
-    n = { id, data: [data, ...f.data] };
-    alerts.push(n);
-    removeAfterXs(id);
-  } else {
-    alerts.push(n);
+      existingArray.push(doc);
+      const updatedJsonString = JSON.stringify(existingArray);
+
+      await redis.set(id, updatedJsonString);
+      await redis.expire(id, seconds);
+    } else {
+      const jsonString = JSON.stringify([doc]);
+      await redis.set(id, jsonString);
+      await redis.expire(id, seconds);
+    }
+  } catch (error) {
+    console.error("redis error ", error);
   }
 }
 
-export function getAlertByUserId(id) {
-  // removeAfterXs(id);
-  const r = [];
-  alerts.forEach(function (v, i) {
-    const s = v.data.length;
-    for (let j = 0; j < s; j++) {
-      const d = v.data[j];
-      if (d.userId === id) r.push({ ...d, id: v.id });
+async function getDoc(id) {
+  let r = [];
+  try {
+    const req = await redis.get(id);
+    if (req) {
+      r = JSON.parse(req);
+      r = r.reverse();
     }
-    removeAfterXs(v.id);
-  });
-
+  } catch (err) {
+    console.error(err);
+  }
   return r;
 }
 
-export function getAlert(id) {
-  removeAfterXs(id);
-  const f = alerts.find(function (v, i) {
-    return v.id === id;
-  });
+export async function newAlert(id, data) {
+  let n = { id, data: [data] };
+  console.log("New alert for MT => ", data.userId, data.MT4, data.messageData);
 
-  return f;
+  newDoc(data.userId, data);
+  // removeAfterXs(id);
 }
 
-function removeAfterXs(id, sec = 50) {
-  const i = alerts.findIndex((obj) => obj.id === id);
-  let t = new Date();
-  t = new Date(t.getTime() - 1000 * sec);
+export async function getAlertByUserId(id) {
+  // removeAfterXs(id);
+  const r = await getDoc(id);
 
-  //   console.log(i, t, new Date());
-  if (i >= 0) {
-    const nd = alerts[i].data.filter(function (v) {
-      return v.time > t;
-    });
-
-    alerts[i].data = nd;
-  }
+  return r;
 }
 
 export function webhookTime(time) {
@@ -95,8 +93,6 @@ export function webhookTime(time) {
     }
     return true;
   } else return true;
-
-  return false;
 }
 
 function changeTimeZone(date, timeZone) {

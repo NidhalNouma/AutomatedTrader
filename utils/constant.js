@@ -27,6 +27,12 @@ export const MT5EA = {
   version: process.env.NEXT_PUBLIC_MT5_EA_VERSION,
 };
 
+export const REDIS = {
+  host: process.env.NEXT_PUBLIC_REDIS_HOST,
+  password: process.env.NEXT_PUBLIC_REDIS_PASSWORD,
+  port: process.env.NEXT_PUBLIC_REDIS_PORT,
+};
+
 export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;
 const urlForTelegram = () =>
   // window.location.protocol +

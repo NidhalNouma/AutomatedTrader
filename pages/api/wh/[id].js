@@ -7,7 +7,6 @@ import { sendMessage } from "../../../db/telegram";
 
 import {
   newAlert,
-  getAlert,
   getAlertByUserId,
   webhookTime,
 } from "../../../db/manageAlerts";
@@ -71,7 +70,7 @@ export default async function handler(req, res) {
               console.log(alert);
               if (alert) {
                 const time = new Date();
-                newAlert(id, {
+                await newAlert(id, {
                   message: message,
                   messageData: msgData,
                   userId: r.userId,
@@ -80,6 +79,7 @@ export default async function handler(req, res) {
                   mqlTime: moment(time).format("YYYY.MM.DD HH:mm:ss"),
                   MT4: r.MT4,
                   alertId: alert,
+                  whId: id,
                 });
 
                 if (user && user.telegram) {
@@ -92,7 +92,7 @@ export default async function handler(req, res) {
       }
     }
   } else if (req.method === "GET") {
-    const r = getAlertByUserId(id);
+    const r = await getAlertByUserId(id);
     return res.status(200).json(r);
   }
 
