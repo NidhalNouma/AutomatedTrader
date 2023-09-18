@@ -7,7 +7,7 @@ const redis = new Redis({
   password: REDIS.password,
 });
 
-async function newDoc(id, doc, seconds = 10 * 10000) {
+async function newDoc(id, doc, seconds = 20) {
   try {
     const result = await redis.get(id);
     if (result) {
