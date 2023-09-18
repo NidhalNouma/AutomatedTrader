@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     let message = req.body;
     if (id != undefined && message?.get) {
-      const r = getAlertByUserId(id);
+      const r = await getAlertByUserId(id);
       return res.status(200).json(r);
     } else if (id != undefined && message) {
       const r = await getWebhook(id);
