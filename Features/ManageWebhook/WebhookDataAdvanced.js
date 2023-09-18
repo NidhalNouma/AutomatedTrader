@@ -45,11 +45,13 @@ function WebhookDataAdvanced({
 
   const { getAllWebhooks, changeWebhookData } = GetWebhookContext();
   const { fullUser } = GetFullUserContext();
+  const sub = fullUser?.subObj;
+
+  console.log(sub);
 
   return (
     <div className="w-11/12 mx-auto flex flex-col items-center">
-      {fullUser.subObj?.chargeBeeId ===
-      pricingList.lifetime["Lifetime access"].chargeBeeId ? (
+      {sub.advancedWebhook ? (
         <Fragment>
           {includeName && (
             <Input1

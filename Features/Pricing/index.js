@@ -12,6 +12,7 @@ import {
 import { OpenCheckout, GetChargeBeeContext } from "../../hooks/ChargeBee";
 
 import { GiRobotLeg, GiChart } from "react-icons/gi";
+import { GiLevelTwo } from "react-icons/gi";
 import { AiOutlineFundProjectionScreen, AiOutlineAlert } from "react-icons/ai";
 import { RiExternalLinkFill } from "react-icons/ri";
 import {
@@ -128,6 +129,15 @@ function Index({ title, value, t, setSuccess, i }) {
               />
               Automate Tradingview
             </Ppricing>
+            {value.advancedWebhook && (
+              <Ppricing>
+                <GiLevelTwo
+                  className="h-4 w-4 mr-1 text-accent"
+                  strokeWidth="10"
+                />
+                Advanced webhook
+              </Ppricing>
+            )}
             <Ppricing>
               <AiOutlineFundProjectionScreen
                 className="h-4 w-4 mr-2 text-accent"

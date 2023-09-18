@@ -38,6 +38,7 @@ export const pricingList = {
     },
     "Premium plan": {
       chargeBeeId: "Premium-Membership-USD-Monthly",
+      advancedWebhook: true,
       price: 159,
       save: 0,
       accounts: 20,
@@ -91,6 +92,7 @@ export const pricingList = {
     },
     "Premium plan": {
       chargeBeeId: "Premium-Membership-USD-Yearly",
+      advancedWebhook: true,
       price: 954,
       save: 50,
       accounts: 20,
@@ -107,6 +109,7 @@ export const pricingList = {
   lifetime: {
     "Lifetime access": {
       chargeBeeId: "Life-Time-Membership",
+      advancedWebhook: true,
       price: 1999,
       save: 60.02,
       accounts: 100,
