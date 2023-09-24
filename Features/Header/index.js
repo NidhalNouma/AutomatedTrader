@@ -1,11 +1,10 @@
 import { useState, Fragment } from "react";
 import { useRouter } from "next/router";
 
-import { Dropdown, Button, Drawer, Indicator } from "react-daisyui";
+import { Dropdown, Button, Drawer } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
 
 import Link from "next/link";
-import { BellIcon } from "@heroicons/react/outline";
 import { MdWaterfallChart, MdOutlineCandlestickChart } from "react-icons/md";
 import { GiUpgrade } from "react-icons/gi";
 import SearchHeader from "./SearchHeader";
@@ -21,6 +20,7 @@ import { SignOut } from "../../hooks/SignHook";
 import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 import { pricingList } from "../../utils/pricing";
 
+import NotificationHeader from "../notifications/Header";
 import Banners from "../Banners";
 
 function Index() {
@@ -51,7 +51,7 @@ function Index() {
           <div className="flex items-center">
             <LeftMenu />
             <ButtonP
-              className="!bg-primary !border-bga !border-[2px] !text-text-h hover:!text-text-h hiddeni md:flex" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
+              className="!bg-primary !border-bga !border-[2px] !text-text-h hover:!text-text-h hiddeni md:flex"
               onClick={() => {
                 const sub = fullUser.subObj;
                 if (sub && sub.manualTrade) setOpen(true);
@@ -71,28 +71,7 @@ function Index() {
           {user ? (
             <div className="flex items-center justify-center ml-auto">
               <SearchHeader />
-
-              <Dropdown vertical="end">
-                <Indicator
-                  vertical="top"
-                  horizontal=""
-                  // item={<Badge size="xs" color="accent" />}
-                  className="relative ml-2"
-                >
-                  {/* <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div> */}
-                  <span className="cursor-pointer text-text-p">
-                    <BellIcon className="h-7 w-7" />
-                  </span>
-                </Indicator>
-
-                <Dropdown.Menu className="w-64 menu-compact bg-bga">
-                  <div className="py-4 px-2">
-                    <p className="text-sm font-semibold">
-                      No available notifications!
-                    </p>
-                  </div>
-                </Dropdown.Menu>
-              </Dropdown>
+              <NotificationHeader />
 
               {fullUser?.subObj?.chargeBeeId !==
                 pricingList.lifetime["Lifetime access"].chargeBeeId && (

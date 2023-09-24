@@ -10,6 +10,7 @@ import { checkUser } from "../db/sign";
 import { UserCC, FullUserCC, GetFullUser } from "../hooks/UserHook";
 import { WebHookCC, GetWebhook } from "../hooks/WebHook";
 import { AlertsCC, GetAlerts } from "../hooks/AlertsHook";
+import { NotificationCC, GetNotifications } from "../hooks/NotificationHook";
 import { MTAccountsCC, GetMTAccounts } from "../hooks/MTAccounts";
 import { ToastCC, ToastHook } from "../hooks/ToastHook";
 
@@ -33,6 +34,7 @@ function MyApp({ Component, pageProps }) {
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
   const { getAllAlertsHook, alertsHook } = GetAlerts();
+  const { getAllNotifications, notifications } = GetNotifications();
   const {
     mtAccounts,
     setMTAccounts,
@@ -119,6 +121,7 @@ function MyApp({ Component, pageProps }) {
       getAllMTAccounts(user?.uid);
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
+      getAllNotifications(user?.uid);
     } else if (!fullUser) {
       setMTAccounts([]);
       setWebhooks([]);
@@ -161,21 +164,23 @@ function MyApp({ Component, pageProps }) {
                       changeWebhookData,
                     }}
                   >
-                    <AlertsCC value={{ alertsHook }}>
-                      <MTAccountsCC
-                        value={{
-                          mtAccounts,
-                          setMTAccounts,
-                          mt5Accounts,
-                          setMT5Accounts,
-                          mt4Accounts,
-                          setMT4Accounts,
-                          getData,
-                        }}
-                      >
-                        <Component {...pageProps} />
-                      </MTAccountsCC>
-                    </AlertsCC>
+                    <NotificationCC value={{ notifications }}>
+                      <AlertsCC value={{ alertsHook }}>
+                        <MTAccountsCC
+                          value={{
+                            mtAccounts,
+                            setMTAccounts,
+                            mt5Accounts,
+                            setMT5Accounts,
+                            mt4Accounts,
+                            setMT4Accounts,
+                            getData,
+                          }}
+                        >
+                          <Component {...pageProps} />
+                        </MTAccountsCC>
+                      </AlertsCC>
+                    </NotificationCC>
                   </WebHookCC>
                 </FullUserCC>
               </UserCC>

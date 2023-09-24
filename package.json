@@ -12,6 +12,7 @@
     "@chargebee/chargebee-js-react-wrapper": "^0.6.3",
     "@heroicons/react": "^1.0.6",
     "@lottiefiles/react-lottie-player": "^3.5.2",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "aos": "^3.0.0-beta.6",
     "apexcharts": "^3.41.0",
     "axios": "^0.27.2",
