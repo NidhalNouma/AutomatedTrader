@@ -6,6 +6,7 @@ import {
   FcBearish,
   FcBullish,
 } from "react-icons/fc";
+import { ArrowUpIcon } from "@heroicons/react/solid";
 import { H4, Hi4 } from "../../Components/H";
 import { TradeDetails } from "./Table";
 import { Modal1 } from "../../Components/Modal";
@@ -17,6 +18,8 @@ function BestWorseTrades({ data }) {
 
   const [best, setBest] = useState(null);
   const [lots, setLots] = useState(0);
+  const [profit, setProfit] = useState(0);
+  const [loss, setLoss] = useState(0);
   const [longLots, setLongLots] = useState(0);
   const [worse, setWorse] = useState(null);
   const [strike, setStrike] = useState(null);
@@ -36,6 +39,8 @@ function BestWorseTrades({ data }) {
       long = 0,
       shortWin = 0,
       longWin = 0,
+      _profit = 0,
+      _loss = 0,
       _longlots = 0,
       _lots = 0;
 
@@ -60,7 +65,12 @@ function BestWorseTrades({ data }) {
 
         cis = cis + 1;
         if (cis > is) is = cis;
-      } else cis = 0;
+
+        _profit += Number(v.profit);
+      } else {
+        cis = 0;
+        _loss += Number(v.profit);
+      }
 
       if (
         Number(v.profit) > 0 &&
@@ -87,6 +97,8 @@ function BestWorseTrades({ data }) {
     setTLong(long);
     setTShortWin(shortWin);
     setTLongWin(longWin);
+    setLoss(_loss);
+    setProfit(_profit);
   }, [data]);
 
   return (
@@ -107,13 +119,57 @@ function BestWorseTrades({ data }) {
       </Modal1>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Sec title="Total Trades">
-          <H4 className="text-text-h font-bold mr-6">{tlong + tShort || 0}</H4>
+          <H4 className="text-text-h font-medium !text-lg mr-6">
+            {tlong + tShort || 0}
+          </H4>
           <BarLine
             w1={(tlong / (tlong + tShort)) * 100}
             w2={(tShort / (tlong + tShort)) * 100}
             title1="Long"
             title2="Short"
           />
+        </Sec>
+
+        <Sec title="Profits">
+          <H4 className="text-text-h font-medium !text-lg mr-6">
+            ${Math.round((profit + loss + Number.EPSILON) * 100) / 100}
+          </H4>
+          <BarLine
+            w1={(profit / (profit + loss)) * 100}
+            w2={(loss / (profit + loss)) * 100}
+            title1="Profit"
+            title2="Loss"
+          />
+        </Sec>
+
+        <Sec title="Best trade" onClick={() => best && setOpen(best)}>
+          {/* <FcBullish class=" h-4 w-4 mr-2" /> */}
+          <H4 className="text-green-400">${best?.profit || 0}</H4>
+
+          <BarLine w1={100} w2={0} title1="Profit" title2="" />
+        </Sec>
+
+        <Sec title="Worse trade" onClick={() => worse && setOpen(worse)}>
+          {/* <FcBearish class=" h-4 w-4 mr-2" /> */}
+          <H4 className="text-red-400">${worse?.profit || 0}</H4>
+          <BarLine w1={0} w2={100} title1="" title2="Loss" />
+        </Sec>
+
+        <Sec title="Total Lots">
+          <H4 className="text-text-h font-bold mr-6">
+            {Number(lots).toFixed(2) || 0}
+          </H4>
+          <BarLine
+            w1={(longLots / lots) * 100}
+            w2={((lots - longLots) / lots) * 100}
+            title1="Long"
+            title2="Short"
+          />
+        </Sec>
+
+        <Sec title="Best Streak">
+          <H4 className="text-text-h">{strike || 0}</H4>
+          <BarLine w1={100} w2={0} title1="Profit" title2="" />
         </Sec>
 
         <Sec title="Win Trades">
@@ -146,39 +202,12 @@ function BestWorseTrades({ data }) {
           />
         </Sec>
 
-        <Sec title="Total Lots">
-          <H4 className="text-text-h font-bold mr-6">
-            {Number(lots).toFixed(2) || 0}
-          </H4>
-          <BarLine
-            w1={(longLots / lots) * 100}
-            w2={((lots - longLots) / lots) * 100}
-            title1="Long"
-            title2="Short"
-          />
-        </Sec>
-
-        <Sec title="Best trade" onClick={() => best && setOpen(best)}>
-          <FcBullish class=" h-4 w-4 mr-2" />
-          <H4 className="text-green-400">${best?.profit || 0}</H4>
-        </Sec>
-
-        <Sec title="Worse trade" onClick={() => worse && setOpen(worse)}>
-          <FcBearish class=" h-4 w-4 mr-2" />
-          <H4 className="text-red-400">${worse?.profit || 0}</H4>
-        </Sec>
-
-        <Sec title="Best Streak">
-          <FcPositiveDynamic class=" h-4 w-4 mr-2" />
-          <H4 className="text-text-h">{strike || 0}</H4>
-        </Sec>
-
-        <Sec title="Commissions">
+        {/* <Sec title="Commissions">
           <FcHighPriority class=" h-4 w-4 mr-2" />
           <H4 className="text-red-400">
             ${Number(commission).toFixed(2) || 0}
           </H4>
-        </Sec>
+        </Sec> */}
       </div>
     </Fragment>
   );
@@ -189,13 +218,19 @@ export default BestWorseTrades;
 function Sec({ title, children, onClick }) {
   return (
     <div
-      className={`p-5 bg-gradient-to-br from-bgt via-bg to-bg rounded-lg w-full ${
+      className={`p-4 bg-gradient-to-br from-bgt via-bg to-bg rounded-lg w-full ${
         onClick && "cursor-pointer"
       }`}
       onClick={onClick}
     >
-      <Hi4 className="font-bold">{title}</Hi4>
+      <Hi4 className="font-semibold text-xs mb-1">{title}</Hi4>
       <div className="flex items-center">{children}</div>
+      <div className="flex items-center text-text-p/60 text-xs mt-2">
+        <span className="text-green-400 flex items-center">
+          <ArrowUpIcon className="h-2.5 w-2.5" /> 12%
+        </span>
+        <span className="ml-1">vs last month</span>
+      </div>
     </div>
   );
 }

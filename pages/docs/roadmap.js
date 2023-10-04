@@ -39,7 +39,7 @@ function Roadmap() {
               </p>
 
               <H5 className="font-bold mt-6">
-                Q1 2023: Soft Launch, Pre-sales & Crowdfunding
+                Soft Launch, Pre-sales & Crowdfunding
               </H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will launch a soft version of its platform for
@@ -50,9 +50,7 @@ function Roadmap() {
                 the webhook and EA software at discounted prices.
               </p>
 
-              <H5 className="font-bold mt-6">
-                Q1 2023: Telegram & Discord Alert Bots
-              </H5>
+              <H5 className="font-bold mt-6">Telegram & Discord Alert Bots</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will introduce alert bots on Telegram and
                 Discord to provide traders with real-time updates on their
@@ -61,9 +59,7 @@ function Roadmap() {
                 to sell access to telegram or discord alerts with ease.
               </p>
 
-              <H5 className="font-bold mt-6">
-                Q2 2023: Copy Trader & Social Trading
-              </H5>
+              <H5 className="font-bold mt-6">Copy Trader & Social Trading</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will introduce a copy trader feature that
                 allows users to follow and replicate the trades of successful
@@ -73,16 +69,14 @@ function Roadmap() {
               </p>
 
               <H5 className="font-bold mt-6">
-                Q3 2023: Official Launch, Crowdfunding Closed
+                Official Launch, Crowdfunding Closed
               </H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will officially launch its platform, which will
                 be fully tested and ready for the market.
               </p>
 
-              <H5 className="font-bold mt-6">
-                Q3 2023: Blockchain Trading Technology
-              </H5>
+              <H5 className="font-bold mt-6">Blockchain Trading Technology</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will integrate blockchain wallets so that users
                 can trade, store, and fund other crypto wallets directly. This
@@ -93,7 +87,7 @@ function Roadmap() {
               </p>
 
               <H5 className="font-bold mt-6">
-                Q3 2023: Signal Selling Merchant Services
+                Signal Selling Merchant Services
               </H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will introduce a signal selling feature that
@@ -104,7 +98,7 @@ function Roadmap() {
                 service.
               </p>
 
-              <H5 className="font-bold mt-6">Q3-Q4 2023: iOS & Android App</H5>
+              <H5 className="font-bold mt-6">iOS & Android App</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will launch an iOS and Android app with all the
                 features of the web app, offering greater accessibility and
@@ -112,7 +106,7 @@ function Roadmap() {
               </p>
 
               <H5 className="font-bold mt-6">
-                Q4 2023: Portfolio Management, Smart Portfolio
+                Portfolio Management, Smart Portfolio
               </H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will offer professional money managers
@@ -121,16 +115,14 @@ function Roadmap() {
                 available to track all managed accounts.
               </p>
 
-              <H5 className="font-bold mt-6">Q4 2023: Cloud Trading</H5>
+              <H5 className="font-bold mt-6">Cloud Trading</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will launch a web-based trading platform that
                 does not require a VPS, providing users with greater flexibility
                 and accessibility.
               </p>
 
-              <H5 className="font-bold mt-6">
-                Q4 2023-2024: Strategy Tester, Wealth System
-              </H5>
+              <H5 className="font-bold mt-6">Strategy Tester, Wealth System</H5>
               <p className="mt-3 text-text-p text-sm">
                 Automated Trader will add features and tools to enhance the
                 trading experience for its users. This includes a strategy
