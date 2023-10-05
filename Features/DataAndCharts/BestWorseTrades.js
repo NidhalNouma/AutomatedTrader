@@ -12,6 +12,7 @@ import { TradeDetails } from "./Table";
 import { Modal1 } from "../../Components/Modal";
 
 import BarLine from "./BarLine";
+import CircleArc from "./CircleArc";
 
 function BestWorseTrades({ data }) {
   const [open, setOpen] = useState(null);
@@ -118,88 +119,114 @@ function BestWorseTrades({ data }) {
         {/* <OpenTrade close={() => setOpen(false)} /> */}
       </Modal1>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Sec title="Total Trades">
+        <Sec
+          title="Total Trades"
+          rightPart={
+            <BarLine
+              w1={(tlong / (tlong + tShort)) * 100}
+              w2={(tShort / (tlong + tShort)) * 100}
+              title1="Long"
+              title2="Short"
+            />
+          }
+        >
           <H4 className="text-text-h font-medium !text-lg mr-6">
             {tlong + tShort || 0}
           </H4>
-          <BarLine
-            w1={(tlong / (tlong + tShort)) * 100}
-            w2={(tShort / (tlong + tShort)) * 100}
-            title1="Long"
-            title2="Short"
-          />
         </Sec>
 
-        <Sec title="Profits">
+        <Sec title="Profits" rightPart={<CircleArc percentage={10} />}>
           <H4 className="text-text-h font-medium !text-lg mr-6">
             ${Math.round((profit + loss + Number.EPSILON) * 100) / 100}
           </H4>
-          <BarLine
+          {/* <BarLine
             w1={(profit / (profit + loss)) * 100}
             w2={(loss / (profit + loss)) * 100}
             title1="Profit"
             title2="Loss"
-          />
+          /> */}
         </Sec>
 
-        <Sec title="Best trade" onClick={() => best && setOpen(best)}>
+        <Sec
+          title="Best trade"
+          onClick={() => best && setOpen(best)}
+          rightPart={<BarLine w1={100} w2={0} title1="Profit" title2="" />}
+        >
           {/* <FcBullish class=" h-4 w-4 mr-2" /> */}
           <H4 className="text-green-400">${best?.profit || 0}</H4>
-
-          <BarLine w1={100} w2={0} title1="Profit" title2="" />
         </Sec>
 
-        <Sec title="Worse trade" onClick={() => worse && setOpen(worse)}>
+        <Sec
+          title="Worse trade"
+          onClick={() => worse && setOpen(worse)}
+          rightPart={<BarLine w1={0} w2={100} title1="" title2="Loss" />}
+        >
           {/* <FcBearish class=" h-4 w-4 mr-2" /> */}
           <H4 className="text-red-400">${worse?.profit || 0}</H4>
-          <BarLine w1={0} w2={100} title1="" title2="Loss" />
         </Sec>
 
-        <Sec title="Total Lots">
+        <Sec
+          title="Total Lots"
+          rightPart={
+            <BarLine
+              w1={(longLots / lots) * 100}
+              w2={((lots - longLots) / lots) * 100}
+              title1="Long"
+              title2="Short"
+            />
+          }
+        >
           <H4 className="text-text-h font-bold mr-6">
             {Number(lots).toFixed(2) || 0}
           </H4>
-          <BarLine
-            w1={(longLots / lots) * 100}
-            w2={((lots - longLots) / lots) * 100}
-            title1="Long"
-            title2="Short"
-          />
         </Sec>
 
-        <Sec title="Best Streak">
+        <Sec
+          title="Best Streak"
+          rightPart={<BarLine w1={100} w2={0} title1="Profit" title2="" />}
+        >
           <H4 className="text-text-h">{strike || 0}</H4>
-          <BarLine w1={100} w2={0} title1="Profit" title2="" />
         </Sec>
 
-        <Sec title="Win Trades">
+        <Sec
+          title="Win Trades"
+          rightPart={
+            <CircleArc percentage={80} color={"green"} />
+            // <BarLine
+            //   w1={(tlongWin / (tlongWin + tShortWin)) * 100}
+            //   w2={(tShortWin / (tlongWin + tShortWin)) * 100}
+            //   title1="Long"
+            //   title2="Short"
+            // />
+          }
+        >
           <H4 className="text-text-h font-bold  mr-6">
             {tlongWin + tShortWin}
           </H4>
-          <BarLine
-            w1={(tlongWin / (tlongWin + tShortWin)) * 100}
-            w2={(tShortWin / (tlongWin + tShortWin)) * 100}
-            title1="Long"
-            title2="Short"
-          />
         </Sec>
 
-        <Sec title="Loss Trades">
+        <Sec
+          title="Loss Trades"
+          rightPart={
+            <CircleArc percentage={80} color="red" />
+            // <BarLine
+            //   w1={
+            //     ((tlong - tlongWin) / (tlong + tShort - tlongWin - tShortWin)) *
+            //     100
+            //   }
+            //   w2={
+            //     ((tShort - tShortWin) /
+            //       (tlong + tShort - tlongWin - tShortWin)) *
+            //     100
+            //   }
+            //   title1="Long"
+            //   title2="Short"
+            // />
+          }
+        >
           <H4 className="text-text-h font-bold">
             {tlong + tShort - tlongWin - tShortWin}
           </H4>
-          <BarLine
-            w1={
-              ((tlong - tlongWin) / (tlong + tShort - tlongWin - tShortWin)) *
-              100
-            }
-            w2={
-              ((tShort - tShortWin) / (tlong + tShort - tlongWin - tShortWin)) *
-              100
-            }
-            title1="Long"
-            title2="Short"
-          />
         </Sec>
 
         {/* <Sec title="Commissions">
@@ -215,22 +242,26 @@ function BestWorseTrades({ data }) {
 
 export default BestWorseTrades;
 
-function Sec({ title, children, onClick }) {
+function Sec({ title, children, onClick, rightPart }) {
   return (
     <div
-      className={`p-4 bg-gradient-to-br from-bgt via-bg to-bg rounded-lg w-full ${
+      className={`p-4 bg-gradient-to-br from-bgt via-bg to-bg rounded-lg w-full flex items-center justify-between ${
         onClick && "cursor-pointer"
       }`}
       onClick={onClick}
     >
-      <Hi4 className="font-semibold text-xs mb-1">{title}</Hi4>
-      <div className="flex items-center">{children}</div>
-      <div className="flex items-center text-text-p/60 text-xs mt-2">
-        <span className="text-green-400 flex items-center">
-          <ArrowUpIcon className="h-2.5 w-2.5" /> 12%
-        </span>
-        <span className="ml-1">vs last month</span>
+      <div className="">
+        <Hi4 className="font-semibold text-xs mb-1">{title}</Hi4>
+
+        <div className="flex items-center">{children}</div>
+        <div className="flex items-center text-text-p/60 text-xs mt-2">
+          <span className="text-green-400 flex items-center">
+            <ArrowUpIcon className="h-2.5 w-2.5" /> 12%
+          </span>
+          <span className="ml-1">vs last month</span>
+        </div>
       </div>
+      {rightPart}
     </div>
   );
 }
