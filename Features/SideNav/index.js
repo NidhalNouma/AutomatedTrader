@@ -160,7 +160,7 @@ function Index({ cpath, fixed = true }) {
             </div>
             {openApps && (
               <div className="pr-0 pb-0">
-                <Linksn
+                {/* <Linksn
                   href="/apps/mt4"
                   isActive={cpath === "mt4"}
                   className="mt-2"
@@ -197,6 +197,25 @@ function Index({ cpath, fixed = true }) {
                   }
                 >
                   <span className="capitalize ml-2 text-base">MT5</span>
+                </Linksn> */}
+                <Linksn
+                  href="/apps/metatrader"
+                  isActive={cpath === "metatrader"}
+                  className="mt-2"
+                  icon={
+                    <div className="w-5 h-5 ml-1">
+                      <Image
+                        className=""
+                        src="/Images/mt5-icon.png"
+                        alt=""
+                        width="1w"
+                        height="1h"
+                        layout="responsive"
+                      />
+                    </div>
+                  }
+                >
+                  <span className="capitalize ml-2 text-base">Metatrader</span>
                 </Linksn>
                 <Linksn
                   href="/apps/binance"

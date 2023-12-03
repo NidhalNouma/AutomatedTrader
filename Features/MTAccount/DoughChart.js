@@ -102,7 +102,7 @@ function DoughChart({ adata, total }) {
         <ReactApexChart
           className="flex justify-center items-cente w-full"
           options={options}
-          series={data}
+          series={data.map((v) => Math.abs(v))}
           type="donut"
           // width={260}
         />

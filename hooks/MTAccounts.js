@@ -223,7 +223,7 @@ const profitPerTime = (data, getProfit = true, wh, getAll = false) => {
 
   data?.forEach((v) => {
     const stime = v.closeTimeGMT ? v.closeTimeGMT : v.closeTime;
-    const time = moment(stime, "YYYY.MM.DD HH:mm:ss");
+    const time = stime; //moment(stime, "YYYY.MM.DD HH:mm:ss");
     const day = new Date(new Date(time).toLocaleDateString()).getDate();
     const month = new Date(new Date(time).toLocaleDateString()).getMonth();
     const year = new Date(new Date(time).toLocaleDateString()).getFullYear();
@@ -288,6 +288,7 @@ export function getDataFromAccountPerPeriod(
   withWebHook = null,
   addPerc = false
 ) {
+  // console.log(period);
   const loss = profitPerTime(account?.data, false, withWebHook);
   const profit = profitPerTime(account?.data, true, withWebHook);
 
@@ -386,8 +387,8 @@ export function getDataFromAccountPerPeriod(
 
 function getDates(startDate, stopDate) {
   var dateArray = [];
-  var currentDate = moment(startDate, "YYYY.MM.DD HH:mm:ss");
-  var stopDate = moment(stopDate, "YYYY.MM.DD HH:mm:ss");
+  var currentDate = startDate; // moment(startDate, "YYYY.MM.DD HH:mm:ss");
+  var stopDate = stopDate; // moment(stopDate, "YYYY.MM.DD HH:mm:ss");
   while (currentDate < stopDate) {
     dateArray.push(moment(currentDate).format("YYYY-MM-DD"));
     currentDate = moment(currentDate).add(1, "days");

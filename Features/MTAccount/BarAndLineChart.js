@@ -24,7 +24,8 @@ export default function BarAndLineChart({ accounts }) {
 
   const firstTradeOpenTime =
     account.data?.length > 0
-      ? moment(account.data[0]?.openTime, "YYYY.MM.DD HH:mm:ss")
+      ? // ? moment(account.data[0]?.openTime, "YYYY.MM.DD HH:mm:ss")
+        account.data[0]?.openTime
       : new Date();
   // alert(firstTradeOpenTime);
   const ds = getDataFromAccountPerPeriod(
@@ -42,6 +43,11 @@ export default function BarAndLineChart({ accounts }) {
     account,
     getDaysFromTimeTillNow(moment().startOf("year"))
   );
+  // console.log(
+  //   dy,
+  //   firstTradeOpenTime,
+  //   getDaysFromTimeTillNow(moment().startOf("year"))
+  // );
   const dm = getDataFromAccountPerPeriod(
     account,
     getDaysFromTimeTillNow(moment().startOf("month"))
@@ -56,8 +62,6 @@ export default function BarAndLineChart({ accounts }) {
     // new Date().setDate(new Date().getDate() - 1),
     // new Date().setDate(new Date().getDate()),
   ]);
-
-  // console.log(dm, dy);
 
   const total = Object.values(ds.tPerc).reduce((p, v) => p + v, 0);
   const totaly = Object.values(dy.tPerc).reduce((p, v) => p + v, 0);
@@ -79,8 +83,12 @@ export default function BarAndLineChart({ accounts }) {
       getDaysFromTimeTillNow(sepTime)
     );
 
+    // console.log(getDaysFromTimeTillNow(sepTime));
+
     const gain = cleanData(di.pPerc, sep);
     const drawDown = cleanData(di.tPerc, sep);
+
+    // console.log(gain, drawDown);
 
     const labels = Object.keys(gain).map((v) => {
       const date = new Date(v);
@@ -103,6 +111,8 @@ export default function BarAndLineChart({ accounts }) {
         data: Object.values(gain).map((v) => Number(numToFixed(v))),
       },
     ];
+
+    setData(datai);
 
     // console.log(labels, options);
     setOptions({
@@ -203,9 +213,7 @@ export default function BarAndLineChart({ accounts }) {
       },
       colors: ["rgb(53, 162, 235)", "rgb(60, 168, 162)"],
     });
-
-    setData(datai);
-  }, [speriod, account]);
+  }, [speriod, account?.data]);
 
   return (
     <div className="">

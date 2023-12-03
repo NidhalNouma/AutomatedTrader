@@ -12,6 +12,7 @@ import { WebHookCC, GetWebhook } from "../hooks/WebHook";
 import { AlertsCC, GetAlerts } from "../hooks/AlertsHook";
 import { NotificationCC, GetNotifications } from "../hooks/NotificationHook";
 import { MTAccountsCC, GetMTAccounts } from "../hooks/MTAccounts";
+import { MTAPIAccountsCC, GetMTAPIAccounts } from "../hooks/MTAccountsApi";
 import { ToastCC, ToastHook } from "../hooks/ToastHook";
 
 import Toasti from "../Features/Toast";
@@ -45,6 +46,17 @@ function MyApp({ Component, pageProps }) {
     getAllMTAccounts,
     getData,
   } = GetMTAccounts();
+  const {
+    mtAPIAccounts,
+    mt5APIAccounts,
+    mt4APIAccounts,
+    setMTAPIAccounts,
+    setMT4APIAccounts,
+    setMT5APIAccounts,
+    getAllMTAPIAccounts,
+    getAllMTAPIAccountsWithoutListen,
+    getMTAPIData,
+  } = GetMTAPIAccounts();
 
   const { alerts, setAlerts, newAlert } = ToastHook();
   // const { openDrawer, toggleOpenDrawer } = GetDrawer();
@@ -119,11 +131,13 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (fullUser && !load) {
       getAllMTAccounts(user?.uid);
+      getAllMTAPIAccounts(user?.uid);
       getAllWebhooks(user?.uid);
       getAllAlertsHook(user?.uid);
       getAllNotifications(user?.uid);
     } else if (!fullUser) {
       setMTAccounts([]);
+      setMTAPIAccounts([]);
       setWebhooks([]);
       setAlerts([]);
     }
@@ -177,7 +191,21 @@ function MyApp({ Component, pageProps }) {
                             getData,
                           }}
                         >
-                          <Component {...pageProps} />
+                          <MTAPIAccountsCC
+                            value={{
+                              mtAPIAccounts,
+                              mt5APIAccounts,
+                              mt4APIAccounts,
+                              setMTAPIAccounts,
+                              setMT4APIAccounts,
+                              setMT5APIAccounts,
+                              getAllMTAPIAccounts,
+                              getAllMTAPIAccountsWithoutListen,
+                              getMTAPIData,
+                            }}
+                          >
+                            <Component {...pageProps} />
+                          </MTAPIAccountsCC>
                         </MTAccountsCC>
                       </AlertsCC>
                     </NotificationCC>

@@ -75,11 +75,11 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
                         <td className="text-xs text-center rounded-l-md">
                           {v.closeTimeGMT
                             ? moment
-                                .utc(v?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
+                                .utc(v?.closeTimeGMT) //, "YYYY.MM.DD HH:mm:ss")
                                 .fromNow()
                             : moment(
-                                v?.closeTime,
-                                "YYYY.MM.DD HH:mm:ss"
+                                v?.closeTime
+                                //"YYYY.MM.DD HH:mm:ss"
                               ).fromNow()}
                         </td>
                         <td className="text-xs text-center font-bold">
