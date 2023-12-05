@@ -8,6 +8,7 @@ import { Modal1 } from "../../Components/Modal";
 import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
 import ColorPicker from "../../Components/ColorPicker";
 import WebhooksPopUp from "./WebhooksPopUp";
+import AccountDetails from "./AccountDetails";
 
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/solid";
 // import { EllipsVer } from "@heroicons/react/solid";
@@ -22,9 +23,12 @@ import { txtColorFromBg } from "../../utils/functions";
 
 import tailwindConfig from "../../tailwind.config.js";
 
+import { ModalBig1 } from "../../Components/Modal";
+
 function Mtstatus({ account, userId }) {
   const [openNumbers, setOpenNumbers] = useState(true);
   const [open, setOpen] = useState(false);
+  const [openAcc, setOpenAcc] = useState(false);
   const [openDel, setOpenDel] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openColor, setOpenColor] = useState(false);
@@ -50,7 +54,8 @@ function Mtstatus({ account, userId }) {
 
   return (
     <div
-      className="bg-bga px-3 py-2 rounded-xl my-2"
+      onClick={() => setOpenAcc(true)}
+      className="bg-bga px-3 py-2 rounded-xl my-2 cursor-pointer"
       style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
     >
       <div className="">
@@ -148,13 +153,25 @@ function Mtstatus({ account, userId }) {
         )}
       </div>
 
+      <ModalBig1
+        open={openAcc}
+        close={() => {
+          setOpenAcc(false);
+        }}
+      >
+        <AccountDetails account={account} close={() => setOpenAcc(false)} />
+      </ModalBig1>
+
       <Modal1
         open={open}
         close={() => {
           setOpen(false);
         }}
       >
-        <WebhooksPopUp close={() => setOpen(false)} id={account?.id} />
+        <WebhooksPopUp
+          close={() => setOpen(false)}
+          id={account?.accountApiId ? account.accountApiId : account.id}
+        />
       </Modal1>
 
       <Modal1

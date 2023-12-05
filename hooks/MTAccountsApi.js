@@ -8,6 +8,7 @@ import {
   addMTAccount,
   getAccountInformation,
   getHistoryOrders,
+  getActiveOrders,
 } from "../db/Metatrader_API";
 
 import moment from "moment";
@@ -133,6 +134,30 @@ export function GetMTAPIAccounts() {
     getAllMTAPIAccountsWithoutListen,
     getMTAPIData,
   };
+}
+
+export function GetLiveTrades(account) {
+  const [trades, setTrades] = useState([]);
+
+  useEffect(() => {
+    const fetchDataAndSetInterval = async () => {
+      if (!account.accountApiId) return;
+
+      const r = await getActiveOrders(account.accountApiId);
+      //   console.log(r);
+      if (r.length > 0) setTrades(r);
+    };
+
+    fetchDataAndSetInterval(); // Initial call
+
+    const intervalId = setInterval(fetchDataAndSetInterval, 5000); // 60000 milliseconds = 1 minute
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  return { trades };
 }
 
 export function AddNewMTAccount() {
