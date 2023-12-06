@@ -9,6 +9,7 @@ import {
   getAccountInformation,
   getHistoryOrders,
   getActiveOrders,
+  closeTrade,
 } from "../db/Metatrader_API";
 
 import moment from "moment";
@@ -139,25 +140,31 @@ export function GetMTAPIAccounts() {
 export function GetLiveTrades(account) {
   const [trades, setTrades] = useState([]);
 
+  const getData = async () => {
+    if (!account.accountApiId) return;
+
+    const r = await getActiveOrders(account.accountApiId);
+    //   console.log(r);
+    if (r.length > 0) setTrades(r);
+  };
+
+  async function closeLiveTrade(tradeId) {
+    const r = await closeTrade(account.accountApiId, tradeId);
+    console.log("Closing a trade ...", r);
+    await getData();
+  }
+
   useEffect(() => {
-    const fetchDataAndSetInterval = async () => {
-      if (!account.accountApiId) return;
+    getData(); // Initial call
 
-      const r = await getActiveOrders(account.accountApiId);
-      //   console.log(r);
-      if (r.length > 0) setTrades(r);
-    };
-
-    fetchDataAndSetInterval(); // Initial call
-
-    const intervalId = setInterval(fetchDataAndSetInterval, 5000); // 60000 milliseconds = 1 minute
+    const intervalId = setInterval(getData, 5000); // 60000 milliseconds = 1 minute
 
     return () => {
       clearInterval(intervalId);
     };
   }, []);
 
-  return { trades };
+  return { trades, closeLiveTrade };
 }
 
 export function AddNewMTAccount() {

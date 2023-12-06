@@ -7,7 +7,7 @@ import { H3, H6, H5 } from "../../Components/H";
 import { GetLiveTrades } from "../../hooks/MTAccountsApi";
 
 function AccountDetails({ account, close }) {
-  const { trades } = GetLiveTrades(account);
+  const { trades, closeLiveTrade } = GetLiveTrades(account);
 
   return (
     <div className="mb-8">
@@ -62,7 +62,7 @@ function AccountDetails({ account, close }) {
 
         {trades.length > 0 && (
           <div className="mt-6 w-full px-4">
-            <DataTable data={trades} />
+            <DataTable data={trades} closeTrade={closeLiveTrade} />
           </div>
         )}
       </div>
@@ -72,7 +72,7 @@ function AccountDetails({ account, close }) {
 
 export default AccountDetails;
 
-function DataTable({ data }) {
+function DataTable({ data, closeTrade }) {
   return (
     <div className="overflow-x-auto w-full max-h-72 hideScrollbar">
       <table className="table-auto w-full">
@@ -107,7 +107,12 @@ function DataTable({ data }) {
                     <td className="text-xs text-center">
                       ${Number(v.profit).toFixed(2)}
                     </td>
-                    <td className="text-xs text-center">X</td>
+                    <td
+                      className="text-xs text-center"
+                      onClick={() => closeTrade(v.id)}
+                    >
+                      X
+                    </td>
                   </tr>
                   {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
                 </React.Fragment>

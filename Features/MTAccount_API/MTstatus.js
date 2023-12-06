@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { H6, H5, H4, H3 } from "../../Components/H";
 // import { ButtonText } from "../../Components/Button";
 import { Input1 } from "../../Components/Input";
@@ -11,6 +11,8 @@ import WebhooksPopUp from "./WebhooksPopUp";
 import AccountDetails from "./AccountDetails";
 
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/solid";
+import { IoMdArrowDroprightCircle } from "react-icons/io";
+
 // import { EllipsVer } from "@heroicons/react/solid";
 
 import {
@@ -54,7 +56,6 @@ function Mtstatus({ account, userId }) {
 
   return (
     <div
-      onClick={() => setOpenAcc(true)}
       className="bg-bga px-3 py-2 rounded-xl my-2 cursor-pointer"
       style={{ backgroundColor: account.color || "rgb(52, 54, 59)" }}
     >
@@ -133,23 +134,32 @@ function Mtstatus({ account, userId }) {
           </div>
         </div>
 
-        {account.balance ? (
-          <div className="grid grid-cols-3">
-            <div className="">
-              <H6 style={{ color: txtColor }}>Balance</H6>
-              <H5 style={{ color: txtColor }} className="font-bold">
-                {account.balance}
-              </H5>
-            </div>
-            <div className="">
-              <H6 style={{ color: txtColor }}>Equity</H6>
-              <H5 style={{ color: txtColor }} className="font-bold">
-                {account.equity}
-              </H5>
-            </div>
-          </div>
-        ) : (
-          <H6 style={{ color: txtColor }}>Conecting ... </H6>
+        {openNumbers && (
+          <Fragment>
+            {account.balance ? (
+              <div className="grid grid-cols-3">
+                <div className="">
+                  <H6 style={{ color: txtColor }}>Balance</H6>
+                  <H5 style={{ color: txtColor }} className="font-bold">
+                    {account.balance}
+                  </H5>
+                </div>
+                <div className="">
+                  <H6 style={{ color: txtColor }}>Equity</H6>
+                  <H5 style={{ color: txtColor }} className="font-bold">
+                    {account.equity}
+                  </H5>
+                </div>
+                <div className="w-full flex items-end">
+                  <span className="ml-auto" onClick={() => setOpenAcc(true)}>
+                    <IoMdArrowDroprightCircle className="h-6 w-6 text-text-p" />
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <H6 style={{ color: txtColor }}>Conecting ... </H6>
+            )}
+          </Fragment>
         )}
       </div>
 

@@ -217,6 +217,42 @@ export async function openTrade(accountApiId, id, actionType, symbol, volume) {
     return { error: e };
   }
 }
+
+export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
+  console.log("Close a trade ... ", accountApiId, " ", tradeId);
+
+  let data = {
+    actionType: "POSITION_CLOSE_ID",
+    positionId: tradeId,
+  };
+
+  if (partialClose > 0)
+    data = {
+      actionType: "POSITION_PARTIAL",
+      positionId: tradeId,
+      volume: partialClose,
+    };
+
+  try {
+    const req = await axios.post(
+      apiDataURL + "/users/current/accounts/" + accountApiId + "/trade",
+      data,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
 // ------------------
 
 export async function listenToNewMTAccounts(userId, func) {
