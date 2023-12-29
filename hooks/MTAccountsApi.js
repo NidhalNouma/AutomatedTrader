@@ -144,7 +144,7 @@ export function GetLiveTrades(account) {
     if (!account.accountApiId) return;
 
     const r = await getActiveOrders(account.accountApiId);
-    //   console.log(r);
+    // console.log(r);
     if (r.length > 0) setTrades(r);
   };
 

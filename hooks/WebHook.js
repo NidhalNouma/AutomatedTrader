@@ -69,91 +69,66 @@ export const WebHook = (userId) => {
   const [succTestMsg, setSuccTestMsg] = useState("");
   const [name, setName] = useState("");
   const [pair, setPair] = useState("");
+  const [msgType, setMsgType] = useState(0);
   const [type, setType] = useState(0);
   const [pendingDistance, setPendingDistance] = useState("");
   const [positionType, setPositionType] = useState(0);
   const [positionValue, setPositionValue] = useState("1");
+  const [positionValuePercentage, setPositionValuePercentage] = useState("1");
   const [stopLoss, setStopLoss] = useState("200.0");
   const [takeProfit, setTakeProfit] = useState("200.0");
+  const [allTrades, setAllTrades] = useState(false);
 
-  const [TS, setTS] = useState({
-    use: false,
-    start: "",
-    stop: "",
-    step: "",
-  });
-  const [BE, setBE] = useState({
-    use: false,
-    stop: "",
-    partiel: "",
-    activate: "",
-    move: "",
-  });
   const [time, setTime] = useState({
     use: false,
     start: "",
     end: "",
     day: ["MON", "TUE", "WED"],
   });
-  const [hedging, setHedging] = useState({
-    use: false,
-    pending: "",
-    max: "",
-    period: 0,
-  });
-  const [maxSS, setMaxSS] = useState({ use: false, spread: "", slippage: "" });
 
   function formatMsg() {
-    let msg = typeToStr(type.toString()) + " " + pair + " ";
-    if (positionType === 1) {
-      msg += positionValue + " ";
-    } else {
-      msg += positionValue + "% ";
-    }
-    if (pendingDistance) msg += "pendingDistance=" + pendingDistance + " ";
+    let msg =
+      pair +
+      " " +
+      typeToStr(msgType === 1 ? (type + 1).toString() : type.toString()) +
+      " ";
 
-    msg += "takeProfit=" + takeProfit + " ";
-    msg += "stopLoss=" + stopLoss + " ";
+    if (msgType === 0) msg = "MARKET-ORDER " + msg;
+    else if (msgType === 1) msg = "PENDING-ORDER " + msg;
+    else if (msgType === 2) msg = "CLOSE-ORDER " + msg;
+    else if (msgType === 3) msg = "UPDATE-SL " + msg;
 
-    if (TS.use) {
-      msg += "useTrailing=" + TS.use + " ";
-      msg += "trailingStart=" + TS.start + " ";
-      msg += "trailingStop=" + TS.stop + " ";
-      msg += "trailingStep=" + TS.step + " ";
-    }
+    if (msgType < 2) {
+      if (pendingDistance) msg += "PENDING-DISTANCE=" + pendingDistance + " ";
+      if (positionType === 1) {
+        msg += "RISK=" + positionValue + " ";
+      } else {
+        msg += "RISK=" + positionValuePercentage + "% ";
+      }
 
-    if (BE.use) {
-      msg += "useBreakEven=" + BE.use + " ";
-      msg += "stopInProfit=" + BE.stop + " ";
-      msg += "partialProfit=" + BE.partiel + " ";
-      msg += "activateBE=" + BE.activate + " ";
-      msg += "moveSL=" + BE.move + " ";
-    }
-
-    if (hedging.use) {
-      msg += "useHedging=" + hedging.use + " ";
-      msg += "pendingPeriod=" + periodToStr(hedging.period) + " ";
-      msg += "pendingOrderDuration=" + hedging.pending + " ";
-      // msg += "-MT " + hedging.max + " ";
-    }
-
-    if (maxSS.use) {
-      msg += "useMax=" + maxSS.use + " ";
-      msg += "maxSpread=" + maxSS.spread + " ";
-      msg += "maxSlippage=" + maxSS.slippage + " ";
+      msg += "TAKE-PROFIT=" + takeProfit + " ";
+      msg += "STOP-LOSS=" + stopLoss + " ";
+    } else if (msgType == 3) {
+      msg += "STOP-LOSS=" + stopLoss + " ";
+    } else if (msgType === 2) {
+      if (positionType === 1) {
+        msg += "PARTIAL-CLOSE=" + positionValue + " ";
+      }
     }
 
     if (time.use) {
-      msg += "useTime=" + time.use + " ";
+      msg += "USE-TIME ";
       let days = "";
       time.day.forEach((d, i) => {
         days += (i > 0 ? "," : "") + d;
       });
 
-      msg += "days=" + days + " ";
-      msg += "startTime=" + time.start + " ";
-      msg += "endTime=" + time.end + " ";
+      msg += "DAYS=" + days + " ";
+      msg += "START-TIME=" + time.start + " ";
+      msg += "END-TIME=" + time.end + " ";
     }
+
+    if (allTrades) msg += "ALL-TRADES ";
 
     return msg;
   }
@@ -164,19 +139,17 @@ export const WebHook = (userId) => {
 
     // console.log(str, r);
 
+    setMsgType(r.msgType);
     setPair(r.pair);
     setType(r.type);
     setPendingDistance(r.pendingDistance);
     setPositionType(r.positionType);
     setPositionValue(r.positionValue);
+    setPositionValuePercentage(r.positionValuePercentage);
     setStopLoss(r.stopLoss);
     setTakeProfit(r.takeProfit);
-
-    setTS(r.TS);
-    setBE(r.BE);
     setTime(r.time);
-    setHedging(r.hedging);
-    setMaxSS(r.maxSS);
+    setAllTrades(r.allTrades);
   }
 
   async function add() {
@@ -289,6 +262,8 @@ export const WebHook = (userId) => {
   }
 
   return {
+    msgType,
+    setMsgType,
     name,
     setName,
     pair,
@@ -301,20 +276,16 @@ export const WebHook = (userId) => {
     setPositionType,
     positionValue,
     setPositionValue,
+    positionValuePercentage,
+    setPositionValuePercentage,
     stopLoss,
     setStopLoss,
     takeProfit,
     setTakeProfit,
-    TS,
-    setTS,
-    BE,
-    setBE,
     time,
     setTime,
-    hedging,
-    setHedging,
-    maxSS,
-    setMaxSS,
+    allTrades,
+    setAllTrades,
     error,
     succTestMsg,
     add,
@@ -428,17 +399,17 @@ export function getMessages(webhook) {
 export function typeToStr(type) {
   switch (type) {
     case "0":
-      return "Buy";
+      return "BUY";
     case "1":
-      return "Sell";
+      return "SELL";
     case "2":
-      return "Buy stop";
+      return "BUT-STOP";
     case "3":
-      return "Sell stop";
+      return "SELL-STOP";
     case "4":
-      return "Buy limit";
+      return "BUY-LIMIT";
     case "5":
-      return "Sell limit";
+      return "SELL-LIMIT";
   }
 
   return type;
@@ -525,21 +496,21 @@ export function getMessageData(message) {
     advanced: false,
   };
 
-  if (datai.length > 1) {
-    if (datai[0] === "test") {
-      const testData = JSON.parse(datai[1]);
-      r.test = { isTest: true, ...testData };
+  // if (datai.length > 1) {
+  //   if (datai[0] === "test") {
+  //     const testData = JSON.parse(datai[1]);
+  //     r.test = { isTest: true, ...testData };
 
-      datai = datai.filter((v, i) => i > 1);
-      // console.log(datai, r);
-    } else if (datai[0] === "manual") {
-      const testData = JSON.parse(datai[1]);
-      r.manual = { isManual: true, ...testData };
+  //     datai = datai.filter((v, i) => i > 1);
+  //     // console.log(datai, r);
+  //   } else if (datai[0] === "manual") {
+  //     const testData = JSON.parse(datai[1]);
+  //     r.manual = { isManual: true, ...testData };
 
-      datai = datai.filter((v, i) => i > 1);
-      // console.log(datai, r);
-    }
-  }
+  //     datai = datai.filter((v, i) => i > 1);
+  //     // console.log(datai, r);
+  //   }
+  // }
 
   let tsi = {
     use: false,
@@ -565,102 +536,133 @@ export function getMessageData(message) {
   datai.forEach(function (v, i) {
     if (i == 0) {
       const t = v.toLowerCase();
+      if (t === "market-order") r.msgType = 0;
+      else if (t === "pending-order") r.msgType = 1;
+      else if (t === "close-order") r.msgType = 2;
+      else if (t === "update-sl") r.msgType = 3;
+    } else if (i == 1) {
+      r.pair = v;
+    } else if (i == 2) {
+      const t = v.toLowerCase();
       if (t === "buy") r.type = 0;
       else if (t === "sell") r.type = 1;
-    } else if (i === 1) {
-      const t = v.toLowerCase();
-      if (t === "limit") {
-        if (r.type === 0) r.type = 4;
-        else if (r.type === 1) r.type = 5;
-      } else if (t === "stop") {
-        if (r.type === 0) r.type = 2;
-        else if (r.type === 1) r.type = 3;
-      } else r.pair = v;
-    } else if (i === 2 && r.type > 1) {
-      r.pair = v;
-    } else if ((i === 2 && r.type <= 1) || (i === 3 && r.type > 1)) {
-      if (v.search("%") >= 0) {
-        r.positionType = 0;
-        r.positionValue = v.replace("%", "");
-      } else {
+      else if (t === "buy-stop") r.type = 2;
+      else if (t === "sell-stop") r.type = 3;
+      else if (t === "buy-limit") r.type = 4;
+      else if (t === "sell-limit") r.type = 5;
+    }
+    // else if (i === 2) {
+    //   const t = v.toLowerCase();
+    //   if (t === "limit") {
+    //     if (r.type === 0) r.type = 4;
+    //     else if (r.type === 1) r.type = 5;
+    //   } else if (t === "stop") {
+    //     if (r.type === 0) r.type = 2;
+    //     else if (r.type === 1) r.type = 3;
+    //   } else r.pair = v;
+    // } else if (i === 2 && r.type > 1) {
+    //   r.pair = v;
+    // }
+    // else if ((i === 2 && r.type <= 1) || (i === 3 && r.type > 1)) {
+    //   if (v.search("%") >= 0) {
+    //     r.positionType = 0;
+    //     r.positionValue = v.replace("%", "");
+    //   } else {
+    //     r.positionType = 1;
+    //     r.positionValue = v;
+    //   }
+    // }
+    else {
+      if (v.search("RISK=") >= 0) {
+        const risk = v.replace("RISK=", "");
+        if (risk.search("%") >= 0) {
+          r.positionType = 0;
+          r.positionValuePercentage = risk.replace("%", "");
+        } else {
+          r.positionType = 1;
+          r.positionValue = risk;
+        }
+      } else if (v.search("PENDING-DISTANCE=") >= 0) {
+        r.pendingDistance = v.replace("PENDING-DISTANCE=", "");
+      } else if (v.search("STOP-LOSS=") >= 0) {
+        r.stopLoss = v.replace("STOP-LOSS=", "");
+      } else if (v.search("TAKE-PROFIT=") >= 0) {
+        r.takeProfit = v.replace("TAKE-PROFIT=", "");
+        // } else if (v.search("useTrailing=") >= 0) {
+        //   tsi = { ...tsi, use: Boolean(v.replace("useTrailing=", "")) };
+        // } else if (v.search("trailingStart=") >= 0) {
+        //   tsi = { ...tsi, start: v.replace("trailingStart=", "") };
+        // } else if (v.search("trailingStop=") >= 0) {
+        //   tsi = { ...tsi, stop: v.replace("trailingStop=", "") };
+        // } else if (v.search("trailingStep=") >= 0) {
+        //   tsi = { ...tsi, step: v.replace("trailingStep=", "") };
+        // } else if (v.search("useBreakEven=") >= 0) {
+        //   bei = { ...bei, use: Boolean(v.replace("useBreakEven=", "")) };
+        // } else if (v.search("stopInProfit=") >= 0) {
+        //   bei = { ...bei, stop: v.replace("stopInProfit=", "") };
+        // } else if (v.search("partialProfit=") >= 0) {
+        //   bei = { ...bei, partiel: v.replace("partialProfit=", "") };
+        // } else if (v.search("activateBE=") >= 0) {
+        //   bei = { ...bei, activate: v.replace("activateBE=", "") };
+        // } else if (v.search("moveSL=") >= 0) {
+        //   bei = { ...bei, move: v.replace("moveSL=", "") };
+        // } else if (v.search("useHedging=") >= 0) {
+        //   hedgingi = { ...hedgingi, use: Boolean(v.replace("useHedging=", "")) };
+        // } else if (v.search("pendingPeriod=") >= 0) {
+        //   hedgingi = {
+        //     ...hedgingi,
+        //     period: strToPeriod(v.replace("pendingPeriod=", "")),
+        //   };
+        // } else if (v.search("pendingOrderDuration=") >= 0) {
+        //   hedgingi = {
+        //     ...hedgingi,
+        //     pending: v.replace("pendingOrderDuration=", ""),
+        //   };
+        // } else if (v.search("useMax=") >= 0) {
+        //   maxSSi = { ...maxSSi, use: Boolean(v.replace("useMax=", "")) };
+        // } else if (v.search("maxSpread=") >= 0) {
+        //   maxSSi = {
+        //     ...maxSSi,
+        //     spread: v.replace("maxSpread=", ""),
+        //   };
+        // } else if (v.search("maxSlippage=") >= 0) {
+        //   maxSSi = {
+        //     ...maxSSi,
+        //     slippage: v.replace("maxSlippage=", ""),
+        //   };
+      } else if (v.search("PARTIAL-CLOSE=") >= 0) {
+        r.positionValue = v.replace("PARTIAL-CLOSE=", "");
         r.positionType = 1;
-        r.positionValue = v;
-      }
-    } else {
-      if (v.search("pendingDistance=") >= 0) {
-        r.pendingDistance = v.replace("pendingDistance=", "");
-      } else if (v.search("stopLoss=") >= 0) {
-        r.stopLoss = v.replace("stopLoss=", "");
-      } else if (v.search("takeProfit=") >= 0) {
-        r.takeProfit = v.replace("takeProfit=", "");
-      } else if (v.search("useTrailing=") >= 0) {
-        tsi = { ...tsi, use: Boolean(v.replace("useTrailing=", "")) };
-      } else if (v.search("trailingStart=") >= 0) {
-        tsi = { ...tsi, start: v.replace("trailingStart=", "") };
-      } else if (v.search("trailingStop=") >= 0) {
-        tsi = { ...tsi, stop: v.replace("trailingStop=", "") };
-      } else if (v.search("trailingStep=") >= 0) {
-        tsi = { ...tsi, step: v.replace("trailingStep=", "") };
-      } else if (v.search("useBreakEven=") >= 0) {
-        bei = { ...bei, use: Boolean(v.replace("useBreakEven=", "")) };
-      } else if (v.search("stopInProfit=") >= 0) {
-        bei = { ...bei, stop: v.replace("stopInProfit=", "") };
-      } else if (v.search("partialProfit=") >= 0) {
-        bei = { ...bei, partiel: v.replace("partialProfit=", "") };
-      } else if (v.search("activateBE=") >= 0) {
-        bei = { ...bei, activate: v.replace("activateBE=", "") };
-      } else if (v.search("moveSL=") >= 0) {
-        bei = { ...bei, move: v.replace("moveSL=", "") };
-      } else if (v.search("useHedging=") >= 0) {
-        hedgingi = { ...hedgingi, use: Boolean(v.replace("useHedging=", "")) };
-      } else if (v.search("pendingPeriod=") >= 0) {
-        hedgingi = {
-          ...hedgingi,
-          period: strToPeriod(v.replace("pendingPeriod=", "")),
-        };
-      } else if (v.search("pendingOrderDuration=") >= 0) {
-        hedgingi = {
-          ...hedgingi,
-          pending: v.replace("pendingOrderDuration=", ""),
-        };
-      } else if (v.search("useMax=") >= 0) {
-        maxSSi = { ...maxSSi, use: Boolean(v.replace("useMax=", "")) };
-      } else if (v.search("maxSpread=") >= 0) {
-        maxSSi = {
-          ...maxSSi,
-          spread: v.replace("maxSpread=", ""),
-        };
-      } else if (v.search("maxSlippage=") >= 0) {
-        maxSSi = {
-          ...maxSSi,
-          slippage: v.replace("maxSlippage=", ""),
-        };
-      } else if (v.search("useTime=") >= 0) {
-        timei = { ...timei, use: Boolean(v.replace("useTime=", "")) };
-      } else if (v.search("startTime=") >= 0) {
-        timei = { ...timei, start: v.replace("startTime=", "") };
-      } else if (v.search("endTime=") >= 0) {
-        timei = { ...timei, end: v.replace("endTime=", "") };
-      } else if (v.search("days=") >= 0) {
-        timei = { ...timei, day: v.replace("days=", "").split(",") };
+      } else if (v.search("USE-TIME=") >= 0) {
+        timei = { ...timei, use: Boolean(v.replace("USE-TIME=", "")) };
+      } else if (v.search("USE-TIME") >= 0) {
+        timei = { ...timei, use: true };
+      } else if (v.search("START-TIME=") >= 0) {
+        timei = { ...timei, start: v.replace("START-TIME=", "") };
+      } else if (v.search("END-TIMES=") >= 0) {
+        timei = { ...timei, end: v.replace("END-TIME=", "") };
+      } else if (v.search("DAYS=") >= 0) {
+        timei = { ...timei, day: v.replace("DAYS=", "").split(",") };
+      } else if (v.search("ALL-TRADES") >= 0) {
+        r.allTrades = true;
       }
     }
   });
 
-  r.TS = tsi;
-  r.BE = bei;
+  // r.TS = tsi;
+  // r.BE = bei;
   r.time = timei;
-  r.hedging = hedgingi;
-  r.maxSS = maxSSi;
+  // r.hedging = hedgingi;
+  // r.maxSS = maxSSi;
 
-  if (
-    Number(r.type) >= 0 &&
-    Number(r.positionValue) > 0 &&
-    Number(r.stopLoss) >= 0 &&
-    Number(r.takeProfit) >= 0
-  )
-    r.isValid = true;
-  else r.isValid = false;
+  // if (
+  //   Number(r.type) >= 0 &&
+  //   // (Number(r.positionValue) > 0) &&
+  //   Number(r.stopLoss) >= 0 &&
+  //   Number(r.takeProfit) >= 0
+  // )
+  r.isValid = true;
+  // else r.isValid = false;
   // console.log(r, message);
   // console.log(r.type, r.isValid);
 

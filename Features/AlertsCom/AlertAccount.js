@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { GetMTAccountsContext } from "../../hooks/MTAccounts";
+import { GetMTAPIAccountsContext } from "../../hooks/MTAccountsApi";
 import { BsArrowRightCircleFill } from "react-icons/bs";
 
 import { H4, H3, Hi4 } from "../../Components/H";
@@ -13,8 +13,10 @@ import { txtColorFromBg } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
 
 function AlertAccount({ accountId, data }) {
-  const { mtAccounts } = GetMTAccountsContext();
-  const account = mtAccounts.find((v) => v.id === accountId);
+  const { mtAPIAccounts } = GetMTAPIAccountsContext();
+  const account = mtAPIAccounts.find((v) => v.accountApiId === accountId);
+
+  // console.log(account, accountId, mtAccounts);
 
   const colors = tailwindConfig.theme.colors;
   const txtColor = txtColorFromBg(
@@ -86,13 +88,25 @@ function Details({ data, close, account }) {
       </div>
       {data.length > 0 ? (
         <div className="px-4 pb-4">
-          {data.map((msg, i) => <Data key={i} msg={msg} />).reverse()}
+          {data.map((msg, i) => <Data_n key={i} msg={msg} />).reverse()}
         </div>
       ) : (
         <div className=" w-full px-10 mt-2 mb-4">
-          <Hi4 className="text-center">No response yet!</Hi4>
+          <Hi4 className="text-center">No response!</Hi4>
         </div>
       )}
+    </div>
+  );
+}
+
+function Data_n({ msg }) {
+  return (
+    <div
+      className={`text-xs mb-2 px-2 rounded-lg py-1 font-semibold ${
+        msg.error ? "bg-red-400 text-red-900" : "bg-green-400 text-green-900"
+      }`}
+    >
+      <p className="">{msg.error || msg.msg}</p>
     </div>
   );
 }

@@ -24,7 +24,6 @@ import { PlayVideoPopup } from "../../Components/Video";
 import { videosUrls, MT4EA } from "../../utils/constant";
 
 import { Modal1 } from "../../Components/Modal";
-import ManageWebhook from "../../Features/ManageWebhook";
 import NewAccount from "../../Features/MT_API/NewAccount";
 
 export default function MT4() {

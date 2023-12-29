@@ -11,7 +11,6 @@ import SearchHeader from "./SearchHeader";
 import { LeftMenu } from "./LeftMenu";
 
 import { Modal1 } from "../../Components/Modal";
-import ManageWebhook from "../ManageWebhook";
 import OpenTrade from "../tradesManual/Open";
 import UpgradeMsg from "../UpgradeMsg";
 

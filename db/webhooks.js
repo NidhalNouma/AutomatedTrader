@@ -19,7 +19,7 @@ import { getMTAccountsByUserId } from "./mtAccounts";
 import { getUser } from "./user";
 import { firebaseConfig } from "../utils/constant";
 
-const collName = "webhooks";
+const collName = "newwebhooks";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 

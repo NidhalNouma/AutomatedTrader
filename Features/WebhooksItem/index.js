@@ -20,8 +20,8 @@ import { H5 } from "../../Components/H";
 import ColorPicker from "../../Components/ColorPicker";
 
 import { Modal1 } from "../../Components/Modal";
-import AddMessage from "../ManageWebhook/AddMessage";
-import EditMessageWH from "../ManageWebhook/EditMessage";
+import AddMessage from "../ManageWebhookAPI/AddMessage";
+import EditMessageWH from "../ManageWebhookAPI/EditMessage";
 import { DeleteMessage, EditMessage } from "../../Components/ModalMsg";
 
 import {
@@ -558,6 +558,16 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                                 value={i}
                                 selected={v.msg === msg.msg}
                               >
+                                {v.data.msgType == 0
+                                  ? "MARKET ORDER"
+                                  : v.data.msgType == 1
+                                  ? "PENDING ORDER"
+                                  : v.data.msgType == 2
+                                  ? "CLOSE ORDER"
+                                  : v.data.msgType == 3
+                                  ? "UPDATE SL"
+                                  : ""}
+                                {" - "}
                                 {v.data.pair}
                                 {" - "}
                                 {v.data.type}

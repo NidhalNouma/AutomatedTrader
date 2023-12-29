@@ -114,7 +114,9 @@ function Alert({ v, wh, key, msg }) {
               <span className="text-xs">
                 Position value:
                 <span className="ml-1 font-bold">
-                  {msg.positionValue || msg.riskPercentage}
+                  {msg.positionValue ||
+                    msg.positionValuePercentage ||
+                    msg.riskPercentage}
                   {msg.positionType === 0 || msg.riskPercentage ? "%" : ""}
                 </span>
               </span>
@@ -197,7 +199,13 @@ function Alert({ v, wh, key, msg }) {
             </Hi6> */}
             <div className="grid grid-cols-2 sm:grid-cols-4 items-center gap-2">
               {Object.keys(v.accounts).map((acc, i) => (
-                <AlertAccount key={i} accountId={acc} data={v.accounts[acc]} />
+                <Fragment key={i}>
+                  <AlertAccount
+                    key={i}
+                    accountId={acc}
+                    data={v.accounts[acc]}
+                  />
+                </Fragment>
               ))}
             </div>
           </div>

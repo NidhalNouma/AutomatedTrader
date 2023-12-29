@@ -7,7 +7,7 @@ import { PlusIcon } from "@heroicons/react/outline";
 import { ButtonP } from "../Components/Button";
 import WebhooksItem from "../Features/WebhooksItem";
 import { Modal1 } from "../Components/Modal";
-import ManageWebhook from "../Features/ManageWebhook";
+import ManageWebhook from "../Features/ManageWebhookAPI";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
 import { GetWebhookContext, getMessageData } from "../hooks/WebHook";

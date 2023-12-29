@@ -200,7 +200,17 @@ export async function openTrade(accountApiId, id, actionType, symbol, volume) {
   try {
     const req = await axios.post(
       apiDataURL + "/users/current/accounts/" + accountApiId + "/trade",
-      { actionType: actionType, symbol: symbol, volume: volume, clientId: id },
+      {
+        actionType:
+          actionType == 0
+            ? "ORDER_TYPE_BUY"
+            : actionType == 1
+            ? "ORDER_TYPE_SELL"
+            : "",
+        symbol: symbol,
+        volume: volume,
+        clientId: id,
+      },
       {
         headers: {
           "auth-token": token,
@@ -218,6 +228,95 @@ export async function openTrade(accountApiId, id, actionType, symbol, volume) {
   }
 }
 
+export async function closeTradeByWHID(
+  accountApiId,
+  tradeId,
+  symbol,
+  actionType,
+  partialClose = 0,
+  all = true
+) {
+  console.log("Close a trade by webhook ID ... ", accountApiId, " ", tradeId);
+  const res = [];
+
+  const listOfTrades = await getActiveOrders(accountApiId);
+  const positionType =
+    actionType == 0
+      ? "POSITION_TYPE_BUY"
+      : actionType == 1
+      ? "POSITION_TYPE_SELL"
+      : "";
+
+  for (let i = 0; i < listOfTrades.length; i++) {
+    const trade = listOfTrades[i];
+    if (all || trade.clientId.search(tradeId) > 0)
+      if (trade.symbol === symbol) {
+        if (trade.type == positionType) {
+          // console.log("Close a trade", trade);
+          if (partialClose > 0) {
+            partialClose = (trade.volume * partialClose) / 100;
+            partialClose =
+              Math.round((partialClose + Number.EPSILON) * 100) / 100;
+          }
+          const r = await closeTrade(accountApiId, trade.id, partialClose);
+          // console.log(r);
+          if (r.orderId) {
+            res.push({
+              orderId: r.orderId,
+              msg: "Order closed successfully!",
+            });
+          } else {
+            res.push({ error: r.message });
+          }
+        }
+      }
+  }
+
+  return res;
+}
+
+export async function modifyTradeByWHID(
+  accountApiId,
+  tradeId,
+  symbol,
+  actionType,
+  SL,
+  all = true
+) {
+  console.log("Modify a trade by webhook ID ... ", accountApiId, " ", tradeId);
+  const res = [];
+
+  const listOfTrades = await getActiveOrders(accountApiId);
+  const positionType =
+    actionType == 0
+      ? "POSITION_TYPE_BUY"
+      : actionType == 1
+      ? "POSITION_TYPE_SELL"
+      : "";
+
+  for (let i = 0; i < listOfTrades.length; i++) {
+    const trade = listOfTrades[i];
+    if (all || trade.clientId.search(tradeId) > 0)
+      if (trade.symbol === symbol) {
+        if (trade.type == positionType) {
+          // console.log("Modify a trade", trade);
+          const r = await modifyTrade(accountApiId, trade.id, SL);
+          // console.log(r);
+          if (r.positionId) {
+            res.push({
+              orderId: r.positionId,
+              msg: "Order modified successfully!",
+            });
+          } else {
+            res.push({ error: r.message });
+          }
+        }
+      }
+  }
+
+  return res;
+}
+
 export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
   console.log("Close a trade ... ", accountApiId, " ", tradeId);
 
@@ -232,6 +331,44 @@ export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
       positionId: tradeId,
       volume: partialClose,
     };
+
+  try {
+    const req = await axios.post(
+      apiDataURL + "/users/current/accounts/" + accountApiId + "/trade",
+      data,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
+export async function modifyTrade(accountApiId, tradeId, SL) {
+  console.log(
+    "Modify a trade ... ",
+    accountApiId,
+    " ",
+    tradeId,
+    " new-sl ",
+    SL
+  );
+
+  let data = {
+    actionType: "POSITION_MODIFY",
+    positionId: tradeId,
+    stopLoss: Number(SL),
+    stopLossUnits: "RELATIVE_PIPS",
+  };
 
   try {
     const req = await axios.post(

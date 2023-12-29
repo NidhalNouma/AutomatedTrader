@@ -1,61 +1,61 @@
-import Redis from "ioredis";
-import { REDIS } from "../utils/constant";
+// import Redis from "ioredis";
+// import { REDIS } from "../utils/constant";
 
-const redis = new Redis({
-  host: REDIS.host,
-  port: REDIS.port,
-  password: REDIS.password,
-});
+// const redis = new Redis({
+//   host: REDIS.host,
+//   port: REDIS.port,
+//   password: REDIS.password,
+// });
 
-async function newDoc(id, doc, seconds = 20) {
-  try {
-    const result = await redis.get(id);
-    if (result) {
-      let existingArray = JSON.parse(result);
+// async function newDoc(id, doc, seconds = 20) {
+//   try {
+//     const result = await redis.get(id);
+//     if (result) {
+//       let existingArray = JSON.parse(result);
 
-      existingArray.push(doc);
-      const updatedJsonString = JSON.stringify(existingArray);
+//       existingArray.push(doc);
+//       const updatedJsonString = JSON.stringify(existingArray);
 
-      await redis.set(id, updatedJsonString);
-      await redis.expire(id, seconds);
-    } else {
-      const jsonString = JSON.stringify([doc]);
-      await redis.set(id, jsonString);
-      await redis.expire(id, seconds);
-    }
-  } catch (error) {
-    console.error("redis error ", error);
-  }
-}
+//       await redis.set(id, updatedJsonString);
+//       await redis.expire(id, seconds);
+//     } else {
+//       const jsonString = JSON.stringify([doc]);
+//       await redis.set(id, jsonString);
+//       await redis.expire(id, seconds);
+//     }
+//   } catch (error) {
+//     console.error("redis error ", error);
+//   }
+// }
 
-async function getDoc(id) {
-  let r = [];
-  try {
-    const req = await redis.get(id);
-    if (req) {
-      r = JSON.parse(req);
-      r = r.reverse();
-    }
-  } catch (err) {
-    console.error(err);
-  }
-  return r;
-}
+// async function getDoc(id) {
+//   let r = [];
+//   try {
+//     const req = await redis.get(id);
+//     if (req) {
+//       r = JSON.parse(req);
+//       r = r.reverse();
+//     }
+//   } catch (err) {
+//     console.error(err);
+//   }
+//   return r;
+// }
 
-export async function newAlert(id, data) {
-  let n = { id, data: [data] };
-  console.log("New alert for MT => ", data.userId, data.MT4, data.messageData);
+// export async function newAlert(id, data) {
+//   let n = { id, data: [data] };
+//   console.log("New alert for MT => ", data.userId, data.MT4, data.messageData);
 
-  newDoc(data.userId, data);
-  // removeAfterXs(id);
-}
+//   newDoc(data.userId, data);
+//   // removeAfterXs(id);
+// }
 
-export async function getAlertByUserId(id) {
-  // removeAfterXs(id);
-  const r = await getDoc(id);
+// export async function getAlertByUserId(id) {
+//   // removeAfterXs(id);
+//   const r = await getDoc(id);
 
-  return r;
-}
+//   return r;
+// }
 
 export function webhookTime(time) {
   const timeEst = changeTimeZone(new Date(), "America/New_York");

@@ -17,7 +17,7 @@ import {
 } from "firebase/firestore";
 import { firebaseConfig } from "../utils/constant";
 
-const collName = "alerts";
+const collName = "alerts_n";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
@@ -26,14 +26,9 @@ export async function addAlert(
   message,
   userId,
   webhookName,
-  mtAccounts
+  accounts
 ) {
   console.log("Adding new alert ...");
-  let accounts = {};
-
-  mtAccounts?.forEach((accountId) => {
-    accounts[accountId] = [];
-  });
 
   try {
     const docRef = await addDoc(collection(db, collName), {
