@@ -234,7 +234,8 @@ export async function closeTradeByWHID(
   symbol,
   actionType,
   partialClose = 0,
-  all = true
+  all,
+  moveToBE
 ) {
   console.log("Close a trade by webhook ID ... ", accountApiId, " ", tradeId);
   const res = [];
@@ -249,24 +250,50 @@ export async function closeTradeByWHID(
 
   for (let i = 0; i < listOfTrades.length; i++) {
     const trade = listOfTrades[i];
-    if (all || trade.clientId.search(tradeId) > 0)
+    if (all || trade.clientId?.search(tradeId) > 0)
       if (trade.symbol === symbol) {
         if (trade.type == positionType) {
           // console.log("Close a trade", trade);
           if (partialClose > 0) {
             partialClose = (trade.volume * partialClose) / 100;
+            // console.log(partialClose);
             partialClose =
               Math.round((partialClose + Number.EPSILON) * 100) / 100;
+            // console.log(partialClose);
+          }
+          if (moveToBE) {
+            const r1 = await modifyTPandSLprice(
+              accountApiId,
+              trade.id,
+              trade.openPrice,
+              0
+            );
+            if (r1.orderId) {
+              res.push({
+                orderId: r1.positionId,
+                msg: "Stop loss move to break even successfully",
+              });
+            } else {
+              res.push({
+                orderId: r1.positionId,
+                error: r1.message,
+                msg: "Error moving SL to breakeven",
+              });
+            }
           }
           const r = await closeTrade(accountApiId, trade.id, partialClose);
           // console.log(r);
           if (r.orderId) {
             res.push({
               orderId: r.orderId,
-              msg: "Order closed successfully!",
+              msg: "Order closed successfully",
             });
           } else {
-            res.push({ error: r.message });
+            res.push({
+              orderId: trade.id,
+              error: r.message,
+              msg: "Error closing the order",
+            });
           }
         }
       }
@@ -281,7 +308,7 @@ export async function modifyTradeByWHID(
   symbol,
   actionType,
   SL,
-  all = true
+  all
 ) {
   console.log("Modify a trade by webhook ID ... ", accountApiId, " ", tradeId);
   const res = [];
@@ -296,7 +323,7 @@ export async function modifyTradeByWHID(
 
   for (let i = 0; i < listOfTrades.length; i++) {
     const trade = listOfTrades[i];
-    if (all || trade.clientId.search(tradeId) > 0)
+    if (all || trade.clientId?.search(tradeId) > 0)
       if (trade.symbol === symbol) {
         if (trade.type == positionType) {
           // console.log("Modify a trade", trade);
@@ -305,10 +332,14 @@ export async function modifyTradeByWHID(
           if (r.positionId) {
             res.push({
               orderId: r.positionId,
-              msg: "Order modified successfully!",
+              msg: "Order modified successfully",
             });
           } else {
-            res.push({ error: r.message });
+            res.push({
+              orderId: trade.id,
+              error: r.message,
+              msg: "Error with updating the stop loss",
+            });
           }
         }
       }
@@ -368,6 +399,50 @@ export async function modifyTrade(accountApiId, tradeId, SL) {
     positionId: tradeId,
     stopLoss: Number(SL),
     stopLossUnits: "RELATIVE_PIPS",
+  };
+
+  try {
+    const req = await axios.post(
+      apiDataURL + "/users/current/accounts/" + accountApiId + "/trade",
+      data,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
+export async function modifyTPandSLprice(
+  accountApiId,
+  tradeId,
+  SLprice,
+  TPprice
+) {
+  console.log(
+    "Modify a trade ... ",
+    accountApiId,
+    " ",
+    tradeId,
+    " new-sl ",
+    SLprice
+  );
+
+  let data = {
+    actionType: "POSITION_MODIFY",
+    positionId: tradeId,
+    stopLoss: Number(SLprice),
+    takeProfit: Number(TPprice),
+    stopLossUnits: "ABSOLUTE_PRICE",
   };
 
   try {

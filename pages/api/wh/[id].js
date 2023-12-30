@@ -71,14 +71,17 @@ export default async function handler(req, res) {
                     alertRespons[r.MT4[i]] = [
                       {
                         orderId: res.orderId,
-                        msg: "Order placed successfully!",
+                        msg: "Order placed successfully",
                       },
                     ];
                   } else {
-                    alertRespons[r.MT4[i]] = [{ error: res.message }];
+                    alertRespons[r.MT4[i]] = [
+                      { error: res.message, msg: "Error placing a new trade" },
+                    ];
                   }
                 }
               } else if (msgData.msgType == 2) {
+                // console.log(msgData);
                 for (let i = 0; i < r.MT4?.length; i++) {
                   const res = await closeTradeByWHID(
                     r.MT4[i],
@@ -86,7 +89,8 @@ export default async function handler(req, res) {
                     msgData.pair,
                     msgData.type,
                     msgData.positionType === 1 ? msgData.positionValue : 0,
-                    msgData.allTrades
+                    msgData.allTrades,
+                    msgData.moveToBE
                   );
                   alertRespons[r.MT4[i]] = res;
                   // console.log(res);

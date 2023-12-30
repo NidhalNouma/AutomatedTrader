@@ -22,6 +22,8 @@ function CloseOrder({
 
   allTrades,
   setAllTrades,
+  moveToBE,
+  setMoveToBE,
 }) {
   return (
     <Fragment>
@@ -41,7 +43,7 @@ function CloseOrder({
                 size="sm"
                 color="primary"
                 checked={positionType === 1}
-                onClick={() => setPositionType(1)}
+                onClick={() => setPositionType(positionType !== 1 ? 1 : 0)}
                 // onChange={() => setPositionType(1)}
               />
               {"Partial close"}
@@ -54,6 +56,14 @@ function CloseOrder({
         />
       </div>
 
+      {positionType === 1 && positionValue < 100 && (
+        <Toggle1
+          name="Move to BE"
+          helper="Move price to breakeven."
+          value={moveToBE}
+          setValue={() => setMoveToBE(!moveToBE)}
+        />
+      )}
       <Toggle1
         name="All trades"
         helper="Close all trades, not just the ones that were opened by this webhook."

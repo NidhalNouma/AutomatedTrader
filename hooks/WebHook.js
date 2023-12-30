@@ -78,6 +78,7 @@ export const WebHook = (userId) => {
   const [stopLoss, setStopLoss] = useState("200.0");
   const [takeProfit, setTakeProfit] = useState("200.0");
   const [allTrades, setAllTrades] = useState(false);
+  const [moveToBE, setMoveToBE] = useState(false);
 
   const [time, setTime] = useState({
     use: false,
@@ -129,6 +130,7 @@ export const WebHook = (userId) => {
     }
 
     if (allTrades) msg += "ALL-TRADES ";
+    if (moveToBE) msg += "MOVE-TO-BE ";
 
     return msg;
   }
@@ -150,6 +152,7 @@ export const WebHook = (userId) => {
     setTakeProfit(r.takeProfit);
     setTime(r.time);
     setAllTrades(r.allTrades);
+    setMoveToBE(r.moveToBE);
   }
 
   async function add() {
@@ -286,6 +289,8 @@ export const WebHook = (userId) => {
     setTime,
     allTrades,
     setAllTrades,
+    moveToBE,
+    setMoveToBE,
     error,
     succTestMsg,
     add,
@@ -645,6 +650,8 @@ export function getMessageData(message) {
         timei = { ...timei, day: v.replace("DAYS=", "").split(",") };
       } else if (v.search("ALL-TRADES") >= 0) {
         r.allTrades = true;
+      } else if (v.search("MOVE-TO-BE") >= 0) {
+        r.moveToBE = true;
       }
     }
   });

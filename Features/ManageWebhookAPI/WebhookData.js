@@ -54,6 +54,8 @@ function WebhookData({
     setPositionValue,
     allTrades,
     setAllTrades,
+    moveToBE,
+    setMoveToBE,
 
     positionValuePercentage,
     setPositionValuePercentage,
@@ -203,6 +205,8 @@ function WebhookData({
           setTime={setTime}
           allTrades={allTrades}
           setAllTrades={setAllTrades}
+          moveToBE={moveToBE}
+          setMoveToBE={setMoveToBE}
         />
       ) : msgType == 3 ? (
         <UpdateSL
