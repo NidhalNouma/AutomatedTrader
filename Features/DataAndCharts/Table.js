@@ -70,9 +70,9 @@ function Table({ data, accounts }) {
                 .reverse()
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
-                  // console.log(v);
                   const { webhooks } = GetWebhookContext();
-                  const wh = webhooks.find((w) => w.id === v?.ID);
+                  const id = v.clientId ? v.clientId.split("_")[2] : null;
+                  const wh = webhooks.find((w) => w.id === id?.toString());
                   const colors = tailwindConfig.theme.colors;
 
                   const txtColor = txtColorFromBg(
@@ -156,9 +156,7 @@ function Table({ data, accounts }) {
                             ? moment
                                 .utc(v.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
                                 .format("yyyy MM DD HH:mm:ss")
-                            : moment(v.closeTime, "YYYY.MM.DD HH:mm:ss").format(
-                                "yyyy MM DD HH:mm:ss"
-                              )}
+                            : moment(v.closeTime).format("yyyy MM DD HH:mm:ss")}
                         </td>
                       </tr>
                       {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
@@ -178,7 +176,8 @@ export default Table;
 
 export function TradeDetails({ data, close }) {
   const { webhooks } = GetWebhookContext();
-  const wh = webhooks.find((v) => v.id === data?.ID);
+  const id = data?.clientId ? data.clientId.split("_")[2] : null;
+  const wh = webhooks.find((w) => w.id === id?.toString());
   // console.log(wh, data);
   const type = typeToStr(data?.type?.toString());
 
@@ -293,9 +292,7 @@ export function TradeDetails({ data, close }) {
               ? moment
                   .utc(data?.openTimeGMT, "YYYY.MM.DD HH:mm:ss")
                   .format("yyyy MM DD HH:mm:ss")
-              : moment(data?.openTime, "YYYY.MM.DD HH:mm:ss").format(
-                  "yyyy MM DD HH:mm:ss"
-                )}
+              : moment(data?.openTime).format("yyyy MM DD HH:mm:ss")}
           </span>
         </div>
         <div className="flex flex-col">
@@ -305,9 +302,7 @@ export function TradeDetails({ data, close }) {
               ? moment
                   .utc(data?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
                   .format("yyyy MM DD HH:mm:ss")
-              : moment(data?.closeTime, "YYYY.MM.DD HH:mm:ss").format(
-                  "yyyy MM DD HH:mm:ss"
-                )}
+              : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
           </span>
         </div>
       </div>

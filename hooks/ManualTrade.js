@@ -1,26 +1,22 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export const PlaceWebhookTrade = (mtAccounts, mt5Accounts, webhooks) => {
-  const brokers = ["MT4", "MT5"];
-  const [sbroker, setSBroker] = useState(
-    mtAccounts.length > 0
-      ? brokers[0]
-      : mt5Accounts.length > 0
-      ? brokers[1]
-      : brokers[0]
-  );
-
-  const [accounts, setAccounts] = useState(mt5Accounts);
-
+export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
+  const [accounts, setAccounts] = useState(mtAccounts);
   const [sAccount, setSAccount] = useState(
-    accounts?.length > 0 ? accounts[0] : null
+    mtAccounts?.length > 0 ? mtAccounts[0] : null
   );
+  // console.log(mtAccounts);
 
   useEffect(() => {
-    if (sbroker === brokers[0]) setAccounts(mtAccounts);
-    else if (sbroker === brokers[1]) setAccounts(mt5Accounts);
-  }, [sbroker]);
+    setAccounts(mtAccounts);
+    setSAccount(mtAccounts?.length > 0 ? mtAccounts[0] : null);
+  }, [mtAccounts]);
+
+  // useEffect(() => {
+  //   if (sbroker === brokers[0]) setAccounts(mtAccounts);
+  //   else if (sbroker === brokers[1]) setAccounts(mt5Accounts);
+  // }, [sbroker]);
 
   const [sWebhook, setSWebhook] = useState(
     webhooks?.length > 0 ? webhooks[0] : null
@@ -31,6 +27,14 @@ export const PlaceWebhookTrade = (mtAccounts, mt5Accounts, webhooks) => {
   );
 
   useEffect(() => {
+    if (sWebhook === null)
+      setSWebhook(
+        sWebhook === null ? (webhooks?.length > 0 ? webhooks[0] : null) : null
+      );
+  }, [webhooks]);
+
+  useEffect(() => {
+    console.log(sWebhook?.messages);
     setSMessage(sWebhook?.messages?.length > 0 ? sWebhook?.messages[0] : null);
   }, [sWebhook]);
 
@@ -53,7 +57,10 @@ export const PlaceWebhookTrade = (mtAccounts, mt5Accounts, webhooks) => {
 
     setError("");
     const msg =
-      "manual " + JSON.stringify({ account: [sAccount.id] }) + " " + sMessage;
+      sMessage +
+      " MANUEL-" +
+      JSON.stringify({ account: [sAccount.accountApiId] }) +
+      " ";
     // console.log(msg, sAccount, sWebhook);
 
     const r = await axios.post("/api/wh/" + sWebhook.id, msg, {
@@ -76,9 +83,6 @@ export const PlaceWebhookTrade = (mtAccounts, mt5Accounts, webhooks) => {
     error,
     send,
 
-    brokers,
-    sbroker,
-    setSBroker,
     accounts,
   };
 };

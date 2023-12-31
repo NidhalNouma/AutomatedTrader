@@ -380,8 +380,8 @@ function mergeData(data) {
         // delete currentItem["commission"];
         // delete currentItem["profit"];
 
-        if (currentItem.type === "DEAL_TYPE_BUY") currentItem["type"] = "0";
-        else if (currentItem.type === "DEAL_TYPE_SELL") currentItem.type = "1";
+        if (existingItem.type === "DEAL_TYPE_BUY") currentItem["type"] = "0";
+        else if (existingItem.type === "DEAL_TYPE_SELL") currentItem.type = "1";
 
         renameKey(currentItem, "time", "closeTime");
         renameKey(currentItem, "brokerTime", "closeBrokerTime");

@@ -194,8 +194,29 @@ export async function getActiveOrders(accountApiId) {
   }
 }
 
-export async function openTrade(accountApiId, id, actionType, symbol, volume) {
+export async function openTrade(
+  accountApiId,
+  id,
+  actionType,
+  symbol,
+  volume,
+  sl,
+  tp,
+  slPrice,
+  tpPrice
+) {
   console.log("Open a trade ... ", accountApiId);
+
+  let slData = {};
+  let tpData = {};
+  if (slPrice)
+    slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
+  else if (sl)
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
+  if (tpPrice)
+    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
+  else if (tp)
+    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
 
   try {
     const req = await axios.post(
@@ -210,6 +231,8 @@ export async function openTrade(accountApiId, id, actionType, symbol, volume) {
         symbol: symbol,
         volume: volume,
         clientId: id,
+        ...slData,
+        ...tpData,
       },
       {
         headers: {
@@ -266,7 +289,7 @@ export async function closeTradeByWHID(
               accountApiId,
               trade.id,
               trade.openPrice,
-              0
+              trade.takeProfit
             );
             if (r1.orderId) {
               res.push({
@@ -275,7 +298,7 @@ export async function closeTradeByWHID(
               });
             } else {
               res.push({
-                orderId: r1.positionId,
+                orderId: trade.id,
                 error: r1.message,
                 msg: "Error moving SL to breakeven",
               });
@@ -295,6 +318,7 @@ export async function closeTradeByWHID(
               msg: "Error closing the order",
             });
           }
+          console.log(res);
         }
       }
   }
@@ -308,6 +332,7 @@ export async function modifyTradeByWHID(
   symbol,
   actionType,
   SL,
+  slPrice,
   all
 ) {
   console.log("Modify a trade by webhook ID ... ", accountApiId, " ", tradeId);
@@ -327,7 +352,14 @@ export async function modifyTradeByWHID(
       if (trade.symbol === symbol) {
         if (trade.type == positionType) {
           // console.log("Modify a trade", trade);
-          const r = await modifyTrade(accountApiId, trade.id, SL);
+          const r = await modifyTrade(
+            accountApiId,
+            trade.id,
+            SL,
+            slPrice,
+            null,
+            trade.takeProfit
+          );
           // console.log(r);
           if (r.positionId) {
             res.push({
@@ -384,21 +416,32 @@ export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
   }
 }
 
-export async function modifyTrade(accountApiId, tradeId, SL) {
-  console.log(
-    "Modify a trade ... ",
-    accountApiId,
-    " ",
-    tradeId,
-    " new-sl ",
-    SL
-  );
+export async function modifyTrade(
+  accountApiId,
+  tradeId,
+  sl,
+  slPrice,
+  tp,
+  tpPrice
+) {
+  console.log("Modify a trade ... ", accountApiId, " ", tradeId);
+
+  let slData = {};
+  let tpData = {};
+  if (slPrice)
+    slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
+  else if (sl)
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
+  if (tpPrice)
+    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
+  else if (tp)
+    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
 
   let data = {
     actionType: "POSITION_MODIFY",
     positionId: tradeId,
-    stopLoss: Number(SL),
-    stopLossUnits: "RELATIVE_PIPS",
+    ...slData,
+    ...tpData,
   };
 
   try {

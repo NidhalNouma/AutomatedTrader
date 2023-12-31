@@ -248,9 +248,7 @@ function TradeDetails({ data, close, profit }) {
               ? moment
                   .utc(data?.openTimeGMT, "YYYY.MM.DD HH:mm:ss")
                   .format("yyyy MM DD HH:mm:ss")
-              : moment(data?.openTime, "YYYY.MM.DD HH:mm:ss").format(
-                  "yyyy MM DD HH:mm:ss"
-                )}
+              : moment(data?.openTime).format("yyyy MM DD HH:mm:ss")}
           </span>
         </div>
         <div className="flex flex-col">
@@ -260,9 +258,7 @@ function TradeDetails({ data, close, profit }) {
               ? moment
                   .utc(data?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
                   .format("yyyy MM DD HH:mm:ss")
-              : moment(data?.closeTime, "YYYY.MM.DD HH:mm:ss").format(
-                  "yyyy MM DD HH:mm:ss"
-                )}
+              : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
           </span>
         </div>
 

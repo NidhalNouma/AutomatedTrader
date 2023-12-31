@@ -492,7 +492,7 @@ export const WebHookCC = ({ children, value }) => {
 
 export const GetWebhookContext = () => useContext(WebHooksC);
 
-export function getMessageData(message) {
+export function getMessageData(message, symbol, fixedLotSize) {
   // console.log("New basic webhook alert: ", message);
   if (!message) return;
   let datai = message.split(" ");
@@ -547,6 +547,7 @@ export function getMessageData(message) {
       else if (t === "update-sl") r.msgType = 3;
     } else if (i == 1) {
       r.pair = v;
+      if (symbol) r.pair = symbol;
     } else if (i == 2) {
       const t = v.toLowerCase();
       if (t === "buy") r.type = 0;
@@ -587,12 +588,20 @@ export function getMessageData(message) {
           r.positionType = 1;
           r.positionValue = risk;
         }
+        if (fixedLotSize) {
+          r.positionType = 1;
+          r.positionValue = fixedLotSize;
+        }
       } else if (v.search("PENDING-DISTANCE=") >= 0) {
         r.pendingDistance = v.replace("PENDING-DISTANCE=", "");
       } else if (v.search("STOP-LOSS=") >= 0) {
         r.stopLoss = v.replace("STOP-LOSS=", "");
       } else if (v.search("TAKE-PROFIT=") >= 0) {
         r.takeProfit = v.replace("TAKE-PROFIT=", "");
+      } else if (v.search("STOP-LOSS-@=") >= 0) {
+        r.stopLossPrice = v.replace("STOP-LOSS-@=", "");
+      } else if (v.search("TAKE-PROFIT-@=") >= 0) {
+        r.takeProfitPrice = v.replace("TAKE-PROFIT-@=", "");
         // } else if (v.search("useTrailing=") >= 0) {
         //   tsi = { ...tsi, use: Boolean(v.replace("useTrailing=", "")) };
         // } else if (v.search("trailingStart=") >= 0) {
@@ -652,6 +661,9 @@ export function getMessageData(message) {
         r.allTrades = true;
       } else if (v.search("MOVE-TO-BE") >= 0) {
         r.moveToBE = true;
+      } else if (v.search("MANUEL-") >= 0) {
+        const testData = JSON.parse(v.replace("MANUEL-", ""));
+        r.manual = { isManual: true, ...testData };
       }
     }
   });

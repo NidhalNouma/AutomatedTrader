@@ -208,7 +208,7 @@ function BestWorseTrades({ data }) {
         <Sec
           title="Loss Trades"
           rightPart={
-            <CircleArc percentage={80} color="red" />
+            <CircleArc percentage={80} color={"red"} />
             // <BarLine
             //   w1={
             //     ((tlong - tlongWin) / (tlong + tShort - tlongWin - tShortWin)) *

@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
-import { GetMTAccountsContext, CalculateData } from "../hooks/MTAccounts";
+import { GetMTAPIAccountsContext } from "../hooks/MTAccountsApi";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 import { GetWebhookContext } from "../hooks/WebHook";
 
@@ -23,8 +23,8 @@ import { PlayVideoPopup } from "../Components/Video";
 import { videosUrls } from "../utils/constant";
 
 export default function TradesPage() {
-  const { mt4Accounts, getData } = GetMTAccountsContext();
-  const data = getData();
+  const { mtAPIAccounts, getMTAPIData } = GetMTAPIAccountsContext();
+  const data = getMTAPIData();
   const { fullUser } = GetFullUserContext();
 
   const [open, setOpen] = useState(false);
@@ -35,7 +35,7 @@ export default function TradesPage() {
 
   const options = [
     "All",
-    ...mt4Accounts.map((account) => account.accountDisplayName),
+    ...mtAPIAccounts.map((account) => account.accountDisplayName),
   ];
   const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
   const [account, setAccount] = useState(options[0]);
@@ -54,7 +54,7 @@ export default function TradesPage() {
         );
       setFilteredData(fdata);
     }
-  }, [account, wh, mt4Accounts]);
+  }, [account, wh, mtAPIAccounts]);
 
   return (
     <>
@@ -134,7 +134,7 @@ export default function TradesPage() {
               <CalendarTrades data={filtredData} />
             </div>
             <div className="mt-6">
-              <Table data={filtredData} accounts={mt4Accounts} />
+              <Table data={filtredData} accounts={mtAPIAccounts} />
             </div>
           </Fragment>
         ) : (

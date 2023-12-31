@@ -55,7 +55,7 @@ const ProgressArc = ({ percentage, color }) => {
         cy={radius}
         r={radius - strokeWidth / 2}
         fill="none"
-        className={`stroke-${color}-100`}
+        className={`${color === "red" ? "stroke-red-100" : "stroke-green-100"}`}
         strokeWidth={2}
       />
 
@@ -65,7 +65,7 @@ const ProgressArc = ({ percentage, color }) => {
         cy={radius}
         r={radius - strokeWidth / 2}
         fill="none"
-        className={`stroke-${color}-400`}
+        className={`${color === "red" ? "stroke-red-400" : "stroke-green-400"}`}
         strokeWidth={strokeWidth}
         strokeDasharray={circumference}
         strokeDashoffset={circumference - progressLength}

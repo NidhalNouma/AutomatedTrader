@@ -3,13 +3,13 @@ import { Select1 } from "../../Components/Input";
 import { Alert } from "react-daisyui";
 import { ButtonP } from "../../Components/Button";
 
-import { GetMTAccountsContext } from "../../hooks/MTAccounts";
+import { GetMTAPIAccountsContext } from "../../hooks/MTAccountsApi";
 import { GetWebhookContext } from "../../hooks/WebHook";
 import { PlaceWebhookTrade } from "../../hooks/ManualTrade";
 import { GetToastContext } from "../../hooks/ToastHook";
 
 function WebhookTrade({ close }) {
-  const { mtAccounts, mt5Accounts } = GetMTAccountsContext();
+  const { mtAPIAccounts, mt5Accounts } = GetMTAPIAccountsContext();
   let { webhooks } = GetWebhookContext();
   const { newAlert } = GetToastContext();
   webhooks = webhooks.filter(
@@ -26,15 +26,14 @@ function WebhookTrade({ close }) {
     error,
     send,
 
-    brokers,
-    sbroker,
-    setSBroker,
     accounts,
-  } = PlaceWebhookTrade(mtAccounts, mt5Accounts, webhooks);
+  } = PlaceWebhookTrade(mtAPIAccounts, webhooks);
+
+  // console.log(sAccount);
 
   return (
     <div className="w-full mx-auto flex flex-col items-center max-w-md">
-      {mt5Accounts?.length > 0 && mtAccounts.length > 0 && (
+      {/* {mtAPIAccounts?.length > 0 && (
         <Select1
           className="my-1"
           name="Choose a broker"
@@ -43,7 +42,7 @@ function WebhookTrade({ close }) {
           value={brokers.indexOf(sbroker)}
           setValue={(v) => setSBroker(brokers[v])}
         />
-      )}
+      )} */}
       <Select1
         className="my-1"
         name="Choose an account"

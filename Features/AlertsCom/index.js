@@ -47,7 +47,7 @@ const Index = ({ alertsHook }) => {
 export default Index;
 
 function Alert({ v, wh, key, msg }) {
-  const [showDate, setShowDate] = useState(false);
+  const [showDate, setShowDate] = useState(true);
 
   return (
     <div key={key} className={"p-1 mx-1" + (10 - 1 === key ? "" : "pb-0")}>
@@ -66,10 +66,10 @@ function Alert({ v, wh, key, msg }) {
       >
         <div
           className="cursor-pointer flex items-center justify-between mb-6"
-          onClick={() => setShowDate(!showDate)}
+          // onClick={() => setShowDate(!showDate)}
         >
           <H6>
-            {msg?.advanced && (
+            {wh?.advanced && (
               <Fragment>
                 <span className=" text-bg rounded-xl font-bold px-2 py-0 bg-accent mr-2">
                   advanced
@@ -98,99 +98,34 @@ function Alert({ v, wh, key, msg }) {
             <span className="font-extrabold text-text-p px-2 py-1">
               {msg.pair}
             </span>
+            {msg.msgType >= 0 && (
+              <span className="font-extrabold text-bga rounded-xl bg-text-p px-2 py-0">
+                {msg.msgType == 0
+                  ? "Market order"
+                  : msg.msgType == 1
+                  ? "Pending order"
+                  : msg.msgType == 2
+                  ? "Close order"
+                  : msg.msgType == 3
+                  ? "Update order"
+                  : ""}
+              </span>
+            )}
           </H6>
           <Hi6>{moment(v.created_at.toDate()).fromNow()}</Hi6>
         </div>
         {showDate && (
-          <div className="mb-6 m-0 pt-0 px-2">
-            <div className="grid grid-cols-3 gap-3 justify-between w-full">
-              <span className="text-xs">
-                Position type:
-                <span className="ml-1 font-bold">
-                  {typeToStr(msg.type?.toString())}
-                </span>
-              </span>
-
-              <span className="text-xs">
-                Position value:
-                <span className="ml-1 font-bold">
-                  {msg.positionValue ||
-                    msg.positionValuePercentage ||
-                    msg.riskPercentage}
-                  {msg.positionType === 0 || msg.riskPercentage ? "%" : ""}
-                </span>
-              </span>
-
-              <span></span>
-
-              <span className="text-xs">
-                Stop loss:
-                <span className="ml-1 font-bold">{msg.stopLoss}</span>
-              </span>
-
-              <span className="text-xs">
-                Take profit:
-                <span className="ml-1 font-bold">
-                  {msg.takeProfit || msg.takeProfit3}
-                </span>
-              </span>
-              <span className="text-xs">
-                {/* Take profit:
-            <span className="ml-1 font-bold">
-              {msg.takeProfit || msg.takeProfit3}
-            </span> */}
-              </span>
-
-              {msg?.advanced && msg?.alertType === "ENTRY" && (
-                <Fragment>
-                  <span className="text-xs">
-                    Take profit 1:
-                    <span className="ml-1 font-bold">{msg.takeProfit1}</span>
-                  </span>
-                  <span className="text-xs">
-                    Take profit 2:
-                    <span className="ml-1 font-bold">{msg.takeProfit2}</span>
-                  </span>
-                  <span className="text-xs">
-                    Take profit 3:
-                    <span className="ml-1 font-bold">{msg.takeProfit3}</span>
-                  </span>
-                  <span className="text-xs">
-                    Parciel Close 1:
-                    <span className="ml-1 font-bold">{msg.parcielClose1}</span>
-                  </span>
-                  <span className="text-xs">
-                    Parciel Close 2:
-                    <span className="ml-1 font-bold">{msg.parcielClose2}</span>
-                  </span>
-                  <span className="text-xs">
-                    Parciel Close 3:
-                    <span className="ml-1 font-bold">{msg.parcielClose3}</span>
-                  </span>
-                  <span className="text-xs">
-                    Break Even Start:
-                    <span className="ml-1 font-bold">{msg.breakEvenStart}</span>
-                  </span>
-                  <span className="text-xs">
-                    Break Even Offset:
-                    <span className="ml-1 font-bold">
-                      {msg.breakEvenOffset}
-                    </span>
-                  </span>
-                  <span className="text-xs">
-                    Break Even Parciel Close:
-                    <span className="ml-1 font-bold">
-                      {msg.breakEvenPClose}
-                    </span>
-                  </span>
-                </Fragment>
-              )}
-            </div>
-            {/* <p>
-            tabIndex={i} attribute is necessary to make the div
-            focusable
-          </p> */}
-          </div>
+          <Fragment>
+            {msg.msgType === 0 ? (
+              <MarketOrder msg={msg} />
+            ) : msg.msgType === 2 ? (
+              <CloseOrder msg={msg} />
+            ) : msg.msgType === 3 ? (
+              <UpddateOrder msg={msg} />
+            ) : (
+              <Fragment />
+            )}
+          </Fragment>
         )}
         {v.accounts && (
           <div className="flex">
@@ -209,6 +144,161 @@ function Alert({ v, wh, key, msg }) {
               ))}
             </div>
           </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function UpddateOrder({ msg }) {
+  return (
+    <div className="mb-6 m-0 pt-0 px-2">
+      <div className="grid grid-cols-3 gap-3 justify-between w-full">
+        <span className="text-xs">
+          Update for:
+          <span className="ml-1 font-bold">
+            {typeToStr(msg.type?.toString())}
+          </span>
+        </span>
+
+        <span className="text-xs">
+          {/* Position value:
+          <span className="ml-1 font-bold">
+            {msg.positionValue ||
+              msg.positionValuePercentage ||
+              msg.riskPercentage}
+            {msg.positionType === 0 || msg.riskPercentage ? "%" : ""}
+          </span> */}
+        </span>
+
+        <div></div>
+
+        {msg.stopLoss && (
+          <span className="text-xs">
+            Stop loss:
+            <span className="ml-1 font-bold">{msg.stopLoss}</span>
+          </span>
+        )}
+
+        {msg.stopLossPrice && (
+          <span className="text-xs">
+            Stop loss @
+            <span className="ml-1 font-bold">{msg.stopLossPrice}</span>
+          </span>
+        )}
+
+        {msg.takeProfit && (
+          <span className="text-xs">
+            Take profit:
+            <span className="ml-1 font-bold">{msg.takeProfit}</span>
+          </span>
+        )}
+
+        {msg.takeProfitPrice && (
+          <span className="text-xs">
+            take Profit @
+            <span className="ml-1 font-bold">{msg.takeProfitPrice}</span>
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function MarketOrder({ msg }) {
+  return (
+    <div className="mb-6 m-0 pt-0 px-2">
+      <div className="grid grid-cols-3 gap-3 justify-between w-full">
+        <span className="text-xs">
+          Order type:
+          <span className="ml-1 font-bold">
+            {typeToStr(msg.type?.toString())}
+          </span>
+        </span>
+
+        <span className="text-xs">
+          Position value:
+          <span className="ml-1 font-bold">
+            {msg.positionValue ||
+              msg.positionValuePercentage ||
+              msg.riskPercentage}
+            {msg.positionType === 0 || msg.riskPercentage ? "%" : ""}
+          </span>
+        </span>
+
+        <div></div>
+
+        {msg.stopLoss && (
+          <span className="text-xs">
+            Stop loss:
+            <span className="ml-1 font-bold">{msg.stopLoss}</span>
+          </span>
+        )}
+
+        {msg.stopLossPrice && (
+          <span className="text-xs">
+            Stop loss @
+            <span className="ml-1 font-bold">{msg.stopLossPrice}</span>
+          </span>
+        )}
+
+        {msg.takeProfit && (
+          <span className="text-xs">
+            Take profit:
+            <span className="ml-1 font-bold">{msg.takeProfit}</span>
+          </span>
+        )}
+
+        {msg.takeProfitPrice && (
+          <span className="text-xs">
+            take Profit @
+            <span className="ml-1 font-bold">{msg.takeProfitPrice}</span>
+          </span>
+        )}
+
+        {msg.allTrades && (
+          <span className="text-xs">
+            <span className=" font-bold">Apply to all trades</span>
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CloseOrder({ msg }) {
+  console.log(msg);
+  return (
+    <div className="mb-6 m-0 pt-0 px-2">
+      <div className="grid grid-cols-3 gap-3 justify-between w-full">
+        <span className="text-xs">
+          Closing
+          <span className="ml-1 font-bold">
+            {typeToStr(msg.type?.toString())}
+          </span>
+        </span>
+
+        {msg.positionType == 1 ? (
+          <span className="text-xs">
+            Partial close:
+            <span className="ml-1 font-bold">{msg.positionValue}%</span>
+          </span>
+        ) : (
+          <span></span>
+        )}
+
+        <div></div>
+
+        {msg.moveToBE && (
+          <span className="text-xs">
+            <span className=" font-bold">With SL to BreakEven</span>
+          </span>
+        )}
+
+        {msg.allTrades && (
+          <span className="text-xs">
+            <span className=" font-bold">Apply to all trades</span>
+          </span>
         )}
       </div>
     </div>

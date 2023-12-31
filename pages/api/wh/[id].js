@@ -31,7 +31,11 @@ export default async function handler(req, res) {
         //   msgData = getMessageAdvancedData(message, r.pair);
         //   message = "pair: " + r.pair + "," + message;
         // } else
-        msgData = getMessageData(message);
+        msgData = getMessageData(
+          message,
+          r.advanced ? r.pair : null,
+          r.advanced && r.fixedLotSize ? fixedLotSize : null
+        );
 
         // console.log(msgData);
 
@@ -43,11 +47,11 @@ export default async function handler(req, res) {
         //   r.MT4 = accId;
         // }
 
-        // const manual = msgData.manual;
-        // if (manual && manual?.isManual) {
-        //   const accId = manual.account;
-        //   r.MT4 = accId;
-        // }
+        const manual = msgData.manual;
+        if (manual && manual?.isManual) {
+          const accId = manual.account;
+          r.MT4 = accId;
+        }
 
         if (r && r.active === true && webhookTime(msgData.time)) {
           // const user = await getUser(r.userId);
@@ -64,7 +68,11 @@ export default async function handler(req, res) {
                     "N_N_" + r.id,
                     msgData.type,
                     msgData.pair,
-                    0.01
+                    0.01,
+                    msgData.stopLoss,
+                    msgData.takeProfit,
+                    msgData.stopLossPrice,
+                    msgData.takeProfitPrice
                   );
                   console.log(res);
                   if (res.orderId) {
@@ -103,6 +111,7 @@ export default async function handler(req, res) {
                     msgData.pair,
                     msgData.type,
                     msgData.stopLoss,
+                    msgData.stopLossPrice,
                     msgData.allTrades
                   );
                   alertRespons[r.MT4[i]] = res;
@@ -143,10 +152,6 @@ export default async function handler(req, res) {
       }
     }
   }
-  // else if (req.method === "GET") {
-  //   const r = await getAlertByUserId(id);
-  //   return res.status(200).json(r);
-  // }
 
   return res.status(200).json({ done: false });
 }
