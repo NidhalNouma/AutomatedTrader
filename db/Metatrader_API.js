@@ -229,7 +229,7 @@ export async function openTrade(
             ? "ORDER_TYPE_SELL"
             : "",
         symbol: symbol,
-        volume: volume,
+        volume: Number(volume),
         clientId: id,
         ...slData,
         ...tpData,

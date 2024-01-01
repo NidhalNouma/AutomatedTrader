@@ -2,7 +2,7 @@ import { useState } from "react";
 import Sidenav from "../../Features/SideNav";
 import { H1, H3, H4, Hi5, H6 } from "../../Components/H";
 import { ButtonP } from "../../Components/Button";
-import { GetUserContext } from "../../hooks/UserHook";
+import { GetUserContext, GetFullUserContext } from "../../hooks/UserHook";
 import { GetMTAccountsContext, CalculateData } from "../../hooks/MTAccounts";
 import { GetMTAPIAccountsContext } from "../../hooks/MTAccountsApi";
 
@@ -26,8 +26,14 @@ import { videosUrls, MT4EA } from "../../utils/constant";
 import { Modal1 } from "../../Components/Modal";
 import NewAccount from "../../Features/MT_API/NewAccount";
 
+import UpgradeMsg from "../../Features/UpgradeMsg";
+
 export default function MT4() {
   const { user } = GetUserContext();
+
+  const { fullUser } = GetFullUserContext();
+  const sub = fullUser?.subObj;
+
   const { mtAPIAccounts, getMTAPIData } = GetMTAPIAccountsContext();
   const data = getMTAPIData();
 
@@ -37,6 +43,7 @@ export default function MT4() {
   const tp = totalProfit();
 
   const [open, setOpen] = useState(false);
+  const [openUpg, setOpenUpg] = useState(false);
 
   return (
     <>
@@ -48,6 +55,8 @@ export default function MT4() {
       >
         <NewAccount close={() => setOpen(false)} user={user} />
       </Modal1>
+
+      <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
 
       <Sidenav cpath="metatrader" />
       <MainWithHeader mainClassName="h-full">
@@ -67,9 +76,8 @@ export default function MT4() {
           <div className="">
             <ButtonP
               onClick={(e) => {
-                e.preventDefault();
-                // window.location = MT4EA.path;
-                setOpen(true);
+                if (sub && sub.accounts > mtAPIAccounts.length) setOpen(true);
+                else setOpenUpg(true);
               }}
               icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >

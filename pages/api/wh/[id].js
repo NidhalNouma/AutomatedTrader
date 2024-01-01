@@ -69,7 +69,7 @@ export default async function handler(req, res) {
                     "N_N_" + r.id,
                     msgData.type,
                     msgData.pair,
-                    volume,
+                    Number(volume),
                     msgData.stopLoss,
                     msgData.takeProfit,
                     msgData.stopLossPrice,
@@ -86,7 +86,9 @@ export default async function handler(req, res) {
                   } else {
                     alertRespons[r.MT4[i]] = [
                       {
-                        error: res.message ? res.message : "",
+                        error: res.message
+                          ? res.message
+                          : "Error placing the trade",
                         msg: "Error placing a new trade",
                       },
                     ];
