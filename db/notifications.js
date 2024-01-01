@@ -20,8 +20,8 @@ const collName = "notifications";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 
-export async function addAlert(recipientUserId, message, title) {
-  console.log("Adding new alert ...");
+export async function addNotification(recipientUserId, message, title, link) {
+  console.log("Adding new notification ...");
 
   try {
     const docRef = await addDoc(collection(db, collName), {
@@ -29,7 +29,7 @@ export async function addAlert(recipientUserId, message, title) {
       title,
       recipientUserId,
       isReadBy: [],
-      link: "",
+      link,
       created_at: serverTimestamp(),
       updated_at: serverTimestamp(),
     });

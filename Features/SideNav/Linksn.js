@@ -4,7 +4,7 @@ import Link from "next/link";
 function Linksn({ icon, children, isActive, className, href = "/" }) {
   return (
     <div
-      className={`${className} pr-0 border-r-4 my-[0.4rem] rounded ${
+      className={`${className} pr-0 border-r-0 my-[0.4rem] rounded ${
         isActive ? "border-r-secondary" : "border-r-0"
       }`}
     >

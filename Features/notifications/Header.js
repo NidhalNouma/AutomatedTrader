@@ -1,12 +1,7 @@
 import { Dropdown, Indicator } from "react-daisyui";
 import { BellIcon } from "@heroicons/react/outline";
 import { Fragment, useState } from "react";
-
-import { Modal1 } from "../../Components/Modal";
-import { Button } from "react-daisyui";
-
-import { XIcon } from "@heroicons/react/solid";
-import { H3 } from "../../Components/H";
+import Link from "next/link";
 
 import {
   GetNotificationContext,
@@ -14,8 +9,11 @@ import {
 } from "../../hooks/NotificationHook";
 import { GetFullUserContext } from "../../hooks/UserHook";
 
+import NotItem from "./NotificationItem";
+import NotificationModal from "./NotificationModal";
+
 function NotificationHeader() {
-  const { notifications } = GetNotificationContext();
+  const { notifications, unreadNotifications } = GetNotificationContext();
   const { fullUser } = GetFullUserContext();
 
   const [show, setShow] = useState(null);
@@ -30,7 +28,11 @@ function NotificationHeader() {
     <Fragment>
       <Dropdown vertical="end">
         <Indicator vertical="top" horizontal="" className="relative ml-2">
-          <div className="right-0 top-0 !absolute w-3 h-3 rounded-full bg-accent"></div>
+          {unreadNotifications > 0 && (
+            <div className="right-0 top-0 p-2 !absolute w-3 h-3 flex items-center justify-center rounded-full bg-accent">
+              <span className="text-bg text-xs">{unreadNotifications}</span>
+            </div>
+          )}
           <span className="cursor-pointer text-text-p">
             <BellIcon className="h-7 w-7" />
           </span>
@@ -47,6 +49,13 @@ function NotificationHeader() {
                   read={not.isReadBy?.find((v) => v === fullUser.id)}
                 />
               ))}
+              <div className="">
+                <Link href="/notifications">
+                  <span className="text-xs text-primary mt-2 text-center cursor-pointer">
+                    View all
+                  </span>
+                </Link>
+              </div>
             </div>
           ) : (
             <div className="py-4 px-2">
@@ -58,51 +67,9 @@ function NotificationHeader() {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Modal1
-        open={show}
-        close={() => {
-          setShow(null);
-        }}
-      >
-        <div className="">
-          <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
-            <H3 className="flex">{show?.title}</H3>
-            <Button
-              size="sm"
-              shape="circle"
-              className=" bg-accenti"
-              onClick={() => {
-                setShow(null);
-              }}
-            >
-              <XIcon className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="flex flex-col justify-center items-center w-full mt-0">
-            <div className="px-7 pb-7">
-              <p className="text-sm text-text-p">{show?.message}</p>
-            </div>
-          </div>
-        </div>
-      </Modal1>
+      <NotificationModal show={show} setShow={setShow} />
     </Fragment>
   );
 }
 
 export default NotificationHeader;
-
-function NotItem({ not, setShow, read }) {
-  return (
-    <Fragment>
-      <div
-        onClick={() => setShow()}
-        className={`px-2 py-1.5 rounded cursor-pointer hover:bg-bga my-2 ${
-          read ? "" : "bg-bga"
-        }`}
-      >
-        <p className="text-xs line-clamp-2 text-text-p">{not.message}</p>
-      </div>
-    </Fragment>
-  );
-}

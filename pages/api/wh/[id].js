@@ -4,6 +4,7 @@ import { getWebhook } from "../../../db/webhooks";
 import { addAlert } from "../../../db/alerts";
 import { getUser } from "../../../db/user";
 import { sendMessage } from "../../../db/telegram";
+import { addNotification } from "../../../db/notifications";
 
 import {
   openTrade,
@@ -54,8 +55,6 @@ export default async function handler(req, res) {
         }
 
         if (r && r.active === true && webhookTime(msgData.time)) {
-          // const user = await getUser(r.userId);
-
           // if (advanced || msgData.time.use || msgData.time.use === false)
           // console.log(msgData);
           if (msgData.isValid) {
@@ -140,11 +139,34 @@ export default async function handler(req, res) {
                 alertRespons
               );
 
+              if (alert) {
+                const msgType =
+                  msgData.msgType === 0
+                    ? "Market order"
+                    : msgData.msgType === 1
+                    ? "Pending order"
+                    : msgData.msgType === 2
+                    ? "Close order"
+                    : msgData.msgType === 3
+                    ? "Modify order"
+                    : "";
+                const text =
+                  "New webhook alert: " + msgType + " on " + msgData.pair;
+                await addNotification(
+                  r.userId,
+                  text,
+                  r.name + " " + msgType + " alert",
+                  "/alerts?id=" + alert
+                );
+              }
+
               // console.log(alert);
 
-              // if (user && user.telegram) {
-              //   await sendMessage(user.telegram, message, msgData, r);
-              // }
+              const user = await getUser(r.userId);
+
+              if (user && user.telegram) {
+                await sendMessage(user.telegram, message, msgData, r);
+              }
               return res.status(200).json({ done: true });
             }
           }

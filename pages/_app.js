@@ -35,7 +35,8 @@ function MyApp({ Component, pageProps }) {
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
   const { getAllAlertsHook, alertsHook } = GetAlerts();
-  const { getAllNotifications, notifications } = GetNotifications();
+  const { getAllNotifications, notifications, unreadNotifications } =
+    GetNotifications();
   const {
     mtAccounts,
     setMTAccounts,
@@ -178,7 +179,9 @@ function MyApp({ Component, pageProps }) {
                       changeWebhookData,
                     }}
                   >
-                    <NotificationCC value={{ notifications }}>
+                    <NotificationCC
+                      value={{ notifications, unreadNotifications }}
+                    >
                       <AlertsCC value={{ alertsHook }}>
                         <MTAccountsCC
                           value={{
