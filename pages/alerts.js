@@ -1,6 +1,7 @@
 import Sidenav from "../Features/SideNav";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 import Alerts from "../Features/AlertsCom";
+import { useState } from "react";
 
 import { H1, Hi6, H4 } from "../Components/H";
 
@@ -8,21 +9,34 @@ import { GetAlertsContext } from "../hooks/AlertsHook";
 import AlertsWelcome from "../Features/WelcomeSection/Alerts";
 import { PlayVideoPopup } from "../Components/Video";
 import { videosUrls } from "../utils/constant";
+import { AiFillSetting } from "react-icons/ai";
+
+import { Modal1 } from "../Components/Modal";
+import SettingModal from "../Features/AlertsCom/SettingsModal";
 
 export default function AlertsPage() {
   const { alertsHook } = GetAlertsContext();
+
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <Sidenav cpath="alerts" />
       <MainWithHeader>
         <div className="flex items-center">
           <H1>Alerts</H1>
-          {alertsHook?.length > 0 && (
+
+          <AiFillSetting
+            onClick={() => setOpen(true)}
+            className="ml-3 stroke-4 cursor-pointer h-5 w-5 p-0.5 bg-text-p rounded-full text-bg"
+          />
+
+          {/* {alertsHook?.length > 0 && (
             <PlayVideoPopup
               className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
               src={videosUrls.alertsPage}
             />
-          )}
+          )} */}
         </div>
 
         {alertsHook?.length > 0 ? (
@@ -34,6 +48,15 @@ export default function AlertsPage() {
             <AlertsWelcome />
           </div>
         )}
+
+        <Modal1
+          open={open}
+          close={() => {
+            setOpen(false);
+          }}
+        >
+          <SettingModal close={() => setOpen(false)} />
+        </Modal1>
       </MainWithHeader>
     </>
   );

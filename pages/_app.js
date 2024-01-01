@@ -22,6 +22,7 @@ import LoadingPage from "../Features/LoadingPage";
 import Chargebee from "../Features/chargeBee/ChargeBee";
 // import { ChargeBeeCC, GetChargeBee } from "../hooks/ChargeBee";
 // import { GoogleAnalytics } from "nextjs-google-analytics";
+import NewAlertPopUp from "../Features/AlertsCom/NewAlertModal";
 
 import IntercomSupport from "../Features/IntercomSupporrt";
 
@@ -34,7 +35,7 @@ function MyApp({ Component, pageProps }) {
   const { fullUser, getFullUser, setFullUser } = GetFullUser();
   const { webhooks, getAllWebhooks, setWebhooks, changeWebhookData } =
     GetWebhook();
-  const { getAllAlertsHook, alertsHook } = GetAlerts();
+  const { getAllAlertsHook, alertsHook, newAlerts, setNewAlert } = GetAlerts();
   const { getAllNotifications, notifications, unreadNotifications } =
     GetNotifications();
   const {
@@ -85,7 +86,7 @@ function MyApp({ Component, pageProps }) {
       if (user && fullUser) {
         const subObj = fullUser?.subObj;
 
-        console.log(subObj);
+        // console.log(subObj);
 
         if (!subObj) {
           router.push("/welcome");
@@ -134,7 +135,7 @@ function MyApp({ Component, pageProps }) {
       getAllMTAccounts(user?.uid);
       getAllMTAPIAccounts(user?.uid);
       getAllWebhooks(user?.uid);
-      getAllAlertsHook(user?.uid);
+      getAllAlertsHook(fullUser);
       getAllNotifications(user?.uid);
     } else if (!fullUser) {
       setMTAccounts([]);
@@ -208,6 +209,10 @@ function MyApp({ Component, pageProps }) {
                             }}
                           >
                             <Component {...pageProps} />
+                            <NewAlertPopUp
+                              newAlert={newAlerts}
+                              setNewAlert={setNewAlert}
+                            />
                           </MTAPIAccountsCC>
                         </MTAccountsCC>
                       </AlertsCC>

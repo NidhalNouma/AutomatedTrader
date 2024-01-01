@@ -215,3 +215,42 @@ export const UpdateUserSubscription = async (
   console.log(r);
   return r;
 };
+
+export const AlertSettings = function (user, getFullUser) {
+  const sett = user?.alertSettings;
+  const [sendNotification, setSendNotification] = useState(
+    sett ? sett.sendNotification : false
+  );
+  const [showPopUp, setShowPopUp] = useState(sett ? sett.showPopUp : false);
+  const [popUpSound, setPopUpSound] = useState(sett ? sett.popUpSound : false);
+  const [sendTelegram, setSendTelegram] = useState(
+    sett ? sett.sendTelegram : false
+  );
+
+  async function saveAlertSettings() {
+    const r = await updateUserData(
+      user.id,
+      "alertSettings",
+      {
+        sendNotification,
+        showPopUp,
+        popUpSound,
+      },
+      false
+    );
+    // console.log(r);
+    getFullUser(user.id);
+  }
+
+  return {
+    sendNotification,
+    setSendNotification,
+    showPopUp,
+    setShowPopUp,
+    popUpSound,
+    setPopUpSound,
+    saveAlertSettings,
+    sendTelegram,
+    setSendTelegram,
+  };
+};

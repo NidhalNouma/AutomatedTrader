@@ -85,7 +85,7 @@ export async function getAlertsByUserId(userId) {
   return sortedAsc;
 }
 
-export async function listenToAlerts(userId, func) {
+export async function listenToAlerts(userId, func, setOldAlertsLength) {
   const q = query(collection(db, collName), where("userId", "==", userId));
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     const whs = [];
@@ -96,6 +96,9 @@ export async function listenToAlerts(userId, func) {
     const sortedAsc = whs.sort(
       (objA, objB) => Number(objB.created_at) - Number(objA.created_at)
     );
+
+    if (setOldAlertsLength)
+      setOldAlertsLength((v) => (v === -1 ? sortedAsc.length : v));
 
     func(sortedAsc);
   });

@@ -1,7 +1,7 @@
-import Sidenav from "../Features/SideNav";
-import MainWithHeader from "../Features/mainLayout/MainWithHeader";
+import Sidenav from "../../Features/SideNav";
+import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
 
-import { H1, Hi6, H4 } from "../Components/H";
+import { H1, Hi6, H4 } from "../../Components/H";
 
 export default function Actions() {
   return (

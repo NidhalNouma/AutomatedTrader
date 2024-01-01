@@ -34,7 +34,7 @@ export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
   }, [webhooks]);
 
   useEffect(() => {
-    console.log(sWebhook?.messages);
+    // console.log(sWebhook?.messages);
     setSMessage(sWebhook?.messages?.length > 0 ? sWebhook?.messages[0] : null);
   }, [sWebhook]);
 

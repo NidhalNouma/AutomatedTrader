@@ -62,18 +62,20 @@ export default async function handler(req, res) {
               let alertRespons = {};
               if (msgData.msgType == 0) {
                 for (let i = 0; i < r.MT4?.length; i++) {
+                  const volume =
+                    msgData.positionType === 1 ? msgData.positionValue : 0.01;
                   const res = await openTrade(
                     r.MT4[i],
                     "N_N_" + r.id,
                     msgData.type,
                     msgData.pair,
-                    0.01,
+                    volume,
                     msgData.stopLoss,
                     msgData.takeProfit,
                     msgData.stopLossPrice,
                     msgData.takeProfitPrice
                   );
-                  console.log(res);
+                  // console.log(res);
                   if (res.orderId) {
                     alertRespons[r.MT4[i]] = [
                       {
@@ -83,7 +85,10 @@ export default async function handler(req, res) {
                     ];
                   } else {
                     alertRespons[r.MT4[i]] = [
-                      { error: res.message, msg: "Error placing a new trade" },
+                      {
+                        error: res.message ? res.message : "",
+                        msg: "Error placing a new trade",
+                      },
                     ];
                   }
                 }
@@ -130,6 +135,7 @@ export default async function handler(req, res) {
               //   // alertId: alert,
               //   whId: id,
               // });
+              // console.log(message, alertRespons, msgData);
 
               const alert = await addAlert(
                 id,
@@ -139,34 +145,36 @@ export default async function handler(req, res) {
                 alertRespons
               );
 
-              if (alert) {
-                const msgType =
-                  msgData.msgType === 0
-                    ? "Market order"
-                    : msgData.msgType === 1
-                    ? "Pending order"
-                    : msgData.msgType === 2
-                    ? "Close order"
-                    : msgData.msgType === 3
-                    ? "Modify order"
-                    : "";
-                const text =
-                  "New webhook alert: " + msgType + " on " + msgData.pair;
-                await addNotification(
-                  r.userId,
-                  text,
-                  r.name + " " + msgType + " alert",
-                  "/alerts?id=" + alert
-                );
-              }
+              const user = await getUser(r.userId);
+
+              if (user?.alertSettings?.sendNotification)
+                if (alert) {
+                  const msgType =
+                    msgData.msgType === 0
+                      ? "Market order"
+                      : msgData.msgType === 1
+                      ? "Pending order"
+                      : msgData.msgType === 2
+                      ? "Close order"
+                      : msgData.msgType === 3
+                      ? "Modify order"
+                      : "";
+                  const text =
+                    "New webhook alert: " + msgType + " on " + msgData.pair;
+                  await addNotification(
+                    r.userId,
+                    text,
+                    r.name + " " + msgType + " alert",
+                    "/alerts?id=" + alert
+                  );
+                }
 
               // console.log(alert);
 
-              const user = await getUser(r.userId);
-
-              if (user && user.telegram) {
-                await sendMessage(user.telegram, message, msgData, r);
-              }
+              if (user?.alertSettings?.sendTelegram)
+                if (user && user.telegram) {
+                  await sendMessage(user.telegram, message, msgData, r);
+                }
               return res.status(200).json({ done: true });
             }
           }
