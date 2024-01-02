@@ -115,6 +115,16 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
 
   const { newAlert } = GetToastContext();
 
+  const uniquePairs = new Set();
+  const uniqueMessages = messages.filter((v) => {
+    if (uniquePairs.has(v.data.pair)) {
+      return false; // Duplicate pair, exclude from uniqueMessages
+    } else {
+      uniquePairs.add(v.data.pair);
+      return true; // Unique pair, include in uniqueMessages
+    }
+  });
+
   return (
     <Fragment>
       <div className="flex flex-col justify-center items-center">
@@ -583,7 +593,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     </div>
                     <div className="mt-2 flex items-center">
                       <div className="">
-                        {messages?.map(
+                        {uniqueMessages?.map(
                           (v, i) =>
                             i < 3 && (
                               <span

@@ -194,6 +194,118 @@ export async function getActiveOrders(accountApiId) {
   }
 }
 
+export async function getHistoryOrderById(accountApiId, orderId) {
+  console.log("Get History Order by OrderId ... ", accountApiId, orderId);
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/history-deals/ticket/" +
+        orderId,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
+export async function getOrdernById(accountApiId, orderId) {
+  console.log("Get order by orderId ... ", accountApiId, orderId);
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/orders/" +
+        orderId,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e.message);
+    return { error: e.message };
+  }
+}
+
+export async function getPositionById(accountApiId, positionId) {
+  console.log("Get Position by PositionId ... ", accountApiId, positionId);
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/positions/" +
+        positionId,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e.message);
+    return { error: e.message };
+  }
+}
+
+export async function getHistoryPositionById(accountApiId, positionId) {
+  console.log(
+    "Get History position by positionId ... ",
+    accountApiId,
+    positionId
+  );
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/history-deals/position/" +
+        positionId,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req.data;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
 export async function openTrade(
   accountApiId,
   id,
@@ -280,8 +392,8 @@ export async function closeTradeByWHID(
           if (partialClose > 0) {
             partialClose = (trade.volume * partialClose) / 100;
             // console.log(partialClose);
-            partialClose =
-              Math.round((partialClose + Number.EPSILON) * 100) / 100;
+            partialClose = Math.ceil(partialClose * 100) / 100;
+            // Math.round((partialClose + Number.EPSILON) * 100) / 100;
             // console.log(partialClose);
           }
           if (moveToBE) {
@@ -294,12 +406,15 @@ export async function closeTradeByWHID(
             if (r1.orderId) {
               res.push({
                 orderId: r1.positionId,
+                trade: trade,
+                // positionId: r1.positionId,
                 msg: "Stop loss move to break even successfully",
               });
             } else {
               res.push({
                 orderId: trade.id,
                 error: r1.message,
+                trade: trade,
                 msg: "Error moving SL to breakeven",
               });
             }
@@ -308,11 +423,13 @@ export async function closeTradeByWHID(
           // console.log(r);
           if (r.orderId) {
             res.push({
+              trade: trade,
               orderId: r.orderId,
               msg: "Order closed successfully",
             });
           } else {
             res.push({
+              trade: trade,
               orderId: trade.id,
               error: r.message,
               msg: "Error closing the order",
@@ -363,12 +480,14 @@ export async function modifyTradeByWHID(
           // console.log(r);
           if (r.positionId) {
             res.push({
+              positionId: r.positionId,
               orderId: r.positionId,
               msg: "Order modified successfully",
             });
           } else {
             res.push({
               orderId: trade.id,
+              positionId: trade.positionId,
               error: r.message,
               msg: "Error with updating the stop loss",
             });

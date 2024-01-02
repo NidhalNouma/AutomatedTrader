@@ -38,32 +38,36 @@ function NotificationHeader() {
           </span>
         </Indicator>
 
-        <Dropdown.Menu className="w-72 menu-compact bg-bg">
-          {notifications?.length > 0 ? (
-            <div className="p-0.5">
-              {notifications.map((not, i) => (
-                <NotItem
-                  key={i}
-                  not={not}
-                  setShow={() => click(not)}
-                  read={not.isReadBy?.find((v) => v === fullUser.id)}
-                />
-              ))}
-              <div className="">
-                <Link href="/notifications">
-                  <span className="text-xs text-primary mt-2 text-center cursor-pointer">
-                    View all
-                  </span>
-                </Link>
+        <Dropdown.Menu className="">
+          <div className="w-72 menu-compact bg-bg max-h-[38vh] p-2 rounded-md">
+            {notifications?.length > 0 ? (
+              <Fragment>
+                <div className="p-0.5 max-h-[80%] overflow-hidden">
+                  {notifications.map((not, i) => (
+                    <NotItem
+                      key={i}
+                      not={not}
+                      setShow={() => click(not)}
+                      read={not.isReadBy?.find((v) => v === fullUser.id)}
+                    />
+                  ))}
+                </div>
+                <div className="">
+                  <Link href="/notifications">
+                    <span className="text-xs text-primary mt-2 text-center cursor-pointer">
+                      View all
+                    </span>
+                  </Link>
+                </div>
+              </Fragment>
+            ) : (
+              <div className="py-4 px-2">
+                <p className="text-sm font-semibold">
+                  No available notifications!
+                </p>
               </div>
-            </div>
-          ) : (
-            <div className="py-4 px-2">
-              <p className="text-sm font-semibold">
-                No available notifications!
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </Dropdown.Menu>
       </Dropdown>
 

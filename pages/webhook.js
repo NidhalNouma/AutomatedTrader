@@ -11,7 +11,7 @@ import ManageWebhook from "../Features/ManageWebhookAPI";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
 import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
-import { GetMTAccountsContext } from "../hooks/MTAccounts";
+import { GetMTAPIAccountsContext } from "../hooks/MTAccountsApi";
 import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
 
 import UpgradeMsg from "../Features/UpgradeMsg";
@@ -26,7 +26,7 @@ export default function Webhook() {
   const { fullUser } = GetFullUserContext();
   const sub = fullUser?.subObj;
   const { webhooks } = GetWebhookContext();
-  const { mtAccounts } = GetMTAccountsContext();
+  const { mtAPIAccounts } = GetMTAPIAccountsContext();
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
@@ -92,7 +92,7 @@ export default function Webhook() {
                       <WebhooksItem
                         webhook={v}
                         user={user}
-                        mtAccounts={mtAccounts}
+                        mtAccounts={mtAPIAccounts}
                       />
                     </Fragment>
                   ))}
@@ -116,7 +116,7 @@ export default function Webhook() {
                           <WebhooksItem
                             webhook={v}
                             user={user}
-                            mtAccounts={mtAccounts}
+                            mtAccounts={mtAPIAccounts}
                           />
                         </Fragment>
                       )

@@ -232,7 +232,7 @@ const profitPerTime = (data, getProfit = true, wh, getAll = false) => {
     if (v.swap) profit += Number(v.swap);
     if (v.commission) profit += Number(v.commission);
 
-    if (v.ID === wh || !wh)
+    if (v.ID === wh || !wh || (v.clientId && v.clientId.search(wh) > 0))
       if ((getProfit && profit >= 0) || (!getProfit && profit < 0) || getAll) {
         if (r[year] !== undefined) {
           r[year].profit = Number(r[year].profit) + Number(profit);
@@ -292,7 +292,7 @@ export function getDataFromAccountPerPeriod(
   const loss = profitPerTime(account?.data, false, withWebHook);
   const profit = profitPerTime(account?.data, true, withWebHook);
 
-  // console.log("period", period, profit, loss);
+  console.log("period", account, period, profit, loss);
 
   const r = {
     profit: [],

@@ -10,6 +10,10 @@ import {
   openTrade,
   closeTradeByWHID,
   modifyTradeByWHID,
+  getHistoryOrderById,
+  getHistoryPositionById,
+  getPositionById,
+  getOrdernById,
 } from "../../../db/Metatrader_API";
 
 import { webhookTime } from "../../../db/manageAlerts";
@@ -79,8 +83,10 @@ export default async function handler(req, res) {
                   if (res.orderId) {
                     alertRespons[r.MT4[i]] = [
                       {
+                        positionId: res.orderId,
                         orderId: res.orderId,
                         msg: "Order placed successfully",
+                        isLive: true,
                       },
                     ];
                   } else {
@@ -138,6 +144,25 @@ export default async function handler(req, res) {
               //   whId: id,
               // });
               // console.log(message, alertRespons, msgData);
+
+              if (alertRespons) {
+                for (let acc in alertRespons) {
+                  for (let r in alertRespons[acc]) {
+                    if (
+                      alertRespons[acc][r]?.isLive &&
+                      alertRespons[acc][r]?.orderId
+                    ) {
+                      const trade = await getPositionById(
+                        acc,
+                        alertRespons[acc][r].orderId
+                      );
+                      if (!trade.error) alertRespons[acc][r]["trade"] = trade;
+                      // console.log(alertRespons[acc][r]);
+                    }
+                  }
+                }
+              }
+              // console.log(alertRespons);
 
               const alert = await addAlert(
                 id,

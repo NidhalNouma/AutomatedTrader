@@ -21,6 +21,16 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
 function WebhookLineChart({ webhook, mtAccounts, messages }) {
   const pdata = [];
 
+  const uniquePairs = new Set();
+  const uniqueMessages = messages.filter((v) => {
+    if (uniquePairs.has(v.data.pair)) {
+      return false; // Duplicate pair, exclude from uniqueMessages
+    } else {
+      uniquePairs.add(v.data.pair);
+      return true; // Unique pair, include in uniqueMessages
+    }
+  });
+
   const allData = mtAccounts.map((account) =>
     cleanData(
       getDataFromAccountPerPeriod(
@@ -197,7 +207,7 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
           </div>
 
           <div className="mt-0">
-            {messages?.map(
+            {uniqueMessages?.map(
               (v, i) =>
                 i < 3 && (
                   <span
