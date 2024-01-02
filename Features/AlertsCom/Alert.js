@@ -14,6 +14,8 @@ import {
 export default function Alert({ v, key }) {
   const [showDate, setShowDate] = useState(true);
 
+  // const [accountData, setAccountData] = useState(null);
+
   const { webhooks } = GetWebhookContext();
 
   let msg = getMessageData(v.message);
@@ -30,6 +32,7 @@ export default function Alert({ v, key }) {
           </H6>
           <Hi6>{moment(v.created_at.toDate()).fromNow()}</Hi6>
         </div> */}
+
       <div tabIndex={key} className=" py-2 pb-4 px-0">
         <div
           className="cursor-pointer flex items-center justify-between mb-6"

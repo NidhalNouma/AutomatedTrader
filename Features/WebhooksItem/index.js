@@ -104,7 +104,19 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
   const [urlcopy, setURLcopy] = useState("Click to copy webhook URL!");
   const [msgcopy, setMsgcopy] = useState("Click to copy webhook message!");
 
-  const [viewChart, setViewChart] = useState(forDisplay);
+  const [viewChart, setViewChart] = useState(
+    forDisplay ||
+      (!forDisplay && localStorage.getItem("wh_charts_sett") == "true")
+      ? true
+      : false
+  );
+
+  useEffect(() => {
+    if (!forDisplay && localStorage.getItem("wh_charts_sett") == "true")
+      setViewChart(true);
+    else if (!forDisplay && localStorage.getItem("wh_charts_sett") == "false")
+      setViewChart(false);
+  }, [localStorage.getItem("wh_charts_sett")]);
 
   useEffect(() => {
     const msgs = getMessages(webhook);
@@ -453,7 +465,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                     <span className="text-xs bg-bga text-text-h px-2 py-1 rounded-xl mx-1">
                       {webhook.pair}
                     </span>
-                    <div className="mt-0 w-full">
+                    {/* <div className="mt-0 w-full">
                       {viewChart ? (
                         <BsFillArrowDownCircleFill
                           onClick={() => setViewChart(!viewChart)}
@@ -465,7 +477,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                           className="ml-auto h-4 w-4 text-primary cursor-pointer"
                         />
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 )}
                 {!webhook.advanced && (
@@ -605,7 +617,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             )
                         )}
                       </div>
-                      <div className="mt-0 w-full">
+                      {/* <div className="mt-0 w-full">
                         {viewChart ? (
                           <BsFillArrowDownCircleFill
                             onClick={() => setViewChart(!viewChart)}
@@ -617,7 +629,7 @@ function Index({ webhook, user, mtAccounts, forDisplay = false }) {
                             className="ml-auto h-4 w-4 text-primary cursor-pointer"
                           />
                         )}
-                      </div>
+                      </div> */}
                     </div>
                   </Fragment>
                 )}

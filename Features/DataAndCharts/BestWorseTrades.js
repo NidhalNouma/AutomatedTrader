@@ -191,7 +191,12 @@ function BestWorseTrades({ data }) {
         <Sec
           title="Win Trades"
           rightPart={
-            <CircleArc percentage={80} color={"green"} />
+            <CircleArc
+              percentage={Number(
+                ((tlongWin + tShortWin) / (tlong + tShort)) * 100
+              ).toFixed(0)}
+              color={"green"}
+            />
             // <BarLine
             //   w1={(tlongWin / (tlongWin + tShortWin)) * 100}
             //   w2={(tShortWin / (tlongWin + tShortWin)) * 100}
@@ -208,7 +213,13 @@ function BestWorseTrades({ data }) {
         <Sec
           title="Loss Trades"
           rightPart={
-            <CircleArc percentage={80} color={"red"} />
+            <CircleArc
+              percentage={Number(
+                ((tlong + tShort - tlongWin - tShortWin) / (tlong + tShort)) *
+                  100
+              ).toFixed(0)}
+              color={"red"}
+            />
             // <BarLine
             //   w1={
             //     ((tlong - tlongWin) / (tlong + tShort - tlongWin - tShortWin)) *
@@ -254,12 +265,12 @@ function Sec({ title, children, onClick, rightPart }) {
         <Hi4 className="font-semibold text-xs mb-1">{title}</Hi4>
 
         <div className="flex items-center">{children}</div>
-        <div className="flex items-center text-text-p/60 text-xs mt-2">
+        {/* <div className="flex items-center text-text-p/60 text-xs mt-2">
           <span className="text-green-400 flex items-center">
             <ArrowUpIcon className="h-2.5 w-2.5" /> 12%
           </span>
           <span className="ml-1">vs last month</span>
-        </div>
+        </div> */}
       </div>
       {rightPart}
     </div>

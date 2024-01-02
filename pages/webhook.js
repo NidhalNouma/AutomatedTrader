@@ -21,6 +21,9 @@ import WebhooksWelcome from "../Features/WelcomeSection/Webhooks";
 import { PlayVideoPopup } from "../Components/Video";
 import { videosUrls } from "../utils/constant";
 
+import { AiFillSetting } from "react-icons/ai";
+import WhSettingsModal from "../Features/WebhooksItem/WhSettingModal";
+
 export default function Webhook() {
   const { user } = GetUserContext();
   const { fullUser } = GetFullUserContext();
@@ -29,6 +32,7 @@ export default function Webhook() {
   const { mtAPIAccounts } = GetMTAPIAccountsContext();
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
+  const [openSetting, setOpenSetting] = useState(false);
 
   const [advanced, setAdvanced] = useState([]);
 
@@ -61,6 +65,11 @@ export default function Webhook() {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <H1>Webhooks</H1>
+
+            <AiFillSetting
+              onClick={() => setOpenSetting(true)}
+              className="ml-3 stroke-4 cursor-pointer h-5 w-5 p-0.5 bg-text-p rounded-full text-bg"
+            />
 
             {webhooks?.length > 0 && (
               <PlayVideoPopup
@@ -130,6 +139,15 @@ export default function Webhook() {
             </div>
           )}
         </div>
+
+        <Modal1
+          open={openSetting}
+          close={() => {
+            setOpenSetting(false);
+          }}
+        >
+          <WhSettingsModal close={() => setOpenSetting(false)} />
+        </Modal1>
       </MainWithHeader>
     </>
   );

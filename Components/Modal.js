@@ -3,6 +3,7 @@ import { Modal } from "react-daisyui";
 export const Modal1 = ({
   open,
   children,
+  className,
   backclose = false,
   responsive = false,
 }) => {
@@ -10,7 +11,7 @@ export const Modal1 = ({
     <Modal
       open={open}
       onClickBackdrop={backclose}
-      className="bg-bg modali p-0 w-9/12 max-w-lg max-h-[89vh]"
+      className={"bg-bg modali p-0 w-9/12 max-w-lg max-h-[89vh] " + className}
       responsive={responsive}
     >
       {children}

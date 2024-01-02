@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Alert from "./Alert";
 import { Button, ButtonGroup } from "react-daisyui";
 
@@ -7,6 +7,7 @@ import { H3 } from "../../Components/H";
 import { Modal1 } from "../../Components/Modal";
 
 export default function NewAlertPopUp({ newAlert, setNewAlert }) {
+  const [accountData, setAccountData] = useState(null);
   return (
     newAlert &&
     newAlert?.message && (

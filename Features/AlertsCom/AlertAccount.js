@@ -31,6 +31,7 @@ function AlertAccount({ accountId, data }) {
     account && (
       <Fragment>
         <Modal1
+          className="max-h-full w-full"
           open={open}
           close={() => {
             setOpen(false);

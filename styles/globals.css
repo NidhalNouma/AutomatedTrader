@@ -135,6 +135,9 @@ input[type="number"] {
   color: #fff !important;
   background-color: transparent !important;
 }
+.react-calendar__tile--now {
+  background: transparent !important;
+}
 
 /* Video */
 .video-react.video-react-fluid,

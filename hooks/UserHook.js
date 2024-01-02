@@ -254,3 +254,32 @@ export const AlertSettings = function (user, getFullUser) {
     setSendTelegram,
   };
 };
+
+export const WebhookSettings = function (user, getFullUser) {
+  const [showCharts, setShowCharts] = useState(
+    localStorage.getItem("wh_charts_sett") == "true" ? true : false
+  );
+  console.log(localStorage.getItem("wh_charts_sett"));
+
+  async function saveWebhookSettings() {
+    localStorage.setItem("wh_charts_sett", showCharts);
+    // const r = await updateUserData(
+    //   user.id,
+    //   "alertSettings",
+    //   {
+    //     sendNotification,
+    //     showPopUp,
+    //     popUpSound,
+    //   },
+    //   false
+    // );
+    // // console.log(r);
+    // getFullUser(user.id);
+  }
+
+  return {
+    saveWebhookSettings,
+    showCharts,
+    setShowCharts,
+  };
+};
