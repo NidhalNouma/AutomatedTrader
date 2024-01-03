@@ -66,6 +66,7 @@ export async function addMTAccount(
     );
     // console.log(req);
     if (req.data.error) {
+      console.log(req.data);
       return { error: req.data.message };
     } else {
       const r = await addMTAccountToFB(

@@ -96,22 +96,45 @@ function DataTable({ data, closeTrade }) {
                 <React.Fragment key={i}>
                   <tr className="border-spacing-[7px] border-b-[1px] border-bga">
                     <td className="text-xs text-center py-3">
-                      {moment(v.time).fromNow()}
+                      {moment(v.time).format("MMM DD YYYY - HH:mm:ss")}
                     </td>
-                    <td className="text-xs text-center">
-                      {v.type === "POSITION_TYPE_BUY" ? "BUY" : "SELL"}
+                    <td className={"text-xs text-center "}>
+                      <span
+                        className={`px-2 py-[0.15rem] rounded-md font-semibold ${
+                          v?.type?.search("BUY") >= 0
+                            ? "bg-green-300 text-green-700"
+                            : v.type?.search("SELL") >= 0
+                            ? "bg-red-300 text-red-700"
+                            : ""
+                        }
+                        `}
+                      >
+                        {v.type === "POSITION_TYPE_BUY" ? "BUY" : "SELL"}
+                      </span>
                     </td>
                     <td className="text-xs text-center">{v.symbol}</td>
                     <td className="text-xs text-center">{v.openPrice}</td>
                     <td className="text-xs text-center">{v.volume}</td>
-                    <td className="text-xs text-center">
+                    <td
+                      className={`text-xs text-center ${
+                        v.profit > 0
+                          ? "text-green-300"
+                          : v.profit < 0
+                          ? "text-red-400"
+                          : ""
+                      } `}
+                    >
                       ${Number(v.profit).toFixed(2)}
                     </td>
-                    <td
-                      className="text-xs text-center"
-                      onClick={() => closeTrade(v.id)}
-                    >
-                      X
+                    <td className="text-xs text-center  ">
+                      <Button
+                        size="sm"
+                        shape="circle"
+                        className=" bg-transparent text-xs font-thin hover:bg-bga"
+                        onClick={() => closeTrade(v.id)}
+                      >
+                        X
+                      </Button>
                     </td>
                   </tr>
                   {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}

@@ -64,7 +64,13 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
                 .reverse()
                 ?.map((v, i) => {
                   const type = typeToStr(v.type?.toString());
-                  if (limit && i >= limit) return;
+                  if (limit && i > limit) return;
+                  // if (limit && i == limit)
+                  //   return (
+                  //     <tr className="border-spacing-[7px] border-b-[0px] border-gray-900 cursor-pointer hover:bg-bga">
+                  //       <span className="mt-3">View all</span>
+                  //     </tr>
+                  //   );
                   //   console.log(v);
                   return (
                     <Fragment key={i}>
@@ -88,9 +94,9 @@ function TableSm({ data, bgColor, profit, limit, pips }) {
                         <td className={`text-xs text-center `}>
                           <span
                             className={`px-2 py-[0.15rem] rounded-md font-bold ${
-                              type?.search("Buy") >= 0
+                              type?.search("BUY") >= 0
                                 ? "bg-green-300 text-green-700"
-                                : type?.search("Sell") >= 0
+                                : type?.search("SELL") >= 0
                                 ? "bg-red-300 text-red-700"
                                 : ""
                             }`}
@@ -220,9 +226,9 @@ function TradeDetails({ data, close, profit }) {
           <div>
             <span
               className={`px-2 py-[0.15rem] rounded-md font-bold text-sm ${
-                type?.search("Buy") >= 0
+                type?.search("BUY") >= 0
                   ? "bg-green-300 text-green-700"
-                  : type?.search("Sell") >= 0
+                  : type?.search("SELL") >= 0
                   ? "bg-red-300 text-red-700"
                   : ""
               }`}
@@ -263,8 +269,8 @@ function TradeDetails({ data, close, profit }) {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-sm text-text-p">Pips</span>
-          <span className="text-sm text-text-h">{data?.pips}</span>
+          {/* <span className="text-sm text-text-p">Pips</span>
+          <span className="text-sm text-text-h">{data?.pips}</span> */}
         </div>
         {profit && (
           <div className="flex flex-col">

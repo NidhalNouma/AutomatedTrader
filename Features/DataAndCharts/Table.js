@@ -119,9 +119,9 @@ function Table({ data, accounts }) {
                         <td className={`text-xs text-center `}>
                           <span
                             className={`px-2 py-[0.15rem] rounded-md font-bold ${
-                              type?.search("Buy") >= 0
+                              type?.search("BUY") >= 0
                                 ? "bg-green-300 text-green-700"
-                                : type?.search("Sell") >= 0
+                                : type?.search("SELL") >= 0
                                 ? "bg-red-300 text-red-700"
                                 : ""
                             }`}
@@ -245,9 +245,9 @@ export function TradeDetails({ data, close }) {
           <div>
             <span
               className={`px-2 py-[0.15rem] rounded-md font-bold text-sm ${
-                type?.search("Buy") >= 0
+                type?.search("BUY") >= 0
                   ? "bg-green-300 text-green-700"
-                  : type?.search("Sell") >= 0
+                  : type?.search("SELL") >= 0
                   ? "bg-red-300 text-red-700"
                   : ""
               }`}
@@ -264,25 +264,6 @@ export function TradeDetails({ data, close }) {
         <div className="flex flex-col">
           <span className="text-sm text-text-p">Exit</span>
           <span className="text-sm text-text-h">{data?.close}</span>
-        </div>
-
-        <div className="flex flex-col">
-          <span className="text-sm text-text-p">Pips</span>
-          <span className="text-sm text-text-h">{data?.pips}</span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-sm text-text-p">Profit</span>
-          <span
-            className={`text-sm text-text-h ${
-              data?.profit > 0
-                ? "text-green-300"
-                : data?.profit < 0
-                ? "text-red-400"
-                : ""
-            }`}
-          >
-            ${data?.profit}
-          </span>
         </div>
 
         <div className="flex flex-col">
@@ -303,6 +284,25 @@ export function TradeDetails({ data, close }) {
                   .utc(data?.closeTimeGMT, "YYYY.MM.DD HH:mm:ss")
                   .format("yyyy MM DD HH:mm:ss")
               : moment(data?.closeTime).format("yyyy MM DD HH:mm:ss")}
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          {/* <span className="text-sm text-text-p">Pips</span>
+          <span className="text-sm text-text-h">{data?.pips}</span> */}
+        </div>
+        <div className="flex flex-col">
+          <span className="text-sm text-text-p">Profit</span>
+          <span
+            className={`text-sm text-text-h ${
+              data?.profit > 0
+                ? "text-green-300"
+                : data?.profit < 0
+                ? "text-red-400"
+                : ""
+            }`}
+          >
+            ${data?.profit}
           </span>
         </div>
       </div>

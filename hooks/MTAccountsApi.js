@@ -39,7 +39,7 @@ export function GetMTAPIAccounts() {
         }
       }
 
-      console.log(accounts);
+      // console.log(accounts);
       setMTAPIAccounts([...accounts]);
     }
   }
@@ -145,7 +145,7 @@ export function GetLiveTrades(account) {
 
     const r = await getActiveOrders(account.accountApiId);
     // console.log(r);
-    if (r.length > 0) setTrades(r);
+    if (r.length >= 0) setTrades(r);
   };
 
   async function closeLiveTrade(tradeId) {
