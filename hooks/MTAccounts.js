@@ -292,7 +292,7 @@ export function getDataFromAccountPerPeriod(
   const loss = profitPerTime(account?.data, false, withWebHook);
   const profit = profitPerTime(account?.data, true, withWebHook);
 
-  console.log("period", account, period, profit, loss);
+  // console.log("period", account, period, profit, loss);
 
   const r = {
     profit: [],

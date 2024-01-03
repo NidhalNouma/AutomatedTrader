@@ -207,9 +207,10 @@ export function AddNewMTAccount() {
       accountServer,
       type
     );
+    // console.log(r);
 
     if (r.error) {
-      if (typeof r.error === "string") setError(e.error);
+      if (typeof r?.error === "string") setError(r.error);
       else
         setError(
           "An error occurred while adding the account, please try again."
