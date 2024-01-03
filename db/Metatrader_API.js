@@ -97,6 +97,7 @@ export async function addMTAccount(
         platform: accountType,
         region: "new-york",
         manualTrades: true,
+        metastatsApiEnabled: true,
         magic: 0,
         provisioningProfileId: profileId,
       },
@@ -185,7 +186,9 @@ export async function getHistoryOrders(accountApiId) {
   console.log("Get history trades ... ", accountApiId);
 
   const currentDate = new Date();
-  const endTime = currentDate.toISOString();
+  const endTime = new Date(
+    currentDate.setDate(currentDate.getDate() + 2)
+  ).toISOString();
 
   const startTime = new Date(
     currentDate.setFullYear(currentDate.getFullYear() - 30)
@@ -209,6 +212,7 @@ export async function getHistoryOrders(accountApiId) {
     if (req.data.error) {
       return { error: req.data.message };
     } else {
+      console.log(startTime, endTime, req.data);
       return req.data;
     }
   } catch (e) {

@@ -27,6 +27,7 @@ export function GetMTAPIAccounts() {
         Object.assign(mt, r.data);
 
         const rh = await getHistoryOrders(mt.accountApiId);
+        // console.log("history data:", rh);
         if (rh.length > 0) {
           mt["data"] = mergeData(rh);
           // console.log(
