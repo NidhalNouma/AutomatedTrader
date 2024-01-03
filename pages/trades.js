@@ -96,7 +96,7 @@ export default function TradesPage() {
           </ButtonP>
         </div>
 
-        {filtredData?.length > 0 ? (
+        {mtAPIAccounts.length > 0 ? (
           <Fragment>
             <div className="flex mt-4 w-full items-center justify-start">
               <div className="flex flex-col ">

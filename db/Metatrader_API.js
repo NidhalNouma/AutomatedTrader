@@ -32,19 +32,61 @@ const db = getFirestore();
 const apiURL = "https://mt-provisioning-api-v1.agiliumtrade.agiliumtrade.ai";
 const apiDataURL = "https://mt-client-api-v1.new-york.agiliumtrade.ai";
 
+async function getMTProfileByServerName(serverName, version) {
+  console.log("Checking MT profiles for server ...", serverName);
+  const v = version == "mt4" ? 4 : 5;
+  try {
+    const req = await axios.get(
+      apiURL + "/users/current/provisioning-profiles?version=" + v,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    // console.log(req.data);
+    if (req.data.error) {
+      if (req.data.id) {
+        console.log(req.data);
+      }
+      return { error: req.data.message };
+    } else {
+      let r = { valid: true, id: "" };
+      if (req.data?.length > 0) {
+        const data = req.data;
+        for (let i = 0; i < data.length; i++) {
+          const name = data[i].name;
+          if (serverName.search(name) >= 0) r.id = data[i]._id;
+        }
+        // console.log(r, data);
+      }
+      return r;
+    }
+  } catch (e) {
+    console.error("Error getting mt profiles: ", e);
+    return { error: e };
+  }
+}
+
 export async function addMTAccount(
   userId,
   accountName,
   accountNumber,
   accountPassword,
   accountServer,
-  accountType
+  accountType,
+  profileId = ""
 ) {
   console.log("Adding new MT API account ...");
 
   const transactionId = generateRandomString(32);
 
   try {
+    if (profileId === "") {
+      const pr = await getMTProfileByServerName(accountServer, accountType);
+      if (pr.valid && pr.id) profileId = pr.id;
+      console.log("profileId: ", profileId);
+    }
     const req = await axios.post(
       apiURL + "/users/current/accounts",
       {
@@ -56,6 +98,7 @@ export async function addMTAccount(
         region: "new-york",
         manualTrades: true,
         magic: 0,
+        provisioningProfileId: profileId,
       },
       {
         headers: {
@@ -66,7 +109,9 @@ export async function addMTAccount(
     );
     // console.log(req);
     if (req.data.error) {
-      console.log(req.data);
+      if (req.data.id) {
+        console.log(req.data);
+      }
       return { error: req.data.message };
     } else {
       const r = await addMTAccountToFB(

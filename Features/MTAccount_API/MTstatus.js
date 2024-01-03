@@ -152,7 +152,10 @@ function Mtstatus({ account, userId }) {
                 </div>
                 <div className="w-full flex items-end">
                   <span className="ml-auto" onClick={() => setOpenAcc(true)}>
-                    <IoMdArrowDroprightCircle className="h-6 w-6 text-text-p" />
+                    <IoMdArrowDroprightCircle
+                      style={{ color: txtColor }}
+                      className="h-6 w-6"
+                    />
                   </span>
                 </div>
               </div>
