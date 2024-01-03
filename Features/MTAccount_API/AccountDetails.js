@@ -52,7 +52,9 @@ function AccountDetails({ account, close }) {
           </div>
           <div className="">
             <H6>Free margin</H6>
-            <H5 className="font-bold">{account.freeMargin}</H5>
+            <H5 className="font-bold">
+              {Number(account.freeMargin).toFixed(2)}
+            </H5>
           </div>
           <div className="">
             <H6>Leverage</H6>
@@ -78,11 +80,13 @@ function DataTable({ data, closeTrade }) {
       <table className="table-auto w-full">
         <thead>
           <tr className="bg-bga sticky top-0">
-            <th className="text-text-h text-xs py-2">Time</th>
+            <th className="text-text-h text-xs py-2">Open Time</th>
             <th className="text-text-h text-xs">Type</th>
             <th className="text-text-h text-xs">Pair</th>
             <th className="text-text-h text-xs">Open Price</th>
             <th className="text-text-h text-xs">Lot</th>
+            <th className="text-text-h text-xs">SL</th>
+            <th className="text-text-h text-xs">TP</th>
             <th className="text-text-h text-xs">Profit</th>
             <th className="text-text-h text-xs"></th>
           </tr>
@@ -115,6 +119,8 @@ function DataTable({ data, closeTrade }) {
                     <td className="text-xs text-center">{v.symbol}</td>
                     <td className="text-xs text-center">{v.openPrice}</td>
                     <td className="text-xs text-center">{v.volume}</td>
+                    <td className="text-xs text-center">{v.stopLoss}</td>
+                    <td className="text-xs text-center">{v.takeProfit}</td>
                     <td
                       className={`text-xs text-center ${
                         v.profit > 0
