@@ -6,6 +6,8 @@ export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
   const [sAccount, setSAccount] = useState(
     mtAccounts?.length > 0 ? mtAccounts[0] : null
   );
+
+  const [msgIndex, setMsgIndex] = useState(0);
   // console.log(mtAccounts);
 
   useEffect(() => {
@@ -35,8 +37,18 @@ export const PlaceWebhookTrade = (mtAccounts, webhooks) => {
 
   useEffect(() => {
     // console.log(sWebhook?.messages);
-    setSMessage(sWebhook?.messages?.length > 0 ? sWebhook?.messages[0] : null);
+    const index = sWebhook?.messages?.length - 1 >= msgIndex ? msgIndex : 0;
+    setSMessage(
+      sWebhook?.messages?.length > 0 ? sWebhook?.messages[index] : null
+    );
+    setMsgIndex(index);
   }, [sWebhook]);
+
+  useEffect(() => {
+    if (sMessage && sWebhook) {
+      setMsgIndex(sWebhook?.messages?.indexOf(sMessage));
+    }
+  }, [sMessage]);
 
   useEffect(() => {
     setError("");

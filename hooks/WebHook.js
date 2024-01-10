@@ -583,14 +583,15 @@ export function getMessageData(message, symbol, fixedLotSize) {
         const risk = v.replace("RISK=", "");
         if (risk.search("%") >= 0) {
           r.positionType = 0;
-          r.positionValuePercentage = risk.replace("%", "");
+          const riskPer = risk.replace("%", "");
+          r.positionValuePercentage = Number(riskPer).toFixed(2);
         } else {
           r.positionType = 1;
-          r.positionValue = risk;
+          r.positionValue = Number(risk).toFixed(2);
         }
         if (fixedLotSize) {
           r.positionType = 1;
-          r.positionValue = fixedLotSize;
+          r.positionValue = Number(fixedLotSize).toFixed(2);
         }
       } else if (v.search("PENDING-DISTANCE=") >= 0) {
         r.pendingDistance = v.replace("PENDING-DISTANCE=", "");
@@ -680,7 +681,12 @@ export function getMessageData(message, symbol, fixedLotSize) {
   //   Number(r.stopLoss) >= 0 &&
   //   Number(r.takeProfit) >= 0
   // )
-  r.isValid = true;
+  r.isValid = false;
+
+  if (r.type >= 0 && r.pair?.length > 0 && r.msgType >= 0) {
+    r.isValid = true;
+  }
+  // console.log(r);
   // else r.isValid = false;
   // console.log(r, message);
   // console.log(r.type, r.isValid);
@@ -752,7 +758,7 @@ export function getMessageAdvancedData(msg, pair) {
         case "RISK":
           if (value.indexOf("%") >= 0) {
             const val = value.replace("%", "");
-            r.riskPercentage = Number(val);
+            r.riskPercentage = Number(val).toFixed(2);
           } else r.fixedLotSize = 0; // Number(value);
 
           r.riskPercentage = Number(value);

@@ -259,7 +259,7 @@ export const WebhookSettings = function (user, getFullUser) {
   const [showCharts, setShowCharts] = useState(
     localStorage.getItem("wh_charts_sett") == "true" ? true : false
   );
-  console.log(localStorage.getItem("wh_charts_sett"));
+  // console.log(localStorage.getItem("wh_charts_sett"));
 
   async function saveWebhookSettings() {
     localStorage.setItem("wh_charts_sett", showCharts);

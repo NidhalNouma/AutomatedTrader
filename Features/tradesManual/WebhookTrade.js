@@ -70,6 +70,12 @@ function WebhookTrade({ close }) {
         />
       )}
 
+      {sWebhook && sMessage && (
+        <p className="my-2 p-1 text-text-h bg-bga rounded-lg text-xs max-w-xs">
+          {sMessage}
+        </p>
+      )}
+
       {error && (
         <div className="mt-2 max-w-xs w-full">
           <Alert

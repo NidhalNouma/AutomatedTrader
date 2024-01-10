@@ -192,7 +192,7 @@ export const Select1 = ({
             <option
               key={i}
               value={i}
-              defaultValue={i?.toString() === value?.toString()}
+              // defaultValue={i?.toString() === value?.toString()}
             >
               {v}
             </option>

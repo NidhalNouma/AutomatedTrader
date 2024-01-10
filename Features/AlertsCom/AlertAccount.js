@@ -11,6 +11,7 @@ import { XIcon } from "@heroicons/react/solid";
 
 import { txtColorFromBg } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
+import moment from "moment";
 
 function AlertAccount({ accountId, data }) {
   const { mtAPIAccounts } = GetMTAPIAccountsContext();
@@ -101,6 +102,7 @@ function Details({ data, close, account }) {
 }
 
 function Data_n({ msg }) {
+  // console.log(msg);
   return (
     <div
       className={`text-xs mb-2 px-2 rounded-lg py-1 font-semibold ${
@@ -108,6 +110,51 @@ function Data_n({ msg }) {
       }`}
     >
       <p className="">{msg.error || msg.msg}</p>
+      {msg.trade && (
+        <Fragment>
+          <div
+            className={`pb-1 mt-1.5 border-b-2 ${
+              msg.error ? " border-red-900" : " border-green-900"
+            }`}
+          >
+            <span
+              className={`px-2 font-medium rounded-lg border-[1px] ${
+                msg.error ? " border-red-900" : " border-green-900"
+              }`}
+            >
+              {msg.trade.type}
+            </span>{" "}
+            {msg.trade.symbol}
+          </div>
+          <div className="pt-1">
+            <div className="">
+              <span className="mr-2">ID: {msg.trade.id}</span>
+              {/* <span className="mr-2">Price: {msg.trade.openPrice}</span> */}
+            </div>
+            <div className="">
+              <span className="mr-2">broker time: {msg.trade.brokerTime}</span>
+              {/* <span className="mr-2">Price: {msg.trade.openPrice}</span> */}
+            </div>
+            <div className="">
+              <span className="mr-2">Price: {msg.trade.openPrice}</span>
+            </div>
+            <div className="">
+              <span className="mr-2">Lot size: {Number(msg.trade.volume)}</span>
+            </div>
+            <div className="">
+              <span className="mr-2">Stop Loss: {msg.trade.stopLoss}</span>
+            </div>
+            <div className="">
+              <span className="mr-2">Take Profit: {msg.trade.takeProfit}</span>
+            </div>
+            {msg.trade.profit && (
+              <div className="">
+                <span className="mr-2">Profit: {msg.trade.profit}</span>
+              </div>
+            )}
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 }
