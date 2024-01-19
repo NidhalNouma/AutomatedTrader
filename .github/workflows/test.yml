@@ -1,0 +1,52 @@
+name: Deploy to Google Cloud
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Set up Google Cloud
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_ID }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: gcr.io/${{ secrets.GCP_ID }}/automatedtrader_test:latest
+          build-args: |
+            NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+            NEXT_PUBLIC_TELEGRAM_API_TOKEN=${{ secrets.NEXT_PUBLIC_TELEGRAM_API_TOKEN }}
+            NEXT_PUBLIC_LANDING_URL=${{ secrets.NEXT_PUBLIC_LANDING_URL }}
+            NEXT_PUBLIC_META_API_TOKEN=${{ secrets.NEXT_PUBLIC_META_API_TOKEN }}
+            NEXT_PUBLIC_CHARGEBEE_SITE=${{ secrets.NEXT_PUBLIC_CHARGEBEE_SITE }}
+            NEXT_PUBLIC_CHARGEBEE_API_KEY=${{ secrets.NEXT_PUBLIC_CHARGEBEE_API_KEY }}
+            NEXT_PUBLIC_CHARGEBEE_API_KEY_B=${{ secrets.NEXT_PUBLIC_CHARGEBEE_API_KEY_B }}
+            NEXT_PUBLIC_TEST_PROFILE_ID=${{ secrets.NEXT_PUBLIC_TEST_PROFILE_ID }}
+            NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS=${{ secrets.NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS }}
+            NEXT_PUBLIC_ALLOWED_EMAILS=${{ secrets.NEXT_PUBLIC_ALLOWED_EMAILS }}
+            NEXT_PUBLIC_KLAVIO_PRIVATE_KEY=${{ secrets.NEXT_PUBLIC_KLAVIO_PRIVATE_KEY }}
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy automatedtrader-test \
+            --image gcr.io/${{ secrets.GCP_ID }}/automatedtrader_test:latest \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_ID }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          GOOGLE_CLOUD_PROJECT: ${{ secrets.GCP_ID }}
