@@ -16,7 +16,7 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Print environment variable
-        run: echo "My $testvar environment variable is $TESTVAR ${{env.TESTVAR}}"
+        run: echo "My $TESTVAR environment ${{env.NEXT_PUBLIC_FIREBASE_API_KEY}} variable is ${TESTVAR} ${{ env.TESTVAR }}"
 
       - id: "auth"
         uses: "google-github-actions/auth@v2"
