@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - test
+env:
+  NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
 
 jobs:
   deploy:
@@ -36,7 +38,7 @@ jobs:
           push: true
           tags: gcr.io/${{ secrets.GCP_ID }}/automatedtrader_test:latest
           secrets: |
-            NEXT_PUBLIC_FIREBASE_API_KEY=${{ env.NEXT_PUBLIC_FIREBASE_API_KEY }}
+            NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
             NEXT_PUBLIC_TELEGRAM_API_TOKEN=${{ secrets.NEXT_PUBLIC_TELEGRAM_API_TOKEN }}
             NEXT_PUBLIC_LANDING_URL=${{ secrets.NEXT_PUBLIC_LANDING_URL }}
             NEXT_PUBLIC_META_API_TOKEN=${{ secrets.NEXT_PUBLIC_META_API_TOKEN }}
