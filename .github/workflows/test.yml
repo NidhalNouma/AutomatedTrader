@@ -31,7 +31,7 @@ jobs:
         run: gcloud auth configure-docker
 
       - name: Print environment variable
-        run: echo "My environment variable is ${{ secrets.NEXT_PUBLIC_CHARGEBEE_SITE }}"
+        run: echo "My $testvar environment variable is ${{ secrets.NEXT_PUBLIC_CHARGEBEE_SITE }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
