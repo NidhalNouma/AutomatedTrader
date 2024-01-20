@@ -15,9 +15,6 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
 
-      - name: Print environment variable
-        run: echo "My $TESTVAR environment ${{env.NEXT_PUBLIC_FIREBASE_API_KEY}} variable is ${TESTVAR} ${{ env.TESTVAR }}"
-
       - id: "auth"
         uses: "google-github-actions/auth@v2"
         with:
@@ -39,7 +36,7 @@ jobs:
           push: true
           tags: gcr.io/${{ secrets.GCP_ID }}/automatedtrader_test:latest
           secrets: |
-            NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+            NEXT_PUBLIC_FIREBASE_API_KEY=${{ env.NEXT_PUBLIC_FIREBASE_API_KEY }}
             NEXT_PUBLIC_TELEGRAM_API_TOKEN=${{ secrets.NEXT_PUBLIC_TELEGRAM_API_TOKEN }}
             NEXT_PUBLIC_LANDING_URL=${{ secrets.NEXT_PUBLIC_LANDING_URL }}
             NEXT_PUBLIC_META_API_TOKEN=${{ secrets.NEXT_PUBLIC_META_API_TOKEN }}
