@@ -48,7 +48,7 @@ jobs:
           push: true
           tags: gcr.io/${{ secrets.GCP_ID }}/automatedtrader_test:latest
           build-args: |
-            NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
+            NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyDrZfGjha4F6fkp_X2HbJguaPY1sPppLz4
             NEXT_PUBLIC_TELEGRAM_API_TOKEN=${{ secrets.NEXT_PUBLIC_TELEGRAM_API_TOKEN }}
             NEXT_PUBLIC_LANDING_URL=${{ secrets.NEXT_PUBLIC_LANDING_URL }}
             NEXT_PUBLIC_META_API_TOKEN=${{ secrets.NEXT_PUBLIC_META_API_TOKEN }}
