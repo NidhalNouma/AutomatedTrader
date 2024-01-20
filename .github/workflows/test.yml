@@ -15,6 +15,9 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
 
+      - name: Print environment variable
+        run: echo "My $testvar environment variable is $TESTVAR"
+
       - id: "auth"
         uses: "google-github-actions/auth@v2"
         with:
@@ -29,9 +32,6 @@ jobs:
 
       - name: Configure Docker to use gcloud as a credential helper
         run: gcloud auth configure-docker
-
-      - name: Print environment variable
-        run: echo "My $testvar environment variable is ${{ secrets.NEXT_PUBLIC_CHARGEBEE_SITE }}"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
