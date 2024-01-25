@@ -5,7 +5,6 @@ export default async function handler(req, res) {
     const { id } = req.query;
 
     const r = await getSubscription(id);
-    // console.log(r);
     if (r?.subscription) return res.status(200).json(r?.subscription);
   }
 

@@ -25,6 +25,7 @@ export async function getHostedPage(id) {
 }
 
 export async function getSubscription(id) {
+  // console.log("getting sub  ...", id);
   const purl = "/api/v2/subscriptions/" + id;
   let r = null;
 
@@ -36,8 +37,9 @@ export async function getSubscription(id) {
     });
 
     r = r.data;
+    // console.log(r);
   } catch (e) {
-    console.log("get subscription error => ", e.message);
+    console.log("get subscription error => ", e.message, id);
   }
 
   return r;

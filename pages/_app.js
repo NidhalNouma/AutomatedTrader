@@ -87,8 +87,9 @@ function MyApp({ Component, pageProps }) {
         const subObj = fullUser?.subObj;
 
         // console.log(subObj);
-
-        if (!subObj) {
+        if (subObj) {
+          if (pathname === "/welcome") router.push("/home");
+        } else if (!subObj) {
           router.push("/welcome");
         } else if (
           pathname === "/" ||
