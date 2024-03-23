@@ -79,11 +79,11 @@ function Mtstatus({ account, userId }) {
               )}
               {account.accountDisplayName}
             </H4>
-            {account.name && (
+            {/* {account.name && (
               <span className="text-xs ml-1" style={{ color: txtColor }}>
                 ({account.name})
               </span>
-            )}
+            )} */}
           </div>
           <div className="flex items-center">
             <H6 style={{ color: txtColor }}>No: {account.accountNumber}</H6>
@@ -141,13 +141,13 @@ function Mtstatus({ account, userId }) {
                 <div className="">
                   <H6 style={{ color: txtColor }}>Balance</H6>
                   <H5 style={{ color: txtColor }} className="font-bold">
-                    {account.balance}
+                    {Number(account.balance).toFixed(2)}
                   </H5>
                 </div>
                 <div className="">
                   <H6 style={{ color: txtColor }}>Equity</H6>
                   <H5 style={{ color: txtColor }} className="font-bold">
-                    {account.equity}
+                    {Number(account.equity).toFixed(2)}
                   </H5>
                 </div>
                 <div className="w-full flex items-end">
@@ -160,7 +160,7 @@ function Mtstatus({ account, userId }) {
                 </div>
               </div>
             ) : (
-              <H6 style={{ color: txtColor }}>Conecting ... </H6>
+              <H6 style={{ color: txtColor }}>Connecting ... </H6>
             )}
           </Fragment>
         )}

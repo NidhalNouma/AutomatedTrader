@@ -40,15 +40,15 @@ function AccountDetails({ account, close }) {
           </div>
           <div className="">
             <H6>Platform</H6>
-            <H5 className="font-bold">{account.platform}</H5>
+            <H5 className="font-bold uppercase">{account.platform}</H5>
           </div>
           <div className="">
             <H6>Balance</H6>
-            <H5 className="font-bold">{account.balance}</H5>
+            <H5 className="font-bold">{Number(account.balance).toFixed(2)}</H5>
           </div>
           <div className="">
             <H6>Equity</H6>
-            <H5 className="font-bold">{account.equity}</H5>
+            <H5 className="font-bold">{Number(account.equity).toFixed(2)}</H5>
           </div>
           <div className="">
             <H6>Free margin</H6>

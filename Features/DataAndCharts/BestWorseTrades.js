@@ -135,7 +135,15 @@ function BestWorseTrades({ data }) {
           </H4>
         </Sec>
 
-        <Sec title="Profits" rightPart={<CircleArc percentage={10} />}>
+        <Sec
+          title="Profits"
+          rightPart={
+            <CircleArc
+              percentage={Number((profit / (profit + loss)) * 100).toFixed(0)}
+              color={profit + loss > 0 ? "green" : "red"}
+            />
+          }
+        >
           <H4 className="text-text-h font-medium !text-lg mr-6">
             ${Math.round((profit + loss + Number.EPSILON) * 100) / 100}
           </H4>
