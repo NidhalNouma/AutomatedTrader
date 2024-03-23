@@ -44,13 +44,18 @@ function B1() {
     >
       <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
-          <Image
+          {/* <Image
             src="/Images/banners/bug-detected.png"
             alt=""
             width="1w"
             height="1h"
             className=""
             layout="responsive"
+          /> */}
+          <img
+            src="/Images/banners/bug-detected.png"
+            alt=""
+            className="w-full aspect-auto"
           />
         </div>
 
@@ -67,13 +72,10 @@ function B2() {
   return (
     <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
       <div className="w-10 h-10 mr-2">
-        <Image
+        <img
           src="/Images/banners/trophy.png"
           alt=""
-          width="1w"
-          height="1h"
-          className=""
-          layout="responsive"
+          className="w-full aspect-auto"
         />
       </div>
 
@@ -90,13 +92,10 @@ function B3() {
     <Link href="/membership">
       <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
-          <Image
+          <img
             src="/Images/banners/attracting-money.png"
             alt=""
-            width="1w"
-            height="1h"
-            className=""
-            layout="responsive"
+            className="w-full aspect-auto"
           />
         </div>
 
@@ -118,13 +117,10 @@ function Henko() {
     >
       <div className="cursor-pointer flex items-center justify-center bg-transparent rounded-xl p-2 flip-animation ">
         <div className="w-10 h-10 mr-2">
-          <Image
+          <img
             src="/Images/banners/henko-logo.png"
             alt=""
-            width="1w"
-            height="1h"
-            className=""
-            layout="responsive"
+            className="w-full aspect-auto"
           />
         </div>
 

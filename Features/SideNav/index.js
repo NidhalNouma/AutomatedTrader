@@ -31,12 +31,18 @@ function Index({ cpath, fixed = true }) {
       {/* {fixed && ( */}
       <div className="py-4 px-4 m-2 sticky top-3 left-0 ">
         <div className="relative">
-          <Image
+          {/* <Image
             src="/Logo/dark-logo.png"
             alt=""
             width="15w"
             height="2h"
             className=""
+            layout="responsive"
+          /> */}
+          <img
+            src="/Logo/dark-logo.png"
+            alt=""
+            className="w-full aspect-auto"
             layout="responsive"
           />
           <span className="truncate absolute top-full right-0 text-xs font-bold text-text-h px-1 rounded-full">
@@ -204,12 +210,18 @@ function Index({ cpath, fixed = true }) {
                   className="mt-2"
                   icon={
                     <div className="w-5 h-5 ml-1">
-                      <Image
+                      {/* <Image
                         className=""
                         src="/Images/mt5-icon.png"
                         alt=""
                         width="1w"
                         height="1h"
+                        layout="responsive"
+                      /> */}
+                      <img
+                        className="h-5 w-5"
+                        src="/Images/mt5-icon.png"
+                        alt=""
                         layout="responsive"
                       />
                     </div>
@@ -223,12 +235,18 @@ function Index({ cpath, fixed = true }) {
                   className="mt-2"
                   icon={
                     <div className="w-5 h-5 ml-1">
-                      <Image
+                      {/* <Image
                         className=""
                         src="/Images/Binance_Logo.png"
                         alt=""
                         width="1w"
                         height="1h"
+                        layout="responsive"
+                      /> */}
+                      <img
+                        className="h-5 w-5"
+                        src="/Images/Binance_Logo.png"
+                        alt=""
                         layout="responsive"
                       />
                     </div>
@@ -242,12 +260,18 @@ function Index({ cpath, fixed = true }) {
                   // className="my-0"
                   icon={
                     <div className="w-5 h-5 ml-1">
-                      <Image
+                      {/* <Image
                         className=""
                         src="/Images/telegram-icon.png"
                         alt=""
                         width="1w"
                         height="1h"
+                        layout="responsive"
+                      /> */}
+                      <img
+                        className="h-5 w-5"
+                        src="/Images/telegram-icon.png"
+                        alt=""
                         layout="responsive"
                       />
                     </div>
