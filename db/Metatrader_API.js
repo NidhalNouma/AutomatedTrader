@@ -365,7 +365,8 @@ export async function openTrade(
   sl,
   tp,
   slPrice,
-  tpPrice
+  tpPrice,
+  volumePercentage
 ) {
   console.log("Open a trade ... ", accountApiId);
 
@@ -379,6 +380,15 @@ export async function openTrade(
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
   else if (tp)
     tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
+
+  if (volumePercentage) {
+    volume = 0.1;
+    // const accInfo = getAccountInformation(accountApiId)
+
+    if (!slPrice || !sl) {
+      return { error: "Can't use a volume percentage without a stop loss." };
+    }
+  }
 
   try {
     const req = await axios.post(
@@ -435,14 +445,22 @@ export async function closeTradeByWHID(
 
   for (let i = 0; i < listOfTrades.length; i++) {
     const trade = listOfTrades[i];
+    console.log(
+      "Close trade by webhook ID",
+      trade.clientId,
+      trade.volume,
+      " | ",
+      tradeId
+    );
     if (all || trade.clientId?.search(tradeId) > 0)
       if (trade.symbol === symbol) {
         if (trade.type == positionType) {
           // console.log("Close a trade", trade);
-          if (partialClose > 0) {
-            partialClose = (trade.volume * partialClose) / 100;
+          let pClose = trade.volume;
+          if (partialClose > 0 && partialClose < 100) {
+            pClose = (trade.volume * partialClose) / 100;
             // console.log(partialClose);
-            partialClose = Math.ceil(partialClose * 100) / 100;
+            pClose = Math.ceil(pClose * 100) / 100;
             // Math.round((partialClose + Number.EPSILON) * 100) / 100;
             // console.log(partialClose);
           }
@@ -469,7 +487,12 @@ export async function closeTradeByWHID(
               });
             }
           }
-          const r = await closeTrade(accountApiId, trade.id, partialClose);
+          const r = await closeTrade(
+            accountApiId,
+            trade.id,
+            partialClose,
+            pClose
+          );
           // console.log(r);
           if (r.orderId) {
             res.push({
@@ -549,7 +572,12 @@ export async function modifyTradeByWHID(
   return res;
 }
 
-export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
+export async function closeTrade(
+  accountApiId,
+  tradeId,
+  partialClosePercentage = 0,
+  partialClose = 0
+) {
   console.log("Close a trade ... ", accountApiId, " ", tradeId);
 
   let data = {
@@ -557,7 +585,7 @@ export async function closeTrade(accountApiId, tradeId, partialClose = 0) {
     positionId: tradeId,
   };
 
-  if (partialClose > 0)
+  if (partialClosePercentage > 0 && partialClosePercentage < 100)
     data = {
       actionType: "POSITION_PARTIAL",
       positionId: tradeId,

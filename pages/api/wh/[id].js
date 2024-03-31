@@ -66,8 +66,7 @@ export default async function handler(req, res) {
               let alertRespons = {};
               if (msgData.msgType == 0) {
                 for (let i = 0; i < r.MT4?.length; i++) {
-                  const volume =
-                    msgData.positionType === 1 ? msgData.positionValue : 0.01;
+                  const volume = msgData.positionValue;
                   const res = await openTrade(
                     r.MT4[i],
                     "N_N_" + r.id,
@@ -77,7 +76,8 @@ export default async function handler(req, res) {
                     msgData.stopLoss,
                     msgData.takeProfit,
                     msgData.stopLossPrice,
-                    msgData.takeProfitPrice
+                    msgData.takeProfitPrice,
+                    msgData.positionType === 1 ? false : true
                   );
                   // console.log(res);
                   if (res.orderId) {

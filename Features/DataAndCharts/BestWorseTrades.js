@@ -139,7 +139,9 @@ function BestWorseTrades({ data }) {
           title="Profits"
           rightPart={
             <CircleArc
-              percentage={Number((profit / (profit + loss)) * 100).toFixed(0)}
+              percentage={Number(
+                (profit / (profit + Math.abs(loss))) * 100
+              ).toFixed(0)}
               color={profit + loss > 0 ? "green" : "red"}
             />
           }

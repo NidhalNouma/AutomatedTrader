@@ -50,7 +50,7 @@ function Table({ data, accounts }) {
                 </th>
                 <th className="text-text-h text-md px-2 sm:px-0">Type</th>
                 <th className="text-text-h text-md px-2 sm:px-0">Lot</th>
-                <th className="text-text-h text-md px-2 sm:px-0">Pips</th>
+                {/* <th className="text-text-h text-md px-2 sm:px-0">Pips</th> */}
                 <th className="text-text-h text-md px-2 sm:px-0">Profit</th>
                 <th className="text-text-h text-md px-2 sm:px-0 truncate">
                   Open Price
@@ -132,7 +132,7 @@ function Table({ data, accounts }) {
                         <td className="text-xs text-center">
                           {Number(v.lot)?.toFixed(2)}
                         </td>
-                        <td className={`text-xs text-center `}>{v.pips}</td>
+                        {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
                         <td
                           className={`text-xs text-center font-bold ${
                             v.profit > 0

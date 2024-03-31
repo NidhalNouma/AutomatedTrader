@@ -46,12 +46,17 @@ export default function TradesPage() {
     if (account === "All" && wh === "All") setFilteredData(data);
     else {
       let fdata = data;
+      // console.log(account, fdata);
       if (account !== "All")
         fdata = fdata.filter((v) => v.accountDisplayName === account);
       if (wh !== "All")
         fdata = fdata.filter(
-          (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+          (v) =>
+            v.clientId?.indexOf(webhooks[optionsWh.indexOf(wh) - 1]?.id) >= 0
         );
+      // fdata = fdata.filter(
+      //   (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+      // );
       setFilteredData(fdata);
     }
   }, [account, wh, mtAPIAccounts]);
