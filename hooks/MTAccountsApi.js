@@ -8,6 +8,7 @@ import {
   addMTAccount,
   getAccountInformation,
   getHistoryOrders,
+  updateLastHistoryData,
   getActiveOrders,
   closeTrade,
 } from "../db/Metatrader_API";
@@ -26,18 +27,41 @@ export function GetMTAPIAccounts() {
         const r = await getAccountInformation(mt.accountApiId);
         Object.assign(mt, r.data);
 
-        const rh = await getHistoryOrders(mt.accountApiId);
-        // console.log("history data:", rh);
-        if (rh.length > 0) {
-          mt["data"] = mergeData(rh);
-          // console.log(
-          //   rh,
-          //   rh.find((item) => item.type === "DEAL_TYPE_BALANCE")
-          // );
-          mt["accountStartBalance"] = rh.find(
-            (item) => item.type === "DEAL_TYPE_BALANCE"
-          ).profit;
+        let loop = true;
+        let count = 0;
+        let rh = [];
+        while (loop) {
+          let res = await getHistoryOrders(
+            mt.accountApiId,
+            mt.lastUpdated,
+            count
+          );
+          if (res?.length > 0) rh = [...rh, ...res];
+          console.log(res, count);
+          if (res.length >= 1000) count += 1000;
+          else loop = false;
         }
+
+        // console.log(mt.lastUpdated, mt);
+
+        if (rh.length > 0) {
+          const data = mergeData(rh);
+          let accountStartBalance = null;
+          let stBalance = rh.find((item) => item.type === "DEAL_TYPE_BALANCE");
+          if (stBalance) accountStartBalance = stBalance.profit;
+          mt["data"] = data;
+          mt["accountStartBalance"] = accountStartBalance;
+          // const nr = await updateLastHistoryData(
+          //   mt.userId,
+          //   mt.id,
+          //   data,
+          //   accountStartBalance
+          // );
+
+          // mt = nr;
+        }
+
+        Object.assign(mt, r.data);
       }
 
       // console.log(accounts);

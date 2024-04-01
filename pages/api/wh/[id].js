@@ -66,7 +66,10 @@ export default async function handler(req, res) {
               let alertRespons = {};
               if (msgData.msgType == 0) {
                 for (let i = 0; i < r.MT4?.length; i++) {
-                  const volume = msgData.positionValue;
+                  const volume =
+                    msgData.positionType === 1
+                      ? msgData.positionValue
+                      : msgData.positionValuePercentage;
                   const res = await openTrade(
                     r.MT4[i],
                     "N_N_" + r.id,

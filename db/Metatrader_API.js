@@ -182,27 +182,17 @@ export async function getAccountInformation(accountApiId) {
   }
 }
 
-export async function getHistoryOrders(accountApiId) {
-  console.log("Get history trades ... ", accountApiId);
-
-  const currentDate = new Date();
-  const endTime = new Date(
-    currentDate.setDate(currentDate.getDate() + 2)
-  ).toISOString();
-
-  const startTime = new Date(
-    currentDate.setFullYear(currentDate.getFullYear() - 30)
-  ).toISOString();
+export async function getSymbolInformation(accountApiId, symbol) {
+  console.log("Get symbol information ... ", accountApiId), symbol;
 
   try {
     const req = await axios.get(
       apiDataURL +
         "/users/current/accounts/" +
         accountApiId +
-        "/history-deals/time/" +
-        startTime +
-        "/" +
-        endTime,
+        "/symbols/" +
+        symbol +
+        "/specification",
       {
         headers: {
           "auth-token": token,
@@ -212,7 +202,77 @@ export async function getHistoryOrders(accountApiId) {
     if (req.data.error) {
       return { error: req.data.message };
     } else {
-      console.log(startTime, endTime, req.data);
+      return req;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
+export async function getSymbolPrice(accountApiId, symbol) {
+  console.log("Get symbol price ... ", accountApiId), symbol;
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/symbols/" +
+        symbol +
+        "/current-price",
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      return req;
+    }
+  } catch (e) {
+    console.error("Error : ", e);
+    return { error: e };
+  }
+}
+
+export async function getHistoryOrders(accountApiId, startTime, offset = 0) {
+  console.log("Get history trades ... ", accountApiId, startTime);
+
+  const currentDate = new Date();
+  const endTime = new Date(
+    currentDate.setDate(currentDate.getDate() + 2)
+  ).toISOString();
+
+  if (!startTime)
+    startTime = new Date(
+      currentDate.setFullYear(currentDate.getFullYear() - 30)
+    ).toISOString();
+  else startTime = new Date(startTime).toISOString();
+
+  try {
+    const req = await axios.get(
+      apiDataURL +
+        "/users/current/accounts/" +
+        accountApiId +
+        "/history-deals/time/" +
+        startTime +
+        "/" +
+        endTime +
+        "?limit=1000&offset=" +
+        offset,
+      {
+        headers: {
+          "auth-token": token,
+        },
+      }
+    );
+    if (req.data.error) {
+      return { error: req.data.message };
+    } else {
+      // console.log(startTime, endTime, req.data);
       return req.data;
     }
   } catch (e) {
@@ -382,11 +442,48 @@ export async function openTrade(
     tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
 
   if (volumePercentage) {
-    volume = 0.1;
-    // const accInfo = getAccountInformation(accountApiId)
-
-    if (!slPrice || !sl) {
+    if (!slPrice && !sl) {
       return { error: "Can't use a volume percentage without a stop loss." };
+    }
+
+    const accInfoReq = getAccountInformation(accountApiId);
+    const symInfoReq = getSymbolInformation(accountApiId, symbol);
+    const symPriceReq = getSymbolPrice(accountApiId, symbol);
+
+    const [accInfo, symInfo, symPrice] = await Promise.all([
+      accInfoReq,
+      symInfoReq,
+      symPriceReq,
+    ]);
+
+    // risk amount = account balance * risk / 100
+    // pointVal = tickVal / (tickSize / point)
+    // lot = risk amount / (pointVal * riskPoint(sl point))
+
+    if (accInfo.data) {
+      const risk = (accInfo.data.balance * volume) / 100;
+      // console.log(risk);
+      if (symPrice.data) {
+        const tickVal = symPrice.data.lossTickValue;
+        const bid = symPrice.data.bid;
+
+        if (symInfo.data) {
+          const tickSize = symInfo.data.tickSize;
+
+          let pips = sl;
+          if (slPrice) pips = Math.abs(slPrice - bid) / tickSize;
+
+          const pointVal = tickVal;
+
+          volume = risk / (pointVal * pips);
+
+          if (volume < symInfo.data.minVolume) volume = symInfo.data.minVolume;
+          else if (volume > symInfo.data.maxVolume)
+            volume = symInfo.data.maxVolume;
+
+          // console.log(volume, pointVal, pips);
+        }
+      }
     }
   }
 
@@ -749,6 +846,7 @@ export async function addMTAccountToFB(
 
       type,
       lastUpdated: "",
+      data: [],
       color: getRandomColor(),
       created_at: serverTimestamp(),
     });
@@ -844,6 +942,49 @@ export async function updateColor(userId, id, color) {
   });
 
   const r = getMTAccountsByUserId(userId);
+  return r;
+
+  // const nwh = await getMTAccount(id);
+  // return nwh;
+}
+
+export async function updateLastHistoryData(
+  userId,
+  id,
+  data,
+  accountStartBalance
+) {
+  console.log("Update MT history ... ", id);
+  const msgDoc = doc(db, collName, id);
+
+  let time = "";
+  if (data.length > 0) {
+    for (let i = 0; i < data.length; i++) {
+      const tr = data[i];
+      if (time === "" || new Date(tr.openBrokerTime) > new Date(time))
+        time = new Date(tr.openBrokerTime);
+    }
+  }
+
+  const acc = await getMTAccount(id);
+  if (acc) {
+    if (!accountStartBalance) accountStartBalance = acc.accountStartBalance;
+
+    if (!acc.lastUpdated || new Date(time) > new Date(acc.lastUpdated))
+      if (acc.data?.length > 0) {
+        data = [...acc.data, ...data];
+      }
+
+    console.log("Update MT histoa ... ", accountStartBalance, acc, data.length);
+
+    await updateDoc(msgDoc, {
+      lastUpdated: time,
+      data,
+      accountStartBalance,
+    });
+  }
+
+  const r = getMTAccount(id);
   return r;
 
   // const nwh = await getMTAccount(id);
