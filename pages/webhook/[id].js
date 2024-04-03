@@ -17,6 +17,21 @@ import { WebhookWithData } from "../../hooks/WebhookAccounts";
 
 import { getDataByWebhook, CalculateData } from "../../hooks/MTAccounts";
 
+import { txtColorFromBg, addAlpha } from "../../utils/functions";
+import tailwindConfig from "../../tailwind.config.js";
+
+import {
+  getDataFromAccountPerPeriod,
+  getDaysFromTimeTillNow,
+  cleanData,
+} from "../../hooks/MTAccounts";
+import { numToFixed } from "../../utils/functions";
+
+import dynamic from "next/dynamic";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
+
 function Webhook({}) {
   const router = useRouter();
   const { id } = router.query;

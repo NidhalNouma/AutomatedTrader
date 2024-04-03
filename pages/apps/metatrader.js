@@ -22,6 +22,7 @@ import Mt4Welcome from "../../Features/WelcomeSection/Mt4";
 
 import { PlayVideoPopup } from "../../Components/Video";
 import { videosUrls, MT4EA } from "../../utils/constant";
+import { emailsList } from "../../utils/allowedEmails";
 
 import { Modal1 } from "../../Components/Modal";
 import NewAccount from "../../Features/MT_API/NewAccount";
@@ -44,6 +45,7 @@ export default function MT4() {
 
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
+  const [openWaitingList, setOpenWaitingList] = useState(false);
 
   return (
     <>
@@ -59,8 +61,8 @@ export default function MT4() {
       <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
       <UpgradeWaitlist
         sub={sub}
-        open={openUpg}
-        close={() => setOpenUpg(false)}
+        open={openWaitingList}
+        close={() => setOpenWaitingList(false)}
       ></UpgradeWaitlist>
 
       <Sidenav cpath="metatrader" />
@@ -81,9 +83,16 @@ export default function MT4() {
           <div className="">
             <ButtonP
               onClick={(e) => {
-                // if (sub && sub.accounts > mtAPIAccounts.length) setOpen(true);
-                // else setOpenUpg(true);
-                setOpenUpg(true);
+                if (
+                  emailsList.length > 0 &&
+                  !emailsList.find(
+                    (v) => v.toLowerCase() === user.email.toLowerCase()
+                  )
+                )
+                  setOpenWaitingList(true);
+                else if (sub && sub.accounts > mtAPIAccounts.length)
+                  setOpen(true);
+                else setOpenUpg(true);
               }}
               icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >

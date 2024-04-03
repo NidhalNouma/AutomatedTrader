@@ -37,7 +37,7 @@ export function GetMTAPIAccounts() {
             count
           );
           if (res?.length > 0) rh = [...rh, ...res];
-          console.log(res, count);
+          // console.log(res, count);
           if (res.length >= 1000) count += 1000;
           else loop = false;
         }

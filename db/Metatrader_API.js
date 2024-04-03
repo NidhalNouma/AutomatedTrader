@@ -476,6 +476,7 @@ export async function openTrade(
           const pointVal = tickVal;
 
           volume = risk / (pointVal * pips);
+          volume = volume / 10;
 
           if (volume < symInfo.data.minVolume) volume = symInfo.data.minVolume;
           else if (volume > symInfo.data.maxVolume)

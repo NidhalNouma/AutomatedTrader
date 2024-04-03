@@ -71,6 +71,8 @@ export default function BarAndLineChart({ accounts }) {
 
   const colors = tailwindConfig.theme.colors;
 
+  // console.log(account);
+
   useEffect(() => {
     const sep = 11;
     // let sepTime = moment().startOf("week");

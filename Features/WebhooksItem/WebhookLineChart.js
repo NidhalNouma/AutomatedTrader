@@ -182,45 +182,45 @@ function WebhookLineChart({ webhook, mtAccounts, messages }) {
           // height={"100%"}
         />
       )}
-      <Link href={"/webhook/" + webhook.id}>
-        <div
-          className="mt-1 p-2 rounded-xl cursor-pointer"
-          style={{ backgroundColor: webhook.color }}
-        >
-          <H4 className="font-bold truncate" style={{ color: txtColor }}>
-            {webhook.name}
-          </H4>
-          <div className="flex justify-between items-center mt-1">
-            <div className="">
-              <H6 style={{ color: txtColor }}>Total</H6>
-              <H4 className="font-bold" style={{ color: txtColor }}>
-                {numToFixed(totalp)}%
-              </H4>
-            </div>
-
-            <div className="">
-              <H6 style={{ color: txtColor }}>Today</H6>
-              <H4 className="font-bold" style={{ color: txtColor }}>
-                {numToFixed(totald)}%
-              </H4>
-            </div>
+      {/* <Link href={"/webhook/" + webhook.id}> */}
+      <div
+        className="mt-1 p-2 rounded-xl cursor-pointer"
+        style={{ backgroundColor: webhook.color }}
+      >
+        <H4 className="font-bold truncate" style={{ color: txtColor }}>
+          {webhook.name}
+        </H4>
+        <div className="flex justify-between items-center mt-1">
+          <div className="">
+            <H6 style={{ color: txtColor }}>Total</H6>
+            <H4 className="font-bold" style={{ color: txtColor }}>
+              {numToFixed(totalp)}%
+            </H4>
           </div>
 
-          <div className="mt-0">
-            {uniqueMessages?.map(
-              (v, i) =>
-                i < 3 && (
-                  <span
-                    key={i}
-                    className="text-xs bg-bg text-text-h px-2 py-1 rounded-xl mx-1"
-                  >
-                    {v.data.pair}
-                  </span>
-                )
-            )}
+          <div className="">
+            <H6 style={{ color: txtColor }}>Today</H6>
+            <H4 className="font-bold" style={{ color: txtColor }}>
+              {numToFixed(totald)}%
+            </H4>
           </div>
         </div>
-      </Link>
+
+        <div className="mt-0">
+          {uniqueMessages?.map(
+            (v, i) =>
+              i < 3 && (
+                <span
+                  key={i}
+                  className="text-xs bg-bg text-text-h px-2 py-1 rounded-xl mx-1"
+                >
+                  {v.data.pair}
+                </span>
+              )
+          )}
+        </div>
+      </div>
+      {/* </Link> */}
     </div>
   );
 }
