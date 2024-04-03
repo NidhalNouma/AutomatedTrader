@@ -69,7 +69,7 @@ export function UpgradeWaitlist({ open, close, sub }) {
           </Button>
         </div>
 
-        {sub.name === "Lifetime access" ? (
+        {sub.name === "Lifetime" ? (
           <div className="flex flex-col justify-center items-center w-full mt-2 mb-6">
             <div className="px-7">
               <p className="text-sm">
@@ -88,7 +88,7 @@ export function UpgradeWaitlist({ open, close, sub }) {
               <p className="text-sm">
                 🔑 Lifetime members get first access to new features: Including
                 metatrader API integration + Basic & Advanced webhooks , upgrade
-                your membership today
+                your membership today.
               </p>
             </div>
 

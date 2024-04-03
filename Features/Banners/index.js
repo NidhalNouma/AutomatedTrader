@@ -25,7 +25,7 @@ function Index() {
 
   return (
     <div className="">
-      {div === 0 ? <B1 /> : div === 1 ? <B2 /> : div === 2 ? <B3 /> : <Henko />}
+      {div === 0 ? <B1 /> : div === 1 ? <B2 /> : div === 2 ? <B3 /> : <B2 />}
       {/* <B2 />
       {sub.time !== "lifetime" && <B3 />}
       <Henko /> */}
