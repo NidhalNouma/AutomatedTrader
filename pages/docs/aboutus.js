@@ -11,7 +11,12 @@ function Aboutus() {
     <>
       <Sidenav cpath="help" />
       <MainWithHeader mainClassName="!overflow-x-clip">
-        <H1>Documentation</H1>
+        <H1>
+          Documentation{" "}
+          <span className=" text-xs ml-2 text-bga bg-text-h px-2 rounded-xl">
+            Will be updated soon!
+          </span>
+        </H1>
         <div className="mt-6 flex">
           <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
             <Side ty={0} />

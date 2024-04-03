@@ -70,13 +70,13 @@ export default function Webhook() {
               onClick={() => setOpenSetting(true)}
               className="ml-3 stroke-4 cursor-pointer h-5 w-5 p-0.5 bg-text-p rounded-full text-bg"
             />
-
+            {/* 
             {webhooks?.length > 0 && (
               <PlayVideoPopup
                 className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
                 src={videosUrls.webhooksAT}
               />
-            )}
+            )} */}
           </div>
           <ButtonP
             className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
@@ -135,7 +135,7 @@ export default function Webhook() {
             </Fragment>
           ) : (
             <div className="mt-3 w-full">
-              <WebhooksWelcome sub={sub} />
+              {/* <WebhooksWelcome sub={sub} /> */}
             </div>
           )}
         </div>

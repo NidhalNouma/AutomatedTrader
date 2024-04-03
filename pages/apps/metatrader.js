@@ -198,9 +198,7 @@ export default function MT4() {
             </div>
           </div>
         ) : (
-          <div className="mt-6 w-full">
-            <Mt4Welcome />
-          </div>
+          <div className="mt-6 w-full">{/* <Mt4Welcome /> */}</div>
         )}
       </MainWithHeader>
     </>
