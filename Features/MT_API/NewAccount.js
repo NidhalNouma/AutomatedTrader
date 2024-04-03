@@ -146,4 +146,24 @@ function Index({ close, user }) {
   );
 }
 
-export default Index;
+function WaitingList({ close, user }) {
+  return (
+    <div className="">
+      <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
+        <H3 className="flex">New Account</H3>
+        <Button
+          size="sm"
+          shape="circle"
+          className=" bg-accenti"
+          onClick={() => {
+            close();
+          }}
+        >
+          <XIcon className="h-4 w-4" />
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+export default WaitingList;

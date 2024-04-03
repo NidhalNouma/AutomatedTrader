@@ -26,7 +26,7 @@ import { videosUrls, MT4EA } from "../../utils/constant";
 import { Modal1 } from "../../Components/Modal";
 import NewAccount from "../../Features/MT_API/NewAccount";
 
-import UpgradeMsg from "../../Features/UpgradeMsg";
+import UpgradeMsg, { UpgradeWaitlist } from "../../Features/UpgradeMsg";
 
 export default function MT4() {
   const { user } = GetUserContext();
@@ -57,6 +57,11 @@ export default function MT4() {
       </Modal1>
 
       <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
+      <UpgradeWaitlist
+        sub={sub}
+        open={openUpg}
+        close={() => setOpenUpg(false)}
+      ></UpgradeWaitlist>
 
       <Sidenav cpath="metatrader" />
       <MainWithHeader mainClassName="h-full">
@@ -76,8 +81,9 @@ export default function MT4() {
           <div className="">
             <ButtonP
               onClick={(e) => {
-                if (sub && sub.accounts > mtAPIAccounts.length) setOpen(true);
-                else setOpenUpg(true);
+                // if (sub && sub.accounts > mtAPIAccounts.length) setOpen(true);
+                // else setOpenUpg(true);
+                setOpenUpg(true);
               }}
               icon={<ArrowCircleDownIcon className="h-4 w-4" />}
             >
