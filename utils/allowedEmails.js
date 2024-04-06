@@ -8,4 +8,5 @@ export const emailsList = [
   "abbas@afsmholding.se",
   "rcepoudy27@gmail.com",
   "eric.capistrano@gmail.com",
+  "ii-vancha-ii@hotmail.com",
 ];
