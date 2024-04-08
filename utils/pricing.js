@@ -112,7 +112,7 @@ export const pricingList = {
       advancedWebhook: true,
       price: 1999,
       save: 60.02,
-      accounts: 2,
+      accounts: 1,
       webhooks: 100,
       telegram: true,
       discord: true,
