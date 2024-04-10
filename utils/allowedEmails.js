@@ -13,4 +13,9 @@ export const emailsList = [
   "huskog31@gmail.com",
   "bbasson@bellusps.ca",
   "saagar@consultant.com",
+  "jeanremygaudin@gmail.com",
+  "bbasson@bellusps.ca",
+  "zedtep@gmail.com",
+  "gowthami1230@gmail.com",
+  "yashbhardwajjw@gmail.com",
 ];
