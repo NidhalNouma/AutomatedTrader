@@ -22,7 +22,6 @@ import Mt4Welcome from "../../Features/WelcomeSection/Mt4";
 
 import { PlayVideoPopup } from "../../Components/Video";
 import { videosUrls, MT4EA } from "../../utils/constant";
-import { emailsList } from "../../utils/allowedEmails";
 
 import { Modal1 } from "../../Components/Modal";
 import NewAccount from "../../Features/MT_API/NewAccount";
@@ -84,13 +83,10 @@ export default function MT4() {
             <ButtonP
               onClick={(e) => {
                 if (
-                  emailsList.length > 0 &&
-                  !emailsList.find(
-                    (v) => v.toLowerCase() === user.email.toLowerCase()
-                  )
+                  sub &&
+                  sub.accounts > mtAPIAccounts.length &&
+                  sub.name == "Lifetime"
                 )
-                  setOpenWaitingList(true);
-                else if (sub && sub.accounts > mtAPIAccounts.length)
                   setOpen(true);
                 else setOpenUpg(true);
               }}
