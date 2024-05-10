@@ -22,6 +22,8 @@ import moment from "moment";
 
 export default async function handler(req, res) {
   const { id } = req.query;
+  
+  let dumpRes; //TO-REMOVE
   if (req.method === "POST") {
     let message = req.body;
     if (id != undefined && message) {
@@ -83,6 +85,8 @@ export default async function handler(req, res) {
                     msgData.positionType === 1 ? false : true
                   );
                   // console.log(res);
+                   dumpRes = res;
+
                   if (res.orderId) {
                     alertRespons[r.MT4[i]] = [
                       {
@@ -205,7 +209,7 @@ export default async function handler(req, res) {
                 if (user && user.telegram) {
                   await sendMessage(user.telegram, message, msgData, r);
                 }
-              return res.status(200).json({ done: true, body: {prev:message, proc: msgData} });
+              return res.status(200).json({ done: true, body: {prev:message, proc: msgData, meta: dumpRes} });
             }
           }
         }
