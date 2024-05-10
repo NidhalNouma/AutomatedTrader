@@ -205,7 +205,7 @@ export default async function handler(req, res) {
                 if (user && user.telegram) {
                   await sendMessage(user.telegram, message, msgData, r);
                 }
-              return res.status(200).json({ done: true, body: message });
+              return res.status(200).json({ done: true, body: msgData });
             }
           }
         }
