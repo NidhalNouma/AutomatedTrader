@@ -84,8 +84,8 @@ export default function MT4() {
               onClick={(e) => {
                 if (
                   sub &&
-                  sub.accounts > mtAPIAccounts.length &&
-                  sub.name == "Lifetime"
+                  sub.accounts > mtAPIAccounts.length
+                  // && sub.name == "Lifetime"
                 )
                   setOpen(true);
                 else setOpenUpg(true);
