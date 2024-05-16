@@ -432,14 +432,22 @@ export async function openTrade(
 
   let slData = {};
   let tpData = {};
-  if (slPrice)
+
+  const symInfoReq =  getSymbolInformation(accountApiId, symbol);
+  const  [symInfo] = await Promise.all([
+    symInfoReq,
+  ]);
+  let tickSize = symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD" ? symInfo.data.tickSize : symInfo.data.pipSize;
+  if (sl){
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / tickSize };
+  }
+  else if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
-  else if (sl)
-    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
-  if (tpPrice)
+  if (tp)
+    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) / tickSize};
+  else if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
-  else if (tp)
-    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
+
 
   if (volumePercentage) {
     if (!slPrice && !sl) {
@@ -447,12 +455,10 @@ export async function openTrade(
     }
 
     const accInfoReq = getAccountInformation(accountApiId);
-    const symInfoReq = getSymbolInformation(accountApiId, symbol);
     const symPriceReq = getSymbolPrice(accountApiId, symbol);
 
-    const [accInfo, symInfo, symPrice] = await Promise.all([
+    const [accInfo, symPrice] = await Promise.all([
       accInfoReq,
-      symInfoReq,
       symPriceReq,
     ]);
 
@@ -466,12 +472,18 @@ export async function openTrade(
       if (symPrice.data) {
         const tickVal = symPrice.data.lossTickValue;
         const bid = symPrice.data.bid;
+        const ask = symPrice.data.ask;
+
+          //TODO: distinguish between SELL or BUY op
+          // if actionType === 1/3/5 means SELL
+          // if actionType === 0/2/4 means BUY
+        let param = actionType % 2? bid : ask;
 
         if (symInfo.data) {
           const tickSize = symInfo.data.tickSize;
 
           let pips = sl;
-          if (slPrice) pips = Math.abs(slPrice - bid) / tickSize;
+          if (slPrice) pips = Math.abs(slPrice - param) / tickSize;
 
           const pointVal = tickVal;
 
