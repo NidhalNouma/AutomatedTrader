@@ -493,6 +493,7 @@ export async function openTrade(
           if (volume < symInfo.data.minVolume) volume = symInfo.data.minVolume;
           else if (volume > symInfo.data.maxVolume)
             volume = symInfo.data.maxVolume;
+          volume = parseInt(volume * 100) / 100.0; //METAAPI aprox y.xx, to consider only the first 2 digits after coma
 
           // console.log(volume, pointVal, pips);
         }
@@ -735,14 +736,16 @@ export async function modifyTrade(
 
   let slData = {};
   let tpData = {};
-  if (slPrice)
-    slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
-  else if (sl)
+
+  if (sl)
     slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
-  if (tpPrice)
-    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
-  else if (tp)
+  else if (slPrice)
+    slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
+  if (tp)
     tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
+  else if (tpPrice)
+    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
+  
 
   let data = {
     actionType: "POSITION_MODIFY",
