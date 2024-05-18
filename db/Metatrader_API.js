@@ -470,7 +470,6 @@ export async function openTrade(
       const risk = (accInfo.data.balance * volume) / 100;
       // console.log(risk);
       if (symPrice.data) {
-        const tickVal = symPrice.data.lossTickValue;
         const bid = symPrice.data.bid;
         const ask = symPrice.data.ask;
 
@@ -482,13 +481,14 @@ export async function openTrade(
         if (symInfo.data) {
           const tickSize = symInfo.data.tickSize;
 
-          let pips = sl;
-          if (slPrice) pips = Math.abs(slPrice - param) / tickSize;
+          let ticks = slData.stopLoss;
+          if (slPrice && !sl)
+            ticks = Math.abs(slPrice - param) / tickSize;
+          slData.stopLoss = ticks;
 
-          const pointVal = tickVal;
 
-          volume = risk / (pointVal * pips);
-          volume = volume / 10;
+          volume = risk / (symPrice.data.lossTickValue * ticks);
+          //volume = volume / 10; //UNNECESSARY
 
           if (volume < symInfo.data.minVolume) volume = symInfo.data.minVolume;
           else if (volume > symInfo.data.maxVolume)
