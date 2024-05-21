@@ -437,14 +437,14 @@ export async function openTrade(
   const  [symInfo] = await Promise.all([
     symInfoReq,
   ]);
-  let tickSize = symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD" ? symInfo.data.tickSize : symInfo.data.pipSize;
+  const pipSize =  symInfo.data.pipSize;
   if (sl){
-    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / tickSize };
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / pipSize };
   }
   else if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
   if (tp)
-    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) / tickSize};
+    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) / pipSize};
   else if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
 
@@ -454,48 +454,41 @@ export async function openTrade(
       return { error: "Can't use a volume percentage without a stop loss." };
     }
 
-    const accInfoReq = getAccountInformation(accountApiId);
-    const symPriceReq = getSymbolPrice(accountApiId, symbol);
-
-    const [accInfo, symPrice] = await Promise.all([
-      accInfoReq,
-      symPriceReq,
-    ]);
-
-    // risk amount = account balance * risk / 100
-    // pointVal = tickVal / (tickSize / point)
-    // lot = risk amount / (pointVal * riskPoint(sl point))
-
     if (accInfo.data) {
-      const risk = (accInfo.data.balance * volume) / 100;
-      // console.log(risk);
+      const risk = ((accInfo.data.balance * volume) / 100);
+      console.log(risk, volume);
       if (symPrice.data) {
         const bid = symPrice.data.bid;
         const ask = symPrice.data.ask;
 
-          //TODO: distinguish between SELL or BUY op
+        if (symInfo.data) {
+          console.log("##DEBUG--- start calculating positions");
+
+          const tickSize = symInfo.data.tickSize;
           // if actionType === 1/3/5 means SELL
           // if actionType === 0/2/4 means BUY
-        let param = actionType % 2? bid : ask;
+          let action = actionType % 2? bid : ask;
+          let pips = slData.stopLoss;
 
-        if (symInfo.data) {
-          const tickSize = symInfo.data.tickSize;
+          if (slPrice && !sl) pips = Math.abs(slPrice - action) / pipSize;
+          slData.stopLoss = pips;
+          let pipTicks = pipSize / tickSize;
+          volume = risk / pips / (pipTicks * symPrice.data.lossTickValue);
+          //console.log("Pips in tick", pips, pipTicks * pips );
 
-          let ticks = slData.stopLoss;
-          if (slPrice && !sl)
-            ticks = Math.abs(slPrice - param) / tickSize;
-          slData.stopLoss = ticks;
+  
+          let str = String(symInfo.data.volumeStep);
+          let index = str.split(".")[1].length;
 
-
-          volume = risk / (symPrice.data.lossTickValue * ticks);
-          //volume = volume / 10; //UNNECESSARY
+          if(symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD"){
+            volume = volume / symInfo.data.contractSize;
+          }
+          volume = Number(volume.toFixed(index)); //METAAPI aprox y.xx, to consider only the first 2 digits after coma
 
           if (volume < symInfo.data.minVolume) volume = symInfo.data.minVolume;
           else if (volume > symInfo.data.maxVolume)
             volume = symInfo.data.maxVolume;
-          volume = parseInt(volume * 100) / 100.0; //METAAPI aprox y.xx, to consider only the first 2 digits after coma
-
-          // console.log(volume, pointVal, pips);
+          //console.log(volume, pips);
         }
       }
     }
