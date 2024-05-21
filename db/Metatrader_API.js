@@ -437,6 +437,7 @@ export async function openTrade(
   const  [symInfo] = await Promise.all([
     symInfoReq,
   ]);
+  if(!symInfo.data)    return { error: "Cannot retrieve symbol information" };
   const pipSize =  symInfo.data.pipSize;
   if (sl){
     slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / pipSize };
