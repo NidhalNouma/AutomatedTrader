@@ -450,6 +450,14 @@ export async function openTrade(
 
 
   if (volumePercentage) {
+    const accInfoReq = getAccountInformation(accountApiId);
+    const symPriceReq = getSymbolPrice(accountApiId, symbol);
+
+    const [accInfo, symPrice] = await Promise.all([
+      accInfoReq,
+      symPriceReq,
+    ]);
+
     if (!slPrice && !sl) {
       return { error: "Can't use a volume percentage without a stop loss." };
     }
