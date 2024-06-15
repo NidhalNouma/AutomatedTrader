@@ -13,7 +13,7 @@ import { txtColorFromBg } from "../../utils/functions";
 import tailwindConfig from "../../tailwind.config.js";
 import moment from "moment";
 
-function AlertAccount({ accountId, data }) {
+function AlertAccount({ accountId, data, msg }) {
   const { mtAPIAccounts } = GetMTAPIAccountsContext();
   const account = mtAPIAccounts.find((v) => v.accountApiId === accountId);
 
@@ -39,6 +39,7 @@ function AlertAccount({ accountId, data }) {
           }}
         >
           <Details
+            msg={msg}
             account={account}
             data={data}
             close={() => {
@@ -69,10 +70,10 @@ function AlertAccount({ accountId, data }) {
 
 export default AlertAccount;
 
-function Details({ data, close, account }) {
+function Details({ data, close, account, msg }) {
   // if (account) console.log(account, data);
   return (
-    <div className="">
+    <div className="flex flex-col">
       <div className="sticky top-0 bg-bg p-4 z-20 flex justify-between items-center">
         <div className="flex items-center">
           <H3 className="inline-block mr-2">{account.accountDisplayName}</H3>
@@ -97,6 +98,12 @@ function Details({ data, close, account }) {
           <Hi4 className="text-center">No response!</Hi4>
         </div>
       )}
+
+      <div className=" mx-auto mt-0 mb-4">
+        <div className=" text-text-p text-xs mt-2 border border-text-p/30 px-2 py-0.5 rounded inline-block">
+          {msg}
+        </div>
+      </div>
     </div>
   );
 }

@@ -109,6 +109,7 @@ export default function Alert({ v, key }) {
                     key={i}
                     accountId={acc}
                     data={v.accounts[acc]}
+                    msg={v.message}
                   />
                 </Fragment>
               ))}

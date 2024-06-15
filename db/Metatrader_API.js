@@ -151,7 +151,7 @@ export async function deleteMTAPIaccount(accountApiId) {
       return req;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -177,7 +177,7 @@ export async function getAccountInformation(accountApiId) {
       return req;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -205,7 +205,7 @@ export async function getSymbolInformation(accountApiId, symbol) {
       return req;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -233,7 +233,7 @@ export async function getSymbolPrice(accountApiId, symbol) {
       return req;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -276,7 +276,7 @@ export async function getHistoryOrders(accountApiId, startTime, offset = 0) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -299,7 +299,7 @@ export async function getActiveOrders(accountApiId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -326,7 +326,7 @@ export async function getHistoryOrderById(accountApiId, orderId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -353,7 +353,7 @@ export async function getOrdernById(accountApiId, orderId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e.message);
+    console.error("Error : ", e.code);
     return { error: e.message };
   }
 }
@@ -380,7 +380,7 @@ export async function getPositionById(accountApiId, positionId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e.message);
+    console.error("Error : ", e.code);
     return { error: e.message };
   }
 }
@@ -411,7 +411,7 @@ export async function getHistoryPositionById(accountApiId, positionId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -433,38 +433,34 @@ export async function openTrade(
   let slData = {};
   let tpData = {};
 
-  const symInfoReq =  getSymbolInformation(accountApiId, symbol);
-  const  [symInfo] = await Promise.all([
-    symInfoReq,
-  ]);
-  if(!symInfo.data)    return { error: "Cannot retrieve symbol information" };
-  const pipSize =  symInfo.data.pipSize;
-  if (sl){
+  const symInfoReq = getSymbolInformation(accountApiId, symbol);
+  const [symInfo] = await Promise.all([symInfoReq]);
+  if (!symInfo.data) return { error: "Cannot retrieve symbol information" };
+  const pipSize = symInfo.data.pipSize;
+  if (sl) {
     slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / pipSize };
-  }
-  else if (slPrice)
+  } else if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
   if (tp)
-    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) / pipSize};
+    tpData = {
+      takeProfitUnits: "RELATIVE_PIPS",
+      takeProfit: Number(tp) / pipSize,
+    };
   else if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
-
 
   if (volumePercentage) {
     const accInfoReq = getAccountInformation(accountApiId);
     const symPriceReq = getSymbolPrice(accountApiId, symbol);
 
-    const [accInfo, symPrice] = await Promise.all([
-      accInfoReq,
-      symPriceReq,
-    ]);
+    const [accInfo, symPrice] = await Promise.all([accInfoReq, symPriceReq]);
 
     if (!slPrice && !sl) {
       return { error: "Can't use a volume percentage without a stop loss." };
     }
 
     if (accInfo.data) {
-      const risk = ((accInfo.data.balance * volume) / 100);
+      const risk = (accInfo.data.balance * volume) / 100;
       console.log(risk, volume);
       if (symPrice.data) {
         const bid = symPrice.data.bid;
@@ -476,7 +472,7 @@ export async function openTrade(
           const tickSize = symInfo.data.tickSize;
           // if actionType === 1/3/5 means SELL
           // if actionType === 0/2/4 means BUY
-          let action = actionType % 2? bid : ask;
+          let action = actionType % 2 ? bid : ask;
           let pips = slData.stopLoss;
 
           if (slPrice && !sl) pips = Math.abs(slPrice - action) / pipSize;
@@ -485,11 +481,10 @@ export async function openTrade(
           volume = risk / pips / (pipTicks * symPrice.data.lossTickValue);
           //console.log("Pips in tick", pips, pipTicks * pips );
 
-  
           let str = String(symInfo.data.volumeStep);
           let index = str.split(".")[1].length;
 
-          if(symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD"){
+          if (symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD") {
             volume = volume / symInfo.data.contractSize;
           }
           volume = Number(volume.toFixed(index)); //METAAPI aprox y.xx, to consider only the first 2 digits after coma
@@ -531,7 +526,7 @@ export async function openTrade(
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -721,7 +716,7 @@ export async function closeTrade(
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -739,15 +734,12 @@ export async function modifyTrade(
   let slData = {};
   let tpData = {};
 
-  if (sl)
-    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
+  if (sl) slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
   else if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
-  if (tp)
-    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
+  if (tp) tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
   else if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
-  
 
   let data = {
     actionType: "POSITION_MODIFY",
@@ -772,7 +764,7 @@ export async function modifyTrade(
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
@@ -816,7 +808,7 @@ export async function modifyTPandSLprice(
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e);
+    console.error("Error : ", e.code);
     return { error: e };
   }
 }
