@@ -15,7 +15,9 @@ export const firebaseConfig = {
 export const landingUrl = "/"; //process.env.NEXT_PUBLIC_LANDING_URL || "/";
 
 export function WebhhokURL() {
-  return window.location.protocol + "//" + window.location.host + "/api/wh/";
+  return (
+    window.location.protocol + "//" + window.location.host + "/api/webhook/"
+  );
 }
 
 export const MT4EA = {
