@@ -14,7 +14,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto w-full flex flex-wrap sm:px-5 px-4 items-center md:flex-row">
         <div className="flex flex-row items-center justify-between p-0 md:p-1 w-full">
           <div className="h-full w-48 max-w-[25%]">
-            <Image
+            <img
               src="/Logo/dark-logo.png"
               alt=""
               width="8w"

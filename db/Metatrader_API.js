@@ -433,18 +433,17 @@ export async function openTrade(
   let slData = {};
   let tpData = {};
 
-  const symInfoReq = getSymbolInformation(accountApiId, symbol);
-  const [symInfo] = await Promise.all([symInfoReq]);
-  if (!symInfo.data) return { error: "Cannot retrieve symbol information" };
-  const pipSize = symInfo.data.pipSize;
+  // const symInfoReq = getSymbolInformation(accountApiId, symbol);
+  // const [symInfo] = await Promise.all([symInfoReq]);
+
   if (sl) {
-    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) / pipSize };
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
   } else if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
   if (tp)
     tpData = {
       takeProfitUnits: "RELATIVE_PIPS",
-      takeProfit: Number(tp) / pipSize,
+      takeProfit: Number(tp),
     };
   else if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
@@ -468,6 +467,11 @@ export async function openTrade(
 
         if (symInfo.data) {
           console.log("##DEBUG--- start calculating positions");
+
+          const symInfo = await getSymbolInformation(accountApiId, symbol);
+          if (!symInfo.data)
+            return { error: "Cannot retrieve symbol information" };
+          const pipSize = symInfo.data.pipSize;
 
           const tickSize = symInfo.data.tickSize;
           // if actionType === 1/3/5 means SELL

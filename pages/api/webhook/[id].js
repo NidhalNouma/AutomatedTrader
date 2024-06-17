@@ -1,4 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { rateLimit } from "../../../utils/rateLimit";
 
 import { getWebhook } from "../../../db/webhooks";
 import { addAlert } from "../../../db/alerts";
@@ -20,7 +20,7 @@ import { webhookTime } from "../../../db/manageAlerts";
 import { getMessageData, getMessageAdvancedData } from "../../../hooks/WebHook";
 import moment from "moment";
 
-export default async function handler(req, res) {
+async function handler(req, res) {
   const allowedHost = "tradingview.com";
 
   const referer = req.headers.referer || "";
@@ -109,11 +109,13 @@ export default async function handler(req, res) {
                       },
                     ];
                   } else {
+                    let err = res.error;
+                    if (typeof err !== "string") err = res.message;
+                    if (typeof err !== "string")
+                      err = "Error placing a new trade";
                     alertRespons[r.MT4[i]] = [
                       {
-                        error: res.message
-                          ? res.message
-                          : "Error placing the trade",
+                        error: err,
                         msg: "Error placing a new trade",
                       },
                     ];
@@ -236,3 +238,5 @@ export default async function handler(req, res) {
 
   return res.status(200).json({ done: false });
 }
+
+export default rateLimit(handler);

@@ -109,7 +109,7 @@ function Details({ data, close, account, msg }) {
 }
 
 function Data_n({ msg }) {
-  // console.log(msg);
+  console.log(msg);
   return (
     <div
       className={`text-xs mb-2 px-2 rounded-lg py-1 font-semibold ${
