@@ -21,6 +21,18 @@ import { getMessageData, getMessageAdvancedData } from "../../../hooks/WebHook";
 import moment from "moment";
 
 export default async function handler(req, res) {
+  const allowedHost = "tradingview.com";
+
+  const referer = req.headers.referer || "";
+  const origin = req.headers.origin || "";
+
+  if (!referer.includes(allowedHost) && !origin.includes(allowedHost)) {
+    console.log("Denied request from:", referer || origin);
+    console.log(req.headers);
+    res.status(403).json({ message: "Forbidden" });
+    return;
+  }
+
   const { id } = req.query;
 
   let dumpRes; //TO-REMOVE
