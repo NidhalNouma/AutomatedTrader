@@ -451,8 +451,15 @@ export async function openTrade(
   if (volumePercentage) {
     const accInfoReq = getAccountInformation(accountApiId);
     const symPriceReq = getSymbolPrice(accountApiId, symbol);
+    const symInfoReq = getSymbolInformation(accountApiId, symbol);
 
-    const [accInfo, symPrice] = await Promise.all([accInfoReq, symPriceReq]);
+    const [accInfo, symPrice, symInfo] = await Promise.all([
+      accInfoReq,
+      symPriceReq,
+      symInfoReq,
+    ]);
+
+    // console.log(accInfo.data, symPriceReq.data, symInfo.data);
 
     if (!slPrice && !sl) {
       return { error: "Can't use a volume percentage without a stop loss." };
@@ -468,7 +475,6 @@ export async function openTrade(
         if (symInfo.data) {
           console.log("##DEBUG--- start calculating positions");
 
-          const symInfo = await getSymbolInformation(accountApiId, symbol);
           if (!symInfo.data)
             return { error: "Cannot retrieve symbol information" };
           const pipSize = symInfo.data.pipSize;
@@ -486,6 +492,7 @@ export async function openTrade(
           //console.log("Pips in tick", pips, pipTicks * pips );
 
           let str = String(symInfo.data.volumeStep);
+          // console.log(str);
           let index = str.split(".")[1].length;
 
           if (symInfo.data.priceCalculationMode === "SYMBOL_CALC_MODE_CFD") {
