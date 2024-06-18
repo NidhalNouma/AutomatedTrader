@@ -27,10 +27,9 @@ async function handler(req, res) {
   const origin = req.headers.origin || "";
 
   if (!referer.includes(allowedHost) && !origin.includes(allowedHost)) {
-    console.log("Denied request from:", referer || origin);
-    console.log(req.headers);
-    res.status(403).json({ message: "Forbidden" });
-    return;
+    console.log("Denied request from:", referer || origin, req.headers);
+    // res.status(403).json({ message: "Forbidden" });
+    // return;
   }
 
   const { id } = req.query;
