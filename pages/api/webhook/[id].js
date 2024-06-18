@@ -41,29 +41,12 @@ async function handler(req, res) {
       const r = await getWebhook(id);
       if (r) {
         let msgData = null;
-        // if (r.advanced) {
-        //   // if (r.digits) message = message + ",digits: " + r.digits;
-        //   if (r.fixedLotSize && Number(r.fixedLotSize) > 0)
-        //     message = message + ", fixedLotSize:" + Number(r.fixedLotSize);
 
-        //   msgData = getMessageAdvancedData(message, r.pair);
-        //   message = "pair: " + r.pair + "," + message;
-        // } else
         msgData = getMessageData(
           message,
           r.advanced ? r.pair : null,
           r.advanced && r.fixedLotSize ? fixedLotSize : null
         );
-
-        // console.log(msgData);
-
-        // const advanced = msgData.advanced;
-
-        // const test = msgData.test;
-        // if (test && test?.isTest) {
-        //   const accId = test.account;
-        //   r.MT4 = accId;
-        // }
 
         const manual = msgData.manual;
         if (manual && manual?.isManual) {
@@ -105,6 +88,7 @@ async function handler(req, res) {
                         orderId: res.orderId,
                         msg: "Order placed successfully",
                         isLive: true,
+                        // trade: res,
                       },
                     ];
                   } else {
@@ -115,7 +99,7 @@ async function handler(req, res) {
                     alertRespons[r.MT4[i]] = [
                       {
                         error: err,
-                        msg: "Error placing a new trade",
+                        msg: err,
                       },
                     ];
                   }
@@ -224,7 +208,12 @@ async function handler(req, res) {
                 }
               return res.status(200).json({
                 done: true,
-                body: { prev: message, proc: msgData, meta: dumpRes },
+                body: {
+                  prev: message,
+                  proc: msgData,
+                  meta: dumpRes,
+                  alertRespons,
+                },
               });
             }
           }
