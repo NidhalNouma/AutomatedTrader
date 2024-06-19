@@ -436,17 +436,18 @@ export async function openTrade(
   // const symInfoReq = getSymbolInformation(accountApiId, symbol);
   // const [symInfo] = await Promise.all([symInfoReq]);
 
-  if (sl) {
-    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
-  } else if (slPrice)
+  if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
-  if (tp)
+  else if (sl) {
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
+  }
+  if (tpPrice)
+    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
+  else if (tp)
     tpData = {
       takeProfitUnits: "RELATIVE_PIPS",
       takeProfit: Number(tp),
     };
-  else if (tpPrice)
-    tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
 
   if (volumePercentage) {
     const accInfoReq = getAccountInformation(accountApiId);
