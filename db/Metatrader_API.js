@@ -632,6 +632,12 @@ export async function closeTradeByWHID(
       }
   }
 
+  if (res.length === 0)
+    res.push({
+      error: "No trade availble to close!",
+      msg: "No trade availble to close!",
+    });
+
   return res;
 }
 
@@ -687,6 +693,12 @@ export async function modifyTradeByWHID(
         }
       }
   }
+
+  if (res.length === 0)
+    res.push({
+      error: "No trade availble to modify!",
+      msg: "No trade availble to modify!",
+    });
 
   return res;
 }
