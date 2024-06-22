@@ -45,7 +45,7 @@ async function handler(req, res) {
         msgData = getMessageData(
           message,
           r.advanced ? r.pair : null,
-          r.advanced && r.fixedLotSize ? fixedLotSize : null
+          r.advanced && r.fixedLotSize ? r.fixedLotSize : null
         );
 
         const manual = msgData.manual;

@@ -22,8 +22,20 @@ import axios from "axios";
 
 // import MetaApi from "metaapi.cloud-sdk";
 
+// const connectToMetaApi = async (accountId) => {
+//   const metaApi = new MetaApi(token);
+//   const account = await metaApi.metatraderAccountApi.getAccount(accountId);
+
+//   await account.waitConnected();
+//   const connection = account.getRPCConnection();
+
+//   await connection.connect();
+//   await connection.waitSynchronized();
+
+//   return connection;
+// };
+
 const token = process.env.NEXT_PUBLIC_META_API_TOKEN;
-// const api = new MetaApi(token);
 
 const collName = "mtapi";
 const app = initializeApp(firebaseConfig);

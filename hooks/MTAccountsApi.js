@@ -76,7 +76,7 @@ export function GetMTAPIAccounts() {
 
     fetchDataAndSetInterval(); // Initial call
 
-    const intervalId = setInterval(fetchDataAndSetInterval, 10000); // 60000 milliseconds = 1 minute
+    const intervalId = setInterval(fetchDataAndSetInterval, 10 * 1000); // 60 000 milliseconds = 1 minute
 
     return () => {
       clearInterval(intervalId);
