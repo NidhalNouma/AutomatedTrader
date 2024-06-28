@@ -20,7 +20,7 @@ import {
 import { firebaseConfig } from "../utils/constant";
 import axios from "axios";
 
-// import MetaApi from "metaapi.cloud-sdk";
+// import { MetaApi } from "metaapi.cloud-sdk";
 
 // const connectToMetaApi = async (accountId) => {
 //   const metaApi = new MetaApi(token);
