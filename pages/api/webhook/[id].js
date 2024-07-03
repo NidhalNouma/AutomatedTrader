@@ -58,7 +58,7 @@ async function handler(req, res) {
           // if (advanced || msgData.time.use || msgData.time.use === false)
           // console.log(msgData);
           if (msgData.isValid) {
-            if (true) {
+            if (r.MT4 && r.MT4?.length > 0) {
               let alertRespons = {};
               if (msgData.msgType == 0) {
                 for (let i = 0; i < r.MT4?.length; i++) {

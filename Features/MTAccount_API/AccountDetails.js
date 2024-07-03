@@ -7,7 +7,8 @@ import { H3, H6, H5 } from "../../Components/H";
 import { GetLiveTrades } from "../../hooks/MTAccountsApi";
 
 function AccountDetails({ account, close }) {
-  const { trades, closeLiveTrade } = GetLiveTrades(account);
+  const { closeLiveTrade } = GetLiveTrades(account);
+  const trades = account.positions;
 
   return (
     <div className="mb-8">
@@ -62,7 +63,7 @@ function AccountDetails({ account, close }) {
           </div>
         </div>
 
-        {trades.length > 0 && (
+        {trades?.length > 0 && (
           <div className="mt-6 w-full px-4">
             <DataTable data={trades} closeTrade={closeLiveTrade} />
           </div>

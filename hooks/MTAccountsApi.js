@@ -14,74 +14,77 @@ import {
 } from "../db/Metatrader_API";
 
 import moment from "moment";
+import io from "socket.io-client";
+
+// import dynamic from "next/dynamic";
+// const MetaApi = dynamic(
+//   () => import("metaapi.cloud-sdk").then((mod) => mod.default),
+//   { ssr: false }
+// );
+
+// const apiToken = process.env.NEXT_PUBLIC_META_API_TOKEN;
+// const metaApi = new MetaApi(apiToken);
+// console.log("IMPORT ---- ", metaApi);
 
 export function GetMTAPIAccounts() {
   const [mtAPIAccounts, setMTAPIAccounts] = useState([]);
   const [mt5APIAccounts, setMT5APIAccounts] = useState([]);
   const [mt4APIAccounts, setMT4APIAccounts] = useState([]);
 
-  async function getHistoryData() {
-    const accounts = mtAPIAccounts;
-    if (accounts.length > 0) {
-      for (let mt of accounts) {
-        const r = await getAccountInformation(mt.accountApiId);
-        Object.assign(mt, r.data);
+  async function getHistoryData(mt) {
+    // const r = await getAccountInformation(mt.accountApiId);
+    // Object.assign(mt, r.data);
 
-        let loop = true;
-        let count = 0;
-        let rh = [];
-        while (loop) {
-          let res = await getHistoryOrders(
-            mt.accountApiId,
-            mt.lastUpdated,
-            count
-          );
-          if (res?.length > 0) rh = [...rh, ...res];
-          // console.log(res, count);
-          if (res.length >= 1000) count += 1000;
-          else loop = false;
-        }
+    if (!mt) return mt;
 
-        // console.log(mt.lastUpdated, mt);
-
-        if (rh.length > 0) {
-          const data = mergeData(rh);
-          let accountStartBalance = null;
-          let stBalance = rh.find((item) => item.type === "DEAL_TYPE_BALANCE");
-          if (stBalance) accountStartBalance = stBalance.profit;
-          mt["data"] = data;
-          mt["accountStartBalance"] = accountStartBalance;
-          // const nr = await updateLastHistoryData(
-          //   mt.userId,
-          //   mt.id,
-          //   data,
-          //   accountStartBalance
-          // );
-
-          // mt = nr;
-        }
-
-        Object.assign(mt, r.data);
-      }
-
-      // console.log(accounts);
-      setMTAPIAccounts([...accounts]);
+    let loop = true;
+    let count = 0;
+    let rh = [];
+    while (loop) {
+      let res = await getHistoryOrders(mt.accountApiId, mt.lastUpdated, count);
+      if (res?.length > 0) rh = [...rh, ...res];
+      console.log(res, count);
+      if (res.length >= 1000) count += 1000;
+      else loop = false;
     }
+
+    // console.log(mt.lastUpdated, mt);
+
+    if (rh.length > 0) {
+      const data = mergeData(rh);
+      let accountStartBalance = null;
+      let stBalance = rh.find((item) => item.type === "DEAL_TYPE_BALANCE");
+      if (stBalance) accountStartBalance = stBalance.profit;
+      mt["data"] = data;
+      mt["accountStartBalance"] = accountStartBalance;
+      // const nr = await updateLastHistoryData(
+      //   mt.userId,
+      //   mt.id,
+      //   data,
+      //   accountStartBalance
+      // );
+
+      // mt = nr;
+    }
+
+    // Object.assign(mt, r.data);
+
+    return mt;
   }
 
-  useEffect(() => {
-    const fetchDataAndSetInterval = async () => {
-      await getHistoryData();
-    };
+  // useEffect(() => {
+  //   const fetchDataAndSetInterval = async () => {
+  //     await getHistoryData();
+  //   };
 
-    fetchDataAndSetInterval(); // Initial call
+  //   fetchDataAndSetInterval(); // Initial call
 
-    const intervalId = setInterval(fetchDataAndSetInterval, 10 * 1000); // 60 000 milliseconds = 1 minute
+  //   const intervalId = setInterval(fetchDataAndSetInterval, 10 * 1000); // 60 000 milliseconds = 1 minute
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [mtAPIAccounts.length]);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, [mtAPIAccounts.length]);
 
   async function getAllMTAPIAccounts(userId) {
     if (!userId) return;
@@ -92,6 +95,78 @@ export function GetMTAPIAccounts() {
 
   useEffect(() => {
     if (mtAPIAccounts.length > 0) {
+      const accounts = mtAPIAccounts;
+
+      const socket = io("");
+
+      mtAPIAccounts.forEach((account) => {
+        socket.emit("subscribe", account.accountApiId);
+
+        socket.on("loaded", async (data) => {
+          // console.log("DATA === >> ", data);
+          const cAccount = mtAPIAccounts.find(
+            (acc) => acc.accountApiId === data.accountId
+          );
+
+          if (cAccount) {
+            const history = await getHistoryData(cAccount);
+            if (data.accountInformation)
+              Object.assign(cAccount, data.accountInformation);
+
+            if (data.positions) cAccount["positions"] = data.positions;
+
+            const newAccounts = accounts.map(
+              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+            );
+
+            setMTAPIAccounts([...newAccounts]);
+          }
+        });
+
+        socket.on("accountInfo", async (data) => {
+          const cAccount = mtAPIAccounts.find(
+            (acc) => acc.accountApiId === data.accountId
+          );
+
+          if (cAccount) {
+            if (data.accountInformation)
+              Object.assign(cAccount, data.accountInformation);
+
+            const newAccounts = accounts.map(
+              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+            );
+
+            setMTAPIAccounts([...newAccounts]);
+          }
+        });
+
+        socket.on("positions", async (data) => {
+          const cAccount = mtAPIAccounts.find(
+            (acc) => acc.accountApiId === data.accountId
+          );
+
+          if (cAccount) {
+            if (data.positions) cAccount["positions"] = data.positions;
+
+            const newAccounts = accounts.map(
+              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+            );
+
+            setMTAPIAccounts([...newAccounts]);
+          }
+        });
+      });
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [mtAPIAccounts.length]);
+
+  useEffect(() => {
+    if (mtAPIAccounts.length > 0) {
+      // let ids = accounts.map((account) => account.accountApiId);
+
       const mt5s = mtAPIAccounts.filter((v) => v.type === "mt5");
       const mt4s = mtAPIAccounts.filter((v) => v.type === "mt4");
       setMT4APIAccounts(mt4s);
@@ -179,15 +254,15 @@ export function GetLiveTrades(account) {
     await getData();
   }
 
-  useEffect(() => {
-    getData(); // Initial call
+  // useEffect(() => {
+  //   getData(); // Initial call
 
-    const intervalId = setInterval(getData, 5000); // 60000 milliseconds = 1 minute
+  //   const intervalId = setInterval(getData, 5000); // 60000 milliseconds = 1 minute
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+  //   return () => {
+  //     clearInterval(intervalId);
+  //   };
+  // }, []);
 
   return { trades, closeLiveTrade };
 }

@@ -20,21 +20,6 @@ import {
 import { firebaseConfig } from "../utils/constant";
 import axios from "axios";
 
-// import { MetaApi } from "metaapi.cloud-sdk";
-
-// const connectToMetaApi = async (accountId) => {
-//   const metaApi = new MetaApi(token);
-//   const account = await metaApi.metatraderAccountApi.getAccount(accountId);
-
-//   await account.waitConnected();
-//   const connection = account.getRPCConnection();
-
-//   await connection.connect();
-//   await connection.waitSynchronized();
-
-//   return connection;
-// };
-
 const token = process.env.NEXT_PUBLIC_META_API_TOKEN;
 
 const collName = "mtapi";
@@ -311,7 +296,7 @@ export async function getActiveOrders(accountApiId) {
       return req.data;
     }
   } catch (e) {
-    console.error("Error : ", e.code);
+    console.error("Error : ", e.code, e.response?.data?.message);
     return { error: e };
   }
 }
@@ -765,17 +750,29 @@ export async function modifyTrade(
   tp,
   tpPrice
 ) {
-  console.log("Modify a trade ... ", accountApiId, " ", tradeId);
+  console.log(
+    "Modify a trade ... ",
+    accountApiId,
+    " ",
+    tradeId,
+    "  ",
+    sl,
+    " ",
+    slPrice
+  );
 
   let slData = {};
   let tpData = {};
 
-  if (sl) slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
-  else if (slPrice)
+  if (slPrice)
     slData = { stopLossUnits: "ABSOLUTE_PRICE", stopLoss: Number(slPrice) };
-  if (tp) tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
-  else if (tpPrice)
+  else if (sl)
+    slData = { stopLossUnits: "RELATIVE_PIPS", stopLoss: Number(sl) };
+
+  if (tpPrice)
     tpData = { takeProfitUnits: "ABSOLUTE_PRICE", takeProfit: Number(tpPrice) };
+  else if (tp)
+    tpData = { takeProfitUnits: "RELATIVE_PIPS", takeProfit: Number(tp) };
 
   let data = {
     actionType: "POSITION_MODIFY",
@@ -797,6 +794,7 @@ export async function modifyTrade(
     if (req.data.error) {
       return { error: req.data.message };
     } else {
+      // console.log(req.data);
       return req.data;
     }
   } catch (e) {
