@@ -23,11 +23,9 @@ function Section5() {
       <div className="relative w-full flex items-center justify-center">
         <div className="absolute top-[25px] rounded-full  bg-gradient-to-tr from-primary to-secondary w-[32%] aspect-square scale-150 blur-[280px]"></div>
         <div className="">
-          <Image
-            className=""
+          <img
+            className="h-96 aspect-square"
             src="/Images/landing/trading-and-invest-app.png"
-            width={500}
-            height={500}
             alt="Picture of the author"
           />
           {/* <Player

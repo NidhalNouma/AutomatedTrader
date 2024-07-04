@@ -14,7 +14,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto w-full flex flex-wrap sm:px-5 px-4 items-center md:flex-row">
         <div className="flex flex-row items-center justify-between p-0 md:p-1 w-full">
           <div className="h-full w-48 max-w-[25%]">
-            <img
+            <Image
               src="/Logo/dark-logo.png"
               alt=""
               width="8w"
@@ -53,7 +53,6 @@ export default function Header() {
             <Link href="/signup">
               <span className="flex items-center cursor-pointer py-1 px-4 font-semibold rounded-full text-text-h bg-primary border-2 border-primary">
                 Sign up
-                {/* <ArrowSmRightIcon className="ml-[0.1rem] h-5 w-5" /> */}
               </span>
             </Link>
           </div>

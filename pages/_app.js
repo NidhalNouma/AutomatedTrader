@@ -89,7 +89,8 @@ function MyApp({ Component, pageProps }) {
         if (subObj && pathname === "/welcome") router.push("/home");
         // console.log(subObj);
         if (!subObj) {
-          router.push("/welcome");
+          router.push("/waiting");
+          // router.push("/welcome");
         } else if (
           pathname === "/" ||
           pathname === "/signin" ||

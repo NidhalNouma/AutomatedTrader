@@ -126,12 +126,14 @@ export const pricingList = {
 };
 
 export function getPlanById(subscription, isTSlifetime = false) {
-  const bb = pricingList.lifetime["Lifetime access"];
-  return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
-  if (isTSlifetime) {
-    const bb = pricingList.annual["Basic plan"];
-    return { ...bb, name: "Basic plan", no: 0, time: "yearly" };
+  if (subscription) {
+    const bb = pricingList.lifetime["Lifetime access"];
+    return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
   }
+  // if (isTSlifetime) {
+  //   const bb = pricingList.annual["Basic plan"];
+  //   return { ...bb, name: "Basic plan", no: 0, time: "yearly" };
+  // }
 
   let r = null;
   let id = null;

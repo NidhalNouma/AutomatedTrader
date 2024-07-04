@@ -16,13 +16,15 @@ import {
 import moment from "moment";
 import io from "socket.io-client";
 
+// import MetaApi from "metaapi.cloud-sdk";
+
 // import dynamic from "next/dynamic";
 // const MetaApi = dynamic(
 //   () => import("metaapi.cloud-sdk").then((mod) => mod.default),
 //   { ssr: false }
 // );
 
-// const apiToken = process.env.NEXT_PUBLIC_META_API_TOKEN;
+const apiToken = process.env.NEXT_PUBLIC_META_API_TOKEN;
 // const metaApi = new MetaApi(apiToken);
 // console.log("IMPORT ---- ", metaApi);
 
@@ -30,6 +32,27 @@ export function GetMTAPIAccounts() {
   const [mtAPIAccounts, setMTAPIAccounts] = useState([]);
   const [mt5APIAccounts, setMT5APIAccounts] = useState([]);
   const [mt4APIAccounts, setMT4APIAccounts] = useState([]);
+
+  const [metaapi, setMTAPI] = useState(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/metaapi.cloud-sdk";
+    script.async = true;
+    script.onload = () => {
+      // Script has loaded, you can now use its functionalities
+      const api = new MetaApi.default(apiToken);
+      console.log("metaapi.cloud-sdk loaded", api);
+      setMTAPI(api);
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      // Clean up to prevent memory leaks
+      document.body.removeChild(script);
+    };
+  }, []);
 
   async function getHistoryData(mt) {
     // const r = await getAccountInformation(mt.accountApiId);
@@ -93,75 +116,173 @@ export function GetMTAPIAccounts() {
     });
   }
 
+  async function getAccountData(metaApi, mtaccount) {
+    const account = await metaApi.metatraderAccountApi.getAccount(
+      mtaccount.accountApiId
+    );
+    const connection = account.getStreamingConnection();
+
+    // Add listener
+    // const accountInfoListener = new AccountInfoListener(
+    //   socket,
+    //   mtaccount.accountApiId
+    // );
+    // connection.addSynchronizationListener(accountInfoListener);
+
+    await connection.connect();
+
+    // access local copy of terminal state
+    const terminalState = connection.terminalState;
+
+    await connection.waitSynchronized();
+
+    console.log(terminalState.connected);
+    console.log(terminalState.connectedToBroker);
+    console.log(terminalState.accountInformation);
+    console.log(terminalState.positions);
+    console.log(terminalState.orders);
+
+    const accountInformation = terminalState.accountInformation;
+    const positions = terminalState.positions;
+
+    const history = await getHistoryData(mtaccount);
+
+    if (accountInformation) Object.assign(mtaccount, accountInformation);
+
+    if (positions) mtaccount["positions"] = positions;
+    const newAccounts = mtAPIAccounts.map(
+      (acc) => mtAPIAccounts.find((acc1) => acc1.id === mtaccount.id) || acc
+    );
+
+    setMTAPIAccounts([...newAccounts]);
+  }
+
   useEffect(() => {
-    if (mtAPIAccounts.length > 0) {
-      const accounts = mtAPIAccounts;
+    if (metaapi)
+      if (mtAPIAccounts.length > 0) {
+        const accounts = mtAPIAccounts;
 
-      const socket = io("");
+        // const socket = io("");
 
-      mtAPIAccounts.forEach((account) => {
-        socket.emit("subscribe", account.accountApiId);
-
-        socket.on("loaded", async (data) => {
-          // console.log("DATA === >> ", data);
-          const cAccount = mtAPIAccounts.find(
-            (acc) => acc.accountApiId === data.accountId
-          );
-
-          if (cAccount) {
-            const history = await getHistoryData(cAccount);
-            if (data.accountInformation)
-              Object.assign(cAccount, data.accountInformation);
-
-            if (data.positions) cAccount["positions"] = data.positions;
-
-            const newAccounts = accounts.map(
-              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
-            );
-
-            setMTAPIAccounts([...newAccounts]);
-          }
+        mtAPIAccounts.forEach((account) => {
+          getAccountData(metaapi, account);
+          // socket.emit("subscribe", account.accountApiId);
+          // socket.on("loaded", async (data) => {
+          //   // console.log("DATA === >> ", data);
+          //   const cAccount = mtAPIAccounts.find(
+          //     (acc) => acc.accountApiId === data.accountId
+          //   );
+          //   if (cAccount) {
+          //     const history = await getHistoryData(cAccount);
+          //     if (data.accountInformation)
+          //       Object.assign(cAccount, data.accountInformation);
+          //     if (data.positions) cAccount["positions"] = data.positions;
+          //     const newAccounts = accounts.map(
+          //       (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+          //     );
+          //     setMTAPIAccounts([...newAccounts]);
+          //   }
+          // });
+          // socket.on("accountInfo", async (data) => {
+          //   const cAccount = mtAPIAccounts.find(
+          //     (acc) => acc.accountApiId === data.accountId
+          //   );
+          //   if (cAccount) {
+          //     if (data.accountInformation)
+          //       Object.assign(cAccount, data.accountInformation);
+          //     const newAccounts = accounts.map(
+          //       (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+          //     );
+          //     setMTAPIAccounts([...newAccounts]);
+          //   }
+          // });
+          // socket.on("positions", async (data) => {
+          //   const cAccount = mtAPIAccounts.find(
+          //     (acc) => acc.accountApiId === data.accountId
+          //   );
+          //   if (cAccount) {
+          //     if (data.positions) cAccount["positions"] = data.positions;
+          //     const newAccounts = accounts.map(
+          //       (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+          //     );
+          //     setMTAPIAccounts([...newAccounts]);
+          //   }
+          // });
         });
 
-        socket.on("accountInfo", async (data) => {
-          const cAccount = mtAPIAccounts.find(
-            (acc) => acc.accountApiId === data.accountId
-          );
+        return () => {};
+      }
+  }, [mtAPIAccounts.length, metaapi]);
 
-          if (cAccount) {
-            if (data.accountInformation)
-              Object.assign(cAccount, data.accountInformation);
+  // useEffect(() => {
+  //   if (mtAPIAccounts.length > 0) {
+  //     const accounts = mtAPIAccounts;
 
-            const newAccounts = accounts.map(
-              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
-            );
+  //     const socket = io("");
 
-            setMTAPIAccounts([...newAccounts]);
-          }
-        });
+  //     mtAPIAccounts.forEach((account) => {
+  //       socket.emit("subscribe", account.accountApiId);
 
-        socket.on("positions", async (data) => {
-          const cAccount = mtAPIAccounts.find(
-            (acc) => acc.accountApiId === data.accountId
-          );
+  //       socket.on("loaded", async (data) => {
+  //         // console.log("DATA === >> ", data);
+  //         const cAccount = mtAPIAccounts.find(
+  //           (acc) => acc.accountApiId === data.accountId
+  //         );
 
-          if (cAccount) {
-            if (data.positions) cAccount["positions"] = data.positions;
+  //         if (cAccount) {
+  //           const history = await getHistoryData(cAccount);
+  //           if (data.accountInformation)
+  //             Object.assign(cAccount, data.accountInformation);
 
-            const newAccounts = accounts.map(
-              (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
-            );
+  //           if (data.positions) cAccount["positions"] = data.positions;
 
-            setMTAPIAccounts([...newAccounts]);
-          }
-        });
-      });
+  //           const newAccounts = accounts.map(
+  //             (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+  //           );
 
-      return () => {
-        socket.disconnect();
-      };
-    }
-  }, [mtAPIAccounts.length]);
+  //           setMTAPIAccounts([...newAccounts]);
+  //         }
+  //       });
+
+  //       socket.on("accountInfo", async (data) => {
+  //         const cAccount = mtAPIAccounts.find(
+  //           (acc) => acc.accountApiId === data.accountId
+  //         );
+
+  //         if (cAccount) {
+  //           if (data.accountInformation)
+  //             Object.assign(cAccount, data.accountInformation);
+
+  //           const newAccounts = accounts.map(
+  //             (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+  //           );
+
+  //           setMTAPIAccounts([...newAccounts]);
+  //         }
+  //       });
+
+  //       socket.on("positions", async (data) => {
+  //         const cAccount = mtAPIAccounts.find(
+  //           (acc) => acc.accountApiId === data.accountId
+  //         );
+
+  //         if (cAccount) {
+  //           if (data.positions) cAccount["positions"] = data.positions;
+
+  //           const newAccounts = accounts.map(
+  //             (acc) => accounts.find((acc1) => acc1.id === cAccount.id) || acc
+  //           );
+
+  //           setMTAPIAccounts([...newAccounts]);
+  //         }
+  //       });
+  //     });
+
+  //     return () => {
+  //       socket.disconnect();
+  //     };
+  //   }
+  // }, [mtAPIAccounts.length]);
 
   useEffect(() => {
     if (mtAPIAccounts.length > 0) {

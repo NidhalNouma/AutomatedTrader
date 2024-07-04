@@ -13,6 +13,8 @@ import PricingSection from "../Features/Landing/PricingSection";
 import { ArrowSmRightIcon } from "@heroicons/react/outline";
 // import Footer from "../Features/Landing/Footer";
 
+import ComingSection from "../Features/Landing/ComingBack";
+
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -30,12 +32,12 @@ export default function Home() {
       // }}
     >
       <Header />
-      <Section1 />
+      <ComingSection />
+      {/* <Section1 />
       <Section3 />
       <Section4 />
       <Section5 />
       <Section6 />
-      {/* <Section2 /> */}
       <PricingSection />
 
       <div className="flex justify-center items-center mt-0 h-screen">
@@ -69,7 +71,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
