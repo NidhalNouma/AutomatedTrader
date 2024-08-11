@@ -9,22 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      SECRETS_LIST: |
-        NEXT_PUBLIC_FIREBASE_API_KEY
-        NEXT_PUBLIC_TELEGRAM_API_TOKEN
-        NEXT_PUBLIC_LANDING_URL
-        NEXT_PUBLIC_META_API_TOKEN
-        NEXT_PUBLIC_CHARGEBEE_SITE
-        NEXT_PUBLIC_CHARGEBEE_API_KEY
-        NEXT_PUBLIC_CHARGEBEE_API_KEY_B
-        NEXT_PUBLIC_TEST_PROFILE_ID
-        NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS
-        NEXT_PUBLIC_ALLOWED_EMAILS
-        NEXT_PUBLIC_KLAVIO_PRIVATE_KEY
-        NEXT_PUBLIC_WEBHOOK_RECEIVER_URL
-        NEXT_PUBLIC_TRADE_MANAGEMENT_URL
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -50,13 +34,23 @@ jobs:
 
       - name: Create .env file
         run: |
-          for secret in ${{ env.SECRETS_LIST }}; do
-            echo "${secret}=${{ secrets[secret] }}" >> .env
-          done
+          echo "NEXT_PUBLIC_FIREBASE_API_KEY=${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_TELEGRAM_API_TOKEN=${{ secrets.NEXT_PUBLIC_TELEGRAM_API_TOKEN }}" >> .env
+          echo "NEXT_PUBLIC_LANDING_URL=${{ secrets.NEXT_PUBLIC_LANDING_URL }}" >> .env
+          echo "NEXT_PUBLIC_META_API_TOKEN=${{ secrets.NEXT_PUBLIC_META_API_TOKEN }}" >> .env
+          echo "NEXT_PUBLIC_CHARGEBEE_SITE=${{ secrets.NEXT_PUBLIC_CHARGEBEE_SITE }}" >> .env
+          echo "NEXT_PUBLIC_CHARGEBEE_API_KEY=${{ secrets.NEXT_PUBLIC_CHARGEBEE_API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_CHARGEBEE_API_KEY_B=${{ secrets.NEXT_PUBLIC_CHARGEBEE_API_KEY_B }}" >> .env
+          echo "NEXT_PUBLIC_TEST_PROFILE_ID=${{ secrets.NEXT_PUBLIC_TEST_PROFILE_ID }}" >> .env
+          echo "NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS=${{ secrets.NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS }}" >> .env
+          echo "NEXT_PUBLIC_ALLOWED_EMAILS=${{ secrets.NEXT_PUBLIC_ALLOWED_EMAILS }}" >> .env
+          echo "NEXT_PUBLIC_KLAVIO_PRIVATE_KEY=${{ secrets.NEXT_PUBLIC_KLAVIO_PRIVATE_KEY }}" >> .env
+          echo "NEXT_PUBLIC_WEBHOOK_RECEIVER_URL=${{ secrets.NEXT_PUBLIC_WEBHOOK_RECEIVER_URL }}" >> .env
+          echo "NEXT_PUBLIC_TRADE_MANAGEMENT_URL=${{ secrets.NEXT_PUBLIC_TRADE_MANAGEMENT_URL }}" >> .env
 
       - name: Build and push webhook-receiver
         run: |
-          docker build -t gcr.io/${{ secrets.GCLOUD_PROJECT }}/webhook-receiver ./services/webhook-receiver
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/webhook-receiver ./services/webhook-receiver
           docker push gcr.io/${{ secrets.GCP_ID }}/webhook-receiver
 
       - name: Deploy webhook-receiver to Cloud Run
