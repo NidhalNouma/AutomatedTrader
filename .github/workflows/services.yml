@@ -86,7 +86,7 @@ jobs:
         run: |
           docker build -t gcr.io/${{ secrets.GCP_ID }}/frontend \
             --build-arg NODE_ENV=development \
-            --file ./services/frontend/Dockerfile \
+            --file ./frontend/Dockerfile \
             .
           docker push gcr.io/${{ secrets.GCP_ID }}/frontend
 
