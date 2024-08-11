@@ -4,6 +4,12 @@ FROM node:16
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
+# Define build-time variables
+ARG NODE_ENV
+
+# Set environment variables using the build-time variables
+ENV NODE_ENV=$NODE_ENV
+
 # Copy package.json and package-lock.json
 COPY services/trade-management/package*.json ./
 
