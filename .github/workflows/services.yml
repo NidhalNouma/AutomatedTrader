@@ -48,15 +48,11 @@ jobs:
           echo "NEXT_PUBLIC_WEBHOOK_RECEIVER_URL=${{ secrets.NEXT_PUBLIC_WEBHOOK_RECEIVER_URL }}" >> .env
           echo "NEXT_PUBLIC_TRADE_MANAGEMENT_URL=${{ secrets.NEXT_PUBLIC_TRADE_MANAGEMENT_URL }}" >> .env
 
-      - name: Prepare webhook-receiver build context
-        run: |
-          cp .env ./services/webhook-receiver/
-          cp -r lib ./services/webhook-receiver/
-          cp -r utils ./services/webhook-receiver/
-
       - name: Build and push webhook-receiver
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_ID }}/webhook-receiver ./services/webhook-receiver
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/webhook-receiver \
+            --file ./services/webhook-receiver/Dockerfile \
+            .
           docker push gcr.io/${{ secrets.GCP_ID }}/webhook-receiver
 
       - name: Deploy webhook-receiver to Cloud Run
@@ -76,7 +72,9 @@ jobs:
 
       - name: Build and push trade-management
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_ID }}/trade-management ./services/trade-management
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/trade-management \
+            --file ./services/trade-management/Dockerfile \
+            .
           docker push gcr.io/${{ secrets.GCP_ID }}/trade-management
 
       - name: Deploy trade-management to Cloud Run
@@ -96,7 +94,9 @@ jobs:
 
       - name: Build and push frontend
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_ID }}/frontend ./frontend
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/frontend \
+            --file ./services/frontend/Dockerfile \
+            .
           docker push gcr.io/${{ secrets.GCP_ID }}/frontend
 
       - name: Deploy frontend to Cloud Run
