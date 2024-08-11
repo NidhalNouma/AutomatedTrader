@@ -5,7 +5,7 @@ import { Button, RoundedButton } from "../components/ui/Button";
 import { ToggleInline } from "../components/ui/Input";
 import { ModalWithHeader } from "../components/ui/Modal";
 import WebhookForm from "../components/Forms/Webhook";
-import { SubTitle, Par } from "../components/ui/Text";
+import { SubTitle3, Par } from "../components/ui/Text";
 import { RectangleSkeleton } from "../components/ui/Skeleton";
 
 import WebhookItem from "../components/parts/WebhookItem";
@@ -116,7 +116,7 @@ export default function Webhook() {
           <section className="">
             {advanced.length > 0 && (
               <Fragment>
-                <SubTitle className="mt-4">Advanced webhooks</SubTitle>
+                <SubTitle3 className="mt-4">Advanced webhooks</SubTitle3>
                 <div className="mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-6 gap-y-8">
                   {advanced
                     .sort((a, b) => b.created_at - a.created_at)
@@ -132,7 +132,7 @@ export default function Webhook() {
             {webhooks?.length > 0 ? (
               <Fragment>
                 {advanced.length > 0 && webhooks.length > advanced.length && (
-                  <SubTitle className="mt-8">Basic webhooks</SubTitle>
+                  <SubTitle3 className="mt-8">Basic webhooks</SubTitle3>
                 )}
                 <div className="mt-3 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8">
                   {webhooks

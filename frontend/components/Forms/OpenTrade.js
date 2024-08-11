@@ -1,10 +1,11 @@
 import { Fragment } from "react";
 import { Select } from "../ui/Input";
 import { Button } from "../ui/Button";
+import { Error } from "../ui/Alerts";
 
 import { OpenTrade as OpenTradeHook } from "../../hooksp/TradeHook";
 
-function OpenTrade() {
+function OpenTrade({ close, children }) {
   const {
     account,
     setAccount,
@@ -15,6 +16,8 @@ function OpenTrade() {
     message,
     setMessage,
     messageOptions,
+    error,
+    sendTrade,
   } = OpenTradeHook();
 
   return (
@@ -37,16 +40,22 @@ function OpenTrade() {
       ></Select>
       <Select
         name="Choose a message"
-        className="mt-5"
+        className="mt-5 mb-3"
         options={messageOptions}
         value={message}
         setValue={setMessage}
         helper="Select one of your account to where the trade will be sent."
       ></Select>
 
+      {error && <Error className="mt-3 mb-0 max-w-xs">{error}</Error>}
+
       <Button
-        className="mt-8 w-full max-w-xs"
-        spinnerClassName="mt-8"
+        onClick={async () => {
+          const r = await sendTrade();
+          if (r && typeof close === "function") close();
+        }}
+        className="mt-3 w-full max-w-xs"
+        spinnerClassName="mt-3"
         icon={
           <svg
             className="h-3.5 aspect-square"

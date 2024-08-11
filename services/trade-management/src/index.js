@@ -1,5 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
+import rateLimit from "express-rate-limit";
+import cors from "cors";
 
 import {
   openTrade as openMTTrade,
@@ -9,16 +11,28 @@ import {
 import { placeOrder as openBinanceTrade } from "../lib/third/binanace.js";
 
 const app = express();
-app.use(express.json());
-app.use(bodyParser.text());
+app.use(express.json({ limit: "50mb" }));
+app.use(bodyParser.text({ limit: "50mb" }));
+app.use(cors());
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests from this IP, please try again later.", // Custom message
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
 
 app.post("/metatrader", async (req, res) => {
   const accountSrc = "metatrader";
   try {
     const { account, messageData, openOn, webhookId } = req.body;
-    if (!account) return res.status(500).send("Account not available");
+    if (!account || !account.id)
+      return res.status(500).send("Account not available");
     if (!messageData) return res.status(500).send("Message data not available");
-    if (!openOn) return res.status(500).send("Apps not available");
+    // if (!openOn) return res.status(500).send("Apps not available");
     if (!webhookId) return res.status(500).send("Webhook ID not available");
 
     console.log("Metatrader: managing trade for ", account.id);
@@ -98,7 +112,7 @@ app.post("/binance", async (req, res) => {
     const { account, messageData, openOn, webhookId } = req.body;
     if (!account) return res.status(500).send("Account not available");
     if (!messageData) return res.status(500).send("Message data not available");
-    if (!openOn) return res.status(500).send("Apps not available");
+    // if (!openOn) return res.status(500).send("Apps not available");
     if (!webhookId) return res.status(500).send("Webhook ID not available");
 
     console.log("Binance: managing trade for ", account.id);

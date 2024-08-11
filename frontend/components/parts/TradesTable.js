@@ -54,7 +54,15 @@ function Table({ data }) {
                         title="Trade"
                         className=""
                         trigger={
-                          <tr className="border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60">
+                          <tr
+                            className={`${
+                              v.type == 0
+                                ? "hover:bg-long/10"
+                                : v.type == 1
+                                ? "hover:bg-short/10"
+                                : ""
+                            }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
+                          >
                             {/* <td className="text-xs text-center rounded-l-md">
                           {v.test === "true" ? (
                             <span className="px-2 py-0 rounded-full bg-info text-bg">

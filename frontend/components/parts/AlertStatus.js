@@ -191,7 +191,7 @@ function Apps({ apps, webhook }) {
                       {tr.errorMessage ? (
                         <MessageWithTrade
                           trade={trade}
-                          className="text-error border-error/50"
+                          className="!text-error !border-error/50"
                         >
                           {tr.errorMessage} ID: {tr.tradeId || tr.orderId}{" "}
                         </MessageWithTrade>

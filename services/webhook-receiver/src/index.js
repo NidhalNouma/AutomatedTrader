@@ -1,19 +1,29 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
+import rateLimit from "express-rate-limit";
+
 import { getWebhook } from "../lib/webhooks.js";
 import { getMessageData } from "../lib/third/webhookMessage.js";
 import { getMTAccount } from "../lib/metatrader.js";
 import { getBinanceAccount } from "../lib/binanace.js";
 
-import { rateLimit } from "../utils/rateLimit.js";
 import { servicesURL } from "../utils/constant.js";
-
 import { afterResponse } from "./afterResponse.js";
 
 const app = express();
-app.use(express.json());
-app.use(bodyParser.text());
+app.use(express.json({ limit: "50mb" }));
+app.use(bodyParser.text({ limit: "50mb" }));
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 60 requests per `window` (here, per 15 minutes)
+  message: "Too many requests from this IP, please try again later.", // Custom message
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+app.use(limiter);
 
 async function getAccountById(accountType, id) {
   if (accountType === "metatrader") return await getMTAccount(id);
@@ -25,7 +35,7 @@ async function getAccountById(accountType, id) {
 app.post("/:id", async (req, res) => {
   const id = req.params.id;
   let message = req.body;
-  console.log(message);
+  // console.log(message);
   if (!id) {
     return res.status(500).send("Invalid id");
   }

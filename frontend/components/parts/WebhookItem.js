@@ -26,7 +26,7 @@ import {
 
 import { addAlpha, copyTextToClipboard } from "../../utils/functions";
 
-import { WebhhokURL } from "../../utils/constant";
+import { servicesURL } from "../../utils/constant";
 
 // import WebhookLineChart from "../../Features/WebhooksItem/WebhookLineChart";
 
@@ -271,7 +271,7 @@ function Index({ webhook, mtAccounts, forDisplay = false }) {
                       }
                       onClick={() =>
                         copyTextToClipboard(
-                          WebhhokURL() + webhook.id,
+                          servicesURL.webhook + "/" + webhook.id,
                           () => setURLcopy("URL copied to clipboard!"),
                           () => newAlert("Webhooks URL copied", "error")
                         )

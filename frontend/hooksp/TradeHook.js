@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 
+import axios from "axios";
+
 import { useWebhook } from "../contexts/WebhookContext";
 import { useMetatrader } from "../contexts/MetatraderContext";
 import { useBinance } from "../contexts/BinanceContext";
+
+import { servicesURL } from "../utils/constant";
+import { getMessageData } from "../lib/third/webhookMessage.js";
 
 export function OpenTrade() {
   const { webhooks } = useWebhook();
@@ -15,6 +20,8 @@ export function OpenTrade() {
   const [webhookOptions, setWebhookOptions] = useState(null);
   const [message, setMessage] = useState(null);
   const [messageOptions, setMessageOptions] = useState(null);
+
+  const [error, setError] = useState("");
 
   useEffect(() => {
     let groupOptions = [];
@@ -80,6 +87,66 @@ export function OpenTrade() {
     }
   }, [webhook]);
 
+  async function sendTrade() {
+    setError("");
+    if (!account || !account.value) {
+      setError("Account is required!");
+      return false;
+    }
+    if (!webhook || !webhook.value) {
+      setError("Webhook is required!");
+      return false;
+    }
+    if (!message || !message.value) {
+      setError("Message is required!");
+      return false;
+    }
+
+    const accountId = account.value.id;
+    const webhookId = webhook.value.id;
+    const messageData = getMessageData(message.value);
+
+    // console.log("Sending trade", account, webhook, message);
+    console.log("Sending trade ... ", accountId, webhookId, messageData);
+
+    // let url = "http://localhost:4001";
+    let url = servicesURL.trade;
+
+    let accountSrc = accountOptions.find((o) => {
+      const r = o.options.find((v) => v.value.id === account.value.id);
+      return r;
+    });
+
+    if (!accountSrc) {
+      setError("Account source not availble!");
+      return false;
+    }
+
+    let accountSrcName = accountSrc.label.toLowerCase();
+
+    const r = await axios.post(
+      url + "/" + accountSrcName,
+      {
+        account: account.value,
+        webhookId,
+        messageData,
+      },
+      {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      }
+    );
+
+    if (r?.data?.errorMessage) {
+      setError(r.data.errorMessage);
+      return false;
+    }
+
+    return true;
+  }
+
   return {
     account,
     setAccount,
@@ -90,5 +157,7 @@ export function OpenTrade() {
     message,
     setMessage,
     messageOptions,
+    error,
+    sendTrade,
   };
 }

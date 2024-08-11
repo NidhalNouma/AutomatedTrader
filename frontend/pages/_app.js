@@ -73,7 +73,7 @@ function Main({ children }) {
   const { pathname } = router;
   const { subscription } = router.query;
 
-  const { user, fullUser } = useUser();
+  const { user, fullUser, loading } = useUser();
 
   const [firstPath, setFirstPath] = useState(null);
 
@@ -140,7 +140,7 @@ function Main({ children }) {
 
   return (
     <Fragment>
-      {fullUser === undefined && user === undefined ? (
+      {loading ? (
         <Fragment>
           <LoadingPage />
         </Fragment>

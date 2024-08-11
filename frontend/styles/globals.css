@@ -63,8 +63,9 @@
  }
 
  .sidenav {
-  min-width: 180px;
-  width: 200px;
+  /* min-width: 180px; */
+  /* width: 200px; */
+  max-width: 190px;
   /* display: flex; */
   flex-direction: column; 
   /* background-color: rgb(52, 54, 59); */

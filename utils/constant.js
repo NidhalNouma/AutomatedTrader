@@ -26,27 +26,6 @@ export const firebaseConfig = {
 
 export const landingUrl = "/"; //process.env.NEXT_PUBLIC_LANDING_URL || "/";
 
-export function WebhhokURL() {
-  return (
-    window.location.protocol + "//" + window.location.host + "/api/webhook/"
-  );
-}
-
-export const MT4EA = {
-  path: process.env.NEXT_PUBLIC_MT4_EA,
-  version: process.env.NEXT_PUBLIC_MT4_EA_VERSION,
-};
-export const MT5EA = {
-  path: process.env.NEXT_PUBLIC_MT5_EA,
-  version: process.env.NEXT_PUBLIC_MT5_EA_VERSION,
-};
-
-export const REDIS = {
-  host: process.env.NEXT_PUBLIC_REDIS_HOST,
-  password: process.env.NEXT_PUBLIC_REDIS_PASSWORD,
-  port: process.env.NEXT_PUBLIC_REDIS_PORT,
-};
-
 export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;
 const urlForTelegram = () =>
   // window.location.protocol +
