@@ -63,7 +63,8 @@ jobs:
             --platform managed \
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated \
-            --project ${{ secrets.GCP_ID }}
+            --project ${{ secrets.GCP_ID }} \
+            --update-env-vars PORT=4000
 
       - name: Build and push trade-management
         run: |
@@ -80,7 +81,8 @@ jobs:
             --platform managed \
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated \
-            --project ${{ secrets.GCP_ID }}
+            --project ${{ secrets.GCP_ID }} \
+            --update-env-vars PORT=4001
 
       - name: Build and push frontend
         run: |
@@ -97,4 +99,5 @@ jobs:
             --platform managed \
             --region ${{ secrets.GCP_REGION }} \
             --allow-unauthenticated \
-            --project ${{ secrets.GCP_ID }}
+            --project ${{ secrets.GCP_ID }} \
+            --update-env-vars PORT=3000
