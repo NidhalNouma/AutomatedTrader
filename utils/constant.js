@@ -1,5 +1,17 @@
 // import { useRouter } from "next/router";
 import axios from "axios";
+import dotenv from "dotenv";
+// Load environment variables
+dotenv.config({ path: "/usr/src/app/.env" });
+
+// console.log("ENV---Fle--------", process.env);
+
+export const servicesURL = {
+  webhook: process.env.NEXT_PUBLIC_WEBHOOK_RECEIVER_URL,
+  trade: process.env.NEXT_PUBLIC_TRADE_MANAGEMENT_URL,
+};
+
+export const metaApiToken = process.env.NEXT_PUBLIC_META_API_TOKEN;
 
 export const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

@@ -1,0 +1,180 @@
+import { useState, Fragment, useCallback } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+import { LeftDrawer } from "../ui/Drawer";
+import { Button, RoundedButton } from "../ui/Button";
+import { Dropdown, DropdownButton } from "../ui/Dropdown";
+import { SearchModal } from "../ui/SearchInput";
+import { ModalWithHeader } from "../ui/Modal";
+import { Par } from "../ui/Text";
+
+import SideNav from "./SideNav";
+import NotificationHeader from "./NotificationButton";
+
+import { Swap } from "react-daisyui";
+import { MenuIcon } from "@heroicons/react/outline";
+
+import OpenTrade from "../Forms/OpenTrade";
+import { useUser } from "../../contexts/UserContext";
+import { SignOut } from "../../hooksp/AuthHook";
+
+export default function NavBar({ className, page }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [openUpg, setOpenUpg] = useState(false);
+
+  const [openSideNav, setSideNav] = useState(false);
+
+  const toggleSideNav = useCallback(() => {
+    setSideNav((v) => !v);
+  }, []);
+
+  const { user, fullUser } = useUser();
+  const { signOut } = SignOut();
+
+  return (
+    <Fragment>
+      <div
+        className={` py-2 md:py-4 bg-transparent w-full sticky top-0 z-50 ${className}`}
+        style={{ zIndex: 100 }}
+      >
+        <div className="flex justify-between items-center w-full">
+          <div className="flex items-center">
+            <Fragment>
+              <LeftDrawer
+                className="relative"
+                open={openSideNav}
+                onClickOverlay={toggleSideNav}
+              >
+                <SideNav fixed={false} page={page} />
+              </LeftDrawer>
+              <div className="flex items-center justify-center md:hidden">
+                <Swap
+                  className="mr-4 text-text "
+                  rotate={true}
+                  offElement={
+                    <MenuIcon className="h-7 w-7" onClick={toggleSideNav} />
+                  }
+                  onElement={
+                    <MenuIcon className="h-7 w-7 " onClick={toggleSideNav} />
+                  }
+                />
+              </div>
+            </Fragment>
+
+            {user && (
+              <ModalWithHeader
+                title="Open Trade"
+                trigger={
+                  <Button
+                    className=""
+                    icon={
+                      <svg
+                        className="h-[1.2rem] aspect-auto"
+                        viewBox="0 0 97 167"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M69.9671 0C70.5923 1.12484 71.0603 2.32299 71.667 3.36213C74.6623 8.49212 77.709 13.5631 80.7089 18.6878C83.3653 23.2257 85.9689 27.8241 88.6239 32.3635C90.9214 36.292 93.2611 40.1721 95.5755 44.0813C96.027 44.8439 96.4481 45.6421 97 46.6338C92.6122 46.6338 88.4063 46.6338 84.0934 46.6338C84.0934 67.1488 84.0934 87.5233 84.0934 108C74.1834 108 64.3808 108 54.4702 108C54.4702 87.6284 54.4702 67.2539 54.4702 46.7757C50.3386 46.7757 46.3134 46.7757 42 46.7757C51.1959 31.0624 60.2397 15.6087 69.2058 0.077548C69.3766 1.49012e-08 69.6252 0 69.9671 0Z"
+                          className="fill-light"
+                        />
+                        <path
+                          d="M27.0817 167C26.4281 165.833 25.9256 164.6 25.2973 163.51C22.1838 158.107 19.046 152.732 15.8992 147.368C13.5973 143.444 11.2513 139.571 8.95605 135.64C6.68834 131.755 4.46671 127.818 2.20952 123.922C1.5622 122.804 0.861655 121.748 0 120.366C4.23079 120.366 8.21834 120.366 12.2819 120.366C12.2819 99.8059 12.2819 79.4691 12.2819 59C22.1468 59 31.9342 59 41.8385 59C41.8385 79.3186 41.8385 99.6948 41.8385 120.241C46.2268 120.241 50.5011 120.241 55 120.241C45.8215 135.947 36.7934 151.396 27.8425 166.922C27.6715 167 27.4232 167 27.0817 167Z"
+                          className=" fill-light/60"
+                        />
+                      </svg>
+                    }
+                  >
+                    Open Trade
+                  </Button>
+                }
+              >
+                <OpenTrade />
+              </ModalWithHeader>
+              //   <ButtonP
+              //     className=""
+              //     onClick={() => {
+              //       const sub = fullUser.subObj;
+              //       if (sub && sub.manualTrade) setOpen(true);
+              //       else setOpenUpg(true);
+              //     }}
+              //     icon={<MdOutlineCandlestickChart className="h-4 w-4" />}
+              //   >
+              //     Open Trade
+              //   </ButtonP>
+            )}
+          </div>
+          {user ? (
+            <div className="flex items-center justify-center ml-auto">
+              <SearchModal placeholder="Search for webhooks, profiles and more ...">
+                {/* <Results users={users} /> */}
+                <Par className="mt-6 font-semibold text-center !text-sm">
+                  Coming soon! Lifetime users get first access ,{" "}
+                  <span className="underline cursor-pointer">
+                    <Link href="/membership">
+                      upgrade your membership today
+                    </Link>
+                  </span>
+                </Par>
+              </SearchModal>
+              <div className="ml-4 flex items-center">
+                <NotificationHeader />
+              </div>
+
+              <div className="ml-2">
+                <Dropdown
+                  content={
+                    <Fragment>
+                      <DropdownButton>
+                        <Link className="justify-between" href="/profile">
+                          Profile
+                        </Link>
+                      </DropdownButton>
+                      <DropdownButton>
+                        <Link className="justify-between" href="/settings">
+                          Settings
+                        </Link>
+                      </DropdownButton>
+                      <DropdownButton
+                        onClick={async () => {
+                          await signOut();
+                          router.push("/");
+                        }}
+                      >
+                        Logout
+                      </DropdownButton>
+                    </Fragment>
+                  }
+                >
+                  <RoundedButton className=" hover:bg-text/10 ml-1.5">
+                    <img
+                      className=" aspect-square h-6"
+                      src={user?.photoURL || "/Images/profile.png"}
+                    />
+                  </RoundedButton>
+                </Dropdown>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <Link href="/signin">
+                <span className="cursor-pointer mr-4 py-1 px-6 rounded-lg border-2 text-text-h bg-transparent border-primary">
+                  Login
+                </span>
+              </Link>
+              <Link href="/signup">
+                <span className="cursor-pointer py-1 px-4 rounded-lg text-text-h bg-primary border-2 border-primary">
+                  Sign up
+                </span>
+              </Link>
+            </div>
+          )}
+        </div>
+
+        <div className="absolute inset-0 w-full h-full bg-bg-bgt/30 backdrop-blur-xl -z-10"></div>
+      </div>
+    </Fragment>
+  );
+}

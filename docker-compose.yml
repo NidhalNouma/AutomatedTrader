@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  webhook-receiver:
+    build:
+      context: .
+      dockerfile: services/webhook-receiver/Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./services/webhook-receiver:/usr/src/app
+      - ./lib:/usr/src/app/lib
+      - ./utils:/usr/src/app/utils
+      - /usr/src/app/node_modules
+      - ./.env:/usr/src/app/.env
+    environment:
+      - NODE_ENV=development
+
+  trade-management:
+    build:
+      context: .
+      dockerfile: services/trade-management/Dockerfile
+    ports:
+      - "4001:4001"
+    volumes:
+      - ./services/trade-management:/usr/src/app
+      - ./lib:/usr/src/app/lib
+      - ./utils:/usr/src/app/utils
+      - /usr/src/app/node_modules
+      - ./.env:/usr/src/app/.env
+    environment:
+      - NODE_ENV=development
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app
+      - ./lib:/usr/src/app/lib
+      - ./utils:/usr/src/app/utils
+      - /usr/src/app/node_modules
+      - ./.env:/usr/src/app/.env
+    environment:
+      - NODE_ENV=development

@@ -47,19 +47,56 @@ function hexToRgbA(hex, alpha) {
 }
 
 export function addAlpha(color, opacity) {
-  //   // coerce values so ti is between 0 and 1.
-  //   var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-  //   return color + _opacity.toString(16).toUpperCase();
+  // Ensure opacity is within the valid range
+  if (opacity < 0) opacity = 0;
+  if (opacity > 1) opacity = 1;
 
-  // console.log("color", color + "00");
-  if (color.search("#") >= 0) color = hexToRgbA(color);
-  const r = color.replace(/[\d\.]+\)$/g, opacity);
+  // Check if the color is in hex format
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(color)) {
+    // If the color is in shorthand hex format, expand it to full hex format
+    if (color.length === 4) {
+      color =
+        "#" +
+        color
+          .slice(1)
+          .split("")
+          .map((char) => char + char)
+          .join("");
+    }
+    // Convert hex to rgba
+    const bigint = parseInt(color.slice(1), 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
+  }
 
-  let new_col = color.replace(/rgb/i, "rgba");
-  new_col = new_col.replace(/\)/i, "," + opacity.toString() + ")");
-  // console.log(r, color, new_col);
+  // Check if the color is in rgb or rgba format
+  if (
+    /^rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3})(, ([0-9]*[.])?[0-9]+)?\)$/.test(
+      color
+    )
+  ) {
+    return color.replace(
+      /rgba?\((\d{1,3}), (\d{1,3}), (\d{1,3})(, ([0-9]*[.])?[0-9]+)?\)/,
+      `rgba($1, $2, $3, ${opacity})`
+    );
+  }
 
-  return new_col;
+  // Check if the color is in hsl or hsla format
+  if (
+    /^hsla?\((\d{1,3}), (\d{1,3})%, (\d{1,3})%(, ([0-9]*[.])?[0-9]+)?\)$/.test(
+      color
+    )
+  ) {
+    return color.replace(
+      /hsla?\((\d{1,3}), (\d{1,3})%, (\d{1,3})%(, ([0-9]*[.])?[0-9]+)?\)/,
+      `hsla($1, $2%, $3%, ${opacity})`
+    );
+  }
+
+  // If the color format is not recognized, return the original color
+  return color;
 }
 
 export function numToFixed(num) {
@@ -67,10 +104,10 @@ export function numToFixed(num) {
   let res = String(num).split(".");
 
   // console.log(value, res);
-  if (num === 0) return num.toFixed(1);
+  if (num === 0) return Number(num).toFixed(1);
 
   if (res.length > 1) {
-    if (res[0] > 0) return num.toFixed(1);
+    if (res[0] > 0) return Number(num).toFixed(1);
     else {
       let s = 1;
 
@@ -88,3 +125,53 @@ export function numToFixed(num) {
 
   return Number(value);
 }
+
+export function getRandomHexColor() {
+  var letters = "0123456789ABCDEF";
+  var color = "#";
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+export function getRandomRgbColor() {
+  // var letters = "0123456789ABCDEF";
+  // var color = "#";
+  // for (var i = 0; i < 6; i++) {
+  //   color += letters[Math.floor(Math.random() * 16)];
+  // }
+  // return color;
+  var o = Math.round,
+    r = Math.random,
+    red = 155,
+    green = 170,
+    blue = 255;
+  return (
+    "rgba(" +
+    o(r() * red) +
+    "," +
+    o(r() * green) +
+    "," +
+    o(r() * blue) +
+    "," +
+    r().toFixed(1) +
+    ")"
+  );
+}
+export function generateRandomString(length) {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let randomString = "";
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString += characters.charAt(randomIndex);
+  }
+
+  return randomString;
+}
+
+export const getAssetImageUrl = (asset) => {
+  return `/icons/crypto/color/${asset.toLowerCase()}.svg`;
+};

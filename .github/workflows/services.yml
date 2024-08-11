@@ -1,0 +1,97 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SECRETS_LIST: |
+        NEXT_PUBLIC_FIREBASE_API_KEY
+        NEXT_PUBLIC_TELEGRAM_API_TOKEN
+        NEXT_PUBLIC_LANDING_URL
+        NEXT_PUBLIC_META_API_TOKEN
+        NEXT_PUBLIC_CHARGEBEE_SITE
+        NEXT_PUBLIC_CHARGEBEE_API_KEY
+        NEXT_PUBLIC_CHARGEBEE_API_KEY_B
+        NEXT_PUBLIC_TEST_PROFILE_ID
+        NEXT_PUBLIC_TEST_WEBHOOKS_LIST_IDS
+        NEXT_PUBLIC_ALLOWED_EMAILS
+        NEXT_PUBLIC_KLAVIO_PRIVATE_KEY
+        NEXT_PUBLIC_WEBHOOK_RECEIVER_URL
+        NEXT_PUBLIC_TRADE_MANAGEMENT_URL
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - id: "auth"
+        uses: "google-github-actions/auth@v2"
+        with:
+          project_id: ${{ secrets.GCP_ID }}
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker
+
+      - name: Create .env file
+        run: |
+          for secret in ${{ env.SECRETS_LIST }}; do
+            echo "${secret}=${{ secrets[secret] }}" >> .env
+          done
+
+      - name: Build and push webhook-receiver
+        run: |
+          docker build -t gcr.io/${{ secrets.GCLOUD_PROJECT }}/webhook-receiver ./services/webhook-receiver
+          docker push gcr.io/${{ secrets.GCP_ID }}/webhook-receiver
+
+      - name: Deploy webhook-receiver to Cloud Run
+        run: |
+          gcloud run deploy webhook-receiver \
+            --image gcr.io/${{ secrets.GCP_ID }}/webhook-receiver \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_ID }}
+
+      - name: Build and push trade-management
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/trade-management ./services/trade-management
+          docker push gcr.io/${{ secrets.GCP_ID }}/trade-management
+
+      - name: Deploy trade-management to Cloud Run
+        run: |
+          gcloud run deploy trade-management \
+            --image gcr.io/${{ secrets.GCP_ID }}/trade-management \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_ID }}
+
+      - name: Build and push frontend
+        run: |
+          docker build -t gcr.io/${{ secrets.GCP_ID }}/frontend ./frontend
+          docker push gcr.io/${{ secrets.GCP_ID }}/frontend
+
+      - name: Deploy frontend to Cloud Run
+        run: |
+          gcloud run deploy frontend \
+            --image gcr.io/${{ secrets.GCP_ID }}/frontend \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated \
+            --project ${{ secrets.GCP_ID }}
