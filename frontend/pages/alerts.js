@@ -27,7 +27,7 @@ export default function AlertsPage() {
       <MainLayoutWithHeader title="Alerts" page="alerts">
         {daysAlerts?.length > 0 ? (
           daysAlerts.map((group, i) => (
-            <div className="w-full lg:w-1/2i mt-4">
+            <div className="w-full lg:w-1/2i mt-4" key={i}>
               <SubTitle3 className="mb-2">
                 {moment(group.time).isSame(moment(), "day")
                   ? "Today"

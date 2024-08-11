@@ -187,7 +187,7 @@ function Apps({ apps, webhook }) {
                   let trade = findTrade(tr.tradeId || tr.orderId);
 
                   return (
-                    <li className="">
+                    <li className="" key={i}>
                       {tr.errorMessage ? (
                         <MessageWithTrade
                           trade={trade}
