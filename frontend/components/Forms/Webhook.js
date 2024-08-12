@@ -21,7 +21,7 @@ function WebhookForm({ close }) {
         <ButtonGroup>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+            className={`capitalize !text-sm rounded-lg bg-bg w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
               type === 0 &&
               "text-btn bg-primary hover:!bg-primary hover:text-btn"
             }`}
@@ -31,7 +31,7 @@ function WebhookForm({ close }) {
           </Button_>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg  w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+            className={`capitalize !text-sm rounded-lg bg-bg  w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
               type === 1 &&
               "text-btn bg-primary hover:!bg-primary hover:text-btn"
             }`}
@@ -240,7 +240,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
       <ButtonGroup className="mb-6">
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
             msgType === 0 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -250,7 +250,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
             msgType === 3 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -260,7 +260,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
             msgType === 2 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}

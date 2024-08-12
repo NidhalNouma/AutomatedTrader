@@ -1,32 +1,12 @@
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  LineElement,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  Filler,
-  plugins,
-} from "chart.js";
+import { Chart as ChartJS, registerables } from "chart.js";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { addAlpha } from "../../utils/functions";
 import TooltipComponent from "./Tooltips";
 import PropTypes from "prop-types";
 
-ChartJS.register(
-  ArcElement,
-  LineElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(...registerables);
 
 const ChartJSLine = ({ data, className }) => {
   const { theme } = useTheme();
@@ -95,12 +75,14 @@ const ChartJSLine = ({ data, className }) => {
         ctx.lineTo(x, chart.chartArea.bottom);
         ctx.lineWidth = 1;
         ctx.setLineDash([5, 5]);
-        ctx.strokeStyle = addAlpha(
+
+        const color = addAlpha(
           getComputedStyle(document.documentElement).getPropertyValue(
             "--chart-text-color"
           ),
           0.3
         );
+        ctx.strokeStyle = color;
         ctx.stroke();
         ctx.restore();
       }
@@ -122,12 +104,13 @@ const ChartJSLine = ({ data, className }) => {
         ctx.lineTo(chart.chartArea.right, yPixel);
         ctx.lineWidth = 1;
         ctx.setLineDash([5, 5]);
-        ctx.strokeStyle = addAlpha(
+        const color = addAlpha(
           getComputedStyle(document.documentElement).getPropertyValue(
             "--chart-text-color"
           ),
           0.1
         );
+        ctx.strokeStyle = color;
         ctx.stroke();
         ctx.restore();
       }
@@ -140,8 +123,11 @@ const ChartJSLine = ({ data, className }) => {
     scales: {
       x: {
         ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
+          color: addAlpha(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--chart-text-color"
+            ),
+            0.6
           ),
           padding: 0,
         },
@@ -157,8 +143,11 @@ const ChartJSLine = ({ data, className }) => {
         max: yAxisMax,
         display: false,
         ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
+          color: addAlpha(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--chart-text-color"
+            ),
+            0.6
           ),
           padding: 0,
         },

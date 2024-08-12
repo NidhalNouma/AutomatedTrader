@@ -207,18 +207,13 @@ export default function BinanceStatus({ account, accountData }) {
             <Fragment>
               <div className="">
                 <Label2 className={txtColor}>Spot Balance</Label2>
-                {totalSpotUSDT >= 0 && (
+                {totalSpotUSDT >= 0 ? (
                   <Label className={txtColor + " font-semibold !text-lg"}>
-                    {/* <img
-                          src={balance.image}
-                          alt={balance.asset}
-                          width="32"
-                          height="32"
-                          onError={(e) =>
-                            (e.target.src = "/icons/crypto/color/generic.svg")
-                          }
-                        /> */}
                     $ {Number(totalSpotUSDT).toFixed(8)}
+                  </Label>
+                ) : (
+                  <Label className={txtColor + " font-semibold !text-lg"}>
+                    NA
                   </Label>
                 )}
               </div>

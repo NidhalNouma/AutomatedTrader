@@ -181,7 +181,7 @@ function processTrades(
   const end = new Date(endTime);
 
   // Step 1: Filter objects based on closeTime
-  const filteredTrades = trades.filter((trade) => {
+  const filteredTrades = trades?.filter((trade) => {
     const closeTime = new Date(trade.closeTime);
     return closeTime >= start && closeTime <= end;
   });
@@ -191,7 +191,7 @@ function processTrades(
 
   // Helper function to aggregate trades
   const aggregateTrades = (trades) => {
-    const aggregatedTrade = trades.reduce(
+    const aggregatedTrade = trades?.reduce(
       (acc, trade) => {
         acc.netprofit += trade.profit;
         acc.profit += trade.profit > 0 ? trade.profit : 0;
@@ -466,8 +466,9 @@ export function AccountData() {
 
       let endTime = moment();
       let allDate =
-        account.historyData[0]?.closeTime ||
-        moment().startOf("year").format("YYYY-MM-DD HH:mm:ss");
+        account?.historyData?.length > 0
+          ? account.historyData[0]?.closeTime
+          : moment().startOf("year").format("YYYY-MM-DD HH:mm:ss");
       let todayDate = moment().startOf("day").format("YYYY-MM-DD HH:mm:ss");
       let weekDate = moment().startOf("week").format("YYYY-MM-DD HH:mm:ss");
       let monthDate = moment().startOf("month").format("YYYY-MM-DD HH:mm:ss");

@@ -183,13 +183,13 @@ export default function MTStatus({ account, accountData }) {
               {accountData?.information?.balance ? (
                 <div className="grid grid-cols-3">
                   <div className="">
-                    <Label2 className={txtColor}>Balance</Label2>
+                    <Label2 className="!text-text/80">Balance</Label2>
                     <Label className={txtColor + " font-semibold"}>
                       {Number(accountData?.information?.balance).toFixed(2)}
                     </Label>
                   </div>
                   <div className="">
-                    <Label2 className={txtColor}>Equity</Label2>
+                    <Label2 className="!text-text/80">Equity</Label2>
                     <Label className={txtColor + " font-semibold"}>
                       {Number(accountData?.information?.equity).toFixed(2)}
                     </Label>
@@ -211,31 +211,31 @@ export default function MTStatus({ account, accountData }) {
                       <div className="flex flex-col justify-center items-center w-full">
                         <div className="grid grid-cols-2 sm:grid-cols-4 w-full text-center gap-y-4">
                           <div className="r">
-                            <Label2>Number</Label2>
+                            <Label2 className="!text-text/80">Number</Label2>
                             <Label className="font-bold">
                               {account.accountNumber}
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Broker</Label2>
+                            <Label2 className="!text-text/80">Broker</Label2>
                             <Label className="font-bold">
                               {accountData.information.broker}
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Currency</Label2>
+                            <Label2 className="!text-text/80">Currency</Label2>
                             <Label className="font-bold">
                               {accountData.information.currency}
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Platform</Label2>
+                            <Label2 className="!text-text/80">Platform</Label2>
                             <Label className="font-bold uppercase">
                               {accountData.information.platform}
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Balance</Label2>
+                            <Label2 className="!text-text/80">Balance</Label2>
                             <Label className="font-bold">
                               {Number(accountData.information.balance).toFixed(
                                 2
@@ -243,7 +243,7 @@ export default function MTStatus({ account, accountData }) {
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Equity</Label2>
+                            <Label2 className="!text-text/80">Equity</Label2>
                             <Label className="font-bold">
                               {Number(accountData.information.equity).toFixed(
                                 2
@@ -251,7 +251,9 @@ export default function MTStatus({ account, accountData }) {
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Free margin</Label2>
+                            <Label2 className="!text-text/80">
+                              Free margin
+                            </Label2>
                             <Label className="font-bold">
                               {Number(
                                 accountData.information.freeMargin
@@ -259,7 +261,7 @@ export default function MTStatus({ account, accountData }) {
                             </Label>
                           </div>
                           <div className="">
-                            <Label2>Leverage</Label2>
+                            <Label2 className="!text-text/80">Leverage</Label2>
                             <Label className="font-bold">
                               {accountData.information.leverage}
                             </Label>

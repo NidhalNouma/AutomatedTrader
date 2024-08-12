@@ -21,7 +21,7 @@ export function DropdownButton({ onClick, className, children }) {
   return (
     <Dropdown_.Item
       onClick={onClick}
-      className={`text-title/80 hover:text-primary bg-transparent text-sm font-semibold ${className}`}
+      className={`text-text/80 hover:text-primary bg-transparent text-sm font-semibold ${className}`}
     >
       <span>{children}</span>
     </Dropdown_.Item>

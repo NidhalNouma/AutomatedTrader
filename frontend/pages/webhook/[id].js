@@ -17,8 +17,8 @@ import { WebhookWithData } from "../../hooks/WebhookAccounts";
 
 import { getDataByWebhook, CalculateData } from "../../hooks/MTAccounts";
 
-import { txtColorFromBg, addAlpha } from "../../utils/functions";
-import tailwindConfig from "../../tailwind.config.js";
+// import { txtColorFromBg, addAlpha } from "../../utils/functions";
+// import tailwindConfig from "../../tailwind.config.js";
 
 import {
   getDataFromAccountPerPeriod,

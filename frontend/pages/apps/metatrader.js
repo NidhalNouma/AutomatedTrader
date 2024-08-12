@@ -168,7 +168,7 @@ export default function Metatrader() {
                           value={lineDataPeriod}
                           setValue={setLineDataPeriod}
                           className="w-28 "
-                          selectClassName="!outline-transparent opacity-60"
+                          selectClassName="!outline-bg opacity-60"
                         />
                       </div>
                     </div>
@@ -196,7 +196,7 @@ export default function Metatrader() {
                               value={lineBarAccount}
                               setValue={setLineBarAccount}
                               className="w-28 ml-1"
-                              selectClassName="!outline-transparent opacity-80"
+                              selectClassName="!outline-bg opacity-80"
                             />
                           </SubTitle3>
 
@@ -205,7 +205,7 @@ export default function Metatrader() {
                             value={lineBarDataPeriod}
                             setValue={setLineBarDataPeriod}
                             className="w-28 "
-                            selectClassName="!outline-transparent opacity-60"
+                            selectClassName="!outline-none !outline-bg opacity-60"
                           />
                         </div>
                         <div className="w-full flex items-center justify-between mt-0">

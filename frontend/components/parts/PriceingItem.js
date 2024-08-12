@@ -58,17 +58,17 @@ function Index({ title, value, t, setSuccess, i }) {
     <div
       className={`w-full px-2 h-full bg-bg  rounded-lg ${
         value?.standout
-          ? " bg-gradient-to-b from-primary/40 from-10% via-bg via-80% to-bgt to-90% "
-          : " bg-gradient-to-b from-primary/10 from-10% via-bg via-50% to-bgt to-90% "
+          ? " bg-gradient-to-b from-primary/30 from-10% via-bgt via-80% to-bgt to-90% "
+          : " bg-gradient-to-b from-primary/10 from-10% via-bgt via-80% to-bgt to-90% "
       }`}
     >
       <div className="p-8 rounded-xl h-full flex flex-col">
         <div className="flex w-full justify-center">
-          <h4 className="bg-transparent rounded-lg text-title outline outline-dashed outline-accent px-4 py-1 text-base font-bold uppercase">
+          <h4 className="bg-transparent rounded-lg text-title outline outline-dashed outline-1 outline-text/80 px-4 py-1 text-base font-bold uppercase">
             {title}
           </h4>
         </div>
-        <h5 className="text-7xl font-extrabold pb-0 pt-4 text-secondary text-center">
+        <h5 className="text-7xl font-extrabold pb-0 pt-6 text-primary/80 text-center">
           ${value.price}
           <small className="text-lg">/{t}</small>
         </h5>
@@ -110,16 +110,13 @@ function Index({ title, value, t, setSuccess, i }) {
         {expend && (
           <div className="mb-6 flex flex-col text-sm items-start justify-center">
             <Ppricing>
-              <GiRobotLeg
-                className="h-4 w-4 mr-1 text-accent"
-                strokeWidth="10"
-              />
+              <GiRobotLeg className="h-4 w-4 mr-1 text-text" strokeWidth="10" />
               Automate Tradingview
             </Ppricing>
             {value.advancedWebhook && (
               <Ppricing>
                 <GiLevelTwo
-                  className="h-4 w-4 mr-1 text-accent"
+                  className="h-4 w-4 mr-1 text-text"
                   strokeWidth="10"
                 />
                 Advanced webhook
@@ -127,7 +124,7 @@ function Index({ title, value, t, setSuccess, i }) {
             )}
             <Ppricing>
               <AiOutlineFundProjectionScreen
-                className="h-4 w-4 mr-2 text-accent"
+                className="h-4 w-4 mr-2 text-text"
                 strokeWidth="10"
               />
               {value.accounts > 1
@@ -138,7 +135,7 @@ function Index({ title, value, t, setSuccess, i }) {
             </Ppricing>
             <Ppricing>
               <RiExternalLinkFill
-                className="h-4 w-4 mr-2 text-accent"
+                className="h-4 w-4 mr-2 text-text"
                 strokeWidth="0"
               />
               {value.webhooks > 1
@@ -149,7 +146,7 @@ function Index({ title, value, t, setSuccess, i }) {
             </Ppricing>
             <Ppricing>
               <AiOutlineAlert
-                className="h-4 w-4 mr-2 text-accent"
+                className="h-4 w-4 mr-2 text-text"
                 strokeWidth="10"
               />
               {value.alerts > 1
@@ -159,7 +156,7 @@ function Index({ title, value, t, setSuccess, i }) {
                 : "N/A"}
             </Ppricing>
             <Ppricing>
-              <GiChart className="h-4 w-4 mr-2 text-accent" strokeWidth="20" />
+              <GiChart className="h-4 w-4 mr-2 text-text" strokeWidth="20" />
               MT4 & MT5 EA
             </Ppricing>
 
@@ -167,7 +164,7 @@ function Index({ title, value, t, setSuccess, i }) {
               <Ppricing>
                 {" "}
                 <TbBrandTelegram
-                  className="h-4 w-4 mr-2 text-accent"
+                  className="h-4 w-4 mr-2 text-text"
                   strokeWidth="3"
                 />
                 Telegram Notifications
@@ -176,7 +173,7 @@ function Index({ title, value, t, setSuccess, i }) {
             {value.discord && (
               <Ppricing>
                 <TbBrandDiscord
-                  className="h-4 w-4 mr-2 text-accent"
+                  className="h-4 w-4 mr-2 text-text"
                   strokeWidth="5"
                 />
                 Discord Notifications (Coming soon)
@@ -185,20 +182,20 @@ function Index({ title, value, t, setSuccess, i }) {
             {value.manualTrade && (
               <Ppricing>
                 <TbManualGearbox
-                  className="h-4 w-4 mr-2 text-accent"
+                  className="h-4 w-4 mr-2 text-text"
                   strokeWidth="3"
                 />
                 Manual automation
               </Ppricing>
             )}
             <Ppricing>
-              <BiSupport className="h-4 w-4 mr-2 text-accent" strokeWidth="1" />
+              <BiSupport className="h-4 w-4 mr-2 text-text" strokeWidth="1" />
               24/7 Support
             </Ppricing>
             {value.shareAlerts && (
               <Ppricing>
                 <MdOutlineScreenShare
-                  className="h-4 w-4 mr-2 text-accent"
+                  className="h-4 w-4 mr-2 text-text"
                   strokeWidth="0"
                 />
                 Share Alerts (Coming soon)

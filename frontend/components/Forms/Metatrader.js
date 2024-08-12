@@ -30,7 +30,7 @@ export default function NewAccountForm({ close }) {
         <ButtonGroup>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+            className={`capitalize !text-sm rounded-lg bg-bg w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
               type === "mt4" &&
               "text-btn bg-primary hover:!bg-primary hover:text-btn"
             }`}
@@ -40,7 +40,7 @@ export default function NewAccountForm({ close }) {
           </Button_>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg  w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-dashed outline-primary ${
+            className={`capitalize !text-sm rounded-lg bg-bg  w-24 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
               type === "mt5" &&
               "text-btn bg-primary hover:!bg-primary hover:text-btn"
             }`}

@@ -1,104 +1,52 @@
 import { useState, useEffect, Fragment } from "react";
-import Sidenav from "../Features/SideNav";
-import MainWithHeader from "../Features/mainLayout/MainWithHeader";
-import { GetMTAPIAccountsContext } from "../hooks/MTAccountsApi";
-import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
-import { GetWebhookContext } from "../hooks/WebHook";
 
-import { MdWaterfallChart, MdOutlineCandlestickChart } from "react-icons/md";
-import { SubTitle, Title } from "../components/ui/Text";
-// import { PlusIcon, PlayIcon } from "@heroicons/react/outline";
-
-import { Button as ButtonP } from "../components/ui/Button";
-import Table from "../Features/DataAndCharts/Table";
-import BestWorseTrades from "../Features/DataAndCharts/BestWorseTrades";
-import CalendarTrades from "../Features/DataAndCharts/Calander";
-import { Modal as Modal1 } from "../components/ui/Modal";
-import { Select as Select1 } from "../components/ui/Input";
-import OpenTrade from "../Features/tradesManual/Open";
-import UpgradeMsg from "../Features/UpgradeMsg";
-
-import TradesWelcome from "../Features/WelcomeSection/Trades";
-import { PlayVideoPopup } from "../components/ui/Video";
-import { videosUrls } from "../utils/constant";
+import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 
 export default function TradesPage() {
-  const { mtAPIAccounts, getMTAPIData } = GetMTAPIAccountsContext();
-  const data = getMTAPIData();
-  const { fullUser } = GetFullUserContext();
+  // const { mtAPIAccounts, getMTAPIData } = GetMTAPIAccountsContext();
+  // const data = getMTAPIData();
+  // const { fullUser } = GetFullUserContext();
 
-  const [open, setOpen] = useState(false);
-  const [openUpg, setOpenUpg] = useState(false);
+  // const [open, setOpen] = useState(false);
+  // const [openUpg, setOpenUpg] = useState(false);
 
-  const { webhooks } = GetWebhookContext();
-  const [filtredData, setFilteredData] = useState([]);
+  // const { webhooks } = GetWebhookContext();
+  // const [filtredData, setFilteredData] = useState([]);
 
-  const options = [
-    "All",
-    ...mtAPIAccounts.map((account) => account.accountDisplayName),
-  ];
-  const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
-  const [account, setAccount] = useState(options[0]);
-  const [wh, setWh] = useState(optionsWh[0]);
+  // const options = [
+  //   "All",
+  //   ...mtAPIAccounts.map((account) => account.accountDisplayName),
+  // ];
+  // const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
+  // const [account, setAccount] = useState(options[0]);
+  // const [wh, setWh] = useState(optionsWh[0]);
 
-  useEffect(() => {
-    // console.log(account, datai);
-    if (account === "All" && wh === "All") setFilteredData(data);
-    else {
-      let fdata = data;
-      // console.log(account, fdata);
-      if (account !== "All")
-        fdata = fdata.filter((v) => v.accountDisplayName === account);
-      if (wh !== "All")
-        fdata = fdata.filter(
-          (v) =>
-            v.clientId?.indexOf(webhooks[optionsWh.indexOf(wh) - 1]?.id) >= 0
-        );
-      // fdata = fdata.filter(
-      //   (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
-      // );
-      setFilteredData(fdata);
-    }
-  }, [account, wh, mtAPIAccounts]);
+  // useEffect(() => {
+  //   // console.log(account, datai);
+  //   if (account === "All" && wh === "All") setFilteredData(data);
+  //   else {
+  //     let fdata = data;
+  //     // console.log(account, fdata);
+  //     if (account !== "All")
+  //       fdata = fdata.filter((v) => v.accountDisplayName === account);
+  //     if (wh !== "All")
+  //       fdata = fdata.filter(
+  //         (v) =>
+  //           v.clientId?.indexOf(webhooks[optionsWh.indexOf(wh) - 1]?.id) >= 0
+  //       );
+  //     // fdata = fdata.filter(
+  //     //   (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
+  //     // );
+  //     setFilteredData(fdata);
+  //   }
+  // }, [account, wh, mtAPIAccounts]);
 
   return (
-    <>
-      <Modal1
-        open={open}
-        close={() => {
-          setOpen(false);
-        }}
-      >
-        <OpenTrade close={() => setOpen(false)} />
-      </Modal1>
-      <UpgradeMsg open={openUpg} close={() => setOpenUpg(false)}></UpgradeMsg>
+    <Fragment>
+      <MainLayoutWithHeader page="trades" title="Trades"></MainLayoutWithHeader>
 
-      <Sidenav cpath="trades" />
-      <MainWithHeader>
+      {/* <div>
         <div className="flex justify-between items-center">
-          {/* <div className="flex items-start"> */}
-          <div className="flex items-center">
-            <Title>Trades</Title>
-
-            {data?.length > 0 && (
-              <PlayVideoPopup
-                className="aspect-video w-[100%] mx-auto rounded-xl border-0 border-text-p"
-                src={videosUrls.tradePage}
-              />
-            )}
-          </div>
-
-          <ButtonP
-            className="" // !bg-transparent !px-1 !rounded !border-b-[4px] border-primary "
-            onClick={() => {
-              const sub = fullUser.subObj;
-              if (sub && sub.manualTrade) setOpen(true);
-              else setOpenUpg(true);
-            }}
-            icon={<MdWaterfallChart className="h-4 w-4" />}
-          >
-            Open Trade
-          </ButtonP>
         </div>
 
         {mtAPIAccounts.length > 0 ? (
@@ -147,7 +95,7 @@ export default function TradesPage() {
             <TradesWelcome />
           </div>
         )}
-      </MainWithHeader>
-    </>
+      </div> */}
+    </Fragment>
   );
 }

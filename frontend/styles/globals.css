@@ -6,26 +6,28 @@
 @layer base {
 
     :root {
-      --text-color: 100 3% 75%;
-      --title-color: 200 3% 75%;
+      --text-color: 240 7% 67;
+      --title-color: 240 7% 87%;
+
       --bg-color: 40 5% 5%;
       --bg-2-color: 2 0% 2%;
 
       --text-light-color: 2 0% 95%;
       --text-dark-color: 5 1% 5%;
 
-      --long-color: 120 100% 18%;
+      --long-color: 120 100% 40%;
       --short-color: 360 100% 70%;
 
-      --profit-color: 139 75% 20%;
-      --loss-color: 360 74% 52%;
+      --profit-color: 148 50% 45%;
+      --loss-color: 340 80% 45%;
 
-      --chart-text-color: hsla(100, 3%, 75%, 0.6);
+      --chart-text-color: hsl(100, 3%, 75%);
     }
     
     :root[class~="dark"] {
-      --text-color: 100 3% 35%;
-      --title-color: 200 3% 15%;
+      --text-color: 240 7% 27%;
+      --title-color: 240 7% 20%;
+
       --bg-color: 5 1% 85%;
       --bg-2-color: 2 0% 95%;
 
@@ -34,12 +36,11 @@
 
       --long-color: 120 100% 18%;
       --short-color: 360 100% 70%;
-
-      --profit-color: 139 75% 20%;
-      --loss-color: 360 74% 52%;
-
-
-      --chart-text-color: hsla(100, 3%, 35%, 0.6);
+ 
+      --profit-color: 148 50% 35%;
+      --loss-color: 340 80% 35%;
+      
+      --chart-text-color: hsl(100, 3%, 35%);
     }
 
 

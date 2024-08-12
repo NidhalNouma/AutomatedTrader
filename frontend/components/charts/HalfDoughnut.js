@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, registerables } from "chart.js";
 import TooltipComponent from "./Tooltips";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(...registerables);
 
 const HalfDoughnutChart = ({ children, className, data, labels, colors }) => {
   const chartRef = useRef(null);

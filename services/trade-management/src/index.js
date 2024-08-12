@@ -15,15 +15,15 @@ app.use(express.json({ limit: "50mb" }));
 app.use(bodyParser.text({ limit: "50mb" }));
 app.use(cors());
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  message: "Too many requests from this IP, please try again later.", // Custom message
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+//   message: "Too many requests from this IP, please try again later.", // Custom message
+//   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+//   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+// });
 
-app.use(limiter);
+// app.use(limiter);
 
 app.post("/metatrader", async (req, res) => {
   const accountSrc = "metatrader";

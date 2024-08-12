@@ -37,8 +37,8 @@ function MyApp({ Component, pageProps }) {
           </title>
           <meta
             name="viewport"
-            content="initial-scale=1.0, width=device-width"
-          />
+            content="width=device-width, initial-scale=1, maximum-scale=1"
+          ></meta>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400;500;600;700&family=Shippori+Antique&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap"

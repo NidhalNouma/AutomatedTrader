@@ -41,19 +41,18 @@ export default function Membership() {
           pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale1 />}
 
         <div className="w-full flex flex-col mb-8 bg-bgt mt-8">
-          <div className="mb-6 p-3 mx-auto rounded-lg outline outline-dashed outline-primary/40 outline-offset-4">
+          <div className="flex items-center justify-between w-full max-w-md mb-6 p-3 mx-auto rounded-lg outline outline-1 outline-dashed outline-primary/40 outline-offset-4">
             <ButtonText
-              className={`text-title/80 capitalize !px-6 !text-lg font-semibold hover:bg-transparent hover:text-title ${
+              className={`text-title/80 capitalize  !text-lg font-semibold hover:bg-transparent hover:text-title ${
                 ty === 1 && "text-primary hover:text-primary"
               }`}
               active={ty === 1}
               onClick={() => setTy(1)}
             >
               Monthly
-              {/* <span className="ml-1 hidden md:block">Pricing</span> */}
             </ButtonText>
             <ButtonText
-              className={`text-title/80 capitalize !px-6 !text-lg font-semibold hover:bg-transparent hover:text-title ${
+              className={`text-title/80 capitalize  !text-lg font-semibold hover:bg-transparent hover:text-title ${
                 ty === 2 && "text-primary hover:text-primary"
               }`}
               active={ty === 2}
@@ -61,7 +60,7 @@ export default function Membership() {
             >
               Annually
               <span
-                className={`ml-1 text-xs text-success itranslate-y-2 ${
+                className={`hidden sm:block ml-1 text-xs text-success itranslate-y-2 ${
                   ty === 2 && "!text-primary hover:text-primary"
                 }`}
               >
@@ -69,7 +68,7 @@ export default function Membership() {
               </span>
             </ButtonText>
             <ButtonText
-              className={`text-title/80 capitalize !px-6 !text-lg font-semibold hover:bg-transparent hover:text-title ${
+              className={`text-title/80 capitalize  !text-lg font-semibold hover:bg-transparent hover:text-title ${
                 ty === 3 && "text-primary hover:text-primary"
               }`}
               active={ty === 3}
@@ -78,7 +77,7 @@ export default function Membership() {
             >
               Lifetime
               <span
-                className={`ml-1 text-xs text-success itranslate-y-2 ${
+                className={`hidden sm:block ml-1 text-xs text-success itranslate-y-2 ${
                   ty === 3 && "!text-primary hover:text-primary"
                 }`}
               >

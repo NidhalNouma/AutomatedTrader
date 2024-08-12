@@ -68,7 +68,7 @@ export const RoundedButton = ({
     <Spinner className={" text-text/60 " + spinnerClassName} />
   ) : (
     <button
-      className={`flex items-center justify-center text-text/60 outline-dashed outline-offset-2 outline-text/20 h-9 aspect-square rounded-full p-0.5 hover:bg-current/10 ${className}  `}
+      className={`flex items-center justify-center text-text/60 outline-dashed outline-1 outline-offset-2 outline-text/20 h-9 aspect-square rounded-full p-0.5 hover:bg-current/10 ${className}  `}
       onClick={async (e) => {
         if (typeof onClick !== "function") return;
         setSpin(true);

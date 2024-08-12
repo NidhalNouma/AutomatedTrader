@@ -1,31 +1,12 @@
 import { Line } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  LineElement,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  Filler,
-} from "chart.js";
+import { Chart as ChartJS, registerables } from "chart.js";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { addAlpha } from "../../utils/functions";
 import TooltipComponent from "./Tooltips";
 import PropTypes from "prop-types";
 
-ChartJS.register(
-  LineElement,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(...registerables);
 
 const ChartJSLineBar = ({ data, className }) => {
   const { theme } = useTheme();
@@ -112,8 +93,11 @@ const ChartJSLineBar = ({ data, className }) => {
     scales: {
       x: {
         ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
+          color: addAlpha(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--chart-text-color"
+            ),
+            0.6
           ),
           padding: 0,
         },
@@ -129,8 +113,11 @@ const ChartJSLineBar = ({ data, className }) => {
         max: yAxisMax,
         display: false,
         ticks: {
-          color: getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
+          color: addAlpha(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--chart-text-color"
+            ),
+            0.6
           ),
           padding: 0,
         },
