@@ -1,23 +1,21 @@
-import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, registerables } from "chart.js";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { useTheme } from "../../contexts/ThemeContext";
-import { addAlpha } from "../../utils/functions";
-import TooltipComponent from "./Tooltips";
+import React, { Fragment, useMemo } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import PropTypes from "prop-types";
+import { useTheme } from "../../contexts/ThemeContext";
+import TooltipComponent from "./Tooltips";
+import { addAlpha } from "../../utils/functions";
 
-ChartJS.register(...registerables);
-
-const ChartJSLine = ({ data, className }) => {
+const RechartJSLine = ({ data, className, chartId }) => {
   const { theme } = useTheme();
-  const chartRef = useRef(null);
-  const [tooltipInfo, setTooltipInfo] = useState({
-    visible: false,
-    title: "",
-    labels: [],
-    position: { x: 0, y: 0 },
-  });
 
+  // Calculate max and min for Y-axis
   const maxAbsValue = Math.max(
     ...data.flatMap((dataset) =>
       dataset.data.map((value) => (value ? Math.abs(value) : 0))
@@ -27,240 +25,135 @@ const ChartJSLine = ({ data, className }) => {
   const yAxisMax = maxAbsValue + margin;
   const yAxisMin = -maxAbsValue - margin;
 
-  useEffect(() => {
-    const chart = chartRef.current;
-    if (chart) {
-      chart.data.datasets.forEach((dataset) => {
-        const gradient = chart.ctx.createLinearGradient(0, 0, 0, chart.height);
-        gradient.addColorStop(0, addAlpha(dataset.borderColor, 0.5));
-        gradient.addColorStop(0.1, addAlpha(dataset.borderColor, 0.2));
-        gradient.addColorStop(0.4, addAlpha(dataset.borderColor, 0));
-        dataset.backgroundColor = gradient;
+  const processedData = useMemo(() => {
+    return data[0].labels.map((label, index) => {
+      const dataPoint = { label };
+      data.forEach((dataset) => {
+        dataPoint[dataset.label] = dataset.data[index];
       });
-      chart.update();
+      return dataPoint;
+    });
+  }, [data]);
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <TooltipComponent
+          visible={true}
+          title={label}
+          labels={payload.map((item) => ({
+            text: `${item.name}: ${item.value}`,
+            backgroundColor: item.fill,
+            borderColor: item.stroke,
+          }))}
+        />
+      );
     }
-  }, [chartRef, tooltipInfo]);
 
-  const chartData = {
-    labels: data[0].labels,
-    datasets: data.map((dataset) => ({
-      ...dataset,
-      borderColor: dataset.color,
-      pointRadius: 3,
-      pointBackgroundColor: dataset.color,
-      pointHoverRadius: 2,
-      fill: true,
-      pointRadius: dataset.data.map((point, index) => {
-        if (index === dataset.data.length - 1) return 3;
-        return 1;
-      }),
-      pointBackgroundColor: dataset.color,
-      pointHoverRadius: dataset.data.map((point, index) => {
-        return 2;
-      }),
-    })),
-  };
-
-  const crosshairPlugin = {
-    id: "crosshairPlugin",
-    afterDatasetsDraw: (chart) => {
-      if (chart.tooltip?._active && chart.tooltip._active.length) {
-        const ctx = chart.ctx;
-        const activePoint = chart.tooltip._active[0];
-        const { x } = activePoint.element;
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x, chart.chartArea.top);
-        ctx.lineTo(x, chart.chartArea.bottom);
-        ctx.lineWidth = 1;
-        ctx.setLineDash([5, 5]);
-
-        const color = addAlpha(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
-          ),
-          0.3
-        );
-        ctx.strokeStyle = color;
-        ctx.stroke();
-        ctx.restore();
-      }
-    },
-  };
-
-  const horizontalLinePlugin = {
-    id: "horizontalLinePlugin",
-    afterDraw: (chart) => {
-      const ctx = chart.ctx;
-      const yScale = chart.scales.y;
-      const yValue = 0;
-      if (yScale?.getPixelForValue) {
-        const yPixel = yScale.getPixelForValue(yValue);
-
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(chart.chartArea.left, yPixel);
-        ctx.lineTo(chart.chartArea.right, yPixel);
-        ctx.lineWidth = 1;
-        ctx.setLineDash([5, 5]);
-        const color = addAlpha(
-          getComputedStyle(document.documentElement).getPropertyValue(
-            "--chart-text-color"
-          ),
-          0.1
-        );
-        ctx.strokeStyle = color;
-        ctx.stroke();
-        ctx.restore();
-      }
-    },
-  };
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        ticks: {
-          color: addAlpha(
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--chart-text-color"
-            ),
-            0.6
-          ),
-          padding: 0,
-        },
-        grid: {
-          display: false,
-        },
-        border: {
-          display: false,
-        },
-      },
-      y: {
-        min: yAxisMin,
-        max: yAxisMax,
-        display: false,
-        ticks: {
-          color: addAlpha(
-            getComputedStyle(document.documentElement).getPropertyValue(
-              "--chart-text-color"
-            ),
-            0.6
-          ),
-          padding: 0,
-        },
-        grid: {
-          //   display: false,
-          callback: function (value) {
-            return value === 0 ? "1" : "";
-          },
-        },
-        border: {
-          display: false,
-        },
-      },
-    },
-    interaction: {
-      mode: "nearest",
-      intersect: false,
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-        position: "nearest",
-        external: (context) => {
-          const { chart, tooltip } = context;
-
-          if (tooltip.opacity === 0) {
-            setTooltipInfo((prev) => {
-              if (prev.visible) {
-                return {
-                  visible: false,
-                  title: "",
-                  labels: [],
-                  position: { x: 0, y: 0 },
-                };
-              }
-              return prev;
-            });
-            return;
-          }
-
-          const title = tooltip.title.length ? tooltip.title[0] : "";
-          const labels = tooltip.body.map((b, i) => ({
-            text: b.lines[0],
-            backgroundColor: tooltip.labelColors[i].backgroundColor,
-            borderColor: tooltip.labelColors[i].borderColor,
-          }));
-
-          const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
-
-          const newTooltipInfo = {
-            visible: true,
-            title,
-            labels,
-            position: {
-              x: positionX + tooltip.caretX,
-              y: positionY + tooltip.caretY,
-            },
-          };
-
-          setTooltipInfo((prev) => {
-            if (
-              prev.title !== newTooltipInfo.title ||
-              prev.position.x !== newTooltipInfo.position.x ||
-              prev.position.y !== newTooltipInfo.position.y ||
-              JSON.stringify(prev.labels) !==
-                JSON.stringify(newTooltipInfo.labels)
-            ) {
-              return newTooltipInfo;
-            }
-            return prev;
-          });
-        },
-      },
-    },
-    elements: {
-      line: {
-        tension: 0.25,
-        borderWidth: 4,
-      },
-      point: {
-        borderWidth: 2,
-        hoverBorderWidth: 2,
-      },
-    },
+    return null;
   };
 
   return (
     <Fragment>
       {theme && (
-        <Line
-          className={`w-full h-full ${className}`}
-          ref={chartRef}
-          data={chartData}
-          options={options}
-          plugins={[crosshairPlugin, horizontalLinePlugin]}
-        />
+        <Fragment>
+          <svg style={{ position: "absolute", width: 0, height: 0 }}>
+            <defs>
+              {data.map((dataset, index) => (
+                <linearGradient
+                  key={index}
+                  id={`gradientStroke-${chartId}-${index}`} // Ensure unique ID
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop
+                    offset="0%"
+                    style={{
+                      stopColor: addAlpha(
+                        getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--chart-text-color"),
+                        1
+                      ),
+                      stopOpacity: 1,
+                    }}
+                  />
+                  <stop
+                    offset="100%"
+                    style={{ stopColor: dataset.color, stopOpacity: 1 }}
+                  />
+                </linearGradient>
+              ))}
+              <filter id="glow" x="-100%" y="-100%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+          </svg>
+
+          <ResponsiveContainer className={`w-full h-full ${className}`}>
+            <LineChart data={processedData}>
+              <XAxis
+                axisLine={false}
+                dataKey="label"
+                tickLine={false}
+                tick={(props) => {
+                  const { x, y, payload } = props;
+                  return (
+                    <text
+                      className="text-xs fill-text/60 text-center w-full"
+                      x={x}
+                      y={y}
+                      dy={16}
+                      textAnchor="end"
+                    >
+                      {payload.value}
+                    </text>
+                  );
+                }}
+              />
+              <YAxis hide={true} domain={[yAxisMin, yAxisMax]} />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={{
+                  stroke: addAlpha(
+                    getComputedStyle(document.documentElement).getPropertyValue(
+                      "--chart-text-color"
+                    ),
+                    0.3
+                  ),
+                  strokeWidth: 2,
+                  strokeDasharray: "5 5",
+                }}
+              />
+              {data.map((dataset, index) => (
+                <Line
+                  key={dataset.label}
+                  type="monotone"
+                  dataKey={dataset.label}
+                  stroke={`url(#gradientStroke-${chartId}-${index})`} // Apply the unique gradient
+                  strokeLinecap="round"
+                  strokeWidth={7}
+                  activeDot={{ stroke: dataset.color, strokeWidth: 0 }}
+                  dot={false}
+                  // filter="url(#glow)" // Apply the glow effect
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
+        </Fragment>
       )}
-      <TooltipComponent
-        className="custom-tooltip"
-        visible={tooltipInfo.visible}
-        title={tooltipInfo.title}
-        labels={tooltipInfo.labels}
-        position={tooltipInfo.position}
-      />
     </Fragment>
   );
 };
 
-ChartJSLine.propTypes = {
-  dataset: PropTypes.arrayOf(
+RechartJSLine.propTypes = {
+  data: PropTypes.arrayOf(
     PropTypes.shape({
       labels: PropTypes.arrayOf(PropTypes.string).isRequired,
       color: PropTypes.string.isRequired,
@@ -268,6 +161,7 @@ ChartJSLine.propTypes = {
       data: PropTypes.arrayOf(PropTypes.number).isRequired,
     })
   ).isRequired,
+  // chartId: PropTypes.string.isRequired,
 };
 
-export default ChartJSLine;
+export default RechartJSLine;

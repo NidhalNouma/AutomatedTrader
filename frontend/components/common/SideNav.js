@@ -19,7 +19,7 @@ function Content({ children, fixed }) {
   return (
     <Fragment>
       {fixed ? (
-        <div className="sidenav md:flex hidden bg-bgt z-50 sticky top-0 left-0 overflow-y-scroll hideScrollbar">
+        <div className="sidenav md:flex hidden bg-bgt z-0 sticky top-0 left-0 overflow-y-scroll hideScrollbar">
           {children}
         </div>
       ) : (

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/charts": "^2.1.2",
     "@chargebee/chargebee-js-react-wrapper": "^0.6.3",
     "@heroicons/react": "^1.0.6",
     "@lottiefiles/react-lottie-player": "^3.5.2",
@@ -40,6 +41,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-select": "^5.8.0",
+    "recharts": "^2.12.7",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
     "video-react": "^0.16.0",

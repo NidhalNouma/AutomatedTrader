@@ -297,7 +297,7 @@ export default function Metatrader() {
                         </SubTitle3>
                       </div>
                       <HalfDoughnutChart
-                        className="px-6 -translate-y-16"
+                        className="px-6 "
                         labels={["loss", "profit"]}
                         data={[
                           halfDoughnutData.lossPercentage,
@@ -312,7 +312,7 @@ export default function Metatrader() {
                           ).getPropertyValue("--profit-color")})`,
                         ]}
                       >
-                        <div className=" bg-bgt w-3/4 aspect-square rounded-full flex flex-col items-center justify-center">
+                        <div className=" aspect-square rounded-full flex flex-col items-center justify-center">
                           <div className="text-lg font-bold text-text">
                             Profit trades
                           </div>
@@ -347,7 +347,7 @@ export default function Metatrader() {
                           </Link>
                         )}
                       </div>
-                      <div className="w-4/12 flex flex-col items-center">
+                      <div className="w-4/12 hidden sm:flex flex-col items-center">
                         <DoughnutChart
                           className="px-6 "
                           labels={doughnutData.labels}

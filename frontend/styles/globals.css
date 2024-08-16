@@ -6,8 +6,8 @@
 @layer base {
 
     :root {
-      --text-color: 240 7% 67;
-      --title-color: 240 7% 87%;
+      --text-color: 240 7% 70;
+      --title-color: 240 7% 77%;
 
       --bg-color: 40 5% 5%;
       --bg-2-color: 2 0% 2%;
@@ -25,8 +25,8 @@
     }
     
     :root[class~="dark"] {
-      --text-color: 240 7% 27%;
-      --title-color: 240 7% 20%;
+      --text-color: 240 7% 20%;
+      --title-color: 240 7% 27%;
 
       --bg-color: 5 1% 85%;
       --bg-2-color: 2 0% 95%;

@@ -47,7 +47,7 @@ export function SearchModal({ children, placeholder }) {
       <div className="relative">
         <div
           onClick={() => setOpen(true)}
-          className="hover:bg-text/10 flex items-center p-2 md:px-4 md:py-2 rounded-full md:rounded-lg outline outline-offset-2 outline-dashed outline-text/20 cursor-pointer"
+          className="hover:bg-text/10 flex items-center p-2 md:px-4 md:py-2 rounded-full md:rounded-lg outline outline-1 outline-offset-2 outline-dashed outline-text/20 cursor-pointer"
         >
           <SearchIcon className="h-5 aspect-square text-text/60" />
           <span className="ml-1 text-sm truncate text-text/60 hidden md:block">

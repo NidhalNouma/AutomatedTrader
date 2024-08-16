@@ -146,3 +146,113 @@ function Table({ data }) {
 }
 
 export default Table;
+
+export function LiveTradeTable({ data, className }) {
+  return (
+    <Fragment>
+      <div className="relative rounded-md">
+        <div
+          className={`overflow-x-auto w-full hideScrollbar rounded-md bg-bgt ${className}`}
+        >
+          <table className="table-auto w-full">
+            <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
+              <tr>
+                <th className="px-2 sm:px-2">WebHook</th>
+                <th className="px-2 sm:px-2">App</th>
+                <th className="py-3 px-2 sm:px-0">Symbol</th>
+                <th className="px-2 sm:px-0">Type</th>
+                <th className="px-2 sm:px-0">Lot</th>
+                <th className="px-2 sm:px-0 truncate">Open Price</th>
+                <th className="px-2 sm:px-0 truncate">Current Price</th>
+                <th className="px-2 sm:px-0 truncate">Time</th>
+                <th className="px-2 sm:px-0">Profit</th>
+              </tr>
+            </thead>
+            <tbody className="">
+              {data
+                ?.slice(0)
+                .reverse()
+                ?.map((v, i) => {
+                  // const { webhooks } = GetWebhookContext();
+                  // const id = v.clientId ? v.clientId.split("_")[2] : null;
+                  const wh = false; //webhooks.find((w) => w.id === id?.toString());
+                  const colors = tailwindConfig.theme.colors;
+
+                  // const txtColor = txtColorFromBg(
+                  //   wh?.color,
+                  //   // colors["text-p"],
+                  //   colors["bgt"],
+                  //   colors["text-h"]
+                  // );
+
+                  return (
+                    <Fragment key={i}>
+                      <ModalWithHeader
+                        title="Trade"
+                        className=""
+                        trigger={
+                          <tr
+                            className={`${
+                              v.type == "buy"
+                                ? "hover:bg-long/10"
+                                : v.type == "sell"
+                                ? "hover:bg-short/10"
+                                : ""
+                            }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
+                          >
+                            <td className=" font-bold py-1.5 mr-auto capitalize">
+                              {v.webhook || "NA"}
+                            </td>
+                            <td className=" font-bold py-1.5 mr-auto capitalize">
+                              {v.src}
+                            </td>
+                            <td className=" font-bold py-1.5 mr-auto">
+                              {v.symbol}
+                            </td>
+                            <td className={` `}>
+                              <span
+                                className={`px-2 py-[0.15rem] rounded font-bold capitalize ${
+                                  v.type == "buy"
+                                    ? "bg-long/10 text-long"
+                                    : v.type == "sell"
+                                    ? "bg-short/10 text-short"
+                                    : ""
+                                }`}
+                              >
+                                {v.type}
+                              </span>
+                            </td>
+                            <td className="">{Number(v.volume)?.toFixed(2)}</td>
+                            {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
+                            <td className="">{v.openPrice}</td>
+                            <td className="">{v.currentPrice}</td>
+                            <td className=" ">
+                              {moment(v.openTime).format("yyyy MM DD HH:mm:ss")}
+                            </td>
+                            <td
+                              className={`font-bold ${
+                                v.profit > 0
+                                  ? "text-profit"
+                                  : v.profit < 0
+                                  ? "text-loss"
+                                  : ""
+                              } `}
+                            >
+                              ${Number(v.profit).toFixed(2)}
+                            </td>
+                          </tr>
+                        }
+                      >
+                        <TradeDetails data={v} />
+                      </ModalWithHeader>
+                    </Fragment>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-bgt opacity-30 rounded-b-md z-10"></div> */}
+      </div>
+    </Fragment>
+  );
+}

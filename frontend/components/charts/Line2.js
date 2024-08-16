@@ -1,205 +1,195 @@
-import dynamic from "next/dynamic";
-import { Transition } from "react-transition-group";
+import React, { Fragment, useMemo } from "react";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import PropTypes from "prop-types";
+import { useTheme } from "../../contexts/ThemeContext";
+import TooltipComponent from "./Tooltips";
 import { addAlpha } from "../../utils/functions";
+import { curveCardinal } from "d3-shape";
 
-// Dynamically import the ResponsiveLine component from Nivo
-const ResponsiveLine = dynamic(
-  () => import("@nivo/line").then((mod) => mod.ResponsiveLine),
-  {
-    ssr: false,
-  }
-);
+const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
+  const { theme } = useTheme();
 
-const tooltipStyles = {
-  entering: { opacity: 0, transform: "scale(0.9)" },
-  entered: { opacity: 1, transform: "scale(1)" },
-  exiting: { opacity: 1, transform: "scale(1)" },
-  exited: { opacity: 0, transform: "scale(0.9)" },
-};
+  // Calculate max and min for Y-axis
+  const maxAbsValue = Math.max(
+    ...data.flatMap((dataset) =>
+      dataset.data.map((value) => (value ? Math.abs(value) : 0))
+    )
+  );
+  const margin = maxAbsValue * 0.1;
+  const yAxisMax = maxAbsValue + margin;
+  let yAxisMin = -maxAbsValue - margin;
+  if (minYAxis !== null) yAxisMin = minYAxis;
 
-const CustomTooltip = ({ point, className }) => (
-  <Transition in appear timeout={150}>
-    {(state) => (
-      <div
-        className={
-          "p-2 shadow-md rounded-lg max-w-xs text-text/60 bg-bg/60 backdrop-blur-xl " +
-          className
-        }
-        style={{
-          transition: "opacity 150ms ease-in-out, transform 150ms ease-in-out",
-          ...tooltipStyles[state],
-        }}
-      >
-        <strong>{point.serieId}</strong>
-        <br />
-        <span>{`x: ${point.data.xFormatted || point.data.x}`}</span>
-        <br />
-        <span>{`y: ${point.data.yFormatted || point.data.y}`}</span>
-      </div>
-    )}
-  </Transition>
-);
+  const processedData = useMemo(() => {
+    return data[0].labels.map((label, index) => {
+      const dataPoint = { label };
+      data.forEach((dataset) => {
+        dataPoint[dataset.label] = dataset.data[index];
+      });
+      return dataPoint;
+    });
+  }, [data]);
 
-const data = [
-  {
-    id: "japan",
-    color: "hsl(178, 70%, 50%)",
-    data: [
-      { x: "plane", y: 105 },
-      { x: "helicopter", y: 217 },
-      { x: "boat", y: 1 },
-      { x: "train", y: 54 },
-      { x: "subway", y: 84 },
-      { x: "bus", y: -208 },
-      { x: "car", y: -178 },
-      { x: "moto", y: 241 },
-      { x: "bicycle", y: 38 },
-      { x: "horse", y: 73 },
-      { x: "skateboard", y: 155 },
-      { x: "others", y: 89 },
-    ],
-  },
-  {
-    id: "france",
-    color: "hsl(220, 70%, 50%)",
-    data: [
-      { x: "plane", y: 145 },
-      { x: "helicopter", y: 90 },
-      { x: "boat", y: 30 },
-      { x: "train", y: -100 },
-      { x: "subway", y: 75 },
-      { x: "bus", y: 50 },
-      { x: "car", y: 200 },
-      { x: "moto", y: 80 },
-      { x: "bicycle", y: 60 },
-      { x: "horse", y: 40 },
-      { x: "skateboard", y: 95 },
-      { x: "others", y: 110 },
-    ],
-  },
-];
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <TooltipComponent
+          visible={true}
+          title={label}
+          labels={payload.map((item) => ({
+            text: `${item.name}: ${item.value}`,
+            backgroundColor: item.fill,
+            borderColor: item.stroke,
+          }))}
+        />
+      );
+    }
 
-const MyResponsiveLine = () => {
-  // Identify the last points in each series
-  const lastPoints = data.map((series) => series.data[series.data.length - 1]);
-  const firstPoints = data.map((series) => series.data[0]);
+    return null;
+  };
 
-  const gradientDefs = data.map((series) => ({
-    id: `gradient-${series.id}`,
-    type: "linearGradient",
-    colors: [
-      { offset: 0, color: addAlpha(series.color, 0.5) },
-      { offset: 20, color: addAlpha(series.color, 0.2) },
-      { offset: 50, color: addAlpha(series.color, 0) },
-      { offset: 100, color: addAlpha(series.color, 0) },
-    ],
-  }));
+  let labels = data[0].labels;
 
-  const fillRules = data.map((series) => ({
-    match: { id: series.id },
-    id: `gradient-${series.id}`,
-  }));
+  const cardinal = curveCardinal.tension(0.9);
 
   return (
-    <ResponsiveLine
-      data={data}
-      margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
-      xScale={{ type: "point" }}
-      yScale={{
-        type: "linear",
-        min: "auto",
-        max: "auto",
-        stacked: true,
-        reverse: false,
-      }}
-      curve="natural"
-      axisTop={null}
-      axisRight={null}
-      axisBottom={{
-        tickSize: 5,
-        tickPadding: 10,
-        tickRotation: 0,
-        legend: "transportation",
-        legendOffset: 36,
-        legendPosition: "middle",
-        tickValues: "every 1", // Adjust based on your needs
-        format: (value) => value, // Customize the format as needed
-      }}
-      axisLeft={null}
-      enableGridX={false}
-      enableGridY={false}
-      colors={{ scheme: "paired" }}
-      lineWidth={5}
-      pointSize={10}
-      pointColor={{ from: "color", modifiers: [] }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor" }}
-      pointLabelYOffset={-12}
-      enableArea={true}
-      areaOpacity={1}
-      areaBlendMode="normal"
-      defs={gradientDefs}
-      fill={fillRules}
-      enableTouchCrosshair={true}
-      useMesh={true}
-      // Custom point rendering to show only the last points
-      pointSymbol={(props) => {
-        const { datum, color } = props;
-        const isLastPoint = lastPoints.some(
-          (point) => point.x === datum.x && point.y === datum.y
-        );
-        const isFirst = firstPoints.some(
-          (point) => point.x === datum.x && point.y === datum.y
-        );
-        return isLastPoint ? (
-          <circle
-            r={5}
-            fill={color}
-            style={{
-              filter: "url(#glow)",
-            }}
-          />
-        ) : isFirst ? (
-          <circle
-            r={2}
-            fill={color}
-            style={{
-              filter: "url(#glow)",
-            }}
-          />
-        ) : null;
-      }}
-      tooltip={({ point }) => <CustomTooltip point={point} />}
-      theme={{
-        crosshair: {
-          line: {
-            className: "custom-crosshair-line", // Add custom class name
-            stroke: "rgba(100, 100, 100, 0.4)",
-            strokeWidth: 2,
-            strokeDasharray: "6 6",
-          },
-        },
-        axis: {
-          ticks: {
-            line: {
-              stroke: "hsl(var(--text-color)", // Custom color for ticks
-              strokeWidth: 1,
-              opacity: 0.4,
-            },
-            text: {
-              fill: "hsl(var(--text-color)", // Custom color for tick labels
-              opacity: 0.4,
-            },
-          },
-          legend: {
-            text: {
-              fill: "transparent",
-            },
-          },
-        },
-      }}
-    />
+    <Fragment>
+      {theme && (
+        <Fragment>
+          <svg style={{ position: "absolute", width: 0, height: 0 }}>
+            <defs>
+              {data.map((dataset, index) => (
+                <linearGradient
+                  key={index}
+                  id={`gradientStroke-${chartId}-${index}`} // Ensure unique ID
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="0%"
+                >
+                  <stop
+                    offset="0%"
+                    style={{
+                      stopColor: addAlpha(
+                        getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--chart-text-color"),
+                        1
+                      ),
+                      stopOpacity: 1,
+                    }}
+                  />
+                  <stop
+                    offset="100%"
+                    style={{ stopColor: dataset.color, stopOpacity: 1 }}
+                  />
+                </linearGradient>
+              ))}
+              <filter id="glow" x="-100%" y="-100%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+                <feMerge>
+                  <feMergeNode in="coloredBlur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+          </svg>
+
+          <div className={className}>
+            <ResponsiveContainer className={`w-full h-full `}>
+              <LineChart data={processedData}>
+                <XAxis
+                  hide={true}
+                  axisLine={false}
+                  dataKey="label"
+                  tickLine={false}
+                  tick={(props) => {
+                    const { x, y, payload } = props;
+                    return (
+                      <text
+                        className="text-xs fill-text/60 text-center w-full"
+                        x={x}
+                        y={y}
+                        dy={16}
+                        textAnchor="end"
+                      >
+                        {new Date(payload.value).getMonth() +
+                          1 +
+                          "/" +
+                          new Date(payload.value).getDate()}
+                        {/* {payload.value} */}
+                      </text>
+                    );
+                  }}
+                />
+                <YAxis hide={true} domain={[yAxisMin, yAxisMax]} />
+                <Tooltip
+                  content={<CustomTooltip />}
+                  cursor={{
+                    stroke: addAlpha(
+                      getComputedStyle(
+                        document.documentElement
+                      ).getPropertyValue("--chart-text-color"),
+                      0.3
+                    ),
+                    strokeWidth: 2,
+                    strokeDasharray: "5 5",
+                  }}
+                />
+                {data.map((dataset, index) => (
+                  <Line
+                    key={dataset.label}
+                    type={cardinal}
+                    dataKey={dataset.label}
+                    stroke={dataset.color} // Apply the unique gradient
+                    strokeLinecap="round"
+                    strokeWidth={2}
+                    activeDot={{ stroke: dataset.color, strokeWidth: 0 }}
+                    dot={false}
+                    // filter="url(#glow)" // Apply the glow effect
+                  />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="h-[0.02rem] rounded-full w-full bg-text/30"></div>
+          <div className="w-full flex items-center justify-between mt-0.5">
+            <span className="text-xs text-text/60">
+              {new Date(labels[0]).getMonth() +
+                1 +
+                "/" +
+                new Date(labels[0]).getDate()}
+            </span>
+            <span className="text-xs text-text/60">
+              {new Date(labels[labels.length - 1]).getMonth() +
+                1 +
+                "/" +
+                new Date(labels[labels.length - 1]).getDate()}
+            </span>
+          </div>
+        </Fragment>
+      )}
+    </Fragment>
   );
 };
 
-export default MyResponsiveLine;
+RechartJSLine.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      labels: PropTypes.arrayOf(PropTypes.string).isRequired,
+      color: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      data: PropTypes.arrayOf(PropTypes.number).isRequired,
+    })
+  ).isRequired,
+  // chartId: PropTypes.string.isRequired,
+};
+
+export default RechartJSLine;

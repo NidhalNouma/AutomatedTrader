@@ -1,12 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, registerables } from "chart.js";
+import React, { useMemo, useState } from "react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import TooltipComponent from "./Tooltips";
 
-ChartJS.register(...registerables);
-
-const DoughnutChart = ({ children, className, data, labels, colors }) => {
-  const chartRef = useRef(null);
+const RechartDoughnut = ({ children, className, data, labels, colors }) => {
   const [tooltipInfo, setTooltipInfo] = useState({
     visible: false,
     title: "",
@@ -14,90 +10,66 @@ const DoughnutChart = ({ children, className, data, labels, colors }) => {
     position: { x: 0, y: 0 },
   });
 
-  const options = {
-    cutout: "90%",
-    // rotation: -90,
-    // circumference: 180,
-    plugins: {
-      legend: {
-        display: false,
-      },
+  const processedData = useMemo(() => {
+    return data.map((value, index) => ({
+      value,
+      name: labels[index],
+    }));
+  }, [data, labels]);
 
-      tooltip: {
-        enabled: false,
-        position: "nearest",
-        external: (context) => {
-          const { chart, tooltip } = context;
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const tooltipData = payload[0];
+      const newTooltipInfo = {
+        visible: true,
+        title: tooltipData.name,
+        labels: [
+          {
+            text: `${tooltipData.name}: ${tooltipData.value}`,
+            backgroundColor: tooltipData.fill,
+            borderColor: tooltipData.stroke,
+          },
+        ],
+        position: { x: tooltipData.cx, y: tooltipData.cy },
+      };
 
-          if (tooltip.opacity === 0) {
-            setTooltipInfo((prev) => {
-              if (prev.visible) {
-                return {
-                  visible: false,
-                  title: "",
-                  labels: [],
-                  position: { x: 0, y: 0 },
-                };
-              }
-              return prev;
-            });
-            return;
-          }
+      setTooltipInfo((prev) => {
+        if (
+          prev.title !== newTooltipInfo.title ||
+          prev.position.x !== newTooltipInfo.position.x ||
+          prev.position.y !== newTooltipInfo.position.y ||
+          JSON.stringify(prev.labels) !== JSON.stringify(newTooltipInfo.labels)
+        ) {
+          return newTooltipInfo;
+        }
+        return prev;
+      });
+    }
 
-          const title = tooltip.title.length ? tooltip.title[0] : "";
-          const labels = tooltip.body.map((b, i) => ({
-            text: b.lines[0],
-            backgroundColor: tooltip.labelColors[i].backgroundColor,
-            borderColor: tooltip.labelColors[i].borderColor,
-          }));
-
-          const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;
-
-          const newTooltipInfo = {
-            visible: true,
-            title,
-            labels,
-            position: {
-              x: positionX + tooltip.caretX,
-              y: positionY + tooltip.caretY,
-            },
-          };
-
-          setTooltipInfo((prev) => {
-            if (
-              prev.title !== newTooltipInfo.title ||
-              prev.position.x !== newTooltipInfo.position.x ||
-              prev.position.y !== newTooltipInfo.position.y ||
-              JSON.stringify(prev.labels) !==
-                JSON.stringify(newTooltipInfo.labels)
-            ) {
-              return newTooltipInfo;
-            }
-            return prev;
-          });
-        },
-      },
-    },
-  };
-
-  const chartData = {
-    labels: labels,
-    datasets: [
-      {
-        data: data,
-        backgroundColor: colors,
-        borderColor: colors,
-        borderWidth: 1,
-      },
-    ],
+    return null;
   };
 
   return (
-    <div
-      className={className}
-      style={{ position: "relative", width: "100%", height: "100%" }}
-    >
-      <Doughnut ref={chartRef} data={chartData} options={options} />
+    <div className="relative w-full aspect-square">
+      <ResponsiveContainer
+        className={`w-full aspect-square relative ${className}`}
+      >
+        <PieChart>
+          <Pie
+            data={processedData}
+            innerRadius="90%" // To create the doughnut effect
+            outerRadius="100%"
+            dataKey="value"
+            startAngle={0}
+            endAngle={360}
+            cornerRadius={10} // For rounded edges
+          >
+            {processedData.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={colors[index]} stroke="none" />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
       <div
         className="flex flex-col items-center justify-center w-1/2 aspect-square rounded-full"
         style={{
@@ -109,16 +81,8 @@ const DoughnutChart = ({ children, className, data, labels, colors }) => {
       >
         {children}
       </div>
-
-      <TooltipComponent
-        className="custom-tooltip"
-        visible={tooltipInfo.visible}
-        title={tooltipInfo.title}
-        labels={tooltipInfo.labels}
-        position={tooltipInfo.position}
-      />
     </div>
   );
 };
 
-export default DoughnutChart;
+export default RechartDoughnut;

@@ -1,101 +1,357 @@
 import { useState, useEffect, Fragment } from "react";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
+import { SubTitle3 } from "../components/ui/Text";
+
+import { LiveTradeTable } from "../components/parts/TradesTable";
+import LineChart from "../components/charts/Line2";
+import DoughnutChart from "../components/charts/Doughnut";
+
+import { TradesData } from "../hooksp/TradeHook";
 
 export default function TradesPage() {
-  // const { mtAPIAccounts, getMTAPIData } = GetMTAPIAccountsContext();
-  // const data = getMTAPIData();
-  // const { fullUser } = GetFullUserContext();
-
-  // const [open, setOpen] = useState(false);
-  // const [openUpg, setOpenUpg] = useState(false);
-
-  // const { webhooks } = GetWebhookContext();
-  // const [filtredData, setFilteredData] = useState([]);
-
-  // const options = [
-  //   "All",
-  //   ...mtAPIAccounts.map((account) => account.accountDisplayName),
-  // ];
-  // const optionsWh = ["All", ...webhooks.map((wh) => wh.name)];
-  // const [account, setAccount] = useState(options[0]);
-  // const [wh, setWh] = useState(optionsWh[0]);
-
-  // useEffect(() => {
-  //   // console.log(account, datai);
-  //   if (account === "All" && wh === "All") setFilteredData(data);
-  //   else {
-  //     let fdata = data;
-  //     // console.log(account, fdata);
-  //     if (account !== "All")
-  //       fdata = fdata.filter((v) => v.accountDisplayName === account);
-  //     if (wh !== "All")
-  //       fdata = fdata.filter(
-  //         (v) =>
-  //           v.clientId?.indexOf(webhooks[optionsWh.indexOf(wh) - 1]?.id) >= 0
-  //       );
-  //     // fdata = fdata.filter(
-  //     //   (v) => v.ID === webhooks[optionsWh.indexOf(wh) - 1]?.id
-  //     // );
-  //     setFilteredData(fdata);
-  //   }
-  // }, [account, wh, mtAPIAccounts]);
+  const {
+    trades,
+    liveTrades,
+    liveTradesData,
+    tradesDay,
+    nbTrades,
+    nbProfits,
+    nbLosses,
+    nbLots,
+    totalProfit,
+    totalPositiveProfit,
+    totalNegativeProfit,
+  } = TradesData();
+  // console.log(liveTradesData, tradesDay, nbTrades);
 
   return (
     <Fragment>
-      <MainLayoutWithHeader page="trades" title="Trades"></MainLayoutWithHeader>
-
-      {/* <div>
-        <div className="flex justify-between items-center">
-        </div>
-
-        {mtAPIAccounts.length > 0 ? (
-          <Fragment>
-            <div className="flex mt-4 w-full items-center justify-start">
-              <div className="flex flex-col ">
-                <span className="text-sm text-text-p pl-1">Webhook</span>
-
-                <Select1
-                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
-                  name=""
-                  helper=""
-                  size="sm"
-                  options={optionsWh}
-                  value={wh}
-                  setValue={(i) => setWh(optionsWh[i])}
-                />
+      <MainLayoutWithHeader page="trades" title="Trades">
+        {liveTrades?.length > 0 && (
+          <section className="mt-2">
+            <SubTitle3 className="">Live trades</SubTitle3>
+            <div className="flex mb-2 mt-1 gap-2">
+              <h6 className="text-text text-sm rounded px-1.5 outline outline-dashed outline-primary/60">
+                {liveTrades.length} Trades
+              </h6>
+              <h6 className="text-long text-sm rounded px-1.5 outline outline-dashed outline-long/60">
+                {liveTrades.reduce((v, t) => (t.type == "buy" ? v + 1 : v), 0)}{" "}
+                Buy
+              </h6>
+              <h6 className="text-short text-sm rounded px-1.5 outline outline-dashed outline-short/60">
+                {liveTrades.reduce((v, t) => (t.type == "sell" ? v + 1 : v), 0)}{" "}
+                Sell
+              </h6>
+            </div>
+            <div className="w-full flex flex-col md:flex-row max-w-full">
+              <div className="w-full sm:w-9/12">
+                <LiveTradeTable data={liveTrades} className="h-48" />
               </div>
-              <div className="flex flex-col ml-4">
-                <span className="text-sm text-text-p pl-1">Account</span>
 
-                <Select1
-                  className="!m-0 !outline-none !focus:outline-none !border-bga !focus:border-bga"
-                  name=""
-                  helper=""
-                  size="sm"
-                  options={options}
-                  value={account}
-                  setValue={(i) => setAccount(options[i])}
-                />
+              <div className=" flex flex-col items-center p-2 mx-auto">
+                <DoughnutChart
+                  className=""
+                  labels={liveTradesData.labels}
+                  data={liveTradesData.data}
+                  colors={liveTradesData.colors}
+                >
+                  <div className=" bg-bgt aspect-square rounded-full flex flex-col items-center justify-center">
+                    <div className="text-sm text-text">Profit</div>
+                    <span className="text-xl font-semibold text-profit">
+                      {liveTradesData.data.reduce((p, v) => p + v, 0) || 0}
+                    </span>
+                  </div>
+                </DoughnutChart>
+                <div className="grid grid-cols-3 gap-2 mt-4">
+                  {liveTradesData.data?.map((pair, i) => (
+                    <div
+                      key={i}
+                      className="text-text text-xs font-semibold flex items-center"
+                    >
+                      <div
+                        className="h-2 aspect-square rounded-full mr-1"
+                        style={{
+                          backgroundColor: liveTradesData.colors[i],
+                        }}
+                      ></div>{" "}
+                      {liveTradesData.labels[i]}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-
-            <div className="mt-4">
-              <BestWorseTrades data={filtredData} />
-            </div>
-            <div className="mt-6">
-              <CalendarTrades data={filtredData} />
-            </div>
-            <div className="mt-6">
-              <Table data={filtredData} accounts={mtAPIAccounts} />
-            </div>
-          </Fragment>
-        ) : (
-          <div className="mt-6 w-full">
-            <TradesWelcome />
-          </div>
+          </section>
         )}
-      </div> */}
+
+        <section className="w-full mt-6">
+          <SubTitle3 className="mt-6">History trades</SubTitle3>
+          <section className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+            {nbTrades?.length > 0 && (
+              <div className="bg-primary/[0.05] p-2 rounded-lg">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Trades{" "}
+                    <span className="text-primary text-sm">
+                      {nbTrades[0].data.reduce((v, p) => v + p, 0)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long  text-sm">
+                        {nbTrades[2].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short  text-sm">
+                        {nbTrades[1].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div>
+                  <LineChart
+                    className=" h-36"
+                    data={nbTrades}
+                    chartId="nb"
+                    minYAxis={0}
+                  />
+                </div>
+              </div>
+            )}
+            {nbProfits?.length > 0 && (
+              <div className="border-primary/30 rounded-lg border-none p-2 bg-profit/[0.05]">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Win trades{" "}
+                    <span className="text-profit text-sm">
+                      {nbProfits[0].data.reduce((v, p) => v + p, 0)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {nbProfits[2].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {nbProfits[1].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="">
+                  <LineChart
+                    className=" h-36"
+                    data={nbProfits}
+                    chartId="nbProfit"
+                    minYAxis={0}
+                  />
+                </div>
+              </div>
+            )}
+            {nbLosses?.length > 0 && (
+              <div className=" rounded-lg  p-2 bg-loss/[0.05]">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Loss trades{" "}
+                    <span className="text-loss text-sm">
+                      {nbLosses[0].data.reduce((v, p) => v + p, 0)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {nbLosses[2].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {nbLosses[1].data.reduce((v, p) => v + p, 0)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="">
+                  <LineChart
+                    className=" h-36"
+                    data={nbLosses}
+                    chartId="nbProfit"
+                    minYAxis={0}
+                  />
+                </div>
+              </div>
+            )}
+
+            {nbLots?.length > 0 && (
+              <div className="bg-primary/[0.05] p-2 rounded-lg">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Volume{" "}
+                    <span className="text-primary text-sm">
+                      {Number(
+                        nbLots[0].data.reduce((v, p) => v + p, 0)
+                      ).toFixed(2)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {Number(
+                          nbLots[2].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {Number(
+                          nbLots[1].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div>
+                  <LineChart
+                    className=" h-36"
+                    data={nbLots}
+                    chartId="nbLots"
+                    minYAxis={0}
+                  />
+                </div>
+              </div>
+            )}
+
+            {totalProfit?.length > 0 && (
+              <div className="bg-primary/[0.05] p-2 rounded-lg">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Total profit{" "}
+                    <span className="text-primary text-sm">
+                      {Number(
+                        totalProfit[0].data.reduce((v, p) => v + p, 0)
+                      ).toFixed(2)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {Number(
+                          totalProfit[2].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {Number(
+                          totalProfit[1].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div>
+                  <LineChart
+                    className=" h-36"
+                    data={totalProfit}
+                    chartId="totalProfit"
+                  />
+                </div>
+              </div>
+            )}
+
+            {totalPositiveProfit?.length > 0 && (
+              <div className="border-primary/30 rounded-lg border-none p-2 bg-profit/[0.05]">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Profit trades{" "}
+                    <span className="text-profit text-sm">
+                      {Number(
+                        totalPositiveProfit[0].data.reduce((v, p) => v + p, 0)
+                      ).toFixed(2)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {Number(
+                          totalPositiveProfit[2].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {Number(
+                          totalPositiveProfit[1].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="">
+                  <LineChart
+                    className=" h-36"
+                    data={totalPositiveProfit}
+                    chartId="profitProfit"
+                  />
+                </div>
+              </div>
+            )}
+            {totalNegativeProfit?.length > 0 && (
+              <div className=" rounded-lg  p-2 bg-loss/[0.05]">
+                <div className="text-xs text-text/80">
+                  <h6 className="">
+                    Loss trades{" "}
+                    <span className="text-loss text-sm">
+                      {Number(
+                        totalNegativeProfit[0].data.reduce((v, p) => v + p, 0)
+                      ).toFixed(2)}
+                    </span>
+                  </h6>
+                  <div className="flex items-center">
+                    <h6 className=" mr-2">
+                      Long{" "}
+                      <span className="text-long text-sm">
+                        {Number(
+                          totalNegativeProfit[2].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                    <h6 className="">
+                      Short{" "}
+                      <span className="text-short text-sm">
+                        {Number(
+                          totalNegativeProfit[1].data.reduce((v, p) => v + p, 0)
+                        ).toFixed(2)}
+                      </span>
+                    </h6>
+                  </div>
+                </div>
+                <div className="">
+                  <LineChart
+                    className=" h-36"
+                    data={totalNegativeProfit}
+                    chartId="lossProfit"
+                  />
+                </div>
+              </div>
+            )}
+          </section>
+        </section>
+      </MainLayoutWithHeader>
     </Fragment>
   );
 }

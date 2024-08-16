@@ -57,7 +57,19 @@ module.exports = {
       loss: "hsl(var(--loss-color) / <alpha-value>)",
     },
   },
-  plugins: [require("daisyui"), require("@tailwindcss/line-clamp")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/line-clamp"),
+    function ({ addBase, theme }) {
+      addBase({
+        ":root": {
+          "--clr-primary": theme("colors.primary"),
+          "--clr-secondary": theme("colors.secondary"),
+          "--clr-accent": theme("colors.accent"),
+        },
+      });
+    },
+  ],
 
   daisyui: {
     themes: [

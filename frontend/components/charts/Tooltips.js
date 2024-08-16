@@ -5,17 +5,17 @@ const TooltipComponent = ({ visible, title, labels, position, className }) => {
 
   return (
     <div
-      className={`${className} bg-bg/60 backdrop-blur-xl rounded-lg text-text`}
+      className={`${className} bg-bg/60 backdrop-blur-xl rounded-lg text-text `}
       style={{
-        position: "absolute",
-        left: position.x,
-        top: position.y,
+        // position: "absolute",
+        // left: position.x,
+        // top: position.y,
         opacity: 1,
         pointerEvents: "none",
         transform: "translate(-50%, 0)",
         transition: "all .1s ease",
         padding: "8px",
-        zIndex: 1000,
+        zIndex: 55,
       }}
     >
       {title && <span className="text-sm text-title/80">{title}</span>}
