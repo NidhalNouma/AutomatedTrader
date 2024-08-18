@@ -7,7 +7,7 @@ export function MainLayout({ children, page }) {
   return (
     <div className="flex w-full mx-auto h-auto">
       <SideNav page={page} />
-      <div className="grow flex flex-col ">
+      <div className="grow flex flex-col max-w-full">
         <Navbar page={page} className="px-2 md:pr-8" />
         <main className="grow min-h-[80vh] mt-1 px-2 md:pr-8 mb-10">
           {children}

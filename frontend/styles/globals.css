@@ -182,23 +182,32 @@ input[type="number"] {
 /* Calandar */
 
 .react-calendar button:hover {
-  background-color: transparent !important;
+  background-color: hsl(var(--title-color) / 0.08) !important;
+  border-radius: 10px;
 }
+.react-calendar__navigation button:hover {
+  background-color: transparent !important;
+  border-radius: 10px;
+}
+
 .react-calendar__tile--active {
   background: transparent !important;
   /* border: 2px solid #fff !important; */
   font-weight: bold !important;
 }
 .react-calendar__month-view__days__day--weekend {
-  color: hsl(220 13% 69% / var(--tw-text-opacity)) !important;
+  color: hsl(var(--title-color) / 0.3) !important;
 }
-.react-calendar__month-view__weekdays__weekday abbr {
-  color: #fff !important;
-  text-decoration: none !important;
+.react-calendar__tile--active {
+  color: var(--clr-accent) !important;
 }
 .react-calendar__navigation button {
-  color: #fff !important;
   background-color: transparent !important;
+}
+.react-calendar__month-view__weekdays__weekday abbr {
+  color: hsl(var(--title-color) / 0.8) !important;
+  text-decoration: none !important;
+  font-weight: bold !important;
 }
 .react-calendar__tile--now {
   background: transparent !important;

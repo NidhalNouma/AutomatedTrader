@@ -1,10 +1,13 @@
 import { Fragment, useState, useEffect } from "react";
 import { ModalWithHeader } from "../ui/Modal.js";
 import moment from "moment";
+import { ButtonText } from "../ui/Button.js";
 
 import tailwindConfig from "../../tailwind.config.js";
 
 import { TradeDetails } from "./TradeDetails.js";
+
+import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 
 function Table({ data }) {
   return (
@@ -150,9 +153,9 @@ export default Table;
 export function LiveTradeTable({ data, className }) {
   return (
     <Fragment>
-      <div className="relative rounded-md">
+      <div className="relative rounded-md max-w-full overflow-hidden">
         <div
-          className={`overflow-x-auto w-full hideScrollbar rounded-md bg-bgt ${className}`}
+          className={`overflow-x-auto w-full max-w-full hideScrollbar rounded-md bg-bgt ${className}`}
         >
           <table className="table-auto w-full">
             <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
@@ -198,20 +201,20 @@ export function LiveTradeTable({ data, className }) {
                                 : v.type == "sell"
                                 ? "hover:bg-short/10"
                                 : ""
-                            }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
+                            }  cursor-pointer text-sm py-1.5 text-center text-text/60`}
                           >
-                            <td className=" font-bold py-1.5 mr-auto capitalize">
+                            <td className=" font-bold mr-auto capitalize">
                               {v.webhook || "NA"}
                             </td>
-                            <td className=" font-bold py-1.5 mr-auto capitalize">
+                            <td className=" font-bold mr-auto capitalize">
                               {v.src}
                             </td>
-                            <td className=" font-bold py-1.5 mr-auto">
+                            <td className=" font-bold  py-1.5 mr-auto">
                               {v.symbol}
                             </td>
                             <td className={` `}>
                               <span
-                                className={`px-2 py-[0.15rem] rounded font-bold capitalize ${
+                                className={`px-2 rounded font-bold capitalize ${
                                   v.type == "buy"
                                     ? "bg-long/10 text-long"
                                     : v.type == "sell"
@@ -226,11 +229,11 @@ export function LiveTradeTable({ data, className }) {
                             {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
                             <td className="">{v.openPrice}</td>
                             <td className="">{v.currentPrice}</td>
-                            <td className=" ">
+                            <td className="truncate px-1 ">
                               {moment(v.openTime).format("yyyy MM DD HH:mm:ss")}
                             </td>
                             <td
-                              className={`font-bold ${
+                              className={`font-bold pl-1 ${
                                 v.profit > 0
                                   ? "text-profit"
                                   : v.profit < 0
@@ -251,7 +254,147 @@ export function LiveTradeTable({ data, className }) {
             </tbody>
           </table>
         </div>
-        {/* <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-10 bg-bgt opacity-30 rounded-b-md z-10"></div> */}
+      </div>
+    </Fragment>
+  );
+}
+export function HistoryTradeTable({ data: entryData, className }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 15;
+
+  // Calculate the current page data
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = entryData
+    .slice(indexOfFirstRow, indexOfLastRow)
+    .reverse();
+
+  const totalPages = Math.ceil(entryData.length / rowsPerPage);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    }
+  };
+
+  return (
+    <Fragment>
+      <div className="relative rounded-md max-w-full overflow-hidden">
+        <div
+          className={`overflow-x-auto w-full max-w-full hideScrollbar rounded-md bg-bgt ${className}`}
+        >
+          <table className="table-auto w-full">
+            <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
+              <tr>
+                <th className="px-2 sm:px-2">WebHook</th>
+                <th className="px-2 sm:px-2">App</th>
+                <th className="py-3 px-2 sm:px-0">Symbol</th>
+                <th className="px-2 sm:px-0">Type</th>
+                <th className="px-2 sm:px-0">Lot</th>
+                <th className="px-2 sm:px-0">Profit</th>
+                <th className="px-2 sm:px-0 truncate">Open Price</th>
+                <th className="px-2 sm:px-0 truncate">Close Price</th>
+                <th className="px-2 sm:px-0 truncate">Open Time</th>
+                <th className="px-2 sm:px-0 truncate">Close Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentData.map((v, i) => (
+                <Fragment key={i}>
+                  <ModalWithHeader
+                    title="Trade"
+                    className=""
+                    trigger={
+                      <tr
+                        className={`${
+                          v.type == "buy"
+                            ? "hover:bg-long/10"
+                            : v.type == "sell"
+                            ? "hover:bg-short/10"
+                            : ""
+                        }  cursor-pointer text-sm py-1.5 text-center text-text/60`}
+                      >
+                        <td className=" font-bold mr-auto capitalize">
+                          {v.webhook || "NA"}
+                        </td>
+                        <td className=" font-bold mr-auto capitalize">
+                          {v.src}
+                        </td>
+                        <td className=" font-bold  py-1.5 mr-auto">
+                          {v.symbol}
+                        </td>
+                        <td className={` `}>
+                          <span
+                            className={`px-2 rounded font-bold capitalize ${
+                              v.type == "buy"
+                                ? "bg-long/10 text-long"
+                                : v.type == "sell"
+                                ? "bg-short/10 text-short"
+                                : ""
+                            }`}
+                          >
+                            {v.type}
+                          </span>
+                        </td>
+                        <td className="">
+                          {Number(v.volume || v.lot)?.toFixed(2)}
+                        </td>
+                        <td
+                          className={`font-bold pl-1 ${
+                            v.profit > 0
+                              ? "text-profit"
+                              : v.profit < 0
+                              ? "text-loss"
+                              : ""
+                          } `}
+                        >
+                          ${Number(v.profit).toFixed(2)}
+                        </td>
+                        <td className="">{v.openPrice || v.open}</td>
+                        <td className="">{v.closePrice || v.open}</td>
+                        <td className="truncate px-1 ">
+                          {moment(v.openTime).format("yyyy MM DD HH:mm:ss")}
+                        </td>
+                        <td className="truncate px-1 ">
+                          {moment(v.closeTime).format("yyyy MM DD HH:mm:ss")}
+                        </td>
+                      </tr>
+                    }
+                  >
+                    <TradeDetails data={v} />
+                  </ModalWithHeader>
+                </Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex justify-between items-center mt-3 max-w-md mx-auto">
+          <ButtonText
+            startIcon={<MdNavigateBefore />}
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="px-3 py-1 text-text/60"
+          >
+            Previous
+          </ButtonText>
+          <span className="text-text/40 text-sm">
+            Page {currentPage} of {totalPages}
+          </span>
+          <ButtonText
+            icon={<MdNavigateNext />}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-3 py-1 text-text/60"
+          >
+            Next
+          </ButtonText>
+        </div>
       </div>
     </Fragment>
   );

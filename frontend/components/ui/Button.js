@@ -97,6 +97,7 @@ export function CloseButton({ className, onClick }) {
 export const ButtonText = ({
   className,
   icon,
+  startIcon,
   onClick,
   spinnerClassName,
   ...props
@@ -117,12 +118,13 @@ export const ButtonText = ({
         await onClick(e);
         setSpin(false);
       }}
+      startIcon={startIcon}
       endIcon={icon}
       animation={false}
       // variant="link"
       size="sm"
       responds={true}
-      className={`capitalize outline-0 bg-transparent outline-dashed outline-current hover:bg-text/10 px-2.5 !text-sm font-normal rounded-lg hover:no-underline border-none ${className}  `}
+      className={`capitalize outline-0 bg-transparent outline-dashed outline-current hover:bg-text/10 px-2.5 !text-sm font-normal rounded-lg hover:no-underline border-none disabled:bg-transparent ${className}  `}
       {...props}
     />
   );

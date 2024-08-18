@@ -251,6 +251,7 @@ export function TradesData() {
   useEffect(() => {
     let tTrades = [];
     if (mtAccounts?.length > 0) {
+      // console.log("changing .. trades");
       for (let account of mtAccounts) {
         if (account?.historyData) {
           const tr = account.historyData.map((trade) => {
