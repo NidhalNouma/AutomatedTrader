@@ -59,7 +59,7 @@ export function SignIn({}) {
       <Divider className="text-text/40 text-xs">Or</Divider>
 
       <Button
-        className="w-full bg-text/20 hover:bg-text-20 outline-text/20"
+        className="w-full bg-dark/90 hover:bg-dark text-light outline-text/20"
         onClick={async () => {
           const r = await continueWithGoogleClick();
         }}
@@ -142,7 +142,7 @@ export function SignUp({}) {
       <Divider className="text-text/40 text-xs">Or</Divider>
 
       <Button
-        className="w-full bg-text/20 hover:bg-text-20 outline-text/20"
+        className="w-full bg-dark/90 hover:bg-dark text-light outline-text/20"
         onClick={async () => {
           const r = await continueWithGoogleClick();
         }}

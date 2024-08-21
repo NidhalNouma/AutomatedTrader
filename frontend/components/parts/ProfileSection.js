@@ -14,7 +14,7 @@ function Index({ fullUser }) {
     <div className="flex items-start px-0">
       <div className="w-40 sm:w-20 aspect-square mr-3">
         <img
-          src={fullUser?.photoURL || "Images/profile.png"}
+          src={fullUser?.photoURL || "/Images/profile.png"}
           className="rounded-full w-full h-full border-1 border-text/30 object-cover"
         />
       </div>
@@ -42,7 +42,7 @@ function Index({ fullUser }) {
                 className="h-4 aspect-auto"
                 stroke="currentColor"
                 fill="currentColor"
-                stroke-width="0"
+                strokeWidth="0"
                 role="img"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ function Index({ fullUser }) {
                 className="h-4 aspect-square"
                 stroke="currentColor"
                 fill="currentColor"
-                stroke-width="0"
+                strokeWidth="0"
                 viewBox="0 0 512 512"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -87,7 +87,7 @@ function Index({ fullUser }) {
                 className="w-4 aspect-square"
                 stroke="currentColor"
                 fill="currentColor"
-                stroke-width="0"
+                strokeWidth="0"
                 viewBox="0 0 576 512"
                 xmlns="http://www.w3.org/2000/svg"
               >

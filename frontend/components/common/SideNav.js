@@ -120,7 +120,7 @@ export default function SideNav({ page, fixed = true }) {
         </div>
 
         <div className="my-1">
-          <div className="border-t-2 border-text/10"></div>
+          <div className="border-t border-text/10"></div>
         </div>
 
         <div className="text-text/60 pl-3 my-3">
@@ -235,7 +235,7 @@ export default function SideNav({ page, fixed = true }) {
         </div>
 
         <div className="my-1 /mt-auto">
-          <div className="border-t-2 border-text/10"></div>
+          <div className="border-t border-text/10"></div>
         </div>
 
         <div className="">

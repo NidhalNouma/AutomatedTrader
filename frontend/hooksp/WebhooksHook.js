@@ -596,10 +596,10 @@ export function WebhookApps(webhook) {
 
 export function ViewWebhookPage(publicId) {
   const [webhook, setWebhook] = useState([]);
-  const [alerts, setAlerts] = useState(null);
   const [error, setError] = useState("");
 
-  const [trades, setTrades] = useState([]);
+  const [alerts, setAlerts] = useState(null);
+  const [trades, setTrades] = useState(null);
 
   const [alertsData, setAlertsData] = useState(null);
 
@@ -640,5 +640,5 @@ export function ViewWebhookPage(publicId) {
     if (publicId) getWebhook();
   }, [publicId]);
 
-  return { error, webhook, alerts, alertsData };
+  return { error, webhook, trades, alerts, alertsData };
 }

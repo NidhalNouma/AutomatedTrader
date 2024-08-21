@@ -162,7 +162,7 @@ function Settings() {
                 name="User Name"
                 value={userName}
                 placeholder="@username"
-                setValue={setUserName}
+                setValue={(v) => setUserName(v.toLowerCase())}
               ></Input>
               <div className="mb-2 mt-1 w-full mx-auto max-w-xs">
                 <ToggleInline

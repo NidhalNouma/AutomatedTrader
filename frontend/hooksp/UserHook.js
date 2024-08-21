@@ -129,12 +129,13 @@ export function UpdatePublicProfileSettings() {
   const [error, setError] = useState("");
 
   const submit = async () => {
+    setError("");
     const data = {
-      userName: userName || "",
+      userName: userName.toLowerCase() || "",
       public: publicUser || "",
     };
     const r = await updateUserData(fullUser.id, data, false);
-    if (r.error) setError(r.error);
+    if (r?.error) setError(r.error);
     else if (r) getFullUser(fullUser.id);
     return r;
   };
@@ -143,16 +144,16 @@ export function UpdatePublicProfileSettings() {
 }
 
 export function PublicUser(userName) {
-  const [user, setUser] = useState(null);
-  const [webhooks, setWebhooks] = useState(null);
+  const [user, setUser] = useState("loading ...");
+  const [webhooks, setWebhooks] = useState("loading ...");
 
   async function getUserData() {
     const r = await getUserByUserName(userName);
-    if (r && r.id) {
+    if (r && r.id && r.public) {
       setUser(r);
       const w = await getUserWebhooksWithTrades(r.id, true);
       setWebhooks(w);
-    }
+    } else setUser(r);
   }
 
   useEffect(() => {

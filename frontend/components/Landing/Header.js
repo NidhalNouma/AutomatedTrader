@@ -42,7 +42,7 @@ export default function Header({ className }) {
               rel="noreferrer"
               className=" mr-10"
             >
-              <span className="text-text">
+              <span className="text-text/80">
                 <BsYoutube className="h-6 w-6" />
               </span>
             </a>
@@ -52,7 +52,7 @@ export default function Header({ className }) {
               rel="noreferrer"
               className="mr-10"
             >
-              <span className="text-text">
+              <span className="text-text/80">
                 <BsDiscord className="h-6 w-6" />
               </span>
             </a>

@@ -6,6 +6,7 @@ import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import ProfileSection from "../components/parts/ProfileSection";
 
 import { SubTitle2 } from "../components/ui/Text";
+import { Error } from "../components/ui/Alerts";
 
 import { Button, ButtonText } from "../components/ui/Button";
 
@@ -13,6 +14,12 @@ import { useUser } from "../contexts/UserContext";
 import { useWebhook } from "../contexts/WebhookContext";
 
 import WebhookChart from "../components/parts/WebhookChart";
+
+import {
+  RectangleSkeleton,
+  TextSkeleton,
+  RoundSkeleton,
+} from "../components/ui/Skeleton";
 
 function Profile() {
   const router = useRouter();
@@ -52,12 +59,43 @@ function Profile() {
 export default withAuth(Profile);
 
 export function ProfilePage({ fullUser, webhooks }) {
-  return (
+  return fullUser === null ? (
+    <Fragment>
+      <Error className="max-w-sm mx-auto mt-6">User not availble!</Error>
+    </Fragment>
+  ) : typeof fullUser === "object" && !fullUser.public ? (
+    <Fragment>
+      <Error className="max-w-sm mx-auto mt-6">User is not public!</Error>
+    </Fragment>
+  ) : (
     <div className="mt-6">
-      <ProfileSection fullUser={fullUser} />
+      {typeof fullUser === "string" ? (
+        <div className="flex items-center">
+          <RoundSkeleton className="!w-24 " />
+          <div className="grow ml-4">
+            <TextSkeleton className="w-full max-w-xs " />
+            <div className="mt-2" />
+            <TextSkeleton className="w-full max-w-xs " />
+            <div className="mt-3" />
+            <TextSkeleton className="w-full max-w-xs " />
+          </div>
+        </div>
+      ) : typeof fullUser === "object" ? (
+        <ProfileSection fullUser={fullUser} />
+      ) : (
+        <Fragment></Fragment>
+      )}
+
       <div className="mt-6">
         {/* <SubTitle2 className="">Webhooks</SubTitle2> */}
-        {webhooks?.length > 0 ? (
+        {typeof webhooks === "string" ? (
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-4">
+            <RectangleSkeleton className="" />
+            <RectangleSkeleton className="" />
+            <RectangleSkeleton className="" />
+            <RectangleSkeleton className="" />
+          </div>
+        ) : webhooks?.length > 0 ? (
           <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-4">
             {webhooks.map((webhook, i) => (
               <Fragment key={webhook.id}>

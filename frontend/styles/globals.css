@@ -6,7 +6,7 @@
 @layer base {
 
     :root {
-      --text-color: 240 7% 70;
+      --text-color: 240 7% 70%;
       --title-color: 240 7% 77%;
 
       --bg-color: 2 0% 3%;
