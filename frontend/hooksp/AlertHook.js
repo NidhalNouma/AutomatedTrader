@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { addAlpha } from "../utils/functions";
 
 export function SortAlertsByDays(alerts) {
   const [daysAlerts, setDaysAlerts] = useState([]);
@@ -28,4 +29,79 @@ export function SortAlertsByDays(alerts) {
   }, [alerts]);
 
   return { daysAlerts };
+}
+
+export function processAlerts(alerts) {
+  const result = {
+    days: [],
+    nTypes: { 0: 0, 1: 0, 2: 0, 3: 0 },
+    symbols: {},
+    apps: {},
+  };
+
+  const dayMap = {};
+
+  alerts.forEach((alert) => {
+    const date = new Date(alert.created_at.seconds * 1000); // Convert Firebase timestamp to JavaScript Date
+    const day = date.toISOString().split("T")[0]; // Extract the day in YYYY-MM-DD format
+
+    if (!dayMap[day]) {
+      dayMap[day] = {
+        day: day,
+        numberOfAlerts: 0,
+        ntype: { 0: 0, 1: 0, 2: 0, 3: 0 },
+        apps: {},
+        symbols: {},
+      };
+    }
+
+    // Update day specific data
+    dayMap[day].numberOfAlerts += 1;
+    dayMap[day].ntype[alert.type] += 1;
+
+    alert.apps.forEach((app) => {
+      dayMap[day].apps[app.accountSrc] =
+        (dayMap[day].apps[app.accountSrc] || 0) + 1;
+      result.apps[app.accountSrc] = (result.apps[app.accountSrc] || 0) + 1;
+    });
+
+    dayMap[day].symbols[alert.symbol] =
+      (dayMap[day].symbols[alert.symbol] || 0) + 1;
+
+    // Update overall data
+    result.nTypes[alert.type] += 1;
+    result.symbols[alert.symbol] = (result.symbols[alert.symbol] || 0) + 1;
+  });
+
+  result.days = Object.values(dayMap).reverse();
+
+  return result;
+}
+
+export function alertsChartDayData(days) {
+  if (!days) return [];
+  const labels = days.map((day) => day.day);
+
+  const object1 = {
+    labels: labels,
+    label: "Total alerts",
+    color: getComputedStyle(document.documentElement).getPropertyValue(
+      "--clr-primary"
+    ),
+    data: days.map((day) => day.numberOfAlerts),
+  };
+
+  const object2 = {
+    labels: labels,
+    label: "Market orders",
+    color: addAlpha(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--chart-text-color"
+      ),
+      0.3
+    ),
+    data: days.map((day) => day.ntype[0]), // Assuming ntype 1 corresponds to "Market orders"
+  };
+
+  return [object1, object2];
 }

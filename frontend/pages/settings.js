@@ -2,11 +2,15 @@ import { useState, Fragment } from "react";
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, ButtonFile, ButtonText } from "../components/ui/Button";
 import { SubTitle2, Par, Label } from "../components/ui/Text";
-import { Input } from "../components/ui/Input";
+import { Input, ToggleInline } from "../components/ui/Input";
 import { DeleteModal } from "../components/ui/Modal";
 import { Dropdown, DropdownButton } from "../components/ui/Dropdown";
+import { Error } from "../components/ui/Alerts";
 
-import { UpdateUserSettings } from "../hooksp/UserHook";
+import {
+  UpdateUserSettings,
+  UpdatePublicProfileSettings,
+} from "../hooksp/UserHook";
 import { useUser } from "../contexts/UserContext";
 
 import { SignOut } from "../hooksp/AuthHook";
@@ -33,6 +37,15 @@ export default function Settings() {
     submit,
     updatePhotoURL,
   } = UpdateUserSettings();
+
+  const {
+    userName,
+    setUserName,
+    publicUser,
+    setPublicUser,
+    submit: submitPublic,
+    error: publicError,
+  } = UpdatePublicProfileSettings();
 
   const [openDel, setOpenDel] = useState(false);
 
@@ -63,7 +76,7 @@ export default function Settings() {
               <div className="w-full max-w-xs">
                 <div className="w-xs my-1 pt-1 rounded bg-bga"></div>
                 <Input
-                  className="px-3 mb-2"
+                  className=" mb-2"
                   classNameInput="!outline-text/20"
                   name="Your name"
                   type="text"
@@ -73,7 +86,7 @@ export default function Settings() {
                 />
 
                 <Input
-                  className="px-3 mb-2"
+                  className=" mb-2"
                   classNameInput="!outline-text/20"
                   name="Your Bio"
                   value={bio}
@@ -82,7 +95,7 @@ export default function Settings() {
                   setValue={setBio}
                 ></Input>
                 <Input
-                  className="px-3 mb-2"
+                  className=" mb-2"
                   classNameInput="!outline-text/20"
                   name="TradingView Account"
                   value={tv}
@@ -90,7 +103,7 @@ export default function Settings() {
                   setValue={setTV}
                 ></Input>
                 <Input
-                  className="px-3 mb-2"
+                  className=" mb-2"
                   classNameInput="!outline-text/20"
                   name="Twitter Account"
                   value={twitter}
@@ -99,7 +112,7 @@ export default function Settings() {
                 ></Input>
 
                 <Input
-                  className="px-3 mb-2"
+                  className="mb-2"
                   classNameInput="!outline-text/20"
                   name="Youtube Channel Link"
                   value={ytURL}
@@ -108,7 +121,7 @@ export default function Settings() {
                 ></Input>
 
                 <Input
-                  className="px-3 mb-2"
+                  className="mb-2"
                   classNameInput="!outline-text/20"
                   name="Youtube Username"
                   value={ytUsername}
@@ -116,14 +129,14 @@ export default function Settings() {
                   setValue={setYtUsername}
                 ></Input>
                 <Input
-                  className="px-3 mb-2"
+                  className="mb-2"
                   classNameInput="!outline-text/20"
                   name="Your Website"
                   value={website}
                   placeholder="https://..."
                   setValue={setWebsite}
                 ></Input>
-                <div className="w-full px-3 mt-8 flex justify-center">
+                <div className="w-full mt-8 flex justify-center">
                   <Button
                     className="w-full"
                     onClick={async () => {
@@ -133,6 +146,41 @@ export default function Settings() {
                     Save changes
                   </Button>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6 p-4 bg-bg/40 rounded-lg backdrop-blur-xl">
+            <SubTitle2 className="mb-4">Public profile</SubTitle2>
+            <div className="flex flex-col w-full items-center">
+              <Input
+                className="mb-2"
+                classNameInput="!outline-text/20"
+                name="User Name"
+                value={userName}
+                placeholder="@username"
+                setValue={setUserName}
+              ></Input>
+              <div className="mb-2 mt-1 w-full mx-auto max-w-xs">
+                <ToggleInline
+                  className=""
+                  name="Public"
+                  checked={publicUser}
+                  onChange={() => setPublicUser(!publicUser)}
+                />
+              </div>
+              {publicError && (
+                <Error className="mx-auto max-w-xs mb-4">{publicError}</Error>
+              )}
+              <div className="w-full mt-2 flex justify-center max-w-xs">
+                <Button
+                  className="w-full"
+                  onClick={async () => {
+                    const r = await submitPublic();
+                  }}
+                >
+                  Save changes
+                </Button>
               </div>
             </div>
           </div>

@@ -61,7 +61,7 @@ export default function SideNav({ page, fixed = true }) {
 
   return (
     <Content fixed={fixed}>
-      <div className="py-2 px-4 mx-2 pt-7 sticky top-0 left-0 bg-bgt z-10">
+      <div className="py-2 pl-4 mx-2 pt-7 sticky top-0 left-0 bg-bgt z-10">
         <img
           className="w-full aspect-auto"
           src={

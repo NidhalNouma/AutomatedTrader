@@ -3,15 +3,25 @@ import SideNav from "../common/SideNav";
 import Navbar from "../common/NavBar";
 import { Title } from "../ui/Text";
 
+import Header from "../Landing/Header";
+
+import { useUser } from "../../contexts/UserContext";
+
 export function MainLayout({ children, page }) {
+  const { user } = useUser();
+  // let user = false;
+
   return (
     <div className="flex w-full mx-auto h-auto">
-      <SideNav page={page} />
-      <div className="grow flex flex-col max-w-full">
-        <Navbar page={page} className="px-2 md:pr-8" />
-        <main className="grow min-h-[80vh] mt-1 px-2 md:pr-8 mb-10">
-          {children}
-        </main>
+      {user && <SideNav page={page} />}
+      <div className="grow flex flex-col max-w-full px-1 sm:px-3">
+        {user ? (
+          <Navbar page={page} className="px-2 " />
+        ) : (
+          <Header className="!max-w-full !px-2" />
+        )}
+
+        <main className="grow min-h-[80vh] mt-1 px-2  mb-10">{children}</main>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { useTheme } from "../../contexts/ThemeContext";
 import TooltipComponent from "./Tooltips";
 import { addAlpha } from "../../utils/functions";
 import { curveCardinal } from "d3-shape";
+import moment from "moment";
 
 const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
   const { theme } = useTheme();
@@ -27,15 +28,80 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
   let yAxisMin = -maxAbsValue - margin;
   if (minYAxis !== null) yAxisMin = minYAxis;
 
+  const numLabels = 6; // You can change this value as needed
+
   const processedData = useMemo(() => {
-    return data[0].labels.map((label, index) => {
+    // Function to generate the last `numLabels` days with data set to 0
+    const generateEmptyData = () => {
+      return Array.from({ length: numLabels }, (_, i) => {
+        const label = moment()
+          .subtract(numLabels - 1 - i, "days")
+          .format("YYYY-MM-DD");
+        return {
+          label,
+          value: 0,
+        };
+      });
+    };
+
+    // Check if data is empty or not available
+    if (!data || data.length === 0) {
+      return generateEmptyData();
+    }
+    // Function to fill out labels and data arrays
+    const fillLabelsAndData = (labels, data) => {
+      const filledLabels = [...labels];
+      const filledData = [...data];
+
+      // If there are fewer than numLabels, fill in the missing labels and data points
+      while (filledLabels.length < numLabels) {
+        const lastLabel =
+          filledLabels.length > 0
+            ? moment(filledLabels[0], "YYYY-MM-DD")
+            : moment(); // If no labels exist, use the current date as a reference
+
+        const newLabel = lastLabel.subtract(1, "days").format("YYYY-MM-DD");
+        filledLabels.unshift(newLabel);
+        filledData.unshift(0);
+      }
+
+      return { labels: filledLabels, data: filledData };
+    };
+
+    // Process each dataset in the data array
+    const filledData = data.map((dataset) => {
+      if (dataset.labels.length === 0) {
+        // If labels array is empty, generate the last `numLabels` days with data set to 0
+        const labels = Array.from({ length: numLabels }, (_, i) =>
+          moment()
+            .subtract(numLabels - 1 - i, "days")
+            .format("YYYY-MM-DD")
+        );
+        const data = Array(numLabels).fill(0);
+        return { ...dataset, labels, data };
+      }
+
+      // Fill out labels and data arrays if they are less than numLabels
+      const { labels, data: filledData } = fillLabelsAndData(
+        dataset.labels,
+        dataset.data
+      );
+      return { ...dataset, labels, data: filledData };
+    });
+
+    // Transform the filled data into the desired format
+    const transformedData = filledData[0].labels.map((label, index) => {
       const dataPoint = { label };
-      data.forEach((dataset) => {
+      filledData.forEach((dataset) => {
         dataPoint[dataset.label] = dataset.data[index];
       });
       return dataPoint;
     });
+
+    return transformedData;
   }, [data]);
+
+  console.log(processedData);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -54,8 +120,6 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
 
     return null;
   };
-
-  let labels = data[0].labels;
 
   const cardinal = curveCardinal.tension(0.9);
 
@@ -148,7 +212,15 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
                     key={dataset.label}
                     type={cardinal}
                     dataKey={dataset.label}
-                    stroke={dataset.color} // Apply the unique gradient
+                    stroke={
+                      dataset.color ||
+                      addAlpha(
+                        getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--chart-text-color"),
+                        1
+                      )
+                    } // Apply the unique gradient
                     strokeLinecap="round"
                     strokeWidth={2}
                     activeDot={{ stroke: dataset.color, strokeWidth: 0 }}
@@ -162,16 +234,20 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
           <div className="h-[0.02rem] rounded-full w-full bg-text/30"></div>
           <div className="w-full flex items-center justify-between mt-0.5">
             <span className="text-xs text-text/60">
-              {new Date(labels[0]).getMonth() +
+              {new Date(processedData[0].label).getMonth() +
                 1 +
                 "/" +
-                new Date(labels[0]).getDate()}
+                new Date(processedData[0].label).getDate()}
             </span>
             <span className="text-xs text-text/60">
-              {new Date(labels[labels.length - 1]).getMonth() +
+              {new Date(
+                processedData[processedData.length - 1].label
+              ).getMonth() +
                 1 +
                 "/" +
-                new Date(labels[labels.length - 1]).getDate()}
+                new Date(
+                  processedData[processedData.length - 1].label
+                ).getDate()}
             </span>
           </div>
         </Fragment>

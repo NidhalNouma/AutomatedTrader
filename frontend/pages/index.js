@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <div
-      className="overflow-hidden text-black w-full min-h-screen bg-gradient-to-b from-bg/10 to-bgt/10"
+      className="text-black w-full min-h-screen bg-gradient-to-b from-bg/10 to-bgt/10"
       // style={{
       //   backgroundImage:
       //     "radial-gradient( farthest-corner at -150px -150px, rgb(10, 11, 10) 4%, black  35%);",

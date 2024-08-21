@@ -1,66 +1,73 @@
 import { Fragment, useState } from "react";
-import { PlusIcon } from "@heroicons/react/solid";
+import { useRouter } from "next/router";
 
-import Sidenav from "../Features/SideNav";
-import ProfileSection from "../Features/ProfileSection";
+import { MainLayoutWithHeader } from "../components/layout/MainLayout";
+import ProfileSection from "../components/parts/ProfileSection";
 
-import { GetUserContext, GetFullUserContext } from "../hooks/UserHook";
-import { GetWebhookContext, getMessageData } from "../hooks/WebHook";
-import { GetMTAccountsContext } from "../hooks/MTAccounts";
+import { SubTitle2 } from "../components/ui/Text";
 
-import { H1, H3, H6, Hi6 } from "../components/H";
-import MainWithHeader from "../Features/mainLayout/MainWithHeader";
-import WebhooksItem from "../components/parts/WebhookItem";
+import { Button, ButtonText } from "../components/ui/Button";
 
-import { Modal1 } from "../components/Modal";
-import ManageWebhook from "../Features/ManageWebhookAPI";
+import { useUser } from "../contexts/UserContext";
+import { useWebhook } from "../contexts/WebhookContext";
+
+import WebhookChart from "../components/parts/WebhookChart";
 
 export default function Home() {
-  const { user } = GetUserContext();
-  const { fullUser } = GetFullUserContext();
-  const { webhooks } = GetWebhookContext();
-  const { mtAccounts } = GetMTAccountsContext();
-
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const { fullUser } = useUser();
+  const { webhooks } = useWebhook();
 
   return (
-    <>
-      <Modal1
-        open={open}
-        close={() => {
-          setOpen(false);
-        }}
+    <Fragment>
+      <MainLayoutWithHeader
+        title="Profile"
+        page="profile"
+        rightSection={
+          <div className="">
+            <Button
+              className="bg-transparent hover:bg-transparent text-title"
+              onClick={() => router.push("/settings")}
+            >
+              Edit profile
+            </Button>
+            {fullUser?.userName && (
+              <Button
+                className="bg-secondary hover:bg-secondary ml-3"
+                onClick={() => router.push("/u/" + fullUser?.userName)}
+              >
+                View public profile
+              </Button>
+            )}
+          </div>
+        }
       >
-        <ManageWebhook close={() => setOpen(false)} />
-      </Modal1>
-      <Sidenav cpath="profile" />
-      <MainWithHeader>
-        <ProfileSection user={user} fullUser={fullUser} publicProfile={false} />
-        <div className="mt-6">
-          <H3 className="">Webhooks</H3>
-          {webhooks?.length > 0 ? (
-            <div className="p-2 mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-2 gap-y-4">
-              {webhooks.map(
-                (v, i) =>
-                  v.public && (
-                    <Fragment key={v.id}>
-                      <WebhooksItem
-                        webhook={v}
-                        user={user}
-                        mtAccounts={mtAccounts}
-                        forDisplay={true}
-                      />
-                    </Fragment>
-                  )
-              )}
-            </div>
-          ) : (
-            <div className="mt-3">
-              <p>No available public webhooks.</p>
-            </div>
-          )}
-        </div>
-      </MainWithHeader>
-    </>
+        <ProfilePage fullUser={fullUser} webhooks={webhooks} />
+      </MainLayoutWithHeader>
+    </Fragment>
+  );
+}
+
+export function ProfilePage({ fullUser, webhooks }) {
+  return (
+    <div className="mt-6">
+      <ProfileSection fullUser={fullUser} />
+      <div className="mt-6">
+        {/* <SubTitle2 className="">Webhooks</SubTitle2> */}
+        {webhooks?.length > 0 ? (
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-4">
+            {webhooks.map((webhook, i) => (
+              <Fragment key={webhook.id}>
+                <WebhookChart webhook={webhook} />
+              </Fragment>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-3 text-text/80">
+            <p>No available public webhooks.</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

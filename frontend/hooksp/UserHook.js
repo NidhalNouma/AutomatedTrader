@@ -3,7 +3,12 @@ import {
   updateSubsciption as updateSub,
   updateUserData,
   updateProfilePicture,
+  getUserByUserName,
 } from "../lib/users";
+import {
+  getWebhooksByUserId,
+  getUserWebhooksWithTrades,
+} from "../lib/webhooks";
 import { useUser } from "../contexts/UserContext";
 import axios from "axios";
 
@@ -43,7 +48,7 @@ export const UpdateUserSubscription = () => {
 };
 
 export const UpdateUserSettings = () => {
-  const { fullUser, setFullUser, setUser, user } = useUser();
+  const { fullUser, getFullUser, setUser, user } = useUser();
 
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
@@ -75,8 +80,9 @@ export const UpdateUserSettings = () => {
       youtubeUsername: ytUsername || "",
       website: website || "",
     };
-    const r = await updateUserData(fullUser.id, data);
-    if (r) setFullUser(r);
+
+    const r = await updateUserData(fullUser.id, data, false);
+    if (r && !r.error) getFullUser(fullUser.id);
     return r;
   };
 
@@ -113,3 +119,47 @@ export const UpdateUserSettings = () => {
     updatePhotoURL,
   };
 };
+
+export function UpdatePublicProfileSettings() {
+  const { fullUser, setFullUser, getFullUser } = useUser();
+
+  const [userName, setUserName] = useState(fullUser.userName || "");
+  const [publicUser, setPublicUser] = useState(fullUser.public || false);
+
+  const [error, setError] = useState("");
+
+  const submit = async () => {
+    const data = {
+      userName: userName || "",
+      public: publicUser || "",
+    };
+    const r = await updateUserData(fullUser.id, data, false);
+    if (r.error) setError(r.error);
+    else if (r) getFullUser(fullUser.id);
+    return r;
+  };
+
+  return { userName, setUserName, publicUser, setPublicUser, submit, error };
+}
+
+export function PublicUser(userName) {
+  const [user, setUser] = useState(null);
+  const [webhooks, setWebhooks] = useState(null);
+
+  async function getUserData() {
+    const r = await getUserByUserName(userName);
+    if (r && r.id) {
+      setUser(r);
+      const w = await getUserWebhooksWithTrades(r.id, true);
+      setWebhooks(w);
+    }
+  }
+
+  useEffect(() => {
+    if (userName) {
+      getUserData();
+    }
+  }, [userName]);
+
+  return { user, webhooks };
+}

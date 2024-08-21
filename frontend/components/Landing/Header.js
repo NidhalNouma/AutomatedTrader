@@ -8,13 +8,13 @@ import { MenuIcon, XIcon, ArrowSmRightIcon } from "@heroicons/react/outline";
 import { Dropdown, Button } from "react-daisyui";
 import { BsYoutube, BsDiscord } from "react-icons/bs";
 
-export default function Header() {
+export default function Header({ className }) {
   const { theme, toggleTheme } = useTheme();
   return (
     <header
-      className={`fixed top-0 w-full clearNav z-50 bg-bg/5 py-2 md:py-4 backdrop-blur-xl`}
+      className={`sticky top-0 w-full clearNav z-50 bg-bg/5 py-2.5 md:py-4 backdrop-blur-xl mx-auto max-w-7xl sm:px-5 px-4 ${className}`}
     >
-      <div className="max-w-7xl mx-auto w-full flex flex-wrap sm:px-5 px-4 items-center md:flex-row">
+      <div className=" mx-auto w-full flex flex-wrap items-center md:flex-row">
         <div className="flex flex-row items-center justify-between p-0 md:p-1 w-full">
           <div className="h-full w-48 ">
             <Image

@@ -1,10 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
 import { Toggle, SelectFull, Input } from "../ui/Input";
 import { Label, Label2, Par } from "../ui/Text";
-import { ButtonInfo } from "../ui/Button";
+import { ButtonInfo, ButtonText } from "../ui/Button";
 import { Dropdown, DropdownButton } from "../ui/Dropdown";
-import { DeleteModal, EditModal, Modal } from "../ui/Modal";
+import { DeleteModal, EditModal, Modal, WideModal } from "../ui/Modal";
 import { ColorPicker } from "../ui/ColorPicker";
 
 import {
@@ -13,7 +14,10 @@ import {
   WebhookApps,
 } from "../Forms/Webhook";
 
+import { WebhookPage } from "../../pages/webhook/[id]";
+
 import { ClipboardIcon, ClipboardCopyIcon } from "@heroicons/react/outline";
+import { TbChartPie } from "react-icons/tb";
 
 import {
   EditWebhookColor,
@@ -25,12 +29,11 @@ import {
 } from "../../hooksp/WebhooksHook";
 
 import { addAlpha, copyTextToClipboard } from "../../utils/functions";
-
 import { servicesURL } from "../../utils/constant";
 
-// import WebhookLineChart from "../../Features/WebhooksItem/WebhookLineChart";
-
 function Index({ webhook, mtAccounts, forDisplay = false }) {
+  const router = useRouter();
+
   const { whName, setWhName, editWhName } = EditWebhookName(webhook);
   const { whColor, setWhColor, editWhColor } = EditWebhookColor(webhook);
   const { active, activateWebhook } = SetActiveWebhook(webhook);
@@ -50,7 +53,7 @@ function Index({ webhook, mtAccounts, forDisplay = false }) {
   const [messages, setMessages] = useState([]);
   const [msg, setMsg] = useState(null);
 
-  const [urlcopy, setURLcopy] = useState("Click to copy webhook URL!");
+  const [urlcopy, setURLcopy] = useState("Click to copy webhook private URL!");
   const [msgcopy, setMsgcopy] = useState("Click to copy webhook message!");
 
   const [viewChart, setViewChart] = useState(
@@ -59,6 +62,8 @@ function Index({ webhook, mtAccounts, forDisplay = false }) {
       ? true
       : false
   );
+
+  const [viewData, setViewData] = useState(false);
 
   useEffect(() => {
     if (!forDisplay && localStorage.getItem("wh_charts_sett") == "true")
@@ -250,6 +255,21 @@ function Index({ webhook, mtAccounts, forDisplay = false }) {
               </Par>
             </DeleteModal>
 
+            {viewData && (
+              <WideModal
+                title={webhook.name}
+                open={viewData}
+                close={() => {
+                  history.pushState({ urlPath: "/webhook" }, "", "/webhook");
+                  setViewData(false);
+                }}
+                withHeader={true}
+                className="max-w-[90vw]"
+              >
+                <WebhookPage id={webhook.publicId} title={false} />
+              </WideModal>
+            )}
+
             <div
               style={{
                 borderColor: addAlpha(webhook.color, 0.8),
@@ -263,8 +283,26 @@ function Index({ webhook, mtAccounts, forDisplay = false }) {
                     <Label className="">{webhook.name} </Label>
                   </div>
                   <div className="flex items-center justify-center">
+                    {webhook.publicId && (
+                      <ButtonInfo
+                        className="!h-6  mr-2.5"
+                        helper="View webhook data."
+                        onClick={() => {
+                          // let href = `/webhook/${webhook.publicId}`;
+                          // router.push(href);
+                          window.history.pushState(
+                            { urlPath: "/webhook/" + webhook.publicId },
+                            "",
+                            "/webhook/" + webhook.publicId
+                          );
+                          setViewData(true);
+                        }}
+                      >
+                        <TbChartPie className="h-4 aspect-auto text-secondary" />
+                      </ButtonInfo>
+                    )}
                     <ButtonInfo
-                      className="!h-6"
+                      className="!h-6 "
                       helper={urlcopy}
                       onMouseLeave={() =>
                         setURLcopy("Click to copy webhook URL!")

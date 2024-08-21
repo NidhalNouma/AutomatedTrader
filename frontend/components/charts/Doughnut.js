@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import TooltipComponent from "./Tooltips";
+import { getRandomHexColor } from "../../utils/functions";
 
 const RechartDoughnut = ({ children, className, data, labels, colors }) => {
   const [tooltipInfo, setTooltipInfo] = useState({
@@ -65,7 +66,11 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
             cornerRadius={10} // For rounded edges
           >
             {processedData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index]} stroke="none" />
+              <Cell
+                key={`cell-${index}`}
+                fill={(colors && colors[index]) || getRandomHexColor()}
+                stroke="none"
+              />
             ))}
           </Pie>
         </PieChart>

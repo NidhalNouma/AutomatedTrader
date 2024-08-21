@@ -4,12 +4,6 @@ import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 
 import { SubTitle3 } from "../components/ui/Text";
 
-import AlertsWelcome from "../Features/WelcomeSection/Alerts";
-import { AiFillSetting } from "react-icons/ai";
-
-import { ModalWithHeader as Modal1 } from "../components/ui/Modal";
-import SettingModal from "../Features/AlertsCom/SettingsModal";
-
 import Alert from "../components/parts/AlertStatus";
 
 import { useAlert } from "../contexts/AlertContext";

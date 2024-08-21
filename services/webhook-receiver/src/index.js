@@ -124,7 +124,9 @@ app.post("/:id", async (req, res) => {
         webhook.userId,
         id,
         message,
+        messageData,
         messageData.msgType,
+        messageData.pair,
         webhook.apps,
         apiResponseData
       );

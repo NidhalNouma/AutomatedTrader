@@ -5,7 +5,9 @@ export async function afterResponse(
   userId,
   webhookId,
   message,
+  messageData,
   type,
+  symbol,
   apps,
   tradesResponse
 ) {
@@ -38,7 +40,9 @@ export async function afterResponse(
     userId,
     webhookId,
     message,
+    messageData,
     type,
+    symbol,
     tradesResponse,
     trades
   );

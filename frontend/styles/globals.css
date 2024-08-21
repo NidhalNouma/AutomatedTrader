@@ -9,7 +9,7 @@
       --text-color: 240 7% 70;
       --title-color: 240 7% 77%;
 
-      --bg-color: 40 5% 5%;
+      --bg-color: 2 0% 3%;
       --bg-2-color: 2 0% 2%;
 
       --text-light-color: 2 0% 95%;
@@ -66,7 +66,7 @@
  .sidenav {
   /* min-width: 180px; */
   /* width: 200px; */
-  max-width: 190px;
+  max-width: 185px;
   /* display: flex; */
   flex-direction: column; 
   /* background-color: rgb(52, 54, 59); */
@@ -198,9 +198,9 @@ input[type="number"] {
 .react-calendar__month-view__days__day--weekend {
   color: hsl(var(--title-color) / 0.3) !important;
 }
-.react-calendar__tile--active {
+/* .react-calendar__tile--active {
   color: var(--clr-accent) !important;
-}
+} */
 .react-calendar__navigation button {
   background-color: transparent !important;
 }

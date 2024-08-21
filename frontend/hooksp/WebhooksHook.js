@@ -16,7 +16,11 @@ import {
   editMessage,
   deleteMessage,
   addMessage,
+  getWebhookByPublicId,
 } from "../lib/webhooks";
+import { getAlertsByWebhookId } from "../lib/alerts";
+
+import { processAlerts } from "./AlertHook";
 
 import { getMessageData as getMsgData } from "../lib/third/webhookMessage";
 
@@ -588,4 +592,53 @@ export function WebhookApps(webhook) {
   }
 
   return { data, setData, onSave, error, toggleAccountValue };
+}
+
+export function ViewWebhookPage(publicId) {
+  const [webhook, setWebhook] = useState([]);
+  const [alerts, setAlerts] = useState(null);
+  const [error, setError] = useState("");
+
+  const [trades, setTrades] = useState([]);
+
+  const [alertsData, setAlertsData] = useState(null);
+
+  useEffect(() => {
+    if (alerts?.length > 0) {
+      const pr = processAlerts(alerts);
+      console.log(pr);
+      setAlertsData(pr);
+    }
+  }, [alerts]);
+
+  useEffect(() => {
+    if (webhook) {
+      const allTrades = webhook.trades;
+      if (allTrades?.length > 0) {
+        let closedTrades = [];
+        for (let trade of allTrades) {
+          let closedTrade = trade.trade;
+          if (closedTrade) closedTrades.push(closedTrade);
+        }
+        setTrades(closedTrades);
+      }
+    }
+  }, [webhook]);
+
+  async function getWebhook() {
+    const r = await getWebhookByPublicId(publicId);
+    if (r) {
+      setWebhook(r);
+      // console.log(r);
+      const a = await getAlertsByWebhookId(r.id);
+      // console.log(a);
+      setAlerts(a);
+    } else setError("Webhook not found!");
+  }
+
+  useEffect(() => {
+    if (publicId) getWebhook();
+  }, [publicId]);
+
+  return { error, webhook, alerts, alertsData };
 }
