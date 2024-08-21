@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo } from "react";
+import React, { Fragment, useMemo, useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -14,8 +14,33 @@ import { addAlpha } from "../../utils/functions";
 import { curveCardinal } from "d3-shape";
 import moment from "moment";
 
-const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
+const RechartJSLine = ({
+  data: entryData,
+  className,
+  chartId,
+  defaultColor,
+  minYAxis = null,
+}) => {
   const { theme } = useTheme();
+  const numLabels = 6; // You can change this value as needed
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    if (!entryData || entryData.length === 0) {
+      let labels = Array.from({ length: numLabels }, (_, i) =>
+        moment()
+          .subtract(numLabels - 1 - i, "days")
+          .format("YYYY-MM-DD")
+      );
+
+      let data = Array(numLabels).fill(0);
+      let label = "";
+      let color = defaultColor;
+
+      setData([{ labels, label, data, color }]);
+    } else setData(entryData);
+  }, [entryData]);
 
   // Calculate max and min for Y-axis
   const maxAbsValue = Math.max(
@@ -27,8 +52,6 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
   const yAxisMax = maxAbsValue + margin;
   let yAxisMin = -maxAbsValue - margin;
   if (minYAxis !== null) yAxisMin = minYAxis;
-
-  const numLabels = 6; // You can change this value as needed
 
   const processedData = useMemo(() => {
     // Function to generate the last `numLabels` days with data set to 0
@@ -101,7 +124,7 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
     return transformedData;
   }, [data]);
 
-  console.log(processedData);
+  console.log(processedData, data);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -127,7 +150,7 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
     <Fragment>
       {theme && (
         <Fragment>
-          <svg style={{ position: "absolute", width: 0, height: 0 }}>
+          {/* <svg style={{ position: "absolute", width: 0, height: 0 }}>
             <defs>
               {data.map((dataset, index) => (
                 <linearGradient
@@ -164,7 +187,7 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
                 </feMerge>
               </filter>
             </defs>
-          </svg>
+          </svg> */}
 
           <div className={className}>
             <ResponsiveContainer className={`w-full h-full `}>
@@ -214,6 +237,7 @@ const RechartJSLine = ({ data, className, chartId, minYAxis = null }) => {
                     dataKey={dataset.label}
                     stroke={
                       dataset.color ||
+                      defaultColor ||
                       addAlpha(
                         getComputedStyle(
                           document.documentElement

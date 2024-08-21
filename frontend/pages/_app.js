@@ -2,7 +2,6 @@ import "../styles/globals.css";
 import "../styles/landing.css";
 
 import Head from "next/head";
-import { useRouter } from "next/router";
 import Script from "next/script";
 import { useState, useEffect, Fragment } from "react";
 
@@ -69,74 +68,7 @@ function MyApp({ Component, pageProps }) {
 export default MyApp;
 
 function Main({ children }) {
-  const router = useRouter();
-  const { pathname } = router;
-  const { subscription } = router.query;
-
-  const { user, fullUser, loading } = useUser();
-
-  const [firstPath, setFirstPath] = useState(null);
-
-  useEffect(() => {
-    if (!firstPath) setFirstPath(pathname);
-  }, []);
-
-  useEffect(() => {
-    if (fullUser !== undefined) {
-      // console.log(user);
-      if (user && fullUser) {
-        const subObj = fullUser?.subObj;
-
-        if (subObj && pathname === "/welcome") router.push("/home");
-        // console.log(subObj);
-        if (!subObj) {
-          router.push("/waiting");
-          // router.push("/welcome");
-        } else if (
-          pathname === "/" ||
-          pathname === "/signin" ||
-          pathname === "/signup" ||
-          pathname === "/forgetpassword"
-        ) {
-          if (
-            firstPath === "/" ||
-            firstPath === "/signin" ||
-            firstPath === "/signup" ||
-            firstPath === "/forgetpassword"
-          ) {
-            if (!subscription) router.push("/home");
-            else router.push("/membership?m=" + subscription);
-          } else {
-            if (!subscription) router.push(firstPath);
-            else router.push("/membership?m=" + subscription);
-          }
-        }
-      } else if (user === null) {
-        if (
-          pathname !== "/signin" &&
-          pathname !== "/signup" &&
-          // pathname !== "/" &&
-          pathname !== "/forgetpassword" &&
-          pathname.search("/profile/") === -1 &&
-          pathname.search("/webhook/") === -1
-          // "/" !== landingUrl
-        )
-          router.push(landingUrl);
-      }
-    }
-    if (user === null) {
-      if (
-        pathname !== "/signin" &&
-        pathname !== "/signup" &&
-        // pathname !== "/" &&
-        pathname !== "/forgetpassword" &&
-        pathname.search("/profile/") === -1 &&
-        pathname.search("/webhook/") === -1
-        // "/" !== landingUrl
-      )
-        router.push(landingUrl);
-    }
-  }, [user, fullUser]);
+  const { fullUser, loading } = useUser();
 
   return (
     <Fragment>

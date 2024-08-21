@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
+import { withAuth } from "../../contexts/UserContext";
 import { Button } from "../../components/ui/Button";
 import { SubTitle2 } from "../../components/ui/Text";
 import { MainLayoutWithHeader } from "../../components/layout/MainLayout";
@@ -13,7 +14,7 @@ import BinanceStatus from "../../components/parts/BinanceStatus";
 
 import DoughnutChart from "../../components/charts/Doughnut";
 
-export default function Binance() {
+function Binance() {
   const [openNewAccount, setOpenNewAccount] = useState(false);
   const { binanceAccountsData } = useBinance();
 
@@ -205,3 +206,5 @@ export default function Binance() {
     </Fragment>
   );
 }
+
+export default withAuth(Binance);

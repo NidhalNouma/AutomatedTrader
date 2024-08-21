@@ -1,4 +1,5 @@
 import { useState, Fragment } from "react";
+import { withAuth } from "../contexts/UserContext";
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { ButtonText } from "../components/ui/Button";
 
@@ -12,7 +13,7 @@ import { pricingList } from "../utils/pricing";
 
 import MegaSale1 from "../Features/Banners/MegaSale1";
 
-export default function Membership() {
+function Membership() {
   const router = useRouter();
   const { m } = router.query;
   let queryMembership = 2;
@@ -148,6 +149,8 @@ export default function Membership() {
     </Fragment>
   );
 }
+
+export default withAuth(Membership);
 
 function Play({ l }) {
   // const src = "https://assets7.lottiefiles.com/packages/lf20_lg6lh7fp.json";

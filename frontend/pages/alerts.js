@@ -1,4 +1,6 @@
 import { Fragment, useState } from "react";
+
+import { withAuth } from "../contexts/UserContext";
 import moment from "moment";
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 
@@ -9,7 +11,7 @@ import Alert from "../components/parts/AlertStatus";
 import { useAlert } from "../contexts/AlertContext";
 import { SortAlertsByDays } from "../hooksp/AlertHook";
 
-export default function AlertsPage() {
+function AlertsPage() {
   const { alerts } = useAlert();
   const { daysAlerts } = SortAlertsByDays(alerts);
   const [open, setOpen] = useState(false);
@@ -62,3 +64,5 @@ export default function AlertsPage() {
     </Fragment>
   );
 }
+
+export default withAuth(AlertsPage);

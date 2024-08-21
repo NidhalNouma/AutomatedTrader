@@ -1,8 +1,9 @@
 import Head from "next/head";
+import { withAuth } from "../contexts/UserContext";
 import { useRouter } from "next/router";
 import { SignOut } from "../hooks/SignHook";
 
-export default function Home() {
+function Waiting() {
   const router = useRouter();
   return (
     <div className="text-black w-full h-screen flex flex-col justify-center items-center">
@@ -35,3 +36,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuth(Waiting);

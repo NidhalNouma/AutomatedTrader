@@ -1,4 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
+import { withAuth } from "../../contexts/UserContext";
 import { Button } from "../../components/ui/Button";
 import { SubTitle2 } from "../../components/ui/Text";
 import { MainLayoutWithHeader } from "../../components/layout/MainLayout";
@@ -7,7 +8,7 @@ import NewAccountForm from "../../components/Forms/Binance";
 
 import { PlusIcon } from "@heroicons/react/outline";
 
-export default function Binance() {
+function Bitget() {
   const [openNewAccount, setOpenNewAccount] = useState(false);
 
   return (
@@ -37,3 +38,5 @@ export default function Binance() {
     </Fragment>
   );
 }
+
+export default withAuth(Bitget);

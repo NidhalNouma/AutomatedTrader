@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import Link from "next/link";
+import { withAuth } from "../../contexts/UserContext";
 
 import { MainLayoutWithHeader } from "../../components/layout/MainLayout";
 import { Button, RoundedButton, ButtonText } from "../../components/ui/Button";
@@ -36,7 +37,7 @@ const calculateSumOfData = (datasets) => {
   }, 0);
 };
 
-export default function Metatrader() {
+function Metatrader() {
   const { mtAccounts, mtAccountsData } = useMetatrader();
 
   const {
@@ -393,3 +394,5 @@ export default function Metatrader() {
     </Fragment>
   );
 }
+
+export default withAuth(Metatrader);

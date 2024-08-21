@@ -1,4 +1,6 @@
 import { Fragment } from "react";
+
+import { withAuth } from "../contexts/UserContext";
 import { MainLayout } from "../components/layout/MainLayout";
 
 // import { Hi2, Hi3, Hi4, H4 } from "../components/H";
@@ -9,7 +11,7 @@ import { MainLayout } from "../components/layout/MainLayout";
 // import IncomeSteps from "../Features/HomeSteps/IncomeSteps";
 import { useUser } from "../contexts/UserContext";
 
-export default function Home() {
+function Home() {
   // const { user } = GetUserContext();
   const { fullUser } = useUser();
 
@@ -33,3 +35,5 @@ export default function Home() {
     </Fragment>
   );
 }
+
+export default withAuth(Home);

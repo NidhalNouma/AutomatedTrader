@@ -1,4 +1,6 @@
 import Sidenav from "../Features/SideNav";
+
+import { withAuth } from "../contexts/UserContext";
 import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
 import { ButtonGroup, Button } from "react-daisyui";
@@ -11,7 +13,7 @@ import { GetFullUserContext } from "../hooks/UserHook";
 import NotificationItem from "../Features/notifications/NotificationItem";
 import NotificationModal from "../Features/notifications/NotificationModal";
 
-export default function NotificationsPage() {
+function NotificationsPage() {
   const { notifications, unreadNotifications } = GetNotificationContext();
   const { fullUser } = GetFullUserContext();
 
@@ -88,3 +90,5 @@ export default function NotificationsPage() {
     </>
   );
 }
+
+export default withAuth(NotificationsPage);

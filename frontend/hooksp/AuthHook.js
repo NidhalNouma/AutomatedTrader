@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 import {
   signUp,
   signIn,
@@ -9,6 +10,7 @@ import {
 import { useUser } from "../contexts/UserContext";
 
 export const SignInHook = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -32,6 +34,7 @@ export const SignInHook = () => {
       return;
     }
 
+    router.push("/membership");
     return true;
   };
 
@@ -39,6 +42,7 @@ export const SignInHook = () => {
 };
 
 export const SignUpHook = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -74,6 +78,7 @@ export const SignUpHook = () => {
       return;
     }
 
+    router.push("/membership");
     return true;
   };
 

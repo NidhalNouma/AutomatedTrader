@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
+import { withAuth } from "../contexts/UserContext";
 import Header from "../components/Landing/Header";
 // import Main from "../Features/Landing/Main";
 // import Section1 from "../Features/Landing/Section1";
@@ -18,7 +19,7 @@ import ComingSection from "../components/Landing/ComingBack";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-export default function Home() {
+function Index() {
   useEffect(function () {
     Aos.init();
   }, []);
@@ -75,3 +76,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default withAuth(Index, true);

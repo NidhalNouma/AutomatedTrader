@@ -1,4 +1,7 @@
 import { useState, Fragment } from "react";
+
+import { withAuth } from "../contexts/UserContext";
+
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, ButtonFile, ButtonText } from "../components/ui/Button";
 import { SubTitle2, Par, Label } from "../components/ui/Text";
@@ -15,7 +18,7 @@ import { useUser } from "../contexts/UserContext";
 
 import { SignOut } from "../hooksp/AuthHook";
 
-export default function Settings() {
+function Settings() {
   const { user, fullUser } = useUser();
   const { signOut } = SignOut();
 
@@ -265,3 +268,5 @@ export default function Settings() {
     </Fragment>
   );
 }
+
+export default withAuth(Settings);

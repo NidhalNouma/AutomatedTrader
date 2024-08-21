@@ -1,5 +1,7 @@
 import { useState, useEffect, Fragment } from "react";
 
+import { withAuth } from "../contexts/UserContext";
+
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, RoundedButton } from "../components/ui/Button";
 import { ToggleInline } from "../components/ui/Input";
@@ -14,7 +16,7 @@ import { useWebhook } from "../contexts/WebhookContext";
 import { useUser } from "../contexts/UserContext";
 import { PlusIcon } from "@heroicons/react/outline";
 
-export default function Webhook() {
+function Webhook() {
   const { fullUser } = useUser();
   // const sub = fullUser?.subObj;
 
@@ -169,3 +171,5 @@ export default function Webhook() {
     </Fragment>
   );
 }
+
+export default withAuth(Webhook);

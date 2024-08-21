@@ -1,4 +1,5 @@
 import { useState, useEffect, Fragment } from "react";
+import { withAuth } from "../contexts/UserContext";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { SubTitle3 } from "../components/ui/Text";
@@ -13,7 +14,7 @@ import DoughnutChart from "../components/charts/Doughnut";
 
 import { TradesData } from "../hooksp/TradeHook";
 
-export default function TradesPage() {
+function TradesPage() {
   const {
     trades,
     liveTrades,
@@ -63,7 +64,9 @@ export default function TradesPage() {
                   <div className=" bg-bgt aspect-square rounded-full flex flex-col items-center justify-center">
                     <div className="text-sm text-text">Profit</div>
                     <span className="text-xl font-semibold text-profit">
-                      {liveTradesData.data.reduce((p, v) => p + v, 0) || 0}
+                      {Number(
+                        liveTradesData.data.reduce((p, v) => p + v, 0)
+                      ).toFixed(2) || 0}
                     </span>
                   </div>
                 </DoughnutChart>
@@ -391,3 +394,5 @@ export default function TradesPage() {
     </Fragment>
   );
 }
+
+export default withAuth(TradesPage);

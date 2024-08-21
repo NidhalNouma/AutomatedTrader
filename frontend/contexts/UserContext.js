@@ -3,6 +3,7 @@ import { getUser } from "../lib/users";
 import { checkUser } from "../lib/auth";
 import { getPlanById, checkTSlifetime } from "../utils/pricing";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 const UserContext = createContext();
 
@@ -55,3 +56,26 @@ export const UserProvider = ({ children }) => {
 };
 
 export const useUser = () => useContext(UserContext);
+
+export const withAuth = (WrappedComponent, frontend = false) => {
+  return (props) => {
+    const router = useRouter();
+    const { pathname } = router;
+    const { subscription } = router.query;
+    const { user, fullUser, loading } = useContext(UserContext);
+
+    useEffect(() => {
+      if (!loading)
+        if (frontend) {
+          if (user && fullUser) {
+            if (subscription) router.push("/membership?m=" + subscription);
+            else router.replace("/home");
+          }
+        } else if (!user && !fullUser) {
+          router.replace("/signup");
+        }
+    }, [user, router, loading]);
+
+    return <WrappedComponent {...props} />;
+  };
+};

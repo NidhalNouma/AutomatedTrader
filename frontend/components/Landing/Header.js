@@ -16,20 +16,22 @@ export default function Header({ className }) {
     >
       <div className=" mx-auto w-full flex flex-wrap items-center md:flex-row">
         <div className="flex flex-row items-center justify-between p-0 md:p-1 w-full">
-          <div className="h-full w-48 ">
-            <Image
-              src={
-                theme === "light"
-                  ? "/Logo/dark-logo.png"
-                  : "/Logo/light-logo.png"
-              }
-              alt=""
-              width="8w"
-              height="1h"
-              // className="w-full h-full py-auto"
-              layout="responsive"
-            />
-          </div>
+          <Link href="/">
+            <div className="h-full w-44 cursor-pointer opacity-80 hover:opacity-100 transition-all">
+              <Image
+                src={
+                  theme === "light"
+                    ? "/Logo/dark-logo.png"
+                    : "/Logo/light-logo.png"
+                }
+                alt=""
+                width="8w"
+                height="1h"
+                // className="w-full h-full py-auto"
+                layout="responsive"
+              />
+            </div>
+          </Link>
           <div className="sm:flex hidden flex-1 items-center justify-end">
             <div className="ml-auto mr-10">
               <DarkModeButton />

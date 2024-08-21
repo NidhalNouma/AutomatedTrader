@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import Link from "next/link";
+import { withAuth } from "../contexts/UserContext";
 
 import { CloseButton } from "../components/ui/Button";
 import { SubTitle } from "../components/ui/Text";
@@ -21,7 +22,7 @@ import { HiCurrencyYen } from "react-icons/hi";
 
 import { useTheme } from "../contexts/ThemeContext";
 
-function Signin() {
+function Forgetpassword() {
   const { theme } = useTheme();
 
   return (
@@ -82,4 +83,4 @@ function Signin() {
   );
 }
 
-export default Signin;
+export default withAuth(Forgetpassword, true);

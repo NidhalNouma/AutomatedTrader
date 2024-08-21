@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { withAuth } from "../../contexts/UserContext";
 import { Button, ButtonText } from "../../components/ui/Button";
 import { SubTitle2, Par, Label, Label2 } from "../../components/ui/Text";
 import { Toggle, Input } from "../../components/ui/Input";
@@ -24,7 +25,7 @@ import {
 import { PlusIcon } from "@heroicons/react/outline";
 import { addAlpha } from "../../utils/functions";
 
-export default function Telegram() {
+function Telegram() {
   const { telegrams } = useTelegram();
   const [openNewAccount, setOpenNewAccount] = useState(false);
 
@@ -229,3 +230,5 @@ function TelegramItem({ telegram }) {
     </Fragment>
   );
 }
+
+export default withAuth(Telegram);

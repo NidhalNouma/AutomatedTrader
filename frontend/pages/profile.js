@@ -1,4 +1,5 @@
 import { Fragment, useState } from "react";
+import { withAuth } from "../contexts/UserContext";
 import { useRouter } from "next/router";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
@@ -13,7 +14,7 @@ import { useWebhook } from "../contexts/WebhookContext";
 
 import WebhookChart from "../components/parts/WebhookChart";
 
-export default function Home() {
+function Profile() {
   const router = useRouter();
   const { fullUser } = useUser();
   const { webhooks } = useWebhook();
@@ -47,6 +48,8 @@ export default function Home() {
     </Fragment>
   );
 }
+
+export default withAuth(Profile);
 
 export function ProfilePage({ fullUser, webhooks }) {
   return (
