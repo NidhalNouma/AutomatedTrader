@@ -63,7 +63,7 @@ function Settings() {
             <div className="flex flex-col w-full items-center ">
               <div className="flex flex-col items-center">
                 <img
-                  src={user?.photoURL || "Images/profile.png"}
+                  src={user?.photoURL || "/Images/profile.png"}
                   className="rounded-full w-20 h-20 border-2 border-text/20 object-cover"
                 />
                 <ButtonFile

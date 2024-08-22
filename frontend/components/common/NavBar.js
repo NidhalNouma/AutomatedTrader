@@ -7,7 +7,7 @@ import { Button, RoundedButton } from "../ui/Button";
 import { Dropdown, DropdownButton } from "../ui/Dropdown";
 import { SearchModal } from "../ui/SearchInput";
 import { ModalWithHeader } from "../ui/Modal";
-import { Par } from "../ui/Text";
+import { Label, Par, SubTitle3 } from "../ui/Text";
 
 import SideNav from "./SideNav";
 import NotificationHeader from "./NotificationButton";
@@ -19,10 +19,18 @@ import OpenTrade from "../Forms/OpenTrade";
 import { useUser } from "../../contexts/UserContext";
 import { SignOut } from "../../hooksp/AuthHook";
 
+import { SearchUsersByDisplayName } from "../../hooksp/UserHook";
+import { SearchWebhooksByName } from "../../hooksp/WebhooksHook";
+
+import { addAlpha } from "../../utils/functions";
+
 export default function NavBar({ className, page }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
+
+  const { users, username, setUsername } = SearchUsersByDisplayName();
+  const { webhooks, setName } = SearchWebhooksByName();
 
   const [openSideNav, setSideNav] = useState(false);
 
@@ -108,16 +116,33 @@ export default function NavBar({ className, page }) {
           </div>
           {user ? (
             <div className="flex items-center justify-center ml-auto">
-              <SearchModal placeholder="Search for webhooks, profiles and more ...">
-                {/* <Results users={users} /> */}
-                <Par className="mt-6 font-semibold text-center !text-sm">
-                  Coming soon! Lifetime users get first access ,{" "}
-                  <span className="underline cursor-pointer">
-                    <Link href="/membership">
-                      upgrade your membership today
-                    </Link>
-                  </span>
-                </Par>
+              <SearchModal
+                placeholder="Search for webhooks, profiles and more ..."
+                value={username}
+                setValue={(v) => {
+                  setUsername(v);
+                  setName(v);
+                }}
+              >
+                {users.length > 0 && (
+                  <div className="mt-4">
+                    <SubTitle3 className="ml-2 !text-xs">Users</SubTitle3>
+                    <UsersResults users={users} />
+                  </div>
+                )}
+                {webhooks.length > 0 && (
+                  <div className="mt-4">
+                    <SubTitle3 className="ml-2 !text-xs">Webhooks</SubTitle3>
+                    <WebhooksResult webhooks={webhooks} />
+                  </div>
+                )}
+                {username?.length < 3 &&
+                  users.length === 0 &&
+                  webhooks.length === 0 && (
+                    <Par className="mt-6 font-semibold text-center !text-sm">
+                      Start typing to see the results ...
+                    </Par>
+                  )}
               </SearchModal>
               <div className="ml-4 flex items-center">
                 <NotificationHeader />
@@ -178,3 +203,82 @@ export default function NavBar({ className, page }) {
     </Fragment>
   );
 }
+
+const UsersResults = ({ users }) => {
+  return (
+    <Fragment>
+      {users?.length > 0 && (
+        <Fragment>
+          {users.map((user) => (
+            <div className=" min-h-6 px-2 py-2 my-1 rounded-lg hover:bg-accent/10">
+              <Link
+                key={user.id}
+                href={{
+                  pathname: "/u/" + user.userName,
+                  // query: { linkUser: JSON.stringify(user) },
+                }}
+              >
+                <div className="flex justify-start items-center cursor-pointer">
+                  <div className="w-8 h-8 rounded-full">
+                    <img
+                      className="rounded-full  w-full h-full "
+                      src={user?.photoURL || "/Images/profile.png"}
+                    />
+                  </div>
+                  <div className="ml-3">
+                    <Label>{user.displayName}</Label>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Fragment>
+      )}
+    </Fragment>
+  );
+};
+
+const WebhooksResult = ({ webhooks }) => {
+  return (
+    <Fragment>
+      {webhooks?.length > 0 && (
+        <Fragment>
+          {webhooks.map((webhook) => (
+            <div
+              className={`px-2 py-2 my-1 rounded-lg`}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = addAlpha(
+                  webhook.color,
+                  0.1
+                );
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+              }}
+            >
+              <Link
+                key={webhook.id}
+                href={{
+                  pathname: "/webhook/" + webhook.publicId,
+                  // query: { linkUser: JSON.stringify(user) },
+                }}
+              >
+                <div className="flex justify-start items-center cursor-pointer">
+                  {/* <div className="w-8 h-8 rounded-full">
+                    <img
+                      className="rounded-full  w-full h-full "
+                      src={user?.photoURL || "/Images/profile.png"}
+                    />
+                  </div> */}
+                  <div className="iml-3">
+                    <Label>{webhook.name}</Label>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </Fragment>
+      )}
+    </Fragment>
+  );
+};

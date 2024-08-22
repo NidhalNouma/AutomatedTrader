@@ -1,7 +1,6 @@
 import { Fragment, useRef, useEffect, useState } from "react";
 import { Input, Swap } from "react-daisyui";
 import { XIcon, SearchIcon } from "@heroicons/react/outline";
-import { SearchByDisplayName } from "../../hooks/UserHook";
 import { H5 } from "../H";
 import Link from "next/link";
 
@@ -9,8 +8,7 @@ import { TopModal } from "./Modal";
 
 import { CloseButton } from "./Button";
 
-export function SearchModal({ children, placeholder }) {
-  const { users, displayName, setDisplayName } = SearchByDisplayName();
+export function SearchModal({ children, placeholder, value, setValue }) {
   const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -20,10 +18,28 @@ export function SearchModal({ children, placeholder }) {
     }
   }, [open]);
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (
+        (event.ctrlKey && event.key === "k") || // Ctrl + K on Windows/Linux
+        (event.metaKey && event.key === "k") // Cmd + K on macOS
+      ) {
+        event.preventDefault();
+        setOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <Fragment>
       <TopModal open={open} backclose={() => setOpen(false)}>
-        <div className="pb-12 px-4 ">
+        <div className="pb-4 px-4 ">
           <div className="flex items-center border-b-2 border-text/10 px-2 py-0 w-full">
             <SearchIcon className="h-5 w-5 text-text/60" />
             <Input
@@ -31,9 +47,11 @@ export function SearchModal({ children, placeholder }) {
               // bordered
               type="text"
               placeholder={placeholder}
-              value={displayName}
+              value={value}
               // onChange={(e) => setDisplayName(e.target.value)}
-              onChange={(e) => setDisplayName("")}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
               autoFocus={true}
               ref={inputRef}
             />
@@ -58,35 +76,3 @@ export function SearchModal({ children, placeholder }) {
     </Fragment>
   );
 }
-
-const Results = ({ users }) => {
-  return (
-    <Fragment>
-      {users?.length > 0 && (
-        <div className=" min-h-6 p-2 mt-3 rounded-xl">
-          {users.map((user) => (
-            <Link
-              key={user.id}
-              href={{
-                pathname: "/profile/" + user.id,
-                // query: { linkUser: JSON.stringify(user) },
-              }}
-            >
-              <div className=" py-2 px-2 mb-2 rounded-2xl hover:bg-bga flex justify-start items-center cursor-pointer">
-                <div className="w-8 h-8 rounded-full">
-                  <img
-                    className="rounded-full  w-full h-full "
-                    src={user?.photoURL || "/Images/profile.png"}
-                  />
-                </div>
-                <div className="ml-3">
-                  <H5>{user.displayName}</H5>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
-    </Fragment>
-  );
-};

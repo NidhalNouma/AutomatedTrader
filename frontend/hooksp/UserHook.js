@@ -4,6 +4,7 @@ import {
   updateUserData,
   updateProfilePicture,
   getUserByUserName,
+  searchUsersByUserName,
 } from "../lib/users";
 import {
   getWebhooksByUserId,
@@ -142,6 +143,23 @@ export function UpdatePublicProfileSettings() {
 
   return { userName, setUserName, publicUser, setPublicUser, submit, error };
 }
+
+export const SearchUsersByDisplayName = () => {
+  const [username, setUsername] = useState("");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (username.length > 2)
+      (async () => {
+        const r = await searchUsersByUserName(username);
+        console.log(r);
+        setUsers(r);
+      })();
+    else setUsers([]);
+  }, [username]);
+
+  return { users, username, setUsername };
+};
 
 export function PublicUser(userName) {
   const [user, setUser] = useState("loading ...");

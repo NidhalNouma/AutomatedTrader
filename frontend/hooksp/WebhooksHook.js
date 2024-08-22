@@ -17,6 +17,7 @@ import {
   deleteMessage,
   addMessage,
   getWebhookByPublicId,
+  searchWebhooksByName,
 } from "../lib/webhooks";
 import { getAlertsByWebhookId } from "../lib/alerts";
 
@@ -593,6 +594,23 @@ export function WebhookApps(webhook) {
 
   return { data, setData, onSave, error, toggleAccountValue };
 }
+
+export const SearchWebhooksByName = () => {
+  const [name, setName] = useState("");
+  const [webhooks, setWebhooks] = useState([]);
+
+  useEffect(() => {
+    if (name.length > 2)
+      (async () => {
+        const r = await searchWebhooksByName(name);
+        console.log(r);
+        setWebhooks(r);
+      })();
+    else setWebhooks([]);
+  }, [name]);
+
+  return { webhooks, name, setName };
+};
 
 export function ViewWebhookPage(publicId) {
   const [webhook, setWebhook] = useState([]);

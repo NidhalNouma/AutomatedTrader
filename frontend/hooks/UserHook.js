@@ -3,7 +3,7 @@ import {
   getUser,
   updateUserData,
   updateUserDatas,
-  searchByDisplayName,
+  searchUsersByUserName,
   updateSubsciption,
   checkTSlifetime,
 } from "../db/user";
@@ -170,19 +170,20 @@ export const GetUserPage = (id) => {
 };
 
 export const SearchByDisplayName = () => {
-  const [displayName, setDisplayName] = useState("");
+  const [username, setUsername] = useState("");
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    if (displayName.length > 3)
+    if (username.length > 2)
       (async () => {
-        const r = await searchByDisplayName(displayName);
+        const r = await searchUsersByUserName(username);
+        console.log(r);
         setUsers(r);
       })();
     else setUsers([]);
-  }, [displayName]);
+  }, [username]);
 
-  return { users, displayName, setDisplayName };
+  return { users, username, setUsername };
 };
 
 export const UpdateUserSubscription = async (
