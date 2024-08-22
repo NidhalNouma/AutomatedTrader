@@ -37,6 +37,15 @@ export function processAlerts(alerts) {
     nTypes: { 0: 0, 1: 0, 2: 0, 3: 0 },
     symbols: {},
     apps: {},
+    dayOfTheWeek: {
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+    },
   };
 
   const dayMap = {};
@@ -44,6 +53,7 @@ export function processAlerts(alerts) {
   alerts.forEach((alert) => {
     const date = new Date(alert.created_at.seconds * 1000); // Convert Firebase timestamp to JavaScript Date
     const day = date.toISOString().split("T")[0]; // Extract the day in YYYY-MM-DD format
+    const dayName = date.toLocaleDateString("en-US", { weekday: "long" }); // Get the day of the week
 
     if (!dayMap[day]) {
       dayMap[day] = {
@@ -55,7 +65,7 @@ export function processAlerts(alerts) {
       };
     }
 
-    // Update day specific data
+    // Update day-specific data
     dayMap[day].numberOfAlerts += 1;
     dayMap[day].ntype[alert.type] += 1;
 
@@ -71,6 +81,9 @@ export function processAlerts(alerts) {
     // Update overall data
     result.nTypes[alert.type] += 1;
     result.symbols[alert.symbol] = (result.symbols[alert.symbol] || 0) + 1;
+
+    // Add the alert to the appropriate day of the week
+    result.dayOfTheWeek[dayName].push(alert);
   });
 
   result.days = Object.values(dayMap).reverse();
@@ -78,16 +91,18 @@ export function processAlerts(alerts) {
   return result;
 }
 
-export function alertsChartDayData(days) {
+export function alertsChartDayData(days, color) {
   if (!days) return [];
   const labels = days.map((day) => day.day);
 
   const object1 = {
     labels: labels,
     label: "Total alerts",
-    color: getComputedStyle(document.documentElement).getPropertyValue(
-      "--clr-primary"
-    ),
+    color:
+      color ||
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--clr-primary"
+      ),
     data: days.map((day) => day.numberOfAlerts),
   };
 
@@ -104,4 +119,54 @@ export function alertsChartDayData(days) {
   };
 
   return [object1, object2];
+}
+
+export function alertsChartDayOfWeekData(dayOfTheWeek, color) {
+  if (!dayOfTheWeek) return [];
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  const all = {
+    labels: [],
+    data: [],
+    label: "Total alerts",
+    color:
+      color ||
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--clr-primary"
+      ),
+  };
+
+  const marketOrder = {
+    labels: [],
+    data: [],
+    label: "Market alerts",
+
+    color: addAlpha(
+      getComputedStyle(document.documentElement).getPropertyValue(
+        "--chart-text-color"
+      ),
+      0.3
+    ),
+  };
+
+  daysOfWeek.forEach((day) => {
+    all.labels.push(day);
+    all.data.push(dayOfTheWeek[day] ? dayOfTheWeek[day].length : 0);
+    marketOrder.labels.push(day);
+    marketOrder.data.push(
+      dayOfTheWeek[day]
+        ? dayOfTheWeek[day].filter((v) => v.type == 0).length
+        : 0
+    );
+  });
+
+  return [all, marketOrder];
 }

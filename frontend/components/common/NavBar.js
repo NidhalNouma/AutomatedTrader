@@ -26,7 +26,7 @@ import { addAlpha } from "../../utils/functions";
 
 export default function NavBar({ className, page }) {
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [closeSearch, setCloseSearch] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
   const { users, username, setUsername } = SearchUsersByDisplayName();
@@ -123,17 +123,24 @@ export default function NavBar({ className, page }) {
                   setUsername(v);
                   setName(v);
                 }}
+                close={closeSearch}
               >
                 {users.length > 0 && (
                   <div className="mt-4">
                     <SubTitle3 className="ml-2 !text-xs">Users</SubTitle3>
-                    <UsersResults users={users} />
+                    <UsersResults
+                      users={users}
+                      close={() => setCloseSearch(!closeSearch)}
+                    />
                   </div>
                 )}
                 {webhooks.length > 0 && (
                   <div className="mt-4">
                     <SubTitle3 className="ml-2 !text-xs">Webhooks</SubTitle3>
-                    <WebhooksResult webhooks={webhooks} />
+                    <WebhooksResult
+                      webhooks={webhooks}
+                      close={() => setCloseSearch(!closeSearch)}
+                    />
                   </div>
                 )}
                 {username?.length < 3 &&
@@ -200,32 +207,31 @@ export default function NavBar({ className, page }) {
   );
 }
 
-const UsersResults = ({ users }) => {
+const UsersResults = ({ users, close }) => {
+  const router = useRouter();
   return (
     <Fragment>
       {users?.length > 0 && (
         <Fragment>
-          {users.map((user) => (
-            <div className=" min-h-6 px-2 py-2 my-1 rounded-lg hover:bg-accent/10">
-              <Link
-                key={user.id}
-                href={{
-                  pathname: "/u/" + user.userName,
-                  // query: { linkUser: JSON.stringify(user) },
-                }}
-              >
-                <div className="flex justify-start items-center cursor-pointer">
-                  <div className="w-8 h-8 rounded-full">
-                    <img
-                      className="rounded-full  w-full h-full "
-                      src={user?.photoURL || "/Images/profile.png"}
-                    />
-                  </div>
-                  <div className="ml-3">
-                    <Label>{user.displayName}</Label>
-                  </div>
+          {users.map((user, i) => (
+            <div
+              key={i}
+              onClick={() => {
+                router.push("/u/" + user.userName);
+              }}
+              className=" min-h-6 px-2 py-2 my-1 rounded-lg hover:bg-accent/10 cursor-pointer"
+            >
+              <div className="flex justify-start items-center cursor-pointer">
+                <div className="w-8 h-8 rounded-full">
+                  <img
+                    className="rounded-full  w-full h-full "
+                    src={user?.photoURL || "/Images/profile.png"}
+                  />
                 </div>
-              </Link>
+                <div className="ml-3">
+                  <Label>{user.displayName}</Label>
+                </div>
+              </div>
             </div>
           ))}
         </Fragment>
@@ -234,13 +240,15 @@ const UsersResults = ({ users }) => {
   );
 };
 
-const WebhooksResult = ({ webhooks }) => {
+const WebhooksResult = ({ webhooks, close }) => {
+  const router = useRouter();
   return (
     <Fragment>
       {webhooks?.length > 0 && (
         <Fragment>
-          {webhooks.map((webhook) => (
+          {webhooks.map((webhook, i) => (
             <div
+              key={i}
               className={`px-2 py-2 my-1 rounded-lg`}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = addAlpha(
@@ -251,26 +259,22 @@ const WebhooksResult = ({ webhooks }) => {
               onMouseLeave={(e) => {
                 e.currentTarget.style.backgroundColor = "transparent";
               }}
+              onClick={() => {
+                router.push("/webhook/" + webhook.publicId);
+                close();
+              }}
             >
-              <Link
-                key={webhook.id}
-                href={{
-                  pathname: "/webhook/" + webhook.publicId,
-                  // query: { linkUser: JSON.stringify(user) },
-                }}
-              >
-                <div className="flex justify-start items-center cursor-pointer">
-                  {/* <div className="w-8 h-8 rounded-full">
+              <div className="flex justify-start items-center cursor-pointer">
+                {/* <div className="w-8 h-8 rounded-full">
                     <img
                       className="rounded-full  w-full h-full "
                       src={user?.photoURL || "/Images/profile.png"}
                     />
                   </div> */}
-                  <div className="iml-3">
-                    <Label>{webhook.name}</Label>
-                  </div>
+                <div className="iml-3">
+                  <Label>{webhook.name}</Label>
                 </div>
-              </Link>
+              </div>
             </div>
           ))}
         </Fragment>

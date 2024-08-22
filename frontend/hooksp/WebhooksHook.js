@@ -21,6 +21,8 @@ import {
 } from "../lib/webhooks";
 import { getAlertsByWebhookId } from "../lib/alerts";
 
+import { getUser } from "../lib/users";
+
 import { processAlerts } from "./AlertHook";
 import { processTrades } from "./TradeHook";
 
@@ -615,6 +617,7 @@ export const SearchWebhooksByName = () => {
 
 export function ViewWebhookPage(publicId) {
   const [webhook, setWebhook] = useState(null);
+  const [whUser, setWhUser] = useState(null);
   const [error, setError] = useState("");
 
   const [alerts, setAlerts] = useState(null);
@@ -657,16 +660,22 @@ export function ViewWebhookPage(publicId) {
     const r = await getWebhookByPublicId(publicId);
     if (r) {
       setWebhook(r);
-      // console.log(r);
+      const u = await getUser(r.userId);
+      setWhUser(u);
       const a = await getAlertsByWebhookId(r.id);
-      // console.log(a);
       setAlerts(a);
     } else setError("Webhook not found!");
   }
 
   useEffect(() => {
-    if (publicId) getWebhook();
+    if (publicId) {
+      setWebhook(null);
+      setWhUser(null);
+      setAlerts(null);
+      setTrades(null);
+      getWebhook();
+    }
   }, [publicId]);
 
-  return { error, webhook, trades, alerts, alertsData, tradesData };
+  return { error, whUser, webhook, trades, alerts, alertsData, tradesData };
 }

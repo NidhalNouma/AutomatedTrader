@@ -24,9 +24,9 @@ const TooltipComponent = ({ visible, title, labels, position, className }) => {
           <span
             className="rounded-full h-2 aspect-square"
             style={{
-              backgroundColor: label.backgroundColor,
+              backgroundColor: label.borderColor || label.backgroundColor,
               borderColor: label.borderColor,
-              borderWidth: "2px",
+              borderWidth: "0px",
               marginRight: "8px",
               display: "inline-block",
             }}

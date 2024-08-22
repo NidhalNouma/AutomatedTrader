@@ -14,12 +14,16 @@ import {
   DeleteAccount,
 } from "../../hooksp/MetatraderHook.js";
 
+import { useMetatrader } from "../../contexts/MetatraderContext.js";
+
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/solid";
 import { IoMdArrowDroprightCircle } from "react-icons/io";
 
 import { txtColorFromBg, addAlpha } from "../../utils/functions";
 
 export default function MTStatus({ account, accountData }) {
+  const { closeTradeById } = useMetatrader();
+
   const { accountName, setAccountName, editAccountName } =
     EditAccountName(account);
   const { accountColor, setAccountColor, editAccountColor } =
@@ -272,7 +276,12 @@ export default function MTStatus({ account, accountData }) {
                           <div className="mt-6 w-full px-4">
                             <DataTable
                               data={accountData.positions}
-                              // closeTrade={closeLiveTrade}
+                              closeTrade={async (tradeId) => {
+                                await closeTradeById(
+                                  account.accountApiId,
+                                  tradeId
+                                );
+                              }}
                             />
                           </div>
                         )}

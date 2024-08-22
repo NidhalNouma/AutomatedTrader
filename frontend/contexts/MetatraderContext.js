@@ -131,9 +131,51 @@ export function MetatraderProvider({ children }) {
     }
   }, [metaapi, mtAccounts]);
 
+  async function closeTradeById(accountApiId, tradeId, percentage = 100) {
+    if (!metaapi) return;
+
+    try {
+      const account = await metaapi.metatraderAccountApi.getAccount(
+        accountApiId
+      );
+      const connection = await account.getStreamingConnection();
+      await connection.connect();
+      await connection.waitSynchronized();
+
+      const terminalState = connection.terminalState;
+      const position = terminalState.positions.find(
+        (pos) => pos.id === tradeId
+      );
+
+      if (!position) {
+        console.log(`Trade with ID ${tradeId} not found.`);
+      }
+
+      const closeVolume = (position.volume * percentage) / 100;
+
+      const response = await connection.closePositionPartially(
+        tradeId,
+        closeVolume
+      );
+
+      console.log(
+        `Trade ${tradeId} partially closed by ${percentage}%:`,
+        response
+      );
+    } catch (error) {
+      console.error("Failed to close trade:", error);
+    }
+  }
+
   return (
     <MetatraderContext.Provider
-      value={{ mtAccounts, setMTAccounts, getMTAccounts, mtAccountsData }}
+      value={{
+        mtAccounts,
+        setMTAccounts,
+        getMTAccounts,
+        mtAccountsData,
+        closeTradeById,
+      }}
     >
       {children}
     </MetatraderContext.Provider>

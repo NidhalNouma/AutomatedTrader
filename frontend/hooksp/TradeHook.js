@@ -503,11 +503,23 @@ export function processTrades(trades) {
     profit: [],
     loss: [],
     Trades: [],
+    dayOfTheWeek: {
+      Sunday: [],
+      Monday: [],
+      Tuesday: [],
+      Wednesday: [],
+      Thursday: [],
+      Friday: [],
+      Saturday: [],
+    },
   };
 
   trades.forEach((trade) => {
     // Extract the date (day) from openTime
     const tradeDate = new Date(trade.openTime).toISOString().split("T")[0];
+    const dayName = new Date(trade.openTime).toLocaleDateString("en-US", {
+      weekday: "long",
+    });
 
     // If the date doesn't exist in the groupedTrades object, initialize it
     if (!groupedTrades[tradeDate]) {
@@ -542,6 +554,9 @@ export function processTrades(trades) {
       groupedTrades[tradeDate].loss.push(trade);
       totals.loss.push(trade); // Add to total loss array
     }
+
+    // Add the trade to the dayOfTheWeek object
+    totals.dayOfTheWeek[dayName].push(trade);
   });
 
   // Return the grouped trades and totals
@@ -552,5 +567,6 @@ export function processTrades(trades) {
     profit: totals.profit,
     loss: totals.loss,
     Trades: totals.Trades,
+    dayOfTheWeek: totals.dayOfTheWeek, // Include the dayOfTheWeek object
   };
 }

@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import moment from "moment";
 
@@ -6,9 +7,13 @@ import { MainLayout } from "../../components/layout/MainLayout";
 import { Title, SubTitle3, SubTitle2, Label } from "../../components/ui/Text";
 
 import { ViewWebhookPage } from "../../hooksp/WebhooksHook";
-import { alertsChartDayData } from "../../hooksp/AlertHook";
+import {
+  alertsChartDayData,
+  alertsChartDayOfWeekData,
+} from "../../hooksp/AlertHook";
 
 import LineChart from "../../components/charts/Line2";
+import BarChart from "../../components/charts/Bar";
 import DoughnutWithTooltip from "../../components/charts/DoughnutWithTooltip";
 import Doughnut from "../../components/charts/Doughnut";
 
@@ -32,15 +37,61 @@ function Webhook({}) {
 export default Webhook;
 
 export function WebhookPage({ id, title = true }) {
-  const { error, webhook, trades, alerts, alertsData, tradesData } =
+  const { error, whUser, webhook, trades, alerts, alertsData, tradesData } =
     ViewWebhookPage(id);
+
+  function getHotDays(dayOfTheWeek) {
+    if (!dayOfTheWeek) return [];
+    const daysOfWeek = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    let maxAlerts = 0;
+    const hotDays = [];
+
+    // Find the maximum number of alerts on any single day
+    daysOfWeek.forEach((day) => {
+      const alertCount = dayOfTheWeek[day] ? dayOfTheWeek[day].length : 0;
+      if (alertCount > maxAlerts) {
+        maxAlerts = alertCount;
+      }
+    });
+
+    // Find all days that have the maximum number of alerts
+    daysOfWeek.forEach((day) => {
+      const alertCount = dayOfTheWeek[day] ? dayOfTheWeek[day].length : 0;
+      if (alertCount === maxAlerts && maxAlerts > 0) {
+        hotDays.push(day);
+      }
+    });
+
+    return hotDays;
+  }
+  const hotDays = getHotDays(alertsData?.dayOfTheWeek);
 
   return (
     <Fragment>
       {title && (
         <section className="flex items-center justify-between">
           <div className="inline-flex items-center">
-            <Title>{webhook?.name || "Loading ..."}</Title>
+            <Title>
+              {webhook?.name || "Loading ..."}{" "}
+              {whUser && (
+                <span className="text-xs text-title/80">
+                  by{" "}
+                  <span className="text-xs font-semibold hover:text-title transition-all">
+                    <Link href={"/u/" + whUser.userName}>
+                      {whUser.displayName}
+                    </Link>
+                  </span>
+                </span>
+              )}
+            </Title>
           </div>
         </section>
       )}
@@ -122,8 +173,39 @@ export function WebhookPage({ id, title = true }) {
                 <div className="mt-2">
                   <LineChart
                     className="h-56"
-                    data={alertsChartDayData(alertsData?.days)}
+                    data={alertsChartDayData(alertsData?.days, webhook?.color)}
                     chartId="alertsDays"
+                    minYAxis={0}
+                  />
+                </div>
+
+                <Label className="mt-4">Days of the week</Label>
+
+                <div className="mt-2">
+                  {hotDays?.length > 0 ? (
+                    <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                      {hotDays.map((v, i) => (
+                        <span className="" key={i}>
+                          {i === 0 ? "" : ", "}
+                          {v}
+                        </span>
+                      ))}{" "}
+                      {hotDays.length === 1 ? "is a hot day" : "are hot days"}
+                    </h6>
+                  ) : (
+                    <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                      No available hot day
+                    </h6>
+                  )}
+                </div>
+
+                <div className="mt-2">
+                  <BarChart
+                    className="h-56"
+                    data={alertsChartDayOfWeekData(
+                      alertsData?.dayOfTheWeek,
+                      webhook?.color
+                    )}
                     minYAxis={0}
                   />
                 </div>
@@ -145,7 +227,7 @@ export function WebhookPage({ id, title = true }) {
                     </div>
 
                     <div className="mt-2 flex flex-col sm:flex-row gap-2 items-center justify-center">
-                      <div className="  mx-auto w-full">
+                      <div className="  mx-auto w-full max-w-xs">
                         <DoughnutWithTooltip
                           className=" "
                           data={Object.values(alertsData.nTypes)}
@@ -186,7 +268,7 @@ export function WebhookPage({ id, title = true }) {
                           ]}
                         />
                       </div>
-                      <div className=" mx-auto w-full">
+                      {/* <div className=" mx-auto w-full">
                         <DoughnutWithTooltip
                           className=" "
                           data={Object.values(alertsData.apps)}
@@ -195,7 +277,7 @@ export function WebhookPage({ id, title = true }) {
                             getRandomHexColor()
                           )}
                         />
-                      </div>
+                      </div> */}
                     </div>
                   </Fragment>
                 )}

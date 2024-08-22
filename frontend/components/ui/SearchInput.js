@@ -8,7 +8,7 @@ import { TopModal } from "./Modal";
 
 import { CloseButton } from "./Button";
 
-export function SearchModal({ children, placeholder, value, setValue }) {
+export function SearchModal({ children, placeholder, value, setValue, close }) {
   const inputRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -17,6 +17,11 @@ export function SearchModal({ children, placeholder, value, setValue }) {
       inputRef.current.focus();
     }
   }, [open]);
+
+  useEffect(() => {
+    console.log(close);
+    setOpen(false);
+  }, [close]);
 
   useEffect(() => {
     const handleKeyDown = (event) => {
