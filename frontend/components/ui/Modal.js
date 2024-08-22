@@ -149,7 +149,7 @@ export const TopModal = ({
     <Modal_
       open={open}
       onClickBackdrop={backclose}
-      className="bg-bg modalt p-0"
+      className="bg-bg modalt p-0  max-h-[89vh] hideScrollbar mb-auto mt-12"
       responsive={responsive}
     >
       {children}

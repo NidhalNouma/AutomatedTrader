@@ -220,7 +220,7 @@ export function TradesData() {
 
   useEffect(() => {
     if (trades.length > 0) {
-      let tr = groupTradesByDay(trades);
+      let tr = processTrades(trades).days;
       setTradesDay(tr);
     }
   }, [trades]);
@@ -495,8 +495,15 @@ export function TradesData() {
   };
 }
 
-function groupTradesByDay(trades) {
+export function processTrades(trades) {
   const groupedTrades = {};
+  const totals = {
+    buys: [],
+    sells: [],
+    profit: [],
+    loss: [],
+    Trades: [],
+  };
 
   trades.forEach((trade) => {
     // Extract the date (day) from openTime
@@ -516,22 +523,34 @@ function groupTradesByDay(trades) {
 
     // Add the trade to the Trades array
     groupedTrades[tradeDate].Trades.push(trade);
+    totals.Trades.push(trade); // Add to total Trades array
 
     // Separate into buys and sells
     if (trade.type === "buy") {
       groupedTrades[tradeDate].buys.push(trade);
+      totals.buys.push(trade); // Add to total buys array
     } else if (trade.type === "sell") {
       groupedTrades[tradeDate].sells.push(trade);
+      totals.sells.push(trade); // Add to total sells array
     }
 
     // Separate into profit and loss
     if (trade.profit >= 0) {
       groupedTrades[tradeDate].profit.push(trade);
+      totals.profit.push(trade); // Add to total profit array
     } else {
       groupedTrades[tradeDate].loss.push(trade);
+      totals.loss.push(trade); // Add to total loss array
     }
   });
 
-  // Convert the groupedTrades object into an array
-  return Object.values(groupedTrades);
+  // Return the grouped trades and totals
+  return {
+    days: Object.values(groupedTrades),
+    buys: totals.buys,
+    sells: totals.sells,
+    profit: totals.profit,
+    loss: totals.loss,
+    Trades: totals.Trades,
+  };
 }

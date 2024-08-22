@@ -124,7 +124,7 @@ const RechartJSLine = ({
     return transformedData;
   }, [data]);
 
-  console.log(processedData, data);
+  // console.log(processedData, data);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -145,6 +145,7 @@ const RechartJSLine = ({
   };
 
   const cardinal = curveCardinal.tension(0.9);
+  // console.log(cardinal);
 
   return (
     <Fragment>
@@ -233,7 +234,8 @@ const RechartJSLine = ({
                 {data.map((dataset, index) => (
                   <Line
                     key={dataset.label}
-                    type={cardinal}
+                    // type={cardinal}
+                    type="linear"
                     dataKey={dataset.label}
                     stroke={
                       dataset.color ||

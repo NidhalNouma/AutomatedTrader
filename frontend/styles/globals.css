@@ -123,22 +123,12 @@ a {
   }
 }
 
-/* .modali {
-  max-height: 90vh;
-} */
-
-
-.modalt {
-  /* background-color: transparent; */
-  margin-bottom: auto;
-  margin-top: 6rem;
-  max-height: 90vh;
-}
 
 .modali {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
 }
+
 .modali::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }

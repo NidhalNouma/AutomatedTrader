@@ -98,9 +98,9 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
   return (
     <Fragment>
       {theme && (
-        <div className="relative w-full aspect-square">
+        <Fragment>
           <ResponsiveContainer
-            className={`w-full aspect-square relative ${className}`}
+            className={`h-24 aspect-square relative ${className}`}
           >
             <PieChart>
               <Pie
@@ -109,8 +109,8 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
                 data={processedData}
                 cx="50%"
                 cy="50%"
-                innerRadius={50}
-                outerRadius={90}
+                innerRadius={60}
+                outerRadius={100}
                 // dataKey="value"
                 cornerRadius={10}
                 onMouseEnter={(_, index) => setActiveIndex(index)}
@@ -149,7 +149,7 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
       >
         {children}
       </div> */}
-        </div>
+        </Fragment>
       )}
     </Fragment>
   );

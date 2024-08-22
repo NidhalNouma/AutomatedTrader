@@ -15,14 +15,14 @@ export default function WebhookChart({ webhook }) {
     <Fragment>
       {viewData && (
         <WideModal
-          title={webhook.name}
+          title={webhook?.name || "Loading..."}
           open={viewData}
           close={() => {
             history.back();
             setViewData(false);
           }}
           withHeader={true}
-          className="max-w-[90vw]"
+          className="max-w-[90vw] min-h-[90vh]"
         >
           <WebhookPage id={webhook.publicId} title={false} />
         </WideModal>

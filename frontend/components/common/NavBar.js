@@ -152,15 +152,11 @@ export default function NavBar({ className, page }) {
                 <Dropdown
                   content={
                     <Fragment>
-                      <DropdownButton>
-                        <Link className="justify-between" href="/profile">
-                          Profile
-                        </Link>
+                      <DropdownButton onClick={() => router.push("/profile")}>
+                        Profile
                       </DropdownButton>
-                      <DropdownButton>
-                        <Link className="justify-between" href="/settings">
-                          Settings
-                        </Link>
+                      <DropdownButton onClick={() => router.push("/settings")}>
+                        Settings
                       </DropdownButton>
                       <DropdownButton
                         onClick={async () => {

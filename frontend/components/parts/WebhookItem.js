@@ -239,14 +239,20 @@ function Index({ webhook }) {
 
           {viewData && (
             <WideModal
-              title={webhook.name}
+              title={webhook?.name || "Loading..."}
               open={viewData}
               close={() => {
-                history.pushState({ urlPath: "/webhook" }, "", "/webhook");
+                window.history.pushState(
+                  { urlPath: "/webhook" },
+                  "",
+                  "/webhook"
+                );
+
+                // window.history.back();
                 setViewData(false);
               }}
               withHeader={true}
-              className="max-w-[90vw]"
+              className="max-w-[90vw] min-h-[90vh]"
             >
               <WebhookPage id={webhook.publicId} title={false} />
             </WideModal>
@@ -270,8 +276,6 @@ function Index({ webhook }) {
                       className="!h-6  mr-2.5"
                       helper="View webhook data."
                       onClick={() => {
-                        // let href = `/webhook/${webhook.publicId}`;
-                        // router.push(href);
                         window.history.pushState(
                           { urlPath: "/webhook/" + webhook.publicId },
                           "",

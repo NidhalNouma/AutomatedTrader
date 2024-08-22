@@ -39,8 +39,8 @@ export function SearchModal({ children, placeholder, value, setValue }) {
   return (
     <Fragment>
       <TopModal open={open} backclose={() => setOpen(false)}>
-        <div className="pb-4 px-4 ">
-          <div className="flex items-center border-b-2 border-text/10 px-2 py-0 w-full">
+        <div className="pb-4 ">
+          <div className="flex items-center border-b-2 border-text/10 py-0 w-full sticky top-0 bg-bg/60 backdrop-blur-2xl rounded-t-lg px-6 ">
             <SearchIcon className="h-5 w-5 text-text/60" />
             <Input
               className="px-2 pb-0 grow text-text bg-transparent border-none placeholder:text-text/60 placeholder:opacity-100 focus:outline-0"
@@ -58,7 +58,8 @@ export function SearchModal({ children, placeholder, value, setValue }) {
 
             <CloseButton onClick={() => setOpen(false)} />
           </div>
-          {children}
+
+          <div className="mx-4">{children}</div>
         </div>
       </TopModal>
 

@@ -22,6 +22,7 @@ import {
 import { getAlertsByWebhookId } from "../lib/alerts";
 
 import { processAlerts } from "./AlertHook";
+import { processTrades } from "./TradeHook";
 
 import { getMessageData as getMsgData } from "../lib/third/webhookMessage";
 
@@ -603,7 +604,7 @@ export const SearchWebhooksByName = () => {
     if (name.length > 2)
       (async () => {
         const r = await searchWebhooksByName(name);
-        console.log(r);
+        // console.log(r);
         setWebhooks(r);
       })();
     else setWebhooks([]);
@@ -613,13 +614,14 @@ export const SearchWebhooksByName = () => {
 };
 
 export function ViewWebhookPage(publicId) {
-  const [webhook, setWebhook] = useState([]);
+  const [webhook, setWebhook] = useState(null);
   const [error, setError] = useState("");
 
   const [alerts, setAlerts] = useState(null);
   const [trades, setTrades] = useState(null);
 
   const [alertsData, setAlertsData] = useState(null);
+  const [tradesData, setTradesData] = useState(null);
 
   useEffect(() => {
     if (alerts?.length > 0) {
@@ -628,6 +630,14 @@ export function ViewWebhookPage(publicId) {
       setAlertsData(pr);
     }
   }, [alerts]);
+
+  useEffect(() => {
+    if (trades?.length > 0) {
+      const pr = processTrades(trades);
+      console.log(pr);
+      setTradesData(pr);
+    }
+  }, [trades]);
 
   useEffect(() => {
     if (webhook) {
@@ -639,7 +649,7 @@ export function ViewWebhookPage(publicId) {
           if (closedTrade) closedTrades.push(closedTrade);
         }
         setTrades(closedTrades);
-      }
+      } else setTrades([]);
     }
   }, [webhook]);
 
@@ -658,5 +668,5 @@ export function ViewWebhookPage(publicId) {
     if (publicId) getWebhook();
   }, [publicId]);
 
-  return { error, webhook, trades, alerts, alertsData };
+  return { error, webhook, trades, alerts, alertsData, tradesData };
 }

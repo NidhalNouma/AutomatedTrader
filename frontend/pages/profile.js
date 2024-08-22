@@ -32,7 +32,7 @@ function Profile() {
         title="Profile"
         page="profile"
         rightSection={
-          <div className="">
+          <div className="flex justify-center items-center">
             <Button
               className="bg-transparent hover:bg-transparent text-title"
               onClick={() => router.push("/settings")}
@@ -41,6 +41,7 @@ function Profile() {
             </Button>
             {fullUser?.userName && (
               <Button
+                spinnerClassName="ml-5"
                 className="bg-secondary hover:bg-secondary ml-3"
                 onClick={() => router.push("/u/" + fullUser?.userName)}
               >
