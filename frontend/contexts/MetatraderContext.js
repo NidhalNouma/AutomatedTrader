@@ -58,7 +58,13 @@ export function MetatraderProvider({ children }) {
             data.push(obj);
           }
 
-          await checkHistoryData(account.id);
+          const newAccount = await checkHistoryData(account.id);
+          if (newAccount) {
+            console.log(newAccount, "new account");
+            setMTAccounts((accs) =>
+              accs.map((acc) => (acc.id === account.id ? newAccount : acc))
+            );
+          }
         }
         setMTAccountsData(data);
       };

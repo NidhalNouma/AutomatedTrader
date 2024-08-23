@@ -5,6 +5,7 @@ import { useBinance } from "./BinanceContext";
 import {
   getWebhooksByUserId,
   getUserWebhooksWithTrades,
+  completeWebhookTradeData,
 } from "../lib/webhooks";
 
 const WebhookContext = createContext();
@@ -27,35 +28,45 @@ export function WebhookProvider({ children }) {
               const account = mtAccountsData.find(
                 (acc) => acc.account.id === trade.accountId
               );
-              if (account) {
-                let findLiveTrade = account?.positions?.find(
-                  (t) => t.id === trade.tradeId
-                );
-                if (findLiveTrade) {
-                  // console.log(findLiveTrade);
-                  newTrade.live = true;
-                  let tr = {
-                    ...findLiveTrade,
-                    symbol: findLiveTrade.symbol,
-                    type:
-                      findLiveTrade?.type?.search("BUY") >= 0 ? "Buy" : "Sell",
-                    open: findLiveTrade.openPrice,
-                    close: findLiveTrade.currentPrice,
-                    openTime: findLiveTrade.time,
-                    profit: findLiveTrade.profit,
-                  };
-                  newTrade.trade = tr;
-                } else {
-                  let findHistoryTrade = account?.account?.historyData?.find(
+              if (!trade.trade)
+                if (account) {
+                  let findLiveTrade = account?.positions?.find(
                     (t) => t.id === trade.tradeId
                   );
+                  if (findLiveTrade) {
+                    // console.log(findLiveTrade);
+                    newTrade.live = true;
+                    let tr = {
+                      ...findLiveTrade,
+                      symbol: findLiveTrade.symbol,
+                      type:
+                        findLiveTrade?.type?.toUpperCase()?.search("BUY") >= 0
+                          ? "Buy"
+                          : "Sell",
+                      open: findLiveTrade.openPrice,
+                      close: findLiveTrade.currentPrice,
+                      openTime: findLiveTrade.time,
+                      profit: findLiveTrade.profit,
+                    };
+                    newTrade.trade = tr;
+                  } else {
+                    let findHistoryTrade = account?.account?.historyData?.find(
+                      (t) => t.id === trade.tradeId
+                    );
 
-                  if (findHistoryTrade) {
-                    newTrade.live = false;
-                    newTrade.trade = findHistoryTrade;
+                    if (findHistoryTrade) {
+                      newTrade.live = false;
+                      newTrade.trade = findHistoryTrade;
+                      completeWebhookTradeData(
+                        webhook.id,
+                        trade.tradeId,
+                        trade.accountId,
+                        trade.tradeSrc,
+                        findHistoryTrade
+                      );
+                    }
                   }
                 }
-              }
             }
             return newTrade;
           });
@@ -64,6 +75,8 @@ export function WebhookProvider({ children }) {
         }
         return newWebhook;
       });
+
+      // console.log("wwwhh", wWithTrades);
 
       setWebhooksWithTrades(wWithTrades);
     } else setWebhooksWithTrades(webhooks);

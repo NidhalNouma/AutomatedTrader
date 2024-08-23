@@ -3,6 +3,8 @@ import { ModalWithHeader } from "../ui/Modal.js";
 import moment from "moment";
 import { ButtonText } from "../ui/Button.js";
 
+import { addAlpha } from "../../utils/functions.js";
+
 import tailwindConfig from "../../tailwind.config.js";
 
 import { TradeDetails } from "./TradeDetails.js";
@@ -38,7 +40,7 @@ function Table({ data }) {
                 ?.slice(0)
                 .reverse()
                 ?.map((v, i) => {
-                  const type = v.type == 0 ? "Buy" : "Sell"; //typeToStr(v.type?.toString());
+                  const type = v.type;
                   // const { webhooks } = GetWebhookContext();
                   // const id = v.clientId ? v.clientId.split("_")[2] : null;
                   const wh = false; //webhooks.find((w) => w.id === id?.toString());
@@ -59,9 +61,9 @@ function Table({ data }) {
                         trigger={
                           <tr
                             className={`${
-                              v.type == 0
+                              v.type == "buy"
                                 ? "hover:bg-long/10"
-                                : v.type == 1
+                                : v.type == "sell"
                                 ? "hover:bg-short/10"
                                 : ""
                             }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
@@ -95,9 +97,9 @@ function Table({ data }) {
                             <td className={` `}>
                               <span
                                 className={`px-2 py-[0.15rem] rounded font-bold ${
-                                  v.type == 0
+                                  v.type == "buy"
                                     ? "bg-long/10 text-long"
-                                    : v.type == 1
+                                    : v.type == "sell"
                                     ? "bg-short/10 text-short"
                                     : ""
                                 }`}
@@ -157,7 +159,7 @@ export function LiveTradeTable({ data, className }) {
         <div
           className={`overflow-x-auto w-full max-w-full hideScrollbar rounded-md bg-bgt ${className}`}
         >
-          <table className="table-auto w-full">
+          <table className="table-auto w-full border-spacing-x-1 border-separate">
             <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
               <tr>
                 <th className="px-2 sm:px-2">WebHook</th>
@@ -204,7 +206,21 @@ export function LiveTradeTable({ data, className }) {
                             }  cursor-pointer text-sm py-1.5 text-center text-text/60`}
                           >
                             <td className=" font-bold mr-auto capitalize">
-                              {v.webhook || "NA"}
+                              {v.webhook ? (
+                                <p
+                                  className="px-1 py-0.5 rounded truncate"
+                                  style={{
+                                    backgroundColor: addAlpha(
+                                      v.webhook.color,
+                                      0.2
+                                    ),
+                                  }}
+                                >
+                                  {v.webhook.name}
+                                </p>
+                              ) : (
+                                "NA"
+                              )}
                             </td>
                             <td className=" font-bold mr-auto capitalize">
                               {v.src}
@@ -262,12 +278,13 @@ export function HistoryTradeTable({ data: entryData, className }) {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 15;
 
+  // console.log(entryData);
+
   // Calculate the current page data
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentData = entryData
-    .slice(indexOfFirstRow, indexOfLastRow)
-    .reverse();
+
+  const currentData = entryData.slice(indexOfFirstRow, indexOfLastRow);
 
   const totalPages = Math.ceil(entryData.length / rowsPerPage);
 
@@ -289,7 +306,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
         <div
           className={`overflow-x-auto w-full max-w-full hideScrollbar rounded-md bg-bgt ${className}`}
         >
-          <table className="table-auto w-full">
+          <table className="table-auto w-full border-spacing-x-1 border-separate">
             <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
               <tr>
                 <th className="px-2 sm:px-2">WebHook</th>
@@ -321,7 +338,18 @@ export function HistoryTradeTable({ data: entryData, className }) {
                         }  cursor-pointer text-sm py-1.5 text-center text-text/60`}
                       >
                         <td className=" font-bold mr-auto capitalize">
-                          {v.webhook || "NA"}
+                          {v.webhook ? (
+                            <p
+                              className=" py-0.5 rounded"
+                              style={{
+                                backgroundColor: addAlpha(v.webhook.color, 0.2),
+                              }}
+                            >
+                              {v.webhook.name}
+                            </p>
+                          ) : (
+                            "NA"
+                          )}
                         </td>
                         <td className=" font-bold mr-auto capitalize">
                           {v.src}
@@ -359,6 +387,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
                         <td className="">{v.openPrice || v.open}</td>
                         <td className="">{v.closePrice || v.open}</td>
                         <td className="truncate px-1 ">
+                          {/* {v.openTime} */}
                           {moment(v.openTime).format("yyyy MM DD HH:mm:ss")}
                         </td>
                         <td className="truncate px-1 ">

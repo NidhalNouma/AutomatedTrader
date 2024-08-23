@@ -52,8 +52,8 @@ export function processAlerts(alerts) {
 
   alerts.forEach((alert) => {
     const date = new Date(alert.created_at.seconds * 1000); // Convert Firebase timestamp to JavaScript Date
-    const day = date.toISOString().split("T")[0]; // Extract the day in YYYY-MM-DD format
-    const dayName = date.toLocaleDateString("en-US", { weekday: "long" }); // Get the day of the week
+    const day = moment(date).format("YYYY-MM-DD"); // Extract the day in YYYY-MM-DD format
+    const dayName = moment(date).format("dddd"); // Get the day of the week
 
     if (!dayMap[day]) {
       dayMap[day] = {

@@ -74,6 +74,20 @@ export function WebhookPage({ id, title = true }) {
   }
   const hotDays = getHotDays(alertsData?.dayOfTheWeek);
 
+  let todayAlerts = alertsData?.days.find(
+    (day) => day.time === moment().format("YYYY-MM-DD")
+  );
+  let yesterdayAlerts = alertsData?.days.find(
+    (day) => day.time === moment().subtract(1, "days").format("YYYY-MM-DD")
+  );
+
+  let todayTrades = tradesData?.days.find(
+    (day) => day.time === moment().format("YYYY-MM-DD")
+  );
+  let yesterdayTrades = tradesData?.days.find(
+    (day) => day.time === moment().subtract(1, "days").format("YYYY-MM-DD")
+  );
+
   return (
     <Fragment>
       {title && (
@@ -122,10 +136,10 @@ export function WebhookPage({ id, title = true }) {
               <Fragment>
                 <div className="mt-2">
                   <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
-                    {0} trades today
+                    {todayTrades?.Trades?.length || 0} trades today
                   </h6>
                   <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline ">
-                    {0} trades yesterday
+                    {yesterdayTrades?.Trades?.length || 0} trades yesterday
                   </h6>
                 </div>
 
@@ -133,8 +147,8 @@ export function WebhookPage({ id, title = true }) {
                   <LineChart
                     className="h-56"
                     data={[]}
-                    chartId="alertsDays"
-                    minYAxis={0}
+                    chartId="tradesDays"
+                    // minYAxis={0}
                   />
                 </div>
               </Fragment>
@@ -163,10 +177,10 @@ export function WebhookPage({ id, title = true }) {
               <Fragment>
                 <div className="mt-2">
                   <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
-                    {webhook?.trades?.length} Alerts today
+                    {todayAlerts?.numberOfAlerts || 0} Alerts today
                   </h6>
                   <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline ">
-                    {alerts?.length} Alerts yesterday
+                    {yesterdayAlerts?.numberOfAlerts || 0} Alerts yesterday
                   </h6>
                 </div>
 

@@ -1,12 +1,9 @@
 import { SubTitle } from "chart.js";
 import { Fragment } from "react";
 import moment from "moment";
+import { addAlpha } from "../../utils/functions";
 
 export function TradeDetails({ data }) {
-  //   const { webhooks } = GetWebhookContext();
-  //   const id = data?.clientId ? data.clientId.split("_")[2] : null;
-  const wh = false; // webhooks.find((w) => w.id === id?.toString());
-  // console.log(wh, data);
   const type = data.type == 0 ? "Buy" : "Sell";
 
   return (
@@ -25,13 +22,13 @@ export function TradeDetails({ data }) {
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text/60">WebHook</span>
-          {wh ? (
+          {data.webhook ? (
             <div>
               <span
-                className="text-sm text-title border-b-4"
-                style={{ borderColor: wh?.color }}
+                className="text-sm text-title rounded px-2"
+                style={{ backgroundColor: addAlpha(data?.webhook?.color, 0.2) }}
               >
-                {wh?.name}
+                {data.webhook ? data.webhook.name : "NA"}
               </span>
             </div>
           ) : (

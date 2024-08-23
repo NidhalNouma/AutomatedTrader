@@ -19,7 +19,6 @@ export function SearchModal({ children, placeholder, value, setValue, close }) {
   }, [open]);
 
   useEffect(() => {
-    console.log(close);
     setOpen(false);
   }, [close]);
 

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import moment from "moment";
 import axios from "axios";
 
 import { useWebhook } from "../contexts/WebhookContext";
@@ -221,6 +222,7 @@ export function TradesData() {
   useEffect(() => {
     if (trades.length > 0) {
       let tr = processTrades(trades).days;
+      tr?.reverse();
       setTradesDay(tr);
     }
   }, [trades]);
@@ -230,6 +232,10 @@ export function TradesData() {
     if (mtAccountsData?.length > 0) {
       for (let account of mtAccountsData) {
         const tr = account.positions.map((trade) => {
+          let webhookId = trade.clientId?.split("_")?.slice(2)?.join("_");
+          let webhook = webhookId
+            ? webhooks.find((v) => v.id == webhookId)
+            : null;
           return {
             ...trade,
             type:
@@ -240,6 +246,8 @@ export function TradesData() {
                 : "NA",
             openTime: trade.brokerTime,
             src: "metatrader",
+            webhookId,
+            webhook,
           };
         });
         tTrades = [...tr];
@@ -255,13 +263,20 @@ export function TradesData() {
       for (let account of mtAccounts) {
         if (account?.historyData) {
           const tr = account.historyData.map((trade) => {
+            let webhookId = trade.clientId?.split("_")?.slice(2)?.join("_");
+            let webhook = webhookId
+              ? webhooks.find((v) => v.id == webhookId)
+              : null;
             return {
               ...trade,
-              type: trade.type == 0 ? "buy" : "sell",
+              type: trade.type,
               src: "metatrader",
+              webhookId,
+              webhook,
             };
           });
-          tTrades = [...tr];
+          tr.sort((a, b) => new Date(b.closeTime) - new Date(a.closeTime));
+          tTrades = tr;
         }
       }
     }
@@ -516,10 +531,8 @@ export function processTrades(trades) {
 
   trades.forEach((trade) => {
     // Extract the date (day) from openTime
-    const tradeDate = new Date(trade.openTime).toISOString().split("T")[0];
-    const dayName = new Date(trade.openTime).toLocaleDateString("en-US", {
-      weekday: "long",
-    });
+    const tradeDate = moment(trade.closeTime).format("YYYY-MM-DD");
+    const dayName = moment(trade.closeTime).format("dddd");
 
     // If the date doesn't exist in the groupedTrades object, initialize it
     if (!groupedTrades[tradeDate]) {
@@ -559,7 +572,6 @@ export function processTrades(trades) {
     totals.dayOfTheWeek[dayName].push(trade);
   });
 
-  // Return the grouped trades and totals
   return {
     days: Object.values(groupedTrades),
     buys: totals.buys,
