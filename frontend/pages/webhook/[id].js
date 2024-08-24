@@ -7,17 +7,18 @@ import { MainLayout } from "../../components/layout/MainLayout";
 import { Title, SubTitle3, SubTitle2, Label } from "../../components/ui/Text";
 
 import { ViewWebhookPage } from "../../hooksp/WebhooksHook";
-import {
-  alertsChartDayData,
-  alertsChartDayOfWeekData,
-} from "../../hooksp/AlertHook";
 
 import LineChart from "../../components/charts/Line2";
 import BarChart from "../../components/charts/Bar";
 import DoughnutWithTooltip from "../../components/charts/DoughnutWithTooltip";
 import Doughnut from "../../components/charts/Doughnut";
+import HalfDoughnutChart from "../../components/charts/HalfDoughnut";
 
 import { addAlpha, getRandomHexColor } from "../../utils/functions";
+import {
+  LinesBarsChartData,
+  LinesBarsChartDataDaysOfWeek,
+} from "../../utils/chartsData";
 
 import { RectangleSkeleton, TextSkeleton } from "../../components/ui/Skeleton";
 
@@ -146,11 +147,159 @@ export function WebhookPage({ id, title = true }) {
                 <div className="mt-2">
                   <LineChart
                     className="h-56"
-                    data={[]}
+                    data={LinesBarsChartData(
+                      ["Profit Trades", "Loss Trades", "Total trades"],
+                      [
+                        tradesData?.days?.map((day) => day.profit.length),
+                        tradesData?.days?.map((day) => day.loss.length),
+                        tradesData?.days?.map((day) => day.Trades.length),
+                      ],
+                      tradesData?.days?.map((day) => day.time),
+                      [
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--profit-color")})`,
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--loss-color")})`,
+                        webhook.color,
+                      ]
+                    )}
                     chartId="tradesDays"
-                    // minYAxis={0}
+                    minYAxis={0}
                   />
                 </div>
+
+                <Label className="mt-4">Days of the week</Label>
+
+                <div className="mt-2">
+                  {hotDays?.length > 0 ? (
+                    <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                      {hotDays.map((v, i) => (
+                        <span className="" key={i}>
+                          {i === 0 ? "" : ", "}
+                          {v}
+                        </span>
+                      ))}{" "}
+                      {hotDays.length === 1 ? "is a hot day" : "are hot days"}
+                    </h6>
+                  ) : (
+                    <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                      No available hot day
+                    </h6>
+                  )}
+                </div>
+
+                <div className="mt-2">
+                  <BarChart
+                    className="h-56"
+                    data={LinesBarsChartDataDaysOfWeek(
+                      [
+                        "Total trades",
+                        "Long trades",
+                        "Short trades",
+                        "Profit trades",
+                        "Loss trades",
+                      ],
+                      [
+                        tradesData?.dayOfTheWeek,
+                        tradesData?.dayOfTheWeek,
+                        tradesData?.dayOfTheWeek,
+                        tradesData?.dayOfTheWeek,
+                        tradesData?.dayOfTheWeek,
+                      ],
+                      [
+                        webhook?.color,
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--long-color")})`,
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--short-color")})`,
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--profit-color")})`,
+                        `hsl(${getComputedStyle(
+                          document.documentElement
+                        ).getPropertyValue("--loss-color")})`,
+                      ],
+                      [
+                        null,
+                        "filter:type:buy",
+                        "filter:type:sell",
+                        "filter:profit:>=|0",
+                        "filter:profit:<|0",
+                      ]
+                    )}
+                    minYAxis={0}
+                  />
+                </div>
+
+                {tradesData?.symbols && (
+                  <Fragment>
+                    <Label className="mt-4">Symbols</Label>
+
+                    <div className="mt-2">
+                      {Object.keys(tradesData.symbols).map((v, i) => (
+                        <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                          {tradesData.symbols[v].length} {v}
+                        </h6>
+                      ))}
+                    </div>
+
+                    <div className="mt-2 flex flex-col sm:flex-row gap-2 items-center justify-center">
+                      <div className="  mx-auto w-full max-w-xs">
+                        <DoughnutWithTooltip
+                          className=" "
+                          data={Object.keys(tradesData.symbols).map(
+                            (v, i) => tradesData.symbols[v].length
+                          )}
+                          labels={Object.keys(tradesData.symbols)}
+                        />
+                      </div>
+                    </div>
+                  </Fragment>
+                )}
+
+                {tradesData && (
+                  <Fragment>
+                    <Label className="mt-4">Profitability</Label>
+
+                    <div className="max-w-sm mx-auto mt-4">
+                      <HalfDoughnutChart
+                        className=""
+                        labels={["profit", "loss"]}
+                        data={[
+                          tradesData.profit.length,
+                          tradesData.loss.length,
+                        ]}
+                        colors={[
+                          `hsl(${getComputedStyle(
+                            document.documentElement
+                          ).getPropertyValue("--profit-color")})`,
+                          `hsl(${getComputedStyle(
+                            document.documentElement
+                          ).getPropertyValue("--loss-color")})`,
+                        ]}
+                      >
+                        <div className=" aspect-square rounded-full flex flex-col items-center w-full justify-center">
+                          <div className="text-lg font-bold text-text ">
+                            Profit trades
+                          </div>
+                          <span className="text-xl font-semibold text-profit">
+                            %{" "}
+                            {Number(
+                              (tradesData.profit.length /
+                                (tradesData.loss.length +
+                                  tradesData.profit.length)) *
+                                100
+                            ).toFixed(1)}
+                          </span>
+                        </div>
+                      </HalfDoughnutChart>
+                    </div>
+                  </Fragment>
+                )}
               </Fragment>
             ) : (
               <div className="mt-2">
@@ -187,7 +336,15 @@ export function WebhookPage({ id, title = true }) {
                 <div className="mt-2">
                   <LineChart
                     className="h-56"
-                    data={alertsChartDayData(alertsData?.days, webhook?.color)}
+                    data={LinesBarsChartData(
+                      ["Total alerts", "Market Order"],
+                      [
+                        alertsData?.days?.map((day) => day.numberOfAlerts),
+                        alertsData?.days?.map((day) => day.ntype[0]),
+                      ],
+                      alertsData?.days?.map((day) => day.day),
+                      [webhook.color]
+                    )}
                     chartId="alertsDays"
                     minYAxis={0}
                   />
@@ -216,9 +373,21 @@ export function WebhookPage({ id, title = true }) {
                 <div className="mt-2">
                   <BarChart
                     className="h-56"
-                    data={alertsChartDayOfWeekData(
-                      alertsData?.dayOfTheWeek,
-                      webhook?.color
+                    data={LinesBarsChartDataDaysOfWeek(
+                      [
+                        "Total alerts",
+                        "Market order",
+                        "Close order",
+                        "Modify order",
+                      ],
+                      [
+                        alertsData?.dayOfTheWeek,
+                        alertsData?.dayOfTheWeek,
+                        alertsData?.dayOfTheWeek,
+                        alertsData?.dayOfTheWeek,
+                      ],
+                      [webhook?.color],
+                      [null, "filter:type:0", "filter:type:2", "filter:type:3"]
                     )}
                     minYAxis={0}
                   />
@@ -230,13 +399,13 @@ export function WebhookPage({ id, title = true }) {
 
                     <div className="mt-2">
                       <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
-                        {webhook?.trades?.length} Market order
+                        {alertsData.nTypes["0"]} Market order
                       </h6>
                       <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
-                        {alerts?.length} Close order
+                        {alertsData.nTypes["2"]} Close order
                       </h6>
                       <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline ">
-                        {alerts?.length} Modify order
+                        {alertsData.nTypes["3"]} Modify order
                       </h6>
                     </div>
 

@@ -11,6 +11,7 @@ import {
 import TradeCalander from "../components/parts/TradesCalander";
 import LineChart from "../components/charts/Line2";
 import DoughnutChart from "../components/charts/Doughnut";
+import { RectangleSkeleton } from "../components/ui/Skeleton";
 
 import { TradesData } from "../hooksp/TradeHook";
 
@@ -92,7 +93,7 @@ function TradesPage() {
         )}
 
         <section className="w-full mt-6">
-          {trades?.length > 0 && (
+          {trades?.length > 0 ? (
             <Fragment>
               <SubTitle3 className="mt-6">History Perfermance</SubTitle3>
               <section className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
@@ -388,6 +389,14 @@ function TradesPage() {
                 <HistoryTradeTable data={trades} className="imax-h-64" />
               </section>
             </Fragment>
+          ) : trades === null ? (
+            <Fragment>
+              <RectangleSkeleton className="" />
+              <RectangleSkeleton className="mt-4" />
+              <RectangleSkeleton className="mt-4" />
+            </Fragment>
+          ) : (
+            <Fragment></Fragment>
           )}
         </section>
       </MainLayoutWithHeader>

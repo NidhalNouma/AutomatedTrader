@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
-import Sidenav from "../../Features/SideNav";
-import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
+import { MainLayoutWithHeader } from "../../components/layout/MainLayout";
+
 import Index from "../../Features/Docs/index";
 import Side from "../../Features/Docs/Side";
 
@@ -8,9 +8,12 @@ import { H1, H5, H4 } from "../../components/H";
 
 function Aboutus() {
   return (
-    <>
-      <Sidenav cpath="help" />
-      <MainWithHeader mainClassName="!overflow-x-clip">
+    <Fragment>
+      <MainLayoutWithHeader
+        page="help"
+        title="Documentation"
+      ></MainLayoutWithHeader>
+      {/* <div mainClassName="!overflow-x-clip">
         <H1>
           Documentation{" "}
           <span className=" text-xs ml-2 text-bga bg-text-h px-2 rounded-xl">
@@ -132,8 +135,8 @@ function Aboutus() {
             </Index>
           </div>
         </div>
-      </MainWithHeader>
-    </>
+      </div> */}
+    </Fragment>
   );
 }
 

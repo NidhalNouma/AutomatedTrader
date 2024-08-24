@@ -170,7 +170,7 @@ export function TradesData() {
   const { mtAccountsData, mtAccounts } = useMetatrader();
   const { binanceAccountsData, binanceAccounts } = useBinance();
 
-  const [trades, setTrades] = useState([]);
+  const [trades, setTrades] = useState(null);
   const [liveTrades, setLiveTrades] = useState([]);
   const [liveTradesData, setLiveTradesData] = useState({
     data: [],
@@ -187,7 +187,7 @@ export function TradesData() {
   });
 
   useEffect(() => {
-    if (liveTrades.length > 0) {
+    if (liveTrades?.length > 0) {
       let pairsData = [];
 
       for (let trade of liveTrades) {
@@ -218,12 +218,14 @@ export function TradesData() {
   }, [liveTrades]);
 
   const [tradesDay, setTradesDay] = useState([]);
+  const [tradesData, setTradesData] = useState(null);
 
   useEffect(() => {
-    if (trades.length > 0) {
-      let tr = processTrades(trades).days;
-      tr?.reverse();
-      setTradesDay(tr);
+    if (trades?.length > 0) {
+      let tr = processTrades(trades);
+      setTradesData(tr);
+      let days = tr?.days?.reverse();
+      setTradesDay(days);
     }
   }, [trades]);
 
@@ -518,6 +520,7 @@ export function processTrades(trades) {
     profit: [],
     loss: [],
     Trades: [],
+    symbols: {}, // New symbols object to store trades by symbol
     dayOfTheWeek: {
       Sunday: [],
       Monday: [],
@@ -530,9 +533,10 @@ export function processTrades(trades) {
   };
 
   trades.forEach((trade) => {
-    // Extract the date (day) from openTime
+    // Extract the date (day) from closeTime
     const tradeDate = moment(trade.closeTime).format("YYYY-MM-DD");
     const dayName = moment(trade.closeTime).format("dddd");
+    const symbol = trade.symbol; // Extract the symbol from the trade.pair
 
     // If the date doesn't exist in the groupedTrades object, initialize it
     if (!groupedTrades[tradeDate]) {
@@ -570,6 +574,12 @@ export function processTrades(trades) {
 
     // Add the trade to the dayOfTheWeek object
     totals.dayOfTheWeek[dayName].push(trade);
+
+    // Group trades by symbol
+    if (!totals.symbols[symbol]) {
+      totals.symbols[symbol] = []; // Initialize the array if it doesn't exist
+    }
+    totals.symbols[symbol].push(trade); // Add trade to the symbol array
   });
 
   return {
@@ -579,6 +589,7 @@ export function processTrades(trades) {
     profit: totals.profit,
     loss: totals.loss,
     Trades: totals.Trades,
+    symbols: totals.symbols, // Include the symbols object
     dayOfTheWeek: totals.dayOfTheWeek, // Include the dayOfTheWeek object
   };
 }

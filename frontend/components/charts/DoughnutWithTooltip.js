@@ -47,9 +47,15 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
     const ey = my;
     const textAnchor = cos >= 0 ? "start" : "end";
 
-    return (
+    return data.length > 1 ? (
       <g>
-        <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+        <text
+          x={cx}
+          y={cy}
+          dy={8}
+          textAnchor="middle"
+          className="fill-text/80 text-base font-bold "
+        >
           {payload.name}
         </text>
         <Sector
@@ -91,6 +97,36 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
         >
           {`${(percent * 100).toFixed(2)}%`}
         </text>
+      </g>
+    ) : (
+      <g>
+        <text
+          x={cx}
+          y={cy}
+          dy={8}
+          textAnchor="middle"
+          className="fill-text/80 text-base font-bold "
+        >
+          {payload.name}
+        </text>
+        <Sector
+          cx={cx}
+          cy={cy}
+          innerRadius={innerRadius}
+          outerRadius={outerRadius}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          fill={fill}
+        />
+        <Sector
+          cx={cx}
+          cy={cy}
+          startAngle={startAngle}
+          endAngle={endAngle}
+          innerRadius={outerRadius + 6}
+          outerRadius={outerRadius + 10}
+          fill={fill}
+        />
       </g>
     );
   };

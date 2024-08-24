@@ -28,6 +28,8 @@ import LineAndBarChart from "../../components/charts/LineAndBar";
 import HalfDoughnutChart from "../../components/charts/HalfDoughnut";
 import DoughnutChart from "../../components/charts/Doughnut";
 
+import { RectangleSkeleton } from "../../components/ui/Skeleton";
+
 import { PlusIcon } from "@heroicons/react/outline";
 
 const calculateSumOfData = (datasets) => {
@@ -180,7 +182,7 @@ function Metatrader() {
                 )
               }
               sectionL2={
-                lineBarData && (
+                trades?.length > 0 && (
                   <Fragment>
                     <div className="w-full flex justify-between items-end">
                       <div className="w-full">
@@ -290,7 +292,7 @@ function Metatrader() {
               }
               sectionL3={
                 <Fragment>
-                  {halfDoughnutData && (
+                  {trades?.length > 0 && halfDoughnutData && (
                     <Fragment>
                       <div className="w-full mt-4 ">
                         <SubTitle3 className="flex items-center">
@@ -330,7 +332,8 @@ function Metatrader() {
                 </Fragment>
               }
               sectionR2={
-                halfDoughnutData && (
+                trades?.length > 0 &&
+                doughnutData && (
                   <Fragment>
                     <div className="w-full mt-4">
                       <SubTitle2 className="flex items-center">
@@ -384,6 +387,27 @@ function Metatrader() {
                     </div>
                   </Fragment>
                 )
+              }
+            />
+          </Fragment>
+        ) : mtAccounts == null ? (
+          <Fragment>
+            <AccountLayout
+              className="mt-4"
+              sectionL1={
+                <Fragment>
+                  <RectangleSkeleton className="!h-20" />
+                  <RectangleSkeleton className="!h-20 mt-2" />
+                  <RectangleSkeleton className=" mt-4" />
+                  <RectangleSkeleton className=" mt-4" />
+                </Fragment>
+              }
+              sectionR1={
+                <Fragment>
+                  <RectangleSkeleton className="!h-64" />
+                  <RectangleSkeleton className="!h-64 mt-4" />
+                  <RectangleSkeleton className=" mt-4" />
+                </Fragment>
               }
             />
           </Fragment>

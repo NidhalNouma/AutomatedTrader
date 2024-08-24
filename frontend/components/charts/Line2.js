@@ -45,7 +45,7 @@ const RechartJSLine = ({
   // Calculate max and min for Y-axis
   const maxAbsValue = Math.max(
     ...data.flatMap((dataset) =>
-      dataset.data.map((value) => (value ? Math.abs(value) : 0))
+      dataset.data?.map((value) => (value ? Math.abs(value) : 0))
     )
   );
   const margin = maxAbsValue * 0.1;
@@ -123,8 +123,6 @@ const RechartJSLine = ({
 
     return transformedData;
   }, [data]);
-
-  // console.log(processedData, data);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
