@@ -1,6 +1,6 @@
-const H = ({ children, onClick, className, style }) => {
+const H = ({ children, onClick, className, style, ...props }) => {
   return (
-    <h6 className={`${className} `} onClick={onClick} style={style}>
+    <h6 className={`${className} `} onClick={onClick} style={style} {...props}>
       {children}
     </h6>
   );

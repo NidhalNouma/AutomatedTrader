@@ -7,9 +7,13 @@ import { addAlpha, txtColorFromBg } from "../../utils/functions";
 import { WideModal } from "../ui/Modal";
 
 import { WebhookPage } from "../../pages/webhook/[id]";
+import { WebhookChartData } from "../../hooksp/WebhooksHook";
+
+import { LinesBarsChartData } from "../../utils/chartsData";
 
 export default function WebhookChart({ webhook }) {
   const [viewData, setViewData] = useState(false);
+  const { tradesData } = WebhookChartData(webhook);
 
   return (
     <Fragment>
@@ -34,7 +38,17 @@ export default function WebhookChart({ webhook }) {
           style={{ backgroundColor: addAlpha(webhook.color, 0.05) }}
         ></div>
         <div className="">
-          <LineChart className="h-52" data={[]} defaultColor={webhook.color} />
+          <LineChart
+            className="h-52"
+            data={LinesBarsChartData(
+              ["Total trades"],
+              [tradesData?.days?.map((day) => day.Trades.length)],
+              tradesData?.days?.map((day) => day.time),
+              [webhook.color]
+            )}
+            // minYAxis={0}
+            defaultColor={webhook.color}
+          />
         </div>
         <div className="">
           <SubTitle3 className="">

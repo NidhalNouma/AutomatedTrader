@@ -615,6 +615,38 @@ export const SearchWebhooksByName = () => {
   return { webhooks, name, setName };
 };
 
+export function WebhookChartData(webhook) {
+  const [trades, setTrades] = useState(null);
+  const [tradesData, setTradesData] = useState(null);
+
+  useEffect(() => {
+    if (trades?.length > 0) {
+      const pr = processTrades(trades);
+      setTradesData(pr);
+    }
+  }, [trades]);
+
+  useEffect(() => {
+    if (webhook) {
+      const allTrades = webhook.trades;
+      if (allTrades?.length > 0) {
+        let closedTrades = [];
+        for (let trade of allTrades) {
+          let closedTrade = {
+            ...trade.trade,
+            tradeSrc: trade.tradeSrc,
+            accountId: trade.accountId,
+          };
+          if (trade.trade) closedTrades.push(closedTrade);
+        }
+        setTrades(closedTrades);
+      } else setTrades([]);
+    }
+  }, [webhook]);
+
+  return { tradesData };
+}
+
 export function ViewWebhookPage(publicId) {
   const [webhook, setWebhook] = useState(null);
   const [whUser, setWhUser] = useState(null);
@@ -648,8 +680,12 @@ export function ViewWebhookPage(publicId) {
       if (allTrades?.length > 0) {
         let closedTrades = [];
         for (let trade of allTrades) {
-          let closedTrade = trade.trade;
-          if (closedTrade) closedTrades.push(closedTrade);
+          let closedTrade = {
+            ...trade.trade,
+            tradeSrc: trade.tradeSrc,
+            accountId: trade.accountId,
+          };
+          if (trade.trade) closedTrades.push(closedTrade);
         }
         setTrades(closedTrades);
       } else setTrades([]);

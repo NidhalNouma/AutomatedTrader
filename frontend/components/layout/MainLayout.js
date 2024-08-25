@@ -12,16 +12,18 @@ export function MainLayout({ children, page }) {
   // let user = false;
 
   return (
-    <div className="flex w-full mx-auto h-auto">
+    <div className="flex w-full mx-auto h-auto max-w-full">
       {user && <SideNav page={page} />}
-      <div className="grow flex flex-col max-w-full px-1 sm:px-3">
+      <div className="flex-1 flex flex-col max-w-full px-1 sm:px-3">
         {user ? (
           <Navbar page={page} className="px-2 " />
         ) : (
           <Header className="!max-w-full !px-2" />
         )}
 
-        <main className="grow min-h-[80vh] mt-1 px-2  mb-10">{children}</main>
+        <main className="grow min-h-[80vh] mt-1 px-2  mb-10 flex flex-col relative">
+          {children}
+        </main>
       </div>
     </div>
   );

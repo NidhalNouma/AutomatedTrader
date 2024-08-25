@@ -142,7 +142,7 @@ const RechartJSLine = ({
     return null;
   };
 
-  const cardinal = curveCardinal.tension(0.9);
+  const cardinal = curveCardinal.tension(0.75);
   // console.log(cardinal);
 
   return (
@@ -232,8 +232,8 @@ const RechartJSLine = ({
                 {data.map((dataset, index) => (
                   <Line
                     key={dataset.label}
-                    // type={cardinal}
-                    type="linear"
+                    type={cardinal}
+                    // type="linear"
                     dataKey={dataset.label}
                     stroke={
                       dataset.color ||
@@ -246,9 +246,11 @@ const RechartJSLine = ({
                       )
                     } // Apply the unique gradient
                     strokeLinecap="round"
-                    strokeWidth={2}
+                    strokeWidth={3}
+                    // activeDot={false}
                     activeDot={{ stroke: dataset.color, strokeWidth: 0 }}
                     dot={false}
+
                     // filter="url(#glow)" // Apply the glow effect
                   />
                 ))}

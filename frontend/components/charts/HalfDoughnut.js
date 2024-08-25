@@ -72,7 +72,7 @@ const RechartHalfDoughnut = ({ children, className, data, labels, colors }) => {
         </PieChart>
       </ResponsiveContainer>
       <div
-        className="flex flex-col items-center justify-center w-2/4 bg-bgt aspect-square rounded-full"
+        className="flex flex-col items-center justify-center w-2/4 bg-transparent aspect-square rounded-full"
         style={{
           position: "absolute",
           top: "32.5%",
