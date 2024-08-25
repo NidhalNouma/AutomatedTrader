@@ -1,15 +1,9 @@
 import { Fragment } from "react";
 import { ScrollableButtons } from "../ui/ScrollableSection";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { MainLayoutWithHeader } from "./MainLayout";
-import SideNav from "../common/SideNav";
-import Navbar from "../common/NavBar";
 import { ButtonText } from "../ui/Button";
-
-import Header from "../Landing/Header";
-
-import { useUser } from "../../contexts/UserContext";
 
 export default function DocsLayout({
   page = "help",
@@ -18,8 +12,7 @@ export default function DocsLayout({
   docPage,
   sideNavLinks,
 }) {
-  const { user } = useUser();
-  // let user = false;
+  const router = useRouter();
 
   const linkCss = (pageName) =>
     `!text-base ${
@@ -31,8 +24,18 @@ export default function DocsLayout({
   return (
     <MainLayoutWithHeader page={page} title={title}>
       <ScrollableButtons className="mt-3 sticky top-[3.2rem] md:top-[4.2rem] bg-bgt py-3">
-        <ButtonText className={linkCss("about")}>About us</ButtonText>
-        <ButtonText className={linkCss("webhooks")}>Webhooks</ButtonText>
+        <ButtonText
+          onClick={() => router.push("/docs/aboutus")}
+          className={linkCss("about")}
+        >
+          About us
+        </ButtonText>
+        <ButtonText
+          onClick={() => router.push("/docs/webhooks")}
+          className={linkCss("webhooks")}
+        >
+          Webhooks
+        </ButtonText>
         <ButtonText className={linkCss("trades")}>Trades</ButtonText>
         <ButtonText className={linkCss("alerts")}>Alerts</ButtonText>
         <ButtonText className={linkCss("metatrader")}>Metatrader</ButtonText>
@@ -61,8 +64,19 @@ function RightNav({ className, links, children }) {
     if (element) {
       element.scrollIntoView({
         behavior: "smooth",
-        block: "center", // Centers the section in the viewport
+        block: "center",
       });
+
+      element.classList.add(
+        "!bg-text/20",
+        "transition-all",
+        "duration-500",
+        "rounded"
+      );
+
+      setTimeout(() => {
+        element.classList.remove("!bg-text/20");
+      }, 1350);
     }
   };
 

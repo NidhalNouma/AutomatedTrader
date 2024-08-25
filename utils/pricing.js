@@ -4,9 +4,11 @@ export const pricingList = {
       chargeBeeId: "Basic-Membership-USD-Monthly",
       price: 29,
       save: 0,
-      accounts: 1,
-      webhooks: 1,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: false,
       shareAlerts: false,
       alerts: 10,
@@ -16,9 +18,11 @@ export const pricingList = {
       chargeBeeId: "Standard-Membership-USD-Monthly",
       price: 49,
       save: 0,
-      accounts: 2,
-      webhooks: 3,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: false,
       shareAlerts: false,
       alerts: 40,
@@ -28,9 +32,11 @@ export const pricingList = {
       chargeBeeId: "Professional-Membership-USD-Monthly",
       price: 99,
       save: 0,
-      accounts: 3,
-      webhooks: 5,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: true,
       shareAlerts: false,
       alerts: 80,
@@ -41,9 +47,11 @@ export const pricingList = {
       advancedWebhook: true,
       price: 159,
       save: 0,
-      accounts: 4,
-      webhooks: 40,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: true,
       shareAlerts: true,
       more: true,
@@ -57,9 +65,11 @@ export const pricingList = {
       chargeBeeId: "Basic-Membership-USD-Yearly",
       price: 243,
       save: 30,
-      accounts: 1,
-      webhooks: 1,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: false,
       shareAlerts: false,
       alerts: 10,
@@ -69,9 +79,11 @@ export const pricingList = {
       chargeBeeId: "Standard-Membership-USD-Yearly",
       price: 411,
       save: 30,
-      accounts: 2,
-      webhooks: 3,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
       discord: false,
       shareAlerts: false,
       alerts: 40,
@@ -81,9 +93,12 @@ export const pricingList = {
       chargeBeeId: "Professional-Membership-USD-Yearly",
       price: 712,
       save: 40,
-      accounts: 3,
-      webhooks: 5,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
+
       discord: true,
       shareAlerts: false,
       more: false,
@@ -95,9 +110,12 @@ export const pricingList = {
       advancedWebhook: true,
       price: 954,
       save: 50,
-      accounts: 4,
-      webhooks: 40,
-      telegram: true,
+
+      metatrader: 1,
+      binance: 3,
+      webhooks: 100,
+      telegram: 5,
+
       discord: true,
       shareAlerts: true,
       more: true,
@@ -112,9 +130,10 @@ export const pricingList = {
       advancedWebhook: true,
       price: 1999,
       save: 60.02,
-      accounts: 1,
+      metatrader: 1,
+      binance: 3,
       webhooks: 100,
-      telegram: true,
+      telegram: 5,
       discord: true,
       shareAlerts: true,
       more: true,
@@ -126,14 +145,14 @@ export const pricingList = {
 };
 
 export function getPlanById(subscription, isTSlifetime = false) {
-  if (subscription) {
-    const bb = pricingList.lifetime["Lifetime access"];
-    return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
-  }
-  // if (isTSlifetime) {
-  //   const bb = pricingList.annual["Basic plan"];
-  //   return { ...bb, name: "Basic plan", no: 0, time: "yearly" };
+  // if (subscription) {
+  //   const bb = pricingList.lifetime["Lifetime access"];
+  //   return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
   // }
+  if (isTSlifetime) {
+    const bb = pricingList.annual["Basic plan"];
+    return { ...bb, name: "Basic plan", no: 0, time: "yearly" };
+  }
 
   let r = null;
   let id = null;

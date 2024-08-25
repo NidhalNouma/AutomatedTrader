@@ -4,7 +4,7 @@ import { withAuth } from "../contexts/UserContext";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, RoundedButton } from "../components/ui/Button";
-import { ModalWithHeader } from "../components/ui/Modal";
+import { ModalWithHeader, UpgradeModal } from "../components/ui/Modal";
 import WebhookForm from "../components/Forms/Webhook";
 import { SubTitle3, Par, Label } from "../components/ui/Text";
 import { RectangleSkeleton } from "../components/ui/Skeleton";
@@ -12,6 +12,8 @@ import { RectangleSkeleton } from "../components/ui/Skeleton";
 import WebhookItem from "../components/parts/WebhookItem";
 
 import { useWebhook } from "../contexts/WebhookContext";
+import { useUser } from "../contexts/UserContext";
+
 import { PlusIcon } from "@heroicons/react/outline";
 
 function Webhook() {
@@ -20,6 +22,7 @@ function Webhook() {
   const [advanced, setAdvanced] = useState([]);
 
   const { webhooks } = useWebhook();
+  const { fullUser } = useUser();
 
   useEffect(() => {
     if (webhooks?.length > 0) {
@@ -39,20 +42,34 @@ function Webhook() {
         page="webhook"
         title="Webhooks"
         rightSection={
-          <ModalWithHeader
-            title="New webhook"
-            trigger={
-              <Button
-                className=" !bg-secondary !outline-secondary"
-                icon={<PlusIcon className="h-3.5 aspect-square" />}
-              >
-                New
-              </Button>
-            }
-            close={newWebhookModal}
-          >
-            <WebhookForm close={() => setNewWebhookModal(true)}></WebhookForm>
-          </ModalWithHeader>
+          fullUser?.hasAccessTo?.webhooks &&
+          fullUser?.hasAccessTo?.webhooks < webhooks?.length ? (
+            <ModalWithHeader
+              title="New webhook"
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  New
+                </Button>
+              }
+              close={newWebhookModal}
+            >
+              <WebhookForm close={() => setNewWebhookModal(true)}></WebhookForm>
+            </ModalWithHeader>
+          ) : (
+            <UpgradeModal
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  New
+                </Button>
+              }
+            ></UpgradeModal>
+          )
         }
       >
         {webhooks !== null ? (

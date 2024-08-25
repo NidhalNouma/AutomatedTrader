@@ -3,11 +3,12 @@ import { withAuth } from "../../contexts/UserContext";
 import { Button } from "../../components/ui/Button";
 import { SubTitle2 } from "../../components/ui/Text";
 import { MainLayoutWithHeader } from "../../components/layout/MainLayout";
-import { ModalWithHeader } from "../../components/ui/Modal";
+import { ModalWithHeader, UpgradeModal } from "../../components/ui/Modal";
 import NewAccountForm from "../../components/Forms/Binance";
 import AccountLayout from "../../components/layout/AccountLayout";
 
 import { useBinance } from "../../contexts/BinanceContext";
+import { useUser } from "../../contexts/UserContext";
 
 import { PlusIcon } from "@heroicons/react/outline";
 import BinanceStatus from "../../components/parts/BinanceStatus";
@@ -17,6 +18,7 @@ import DoughnutChart from "../../components/charts/Doughnut";
 function Binance() {
   const [openNewAccount, setOpenNewAccount] = useState(false);
   const { binanceAccountsData } = useBinance();
+  const { fullUser } = useUser();
 
   const mergeBalances = (binanceAccountsData) => {
     const mergedBalances = {};
@@ -69,22 +71,36 @@ function Binance() {
         page="binance"
         title="Binance"
         rightSection={
-          <ModalWithHeader
-            close={openNewAccount}
-            title="New Account"
-            trigger={
-              <Button
-                className=" !bg-secondary !outline-secondary"
-                icon={<PlusIcon className="h-3.5 aspect-square" />}
-              >
-                Account
-              </Button>
-            }
-          >
-            <NewAccountForm
-              close={() => setOpenNewAccount(!openNewAccount)}
-            ></NewAccountForm>
-          </ModalWithHeader>
+          fullUser?.hasAccessTo?.binance &&
+          fullUser?.hasAccessTo?.binance > binanceAccountsData?.length ? (
+            <ModalWithHeader
+              close={openNewAccount}
+              title="New Account"
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Account
+                </Button>
+              }
+            >
+              <NewAccountForm
+                close={() => setOpenNewAccount(!openNewAccount)}
+              ></NewAccountForm>
+            </ModalWithHeader>
+          ) : (
+            <UpgradeModal
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Account
+                </Button>
+              }
+            ></UpgradeModal>
+          )
         }
       >
         {binanceAccountsData?.length > 0 ? (

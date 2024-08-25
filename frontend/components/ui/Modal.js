@@ -1,7 +1,8 @@
 import { useState, Fragment, cloneElement, useEffect } from "react";
-import { Modal as Modal_, Button } from "react-daisyui";
-import { ButtonText, CloseButton } from "./Button";
-import { SubTitle3, Title } from "./Text";
+import { Modal as Modal_ } from "react-daisyui";
+import { useRouter } from "next/router";
+import { ButtonText, CloseButton, Button } from "./Button";
+import { Par, SubTitle3, Title } from "./Text";
 
 import { IoMdDoneAll } from "react-icons/io";
 import { BiExit } from "react-icons/bi";
@@ -239,5 +240,66 @@ export const DeleteModal = ({
         </div>
       </section>
     </Modal_>
+  );
+};
+
+export const UpgradeModal = ({
+  trigger,
+  children,
+  className,
+  title = "Upgrade",
+  withHeader = true,
+  backclose = false,
+  responsive = false,
+}) => {
+  const router = useRouter();
+
+  const [open, setOpen] = useState(false);
+  let close = () => setOpen(false);
+
+  const triggerWithHandler = cloneElement(trigger, {
+    onClick: () => {
+      setOpen(true);
+    },
+  });
+
+  return (
+    <Fragment>
+      {triggerWithHandler}
+      <Modal_
+        open={open}
+        onClickBackdrop={backclose}
+        className={"bg-bg modali p-0 w-9/12 max-w-lg max-h-[89vh] " + className}
+        responsive={responsive}
+      >
+        {withHeader && <ModalHeader title={title} onClose={close} />}
+        <section className="p-4 flex flex-col">
+          <div className="p-4">
+            {children || (
+              <Par className="text-sm">
+                You don't have enough to access this feature, upgrade your plan
+                bellow.
+              </Par>
+            )}
+          </div>
+          <div className="w-full max-w-xs mx-auto mt-4 flex justify-around items-center">
+            {/* <ButtonText
+              onClick={close}
+              className="!text-text/80"
+              icon={<BiExit className="h-4 aspect-auto rotate-180" />}
+            >
+              Back
+            </ButtonText> */}
+            <Button
+              className=""
+              onClick={() => router.push("/membership")}
+              icon={<IoMdDoneAll className="h-4 aspect-auto" />}
+            >
+              Upgrade
+            </Button>
+          </div>
+        </section>
+      </Modal_>
+    </Fragment>
   );
 };

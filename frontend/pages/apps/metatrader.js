@@ -12,7 +12,7 @@ import {
   SubTitle3,
 } from "../../components/ui/Text";
 import { SelectFull } from "../../components/ui/Input";
-import { ModalWithHeader } from "../../components/ui/Modal";
+import { ModalWithHeader, UpgradeModal } from "../../components/ui/Modal";
 import NewAccountForm from "../../components/Forms/Metatrader";
 import AccountLayout from "../../components/layout/AccountLayout";
 
@@ -22,6 +22,7 @@ import { ButtonGroup } from "react-daisyui";
 
 import { useMetatrader } from "../../contexts/MetatraderContext";
 import { processTrades, AccountData } from "../../hooksp/MetatraderHook";
+import { useUser } from "../../contexts/UserContext";
 
 import LineChart from "../../components/charts/Line";
 import LineAndBarChart from "../../components/charts/LineAndBar";
@@ -41,6 +42,7 @@ const calculateSumOfData = (datasets) => {
 
 function Metatrader() {
   const { mtAccounts, mtAccountsData } = useMetatrader();
+  const { fullUser } = useUser();
 
   const {
     lineData,
@@ -79,22 +81,36 @@ function Metatrader() {
         page="metatrader"
         title="Metatrader"
         rightSection={
-          <ModalWithHeader
-            close={openNewAccount}
-            title="New Account"
-            trigger={
-              <Button
-                className=" !bg-secondary !outline-secondary"
-                icon={<PlusIcon className="h-3.5 aspect-square" />}
-              >
-                Account
-              </Button>
-            }
-          >
-            <NewAccountForm
-              close={() => setOpenNewAccount(!openNewAccount)}
-            ></NewAccountForm>
-          </ModalWithHeader>
+          fullUser?.hasAccessTo?.metatrader &&
+          fullUser?.hasAccessTo?.metatrader > mtAccounts?.length ? (
+            <ModalWithHeader
+              close={openNewAccount}
+              title="New Account"
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Account
+                </Button>
+              }
+            >
+              <NewAccountForm
+                close={() => setOpenNewAccount(!openNewAccount)}
+              ></NewAccountForm>
+            </ModalWithHeader>
+          ) : (
+            <UpgradeModal
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Account
+                </Button>
+              }
+            ></UpgradeModal>
+          )
         }
       >
         {mtAccounts?.length > 0 ? (

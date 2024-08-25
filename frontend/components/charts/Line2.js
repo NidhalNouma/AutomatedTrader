@@ -232,8 +232,8 @@ const RechartJSLine = ({
                 {data.map((dataset, index) => (
                   <Line
                     key={dataset.label}
-                    type={cardinal}
-                    // type="linear"
+                    // type={cardinal}
+                    type="linear"
                     dataKey={dataset.label}
                     stroke={
                       dataset.color ||

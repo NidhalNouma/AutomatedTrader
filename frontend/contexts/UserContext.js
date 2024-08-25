@@ -21,15 +21,17 @@ export const UserProvider = ({ children }) => {
           `/api/chargebee/get?id=${user.subscriptionId}`
         );
         user.subscription = sub.data;
-        user.subObj = getPlanById(sub.data);
+        user.hasAccessTo = getPlanById(sub.data, user.lifetimeAccess);
+        // console.log(user, "access User ....");
+        // user.hasAccessTo = null;
       }
 
-      if (!user.subObj) {
-        const ts = await checkTSlifetime(user.email);
-        if (ts?.length > 0 && ts.find((v) => v.Email === user.email)) {
-          user.subObj = getPlanById(null, true);
-        }
-      }
+      // if (!user.hasAccessTo) {
+      //   const ts = await checkTSlifetime(user.email);
+      //   if (ts?.length > 0 && ts.find((v) => v.Email === user.email)) {
+      //     user.hasAccessTo = getPlanById(null, true);
+      //   }
+      // }
     }
 
     setFullUser(user);
@@ -48,7 +50,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, fullUser, setFullUser, getFullUser, loading }}
+      value={{ user, setUser, fullUser, getFullUser, loading }}
     >
       {children}
     </UserContext.Provider>
@@ -65,7 +67,7 @@ export const withAuth = (WrappedComponent, frontend = false) => {
     const { user, fullUser, loading } = useContext(UserContext);
 
     useEffect(() => {
-      if (!loading)
+      if (!loading) {
         if (frontend) {
           if (user && fullUser) {
             if (subscription) router.push("/membership?m=" + subscription);
@@ -74,6 +76,11 @@ export const withAuth = (WrappedComponent, frontend = false) => {
         } else if (!user && !fullUser) {
           router.replace("/signup");
         }
+
+        // if (user && fullUser) {
+        //   if (!fullUser.hasAccessTo) router.push("/welcome");
+        // }
+      }
     }, [user, router, loading]);
 
     return <WrappedComponent {...props} />;

@@ -8,6 +8,7 @@ import {
   ModalWithHeader,
   EditModal,
   DeleteModal,
+  UpgradeModal,
 } from "../../components/ui/Modal";
 import { ColorPicker } from "../../components/ui/ColorPicker";
 import { RectangleSkeleton } from "../../components/ui/Skeleton";
@@ -15,6 +16,7 @@ import { Dropdown, DropdownButton } from "../../components/ui/Dropdown";
 import AddTelegram from "../../components/Forms/Telegram";
 
 import { useTelegram } from "../../contexts/TelegramContext";
+import { useUser } from "../../contexts/UserContext";
 import {
   DeleteTelegram,
   EditTelegramColor,
@@ -27,6 +29,7 @@ import { addAlpha } from "../../utils/functions";
 
 function Telegram() {
   const { telegrams } = useTelegram();
+  const { fullUser } = useUser();
   const [openNewAccount, setOpenNewAccount] = useState(false);
 
   return (
@@ -35,22 +38,35 @@ function Telegram() {
         page="telegram"
         title="Telegram"
         rightSection={
-          <ModalWithHeader
-            close={openNewAccount}
-            title="New Chat"
-            trigger={
-              <Button
-                className=" !bg-secondary !outline-secondary"
-                icon={<PlusIcon className="h-3.5 aspect-square" />}
-              >
-                Chat
-              </Button>
-            }
-          >
-            <AddTelegram
-              close={() => setOpenNewAccount(!openNewAccount)}
-            ></AddTelegram>
-          </ModalWithHeader>
+          fullUser?.hasAccessTo?.telegram > telegrams?.length ? (
+            <ModalWithHeader
+              close={openNewAccount}
+              title="New Chat"
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Chat
+                </Button>
+              }
+            >
+              <AddTelegram
+                close={() => setOpenNewAccount(!openNewAccount)}
+              ></AddTelegram>
+            </ModalWithHeader>
+          ) : (
+            <UpgradeModal
+              trigger={
+                <Button
+                  className=" !bg-secondary !outline-secondary"
+                  icon={<PlusIcon className="h-3.5 aspect-square" />}
+                >
+                  Chat
+                </Button>
+              }
+            ></UpgradeModal>
+          )
         }
       >
         {telegrams !== null ? (

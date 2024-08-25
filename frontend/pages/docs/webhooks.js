@@ -1,27 +1,26 @@
-import { useState, useEffect, Fragment, useRef } from "react";
-import Sidenav from "../../Features/SideNav";
-import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
-import Index, { Step } from "../../Features/Docs/index";
-import Side from "../../Features/Docs/Side";
-
-import { H1, H5, H4 } from "../../components/H";
-
-import { PlayVideoPopup } from "../../components/ui/Video";
-import { videosUrls } from "../../utils/constant";
+import { Fragment } from "react";
+import DocsLayout from "../../components/layout/DocsLayout";
+import { Par, SubTitle3 } from "../../components/ui/Text";
 
 function Webhooks() {
-  const sec2 = useRef(null);
-
-  useEffect(() => {
-    // if (ty === 1.2) {
-    //   sec2.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    // }
-  }, []);
-
   return (
-    <>
-      <Sidenav cpath="help" />
-      <MainWithHeader mainClassName="!overflow-x-clip">
+    <Fragment>
+      <DocsLayout
+        title="Documentation"
+        docPage="webhooks"
+        sideNavLinks={
+          [
+            // { name: "About us", id: "about-us" },
+            // { name: "Introduction", id: "Introduction" },
+            // { name: "Trading tools", id: "trading-tools" },
+            // { name: "Data Analysis", id: "data-analysis" },
+            // { name: "Security Measures", id: "security-measures" },
+            // { name: "Benefits", id: "Benefits" },
+            // { name: "Conclusion", id: "Conclusion" },
+          ]
+        }
+      ></DocsLayout>
+      {/* <MainWithHeader mainClassName="!overflow-x-clip">
         <H1>Documentation</H1>
         <div className="mt-6 flex">
           <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
@@ -29,7 +28,6 @@ function Webhooks() {
           </div>
           <div className="flex-1 px-6">
             <Index>
-              {/* <H4 className="font-bold">Setting up Webhook</H4> */}
               <div className="flex items-center mt-0">
                 <H4 className="font-bold">Webhook in AutomatedTrader</H4>
                 <PlayVideoPopup src={videosUrls.webhooksAT} pulse={true} />
@@ -202,19 +200,6 @@ function Webhooks() {
                 >
                   Click Save.
                 </Step>
-                {/* <Step
-          num={5}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Fadding%20message%2F5.jpg?alt=media&token=2d227ad8-01ca-41e6-8942-8589b40b7e1a"
-        >
-          In Automated Trader, click the list of messages and select the new
-          message you want to use in TradingView.
-        </Step>
-        <Step num={6} imgSrc="">
-          Copy the webhook message and paste it in the Message field.
-        </Step>
-        <Step num={7} imgSrc="">
-          Follow the steps above if needed.
-        </Step> */}
               </p>
 
               <div className="scroll-mt-24" ref={sec2}>
@@ -223,87 +208,87 @@ function Webhooks() {
             </Index>
           </div>
         </div>
-      </MainWithHeader>
-    </>
+      </MainWithHeader> */}
+    </Fragment>
   );
 }
 
 export default Webhooks;
 
-function WebhookTradingView() {
-  return (
-    <Fragment>
-      <div className="flex items-center mt-6">
-        <H4 className="font-bold ">Webhook in TradingView</H4>
-        <PlayVideoPopup src={videosUrls.webhooksTradingView} pulse={true} />
-      </div>
+// function WebhookTradingView() {
+//   return (
+//     <Fragment>
+//       <div className="flex items-center mt-6">
+//         <H4 className="font-bold ">Webhook in TradingView</H4>
+//         <PlayVideoPopup src={videosUrls.webhooksTradingView} pulse={true} />
+//       </div>
 
-      <p className="mt-3 text-text-p text-sm">
-        Here&apos;s a step-by-step guide on how to add an Automated Trader
-        webhook in TradingView:
-        <br />
-        <br />
-        <Step
-          num={1}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2FCover.jpg?alt=media&token=3423db6b-7baa-412b-927d-905594a658d8"
-        >
-          Create your webhook in Automated Trader.
-        </Step>
-        <Step
-          num={2}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F2.jpg?alt=media&token=82624c71-1967-4609-b084-0767fc3ead08"
-        >
-          Find an indicator or alert in TradingView to attach your Automated
-          Trader settings.
-        </Step>
-        <Step
-          num={3}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F3.jpg?alt=media&token=623f9110-9a2c-49ba-8c56-0956c47bb265"
-        >
-          Visit the Notifications tab in TradingView and go to Automated Trader.
-          Copy the webhook URL.
-        </Step>
-        <Step num={4} imgSrc="">
-          To receive webhook alerts for an automated trader, a pro membership is
-          required to receive real-time notifications through webhooks.
-        </Step>
-        <Step
-          num={5}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F7.jpg?alt=media&token=413991c8-e6bd-4f0d-9cf6-65c07d790225"
-        >
-          Go back to TradingView and paste your webhook URL in the field.
-        </Step>
-        <Step
-          num={6}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F8.jpg?alt=media&token=d378a159-3ea8-4494-9a7d-5a89104c218c"
-        >
-          In the TradingView Alert tab, go to Settings.
-        </Step>
-        <Step num={7} imgSrc="">
-          Select your conditions and name the alert anything you want,
-          preferably adding the order type you selected in Automated Trader
-          (buy, buy limit, sell, sell limit, buy stop, sell stop), as well as
-          the pair type and time frame of the chart.
-        </Step>
-        <Step
-          num={8}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F10.jpg?alt=media&token=49829c95-7fcc-4d52-8f7a-3b6b2d715192"
-        >
-          Go back to Automated Trader and copy the webhook message.
-        </Step>
-        <Step
-          num={9}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F11.jpg?alt=media&token=5bb48c09-f9f9-4161-a049-58d952d0fbc7"
-        >
-          Go back to TradingView and paste the message in the Message field.
-        </Step>
-        <Step
-          num={10}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F12.jpg?alt=media&token=fcd278d7-995e-43b9-950a-fc89c1925672"
-        >
-          Click Create.
-        </Step>
-      </p>
-    </Fragment>
-  );
-}
+//       <p className="mt-3 text-text-p text-sm">
+//         Here&apos;s a step-by-step guide on how to add an Automated Trader
+//         webhook in TradingView:
+//         <br />
+//         <br />
+//         <Step
+//           num={1}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2FCover.jpg?alt=media&token=3423db6b-7baa-412b-927d-905594a658d8"
+//         >
+//           Create your webhook in Automated Trader.
+//         </Step>
+//         <Step
+//           num={2}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F2.jpg?alt=media&token=82624c71-1967-4609-b084-0767fc3ead08"
+//         >
+//           Find an indicator or alert in TradingView to attach your Automated
+//           Trader settings.
+//         </Step>
+//         <Step
+//           num={3}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F3.jpg?alt=media&token=623f9110-9a2c-49ba-8c56-0956c47bb265"
+//         >
+//           Visit the Notifications tab in TradingView and go to Automated Trader.
+//           Copy the webhook URL.
+//         </Step>
+//         <Step num={4} imgSrc="">
+//           To receive webhook alerts for an automated trader, a pro membership is
+//           required to receive real-time notifications through webhooks.
+//         </Step>
+//         <Step
+//           num={5}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F7.jpg?alt=media&token=413991c8-e6bd-4f0d-9cf6-65c07d790225"
+//         >
+//           Go back to TradingView and paste your webhook URL in the field.
+//         </Step>
+//         <Step
+//           num={6}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F8.jpg?alt=media&token=d378a159-3ea8-4494-9a7d-5a89104c218c"
+//         >
+//           In the TradingView Alert tab, go to Settings.
+//         </Step>
+//         <Step num={7} imgSrc="">
+//           Select your conditions and name the alert anything you want,
+//           preferably adding the order type you selected in Automated Trader
+//           (buy, buy limit, sell, sell limit, buy stop, sell stop), as well as
+//           the pair type and time frame of the chart.
+//         </Step>
+//         <Step
+//           num={8}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F10.jpg?alt=media&token=49829c95-7fcc-4d52-8f7a-3b6b2d715192"
+//         >
+//           Go back to Automated Trader and copy the webhook message.
+//         </Step>
+//         <Step
+//           num={9}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F11.jpg?alt=media&token=5bb48c09-f9f9-4161-a049-58d952d0fbc7"
+//         >
+//           Go back to TradingView and paste the message in the Message field.
+//         </Step>
+//         <Step
+//           num={10}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FWebhhoks%2Ftradingview%2F12.jpg?alt=media&token=fcd278d7-995e-43b9-950a-fc89c1925672"
+//         >
+//           Click Create.
+//         </Step>
+//       </p>
+//     </Fragment>
+//   );
+// }
