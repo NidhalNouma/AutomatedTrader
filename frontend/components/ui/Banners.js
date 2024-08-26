@@ -1,0 +1,60 @@
+import { useState, useEffect, Children, Fragment } from "react";
+
+export function BinanceBanner({ className, children }) {
+  return (
+    <aside
+      className={` inline-flex items-center mt-1 mb-3 relative h-12 py-1 bg-bgt pl-4 ${className}`}
+    >
+      <div className="absolute left-0 inset-y-0 w-full border -skew-x-[20deg] border-[#f0b90b] bg-[#f0b90b]/10" />
+      {/* <div className="absolute right-0 inset-y-0 w-3/4 border-l-0 border border-[#f0b90b] " /> */}
+      <h1 className="text-title inline text-2xl truncate">Get 8% CashBack</h1>
+      <img src="/Images/binance-logo.png" className="h-full" />
+    </aside>
+  );
+}
+
+export function TSBanner({ className, children }) {
+  return (
+    <aside
+      className={` inline-flex items-center mt-1 mb-3 relative h-12 py-1  pl-4 ${className}`}
+    >
+      <div className="absolute left-0 inset-y-0 w-full border -skew-x-[20deg] border-[rgb(41,97,242)] bg-[rgb(41,97,242)]/10" />
+      {/* <div className="absolute right-0 inset-y-0 w-3/4 border-l-0 border border-[rgb(41,97,242)] " /> */}
+      <h1 className="text-title inline text-2xl truncate">
+        Get Your Signals from
+      </h1>
+      <h1 className="text-[rgb(41,97,242)] inline text-2xl font-extrabold truncate mr-2">
+        TrustedSignals
+      </h1>
+      {/* <img src="/Images/ts-logo.png" className="h-full" /> */}
+    </aside>
+  );
+}
+
+export const FlippingBanners = ({ children, className }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex(
+        (prevIndex) => (prevIndex + 1) % Children.count(children)
+      );
+    }, 7000); // 7 seconds interval
+
+    return () => clearInterval(interval);
+  }, [children]);
+
+  return (
+    <div className={`relative  ml-auto h-14 w-full ${className}`}>
+      {Children.map(children, (child, index) => (
+        <div
+          className={`absolute top-0 left-0 mr-2  h-full transition-opacity duration-1000 ease-in-out ${
+            index === currentIndex ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          {child}
+        </div>
+      ))}
+    </div>
+  );
+};

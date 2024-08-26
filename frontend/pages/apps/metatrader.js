@@ -198,7 +198,8 @@ function Metatrader() {
                 )
               }
               sectionL2={
-                trades?.length > 0 && (
+                trades?.length > 0 &&
+                lineBarData && (
                   <Fragment>
                     <div className="w-full flex justify-between items-end">
                       <div className="w-full">

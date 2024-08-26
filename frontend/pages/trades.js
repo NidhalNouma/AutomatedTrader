@@ -95,7 +95,7 @@ function TradesPage() {
         <section className="w-full mt-6">
           {trades?.length > 0 ? (
             <Fragment>
-              <SubTitle3 className="mt-6">History Perfermance</SubTitle3>
+              <SubTitle3 className="mt-6">History Performance</SubTitle3>
               <section className="w-full grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                 {nbTrades?.length > 0 && (
                   <div className="bg-primary/[0.05] p-2 rounded-lg">

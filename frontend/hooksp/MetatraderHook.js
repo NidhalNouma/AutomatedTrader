@@ -662,6 +662,7 @@ export function AccountData() {
       }
 
       setDoughnutData(p);
+      data.sort((a, b) => new Date(b.closeTime) - new Date(a.closeTime));
       setTrades(data);
     }
   }, [mtAccounts]);

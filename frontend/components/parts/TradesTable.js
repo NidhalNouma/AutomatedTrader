@@ -36,39 +36,36 @@ function Table({ data }) {
               </tr>
             </thead>
             <tbody className="">
-              {data
-                ?.slice(0)
-                .reverse()
-                ?.map((v, i) => {
-                  const type = v.type;
-                  // const { webhooks } = GetWebhookContext();
-                  // const id = v.clientId ? v.clientId.split("_")[2] : null;
-                  const wh = false; //webhooks.find((w) => w.id === id?.toString());
-                  const colors = tailwindConfig.theme.colors;
+              {data?.slice(0)?.map((v, i) => {
+                const type = v.type;
+                // const { webhooks } = GetWebhookContext();
+                // const id = v.clientId ? v.clientId.split("_")[2] : null;
+                const wh = false; //webhooks.find((w) => w.id === id?.toString());
+                const colors = tailwindConfig.theme.colors;
 
-                  // const txtColor = txtColorFromBg(
-                  //   wh?.color,
-                  //   // colors["text-p"],
-                  //   colors["bgt"],
-                  //   colors["text-h"]
-                  // );
+                // const txtColor = txtColorFromBg(
+                //   wh?.color,
+                //   // colors["text-p"],
+                //   colors["bgt"],
+                //   colors["text-h"]
+                // );
 
-                  return (
-                    <Fragment key={i}>
-                      <ModalWithHeader
-                        title="Trade"
-                        className=""
-                        trigger={
-                          <tr
-                            className={`${
-                              v.type == "buy"
-                                ? "hover:bg-long/10"
-                                : v.type == "sell"
-                                ? "hover:bg-short/10"
-                                : ""
-                            }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
-                          >
-                            {/* <td className="text-xs text-center rounded-l-md">
+                return (
+                  <Fragment key={i}>
+                    <ModalWithHeader
+                      title="Trade"
+                      className=""
+                      trigger={
+                        <tr
+                          className={`${
+                            v.type == "buy"
+                              ? "hover:bg-long/10"
+                              : v.type == "sell"
+                              ? "hover:bg-short/10"
+                              : ""
+                          }  border-spacing-[7px] border-b-[0px] cursor-pointer text-sm text-center text-text/60`}
+                        >
+                          {/* <td className="text-xs text-center rounded-l-md">
                           {v.test === "true" ? (
                             <span className="px-2 py-0 rounded-full bg-info text-bg">
                               Test
@@ -93,54 +90,52 @@ function Table({ data }) {
                             </span>
                           )}
                         </td> */}
-                            <td className=" font-bold py-1.5">{v.symbol}</td>
-                            <td className={` `}>
-                              <span
-                                className={`px-2 py-[0.15rem] rounded font-bold ${
-                                  v.type == "buy"
-                                    ? "bg-long/10 text-long"
-                                    : v.type == "sell"
-                                    ? "bg-short/10 text-short"
-                                    : ""
-                                }`}
-                              >
-                                {type}
-                              </span>
-                            </td>
-                            <td className="">{Number(v.lot)?.toFixed(2)}</td>
-                            {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
-                            <td
-                              className={`font-bold ${
-                                v.profit > 0
-                                  ? "text-profit"
-                                  : v.profit < 0
-                                  ? "text-loss"
+                          <td className=" font-bold py-1.5">{v.symbol}</td>
+                          <td className={` `}>
+                            <span
+                              className={`px-2 py-[0.15rem] rounded font-bold ${
+                                v.type == "buy"
+                                  ? "bg-long/10 text-long"
+                                  : v.type == "sell"
+                                  ? "bg-short/10 text-short"
                                   : ""
-                              } `}
+                              }`}
                             >
-                              ${Number(v.profit).toFixed(2)}
-                            </td>
-                            <td className="">{v.open}</td>
-                            <td className="">{v.close}</td>
-                            {/* <td className="text-xs text-center py-3">
+                              {type}
+                            </span>
+                          </td>
+                          <td className="">{Number(v.lot)?.toFixed(2)}</td>
+                          {/* <td className={`text-xs text-center `}>{v.pips}</td> */}
+                          <td
+                            className={`font-bold ${
+                              v.profit > 0
+                                ? "text-profit"
+                                : v.profit < 0
+                                ? "text-loss"
+                                : ""
+                            } `}
+                          >
+                            ${Number(v.profit).toFixed(2)}
+                          </td>
+                          <td className="">{v.open}</td>
+                          <td className="">{v.close}</td>
+                          {/* <td className="text-xs text-center py-3">
                       {v.openTimeGMT
                         ? moment.utc(v.openTimeGMT).format()
                         : moment(v.openTime).format()}
                     </td> */}
-                            <td className=" ">
-                              {moment(v.closeTime).format(
-                                "yyyy MM DD HH:mm:ss"
-                              )}
-                            </td>
-                            {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
-                          </tr>
-                        }
-                      >
-                        <TradeDetails data={v} />
-                      </ModalWithHeader>
-                    </Fragment>
-                  );
-                })}
+                          <td className=" ">
+                            {moment(v.closeTime).format("yyyy MM DD HH:mm:ss")}
+                          </td>
+                          {/* <hr className="my-0 h-px bg-gray-200 border-0 dark:bg-gray-700"></hr> */}
+                        </tr>
+                      }
+                    >
+                      <TradeDetails data={v} />
+                    </ModalWithHeader>
+                  </Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>

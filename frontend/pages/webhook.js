@@ -43,7 +43,7 @@ function Webhook() {
         title="Webhooks"
         rightSection={
           fullUser?.hasAccessTo?.webhooks &&
-          fullUser?.hasAccessTo?.webhooks < webhooks?.length ? (
+          fullUser?.hasAccessTo?.webhooks > webhooks?.length ? (
             <ModalWithHeader
               title="New webhook"
               trigger={

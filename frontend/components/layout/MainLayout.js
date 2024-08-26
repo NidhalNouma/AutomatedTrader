@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import SideNav from "../common/SideNav";
 import Navbar from "../common/NavBar";
 import { Title } from "../ui/Text";
@@ -6,6 +6,8 @@ import { Title } from "../ui/Text";
 import Header from "../Landing/Header";
 
 import { useUser } from "../../contexts/UserContext";
+
+import { BinanceBanner, TSBanner, FlippingBanners } from "../ui/Banners";
 
 export function MainLayout({ children, page }) {
   const { user } = useUser();
@@ -45,7 +47,13 @@ export function MainLayoutWithHeader({
         </div>
         {rightSection}
       </section>
-      {children}
+      <Fragment>
+        <FlippingBanners className="mt-2 -mb-0">
+          <TSBanner className="ml-auto" />
+          <BinanceBanner className="ml-auto" />
+        </FlippingBanners>
+        {children}
+      </Fragment>
     </MainLayout>
   );
 }

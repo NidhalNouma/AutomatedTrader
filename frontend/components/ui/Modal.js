@@ -278,7 +278,7 @@ export const UpgradeModal = ({
             {children || (
               <Par className="text-sm">
                 You don't have enough to access this feature, upgrade your plan
-                bellow.
+                below.
               </Par>
             )}
           </div>
