@@ -3,12 +3,15 @@ import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 
-import {
-  openTrade as openMTTrade,
-  closeTradeByWHID as closeMTTrade,
-  modifyTradeByWHID as modifyMTTrade,
-} from "../lib/third/metaapi.js";
+// import { openTrade as openMTTrade } from "../lib/third/metaapi.js";
 import { placeOrder as openBinanceTrade } from "../lib/third/binanace.js";
+import metaapiFunctions from "../lib/third/metaapiWS.cjs";
+
+const {
+  openTrade: openMTTrade,
+  closeTradeByWHID: closeMTTrade,
+  modifyTradeByWHID: modifyMTTrade,
+} = metaapiFunctions;
 
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -48,7 +51,8 @@ app.post("/metatrader", async (req, res) => {
         messageData.useStopLoss ? messageData.stopLoss : null,
         messageData.useTakeProfit ? messageData.takeProfit : null,
         messageData.stopLossPrice,
-        messageData.takeProfitPrice
+        messageData.takeProfitPrice,
+        messageData.positionValuePercentage
       );
 
       let errorMessage = null;

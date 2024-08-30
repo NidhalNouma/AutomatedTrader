@@ -18,7 +18,14 @@ export function MainLayout({ children, page }) {
       {user && <SideNav page={page} />}
       <div className="flex-1 flex flex-col max-w-full px-1 sm:px-3">
         {user ? (
-          <Navbar page={page} className="px-2 " />
+          <Navbar page={page} className="px-2 ">
+            {page != "membership" && (
+              <FlippingBanners className="mt-0 -mb-0 !ml-5 lg:block hidden min-w-fit grow ">
+                <BinanceBanner className=" " />
+                <TSBanner className="" />
+              </FlippingBanners>
+            )}
+          </Navbar>
         ) : (
           <Header className="!max-w-full !px-2" />
         )}
@@ -48,10 +55,10 @@ export function MainLayoutWithHeader({
         {rightSection}
       </section>
       <Fragment>
-        <FlippingBanners className="mt-2 -mb-0">
+        {/* <FlippingBanners className="mt-2 -mb-0 ">
           <TSBanner className="ml-auto" />
           <BinanceBanner className="ml-auto" />
-        </FlippingBanners>
+        </FlippingBanners> */}
         {children}
       </Fragment>
     </MainLayout>

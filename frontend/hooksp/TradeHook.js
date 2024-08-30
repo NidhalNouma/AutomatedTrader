@@ -196,19 +196,27 @@ export function TradesData() {
         const data = pairsData.find((p) => p?.pair === pair);
         if (data) {
           data.profit += trade.profit;
+          data.count += 1;
         } else {
           let d = {
             pair,
             profit: trade.profit,
+            count: 1,
           };
           pairsData.push(d);
         }
       }
 
-      let p = { data: [], labels: [], colors: liveTradesData.colors };
+      let p = {
+        data: [],
+        count: [],
+        labels: [],
+        colors: liveTradesData.colors,
+      };
       for (let pair of pairsData) {
         if (p.data.length < 6) {
           p.data.push(pair.profit);
+          p.count.push(pair.count);
           p.labels.push(pair.pair);
         }
       }
@@ -583,7 +591,9 @@ export function processTrades(trades) {
   });
 
   return {
-    days: Object.values(groupedTrades),
+    days: Object.values(groupedTrades).sort(
+      (a, b) => new Date(a.time) - new Date(b.time)
+    ),
     buys: totals.buys,
     sells: totals.sells,
     profit: totals.profit,

@@ -59,7 +59,7 @@ function TradesPage() {
                 <DoughnutChart
                   className=""
                   labels={liveTradesData.labels}
-                  data={liveTradesData.data}
+                  data={liveTradesData.data.map((v) => Math.abs(v))}
                   colors={liveTradesData.colors}
                 >
                   <div className=" bg-bgt aspect-square rounded-full flex flex-col items-center justify-center">

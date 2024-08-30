@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { addAlpha } from "../utils/functions";
+import { useAlert } from "../contexts/AlertContext";
 
 export function SortAlertsByDays(alerts) {
   const [daysAlerts, setDaysAlerts] = useState([]);
@@ -29,6 +30,17 @@ export function SortAlertsByDays(alerts) {
   }, [alerts]);
 
   return { daysAlerts };
+}
+
+export function AlertsData() {
+  const { alerts } = useAlert();
+  const [alertsData, setAlertsData] = useState(null);
+
+  useEffect(() => {
+    if (alerts?.length > 0) setAlertsData(processAlerts(alerts));
+  }, [alerts]);
+
+  return { alerts, alertsData };
 }
 
 export function processAlerts(alerts) {
@@ -86,7 +98,9 @@ export function processAlerts(alerts) {
     result.dayOfTheWeek[dayName].push(alert);
   });
 
-  result.days = Object.values(dayMap).reverse();
+  result.days = Object.values(dayMap).sort(
+    (a, b) => new Date(a.day) - new Date(b.day)
+  );
 
   return result;
 }

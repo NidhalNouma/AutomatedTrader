@@ -241,7 +241,10 @@ export function WebhookPage({ id, title = true }) {
 
                     <div className="mt-2">
                       {Object.keys(tradesData.symbols).map((v, i) => (
-                        <h6 className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2">
+                        <h6
+                          key={i}
+                          className="text-text/80 text-sm outline-1 outline-dashed outline-text/40 px-1.5 py-0.5 rounded inline mr-2"
+                        >
                           {tradesData.symbols[v].length} {v}
                         </h6>
                       ))}
@@ -536,7 +539,9 @@ export function WebhookPage({ id, title = true }) {
                                 ? "Modifing Trade"
                                 : "NA"}
                             </span>
-                            <span className="ml-2">{alert.symbol}</span>
+                            <span className="ml-2 text-text/80 text-sm">
+                              {alert.symbol}
+                            </span>
                           </div>
 
                           <span className="text-text/80 text-xs ml-auto">

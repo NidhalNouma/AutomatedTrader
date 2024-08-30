@@ -79,8 +79,12 @@ app.post("/:id", async (req, res) => {
             } else {
               value.push(account.id);
             }
-            const accountPromise = getAccountById(accountType, account.id).then(
-              (accountDetails) => {
+
+            if (value.find((v) => v === account.id)) {
+              const accountPromise = getAccountById(
+                accountType,
+                account.id
+              ).then((accountDetails) => {
                 if (accountDetails && Object.keys(accountDetails).length > 0) {
                   return {
                     accountType,
@@ -90,10 +94,10 @@ app.post("/:id", async (req, res) => {
                   };
                 }
                 return null;
+              });
+              if (accountPromise !== null) {
+                promises.push(accountPromise);
               }
-            );
-            if (accountPromise !== null) {
-              promises.push(accountPromise);
             }
           }
         });

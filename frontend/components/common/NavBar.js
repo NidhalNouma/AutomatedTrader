@@ -24,7 +24,7 @@ import { SearchWebhooksByName } from "../../hooksp/WebhooksHook";
 
 import { addAlpha } from "../../utils/functions";
 
-export default function NavBar({ className, page }) {
+export default function NavBar({ className, children, page }) {
   const router = useRouter();
   const [closeSearch, setCloseSearch] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
@@ -48,7 +48,7 @@ export default function NavBar({ className, page }) {
         style={{ zIndex: 100 }}
       >
         <div className="flex justify-between items-center w-full">
-          <div className="flex items-center">
+          <div className="flex items-center grow">
             <Fragment>
               <LeftDrawer
                 className="relative"
@@ -129,6 +129,7 @@ export default function NavBar({ className, page }) {
                 }
               ></UpgradeModal>
             )}
+            {children}
           </div>
           {user ? (
             <div className="flex items-center justify-center ml-auto">

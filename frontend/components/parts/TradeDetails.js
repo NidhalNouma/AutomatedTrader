@@ -58,11 +58,24 @@ export function TradeDetails({ data }) {
 
         <div className="flex flex-col">
           <span className="text-sm text-text/60">Entry</span>
-          <span className="text-sm text-title">{data?.open}</span>
+          <span className="text-sm text-title">
+            {data?.open || data.openPrice || "-"}
+          </span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text/60">Exit</span>
-          <span className="text-sm text-title">{data?.close}</span>
+          <span className="text-sm text-title">
+            {data?.close || data.currentPrice || "-"}
+          </span>
+        </div>
+
+        <div className="flex flex-col">
+          <span className="text-sm text-text/60">Stoploss</span>
+          <span className="text-sm text-title">{data?.stopLoss || "-"}</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-sm text-text/60">TakeProfit</span>
+          <span className="text-sm text-title">{data?.takeProfit || "-"}</span>
         </div>
 
         <div className="flex flex-col">

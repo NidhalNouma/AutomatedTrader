@@ -20,7 +20,7 @@ export async function afterResponse(
         tradeId: trade.tradeId,
         accountId: trade.accountId,
         accountSrc: trade.accountSrc,
-        trades: account.trades,
+        // trades: account?.trades,
       };
       trades.push(r);
 
