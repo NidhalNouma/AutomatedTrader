@@ -104,6 +104,29 @@ export default function SideNav({ page, fixed = true }) {
             <span className="capitalize ml-1 text-base">Webhooks</span>
           </Linksn>
           <Linksn
+            href="/presets"
+            isActive={page === "presets"}
+            icon={
+              <svg
+                className="h-5 w-5 "
+                stroke="currentColor"
+                fill="none"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M20 7h-9"></path>
+                <path d="M14 17H5"></path>
+                <circle cx="17" cy="17" r="3"></circle>
+                <circle cx="7" cy="7" r="3"></circle>
+              </svg>
+            }
+          >
+            <span className="capitalize ml-1 text-base">Presets</span>
+          </Linksn>
+          <Linksn
             href="/trades"
             isActive={page === "trades"}
             icon={<PaperAirplaneIcon className="h-5 w-5 rotate-[60deg]" />}

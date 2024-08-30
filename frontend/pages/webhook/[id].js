@@ -76,10 +76,10 @@ export function WebhookPage({ id, title = true }) {
   const hotDays = getHotDays(alertsData?.dayOfTheWeek);
 
   let todayAlerts = alertsData?.days.find(
-    (day) => day.time === moment().format("YYYY-MM-DD")
+    (day) => day.day === moment().format("YYYY-MM-DD")
   );
   let yesterdayAlerts = alertsData?.days.find(
-    (day) => day.time === moment().subtract(1, "days").format("YYYY-MM-DD")
+    (day) => day.day === moment().subtract(1, "days").format("YYYY-MM-DD")
   );
 
   let todayTrades = tradesData?.days.find(
@@ -251,9 +251,9 @@ export function WebhookPage({ id, title = true }) {
                     </div>
 
                     <div className="mt-2 flex flex-col sm:flex-row gap-2 items-center justify-center">
-                      <div className="  mx-auto w-full max-w-xs">
+                      <div className="  mx-auto w-full ">
                         <DoughnutWithTooltip
-                          className=" "
+                          className=" w-full aspect-video "
                           data={Object.keys(tradesData.symbols).map(
                             (v, i) => tradesData.symbols[v].length
                           )}
@@ -413,9 +413,9 @@ export function WebhookPage({ id, title = true }) {
                     </div>
 
                     <div className="mt-2 flex flex-col sm:flex-row gap-2 items-center justify-center">
-                      <div className="  mx-auto w-full max-w-xs">
+                      <div className="  mx-auto w-full ">
                         <DoughnutWithTooltip
-                          className=" "
+                          className="w-full aspect-video "
                           data={Object.values(alertsData.nTypes)}
                           labels={Object.keys(alertsData.nTypes).map((v) =>
                             v == 0

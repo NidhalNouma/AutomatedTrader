@@ -157,7 +157,7 @@ export function LiveTradeTable({ data, className }) {
           <table className="table-auto w-full border-spacing-x-1 border-separate">
             <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
               <tr>
-                <th className="px-2 sm:px-2">WebHook</th>
+                <th className="px-2 sm:px-2">Trade By</th>
                 <th className="px-2 sm:px-2">App</th>
                 <th className="py-3 px-2 sm:px-0">Symbol</th>
                 <th className="px-2 sm:px-0">Type</th>
@@ -214,7 +214,7 @@ export function LiveTradeTable({ data, className }) {
                                   {v.webhook.name}
                                 </p>
                               ) : (
-                                "NA"
+                                "Manual"
                               )}
                             </td>
                             <td className=" font-bold mr-auto capitalize">
@@ -304,7 +304,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
           <table className="table-auto w-full border-spacing-x-1 border-separate">
             <thead className="sticky top-0 bg-bgt text-title/60 text-sm">
               <tr>
-                <th className="px-2 sm:px-2">WebHook</th>
+                <th className="px-2 sm:px-2">Trade By</th>
                 <th className="px-2 sm:px-2">App</th>
                 <th className="py-3 px-2 sm:px-0">Symbol</th>
                 <th className="px-2 sm:px-0">Type</th>
@@ -343,7 +343,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
                               {v.webhook.name}
                             </p>
                           ) : (
-                            "NA"
+                            "Manual"
                           )}
                         </td>
                         <td className=" font-bold mr-auto capitalize">

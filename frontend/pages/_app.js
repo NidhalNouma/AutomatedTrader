@@ -9,6 +9,7 @@ import { ThemeProvider, useTheme } from "../contexts/ThemeContext";
 import { UserProvider, useUser } from "../contexts/UserContext";
 import { NotificationProvider } from "../contexts/NotificationContext";
 import { WebhookProvider } from "../contexts/WebhookContext";
+import { PresetsProvider } from "../contexts/PresetsContext";
 import { AlertProvider } from "../contexts/AlertContext";
 import { MetatraderProvider } from "../contexts/MetatraderContext";
 import { BinanceProvider } from "../contexts/BinanceContext";
@@ -82,9 +83,11 @@ function Main({ children }) {
             <MetatraderProvider>
               <BinanceProvider>
                 <WebhookProvider>
-                  <TelegramProvider>
-                    <AlertProvider>{children}</AlertProvider>
-                  </TelegramProvider>
+                  <PresetsProvider>
+                    <TelegramProvider>
+                      <AlertProvider>{children}</AlertProvider>
+                    </TelegramProvider>
+                  </PresetsProvider>
                 </WebhookProvider>
               </BinanceProvider>
             </MetatraderProvider>

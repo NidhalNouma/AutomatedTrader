@@ -135,9 +135,7 @@ const RechartDoughnut = ({ children, className, data, labels, colors }) => {
     <Fragment>
       {theme && (
         <Fragment>
-          <ResponsiveContainer
-            className={`h-24 aspect-square relative ${className}`}
-          >
+          <ResponsiveContainer className={`h-24 relative ${className}`}>
             <PieChart>
               <Pie
                 activeIndex={activeIndex}

@@ -139,17 +139,17 @@ export const pricingList = {
       more: true,
       alerts: 500,
       manualTrade: true,
+      presets: true,
       standout: true,
     },
   },
 };
 
-export function getPlanById(subscription, isTSlifetime = false) {
-  // if (subscription) {
-  //   const bb = pricingList.lifetime["Lifetime access"];
-  //   return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
-  // }
-  if (isTSlifetime) {
+export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
+  if (isLifetime) {
+    const bb = pricingList.lifetime["Lifetime access"];
+    return { ...bb, name: "Lifetime access", no: 0, time: "lifetime" };
+  } else if (isTSlifetime) {
     const bb = pricingList.annual["Basic plan"];
     return { ...bb, name: "Basic plan", no: 0, time: "yearly" };
   }

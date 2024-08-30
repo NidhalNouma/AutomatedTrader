@@ -20,7 +20,7 @@ export function MainLayout({ children, page }) {
         {user ? (
           <Navbar page={page} className="px-2 ">
             {page != "membership" && (
-              <FlippingBanners className="mt-0 -mb-0 !ml-5 lg:block hidden min-w-fit grow ">
+              <FlippingBanners className="mt-0 -mb-0 !ml-5 xl:block hidden min-w-fit grow ">
                 <BinanceBanner className=" " />
                 <TSBanner className="" />
               </FlippingBanners>

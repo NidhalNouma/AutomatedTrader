@@ -3,9 +3,9 @@ import { useState, useEffect, Children, Fragment } from "react";
 export function BinanceBanner({ className, children }) {
   return (
     <aside
-      className={` inline-flex items-center mt-1 mb-3 relative h-8 py-1 bg-bgt pl-4 ${className}`}
+      className={` inline-flex items-center mt-1 mb-3 relative h-8 py-1 bg-bgt pl-4 pr-2 ${className}`}
     >
-      <div className="absolute left-0 inset-y-0 w-full border -skew-x-[20deg] border-[#f0b90b]/60 bg-[#f0b90b]/10" />
+      <div className="absolute left-0 inset-y-0 w-full border rounded-lg -skew-x-[20deg] border-[#f0b90b]/60 bg-[#f0b90b]/10" />
       {/* <div className="absolute right-0 inset-y-0 w-3/4 border-l-0 border border-[#f0b90b] " /> */}
       <p className="text-title  text-lg  w-auto whitespace-nowrap overflow-hidden flex items-center">
         Get 8% CashBack
@@ -18,9 +18,9 @@ export function BinanceBanner({ className, children }) {
 export function TSBanner({ className, children }) {
   return (
     <aside
-      className={` inline-flex items-center mt-1 mb-3 relative h-8 py-1  px-4 ${className}`}
+      className={` inline-flex items-center mt-1 mb-3 relative h-8 py-1  pl-4 pr-2 ${className}`}
     >
-      <div className="absolute left-0 inset-y-0 w-full border -skew-x-[20deg] border-[rgb(41,97,242)]/60 bg-[rgb(41,97,242)]/10" />
+      <div className="absolute left-0 inset-y-0 w-full border rounded-lg -skew-x-[20deg] border-[rgb(41,97,242)]/60 bg-[rgb(41,97,242)]/10" />
       {/* <div className="absolute right-0 inset-y-0 w-3/4 border-l-0 border border-[rgb(41,97,242)] " /> */}
       <h1 className="text-title inline text-lg truncate">
         Get Your Signals from
