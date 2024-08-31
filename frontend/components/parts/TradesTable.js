@@ -200,10 +200,10 @@ export function LiveTradeTable({ data, className }) {
                                 : ""
                             }  cursor-pointer text-sm py-1.5 text-center text-text/60`}
                           >
-                            <td className=" font-bold mr-auto capitalize">
+                            <td className=" font-bold mr-auto capitalize truncate">
                               {v.webhook ? (
                                 <p
-                                  className="px-1 py-0.5 rounded truncate"
+                                  className="px-1 py-0.5 rounded truncate "
                                   style={{
                                     backgroundColor: addAlpha(
                                       v.webhook.color,
@@ -335,7 +335,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
                         <td className=" font-bold mr-auto capitalize">
                           {v.webhook ? (
                             <p
-                              className=" py-0.5 rounded"
+                              className=" py-0.5 rounded truncate"
                               style={{
                                 backgroundColor: addAlpha(v.webhook.color, 0.2),
                               }}

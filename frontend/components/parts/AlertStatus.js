@@ -14,6 +14,15 @@ import { useBinance } from "../../contexts/BinanceContext";
 
 import { addAlpha } from "../../utils/functions";
 
+function findTrade(id, webhook) {
+  let whTrade = null;
+
+  if (id && webhook?.trades?.length > 0)
+    whTrade = webhook.trades?.find((trade) => trade.tradeId === id);
+
+  return whTrade;
+}
+
 export default function Alert({ alert }) {
   const { webhooks } = useWebhook();
   const { mtAccounts } = useMetatrader();
@@ -42,7 +51,18 @@ export default function Alert({ alert }) {
       return app;
     }) || [];
 
-  // console.log(alert, apps);
+  const trades =
+    alert.apps
+      ?.map((app) => findTrade(app.tradeId || app.orderId, webhook))
+      .filter((tr) => tr != null) || [];
+
+  const liveTrades = trades.filter((tr) => tr.live);
+  const totalProfit = trades.reduce(
+    (total, tr) => total + tr.trade?.profit || 0,
+    0
+  );
+
+  // console.log(trades, alert);
 
   return (
     <Fragment>
@@ -51,9 +71,14 @@ export default function Alert({ alert }) {
           backgroundColor: addAlpha(color, 0.05),
           borderColor: addAlpha(color, 0),
         }}
-        className=" mb-3 border-none rounded-lg px-2 py-1"
+        className=" mb-3 border-none rounded-lg pb-1"
       >
-        <div className="flex w-full">
+        <div
+          style={{
+            backgroundColor: addAlpha(color, 0.1),
+          }}
+          className="flex w-full items-center rounded-lg py-1.5 px-2"
+        >
           <span
             className={`${
               alert.type == 2
@@ -61,7 +86,7 @@ export default function Alert({ alert }) {
                 : alert.type == 3
                 ? "bg-info/10"
                 : "bg-primary/10"
-            } text-title px-1 rounded font-semibold text-xs`}
+            } text-title px-1 rounded font-semibold text-xs truncate`}
           >
             {alert.type == 0
               ? "Market Order"
@@ -81,6 +106,35 @@ export default function Alert({ alert }) {
           >
             {webhook?.name || "Webhook NA"}
           </span>
+          {trades?.length > 0 && (
+            <div className="  items-center ml-auto">
+              {/* <span className="text-text text-sm mx-1  px-1 ">
+                {trades?.length || "0"} Trades
+              </span> */}
+              <span className={`text-text text-sm mx-1  hidden md:inline `}>
+                {liveTrades?.length > 0 ? "Progress Profit" : "Closed Profit:"}
+                <span
+                  className={`${
+                    totalProfit >= 0
+                      ? "text-profit bg-profit/10"
+                      : "text-loss bg-loss/10"
+                  } rounded text-sm mx-1  px-1 `}
+                >
+                  {totalProfit || "0"}
+                </span>
+              </span>
+              {liveTrades?.length > 0 ? (
+                <span className="text-sm mx-1  px-1  rounded bg-success/20 text-success">
+                  Active
+                </span>
+              ) : (
+                <span className="text-sm mx-1  px-1  rounded bg-bgt/80 text-text">
+                  Closed
+                </span>
+              )}
+            </div>
+          )}
+
           <span className="text-text/80 text-xs ml-auto">
             {moment(alert.created_at.toDate()).format(
               "MMMM Do YYYY, h:mm:ss a"
@@ -88,55 +142,59 @@ export default function Alert({ alert }) {
           </span>
         </div>
 
-        {alert.type == 0 ? (
-          <MatketOrderInfo messageData={messageData} className="mt-3" />
-        ) : alert.type == 1 ? (
-          <MatketOrderInfo messageData={messageData} className="mt-3" />
-        ) : alert.type == 2 ? (
-          <CloseOrderInfo messageData={messageData} className="mt-3" />
-        ) : alert.type == 3 ? (
-          <ModifyOrderInfo messageData={messageData} className="mt-3" />
-        ) : (
-          <MatketOrderInfo messageData={messageData} className="mt-3" />
-        )}
-
-        <div className="mt-3 mb-2">
-          <h6
-            className="text-title/60 text-sm uppercase flex items-center hover:text-text/80 cursor-pointer"
-            onClick={() => setViewResponse(!viewResponse)}
-          >
-            Response
-            {!viewResponse ? (
-              <ChevronDownIcon className="h-5 aspect-square " />
-            ) : (
-              <ChevronUpIcon className="h-5 aspect-square" />
-            )}
-          </h6>
-          {viewResponse && (
-            <Fragment>
-              {apps?.length > 0 ? (
-                <Apps apps={apps} webhook={webhook} />
-              ) : (
-                <p className="text-text/80 text-xs">No apps available!</p>
-              )}
-            </Fragment>
+        <div className="px-2">
+          {alert.type == 0 ? (
+            <MatketOrderInfo messageData={messageData} className="mt-3" />
+          ) : alert.type == 1 ? (
+            <MatketOrderInfo messageData={messageData} className="mt-3" />
+          ) : alert.type == 2 ? (
+            <CloseOrderInfo messageData={messageData} className="mt-3" />
+          ) : alert.type == 3 ? (
+            <ModifyOrderInfo messageData={messageData} className="mt-3" />
+          ) : (
+            <MatketOrderInfo messageData={messageData} className="mt-3" />
           )}
-        </div>
 
-        <div className="">
-          <span
-            className="flex items-center text-text/60 text-xs font-semibold hover:text-text/80 cursor-pointer"
-            onClick={() => setViewMsg(!viewMsg)}
-          >
-            message{" "}
-            {!viewMsg ? (
-              <ChevronDownIcon className="h-4 aspect-square " />
-            ) : (
-              <ChevronUpIcon className="h-4 aspect-square" />
+          <div className="mt-3 mb-2">
+            <h6
+              className="text-title/60 text-sm uppercase flex items-center hover:text-text/80 cursor-pointer"
+              onClick={() => setViewResponse(!viewResponse)}
+            >
+              Response
+              {!viewResponse ? (
+                <ChevronDownIcon className="h-5 aspect-square " />
+              ) : (
+                <ChevronUpIcon className="h-5 aspect-square" />
+              )}
+            </h6>
+            {viewResponse && (
+              <Fragment>
+                {apps?.length > 0 ? (
+                  <Apps apps={apps} webhook={webhook} />
+                ) : (
+                  <p className="text-text/80 text-xs">No apps available!</p>
+                )}
+              </Fragment>
             )}
-          </span>
+          </div>
 
-          {viewMsg && <p className="text-text text-xs mt-2">{alert.message}</p>}
+          <div className="">
+            <span
+              className="flex items-center text-text/60 text-xs font-semibold hover:text-text/80 cursor-pointer"
+              onClick={() => setViewMsg(!viewMsg)}
+            >
+              message{" "}
+              {!viewMsg ? (
+                <ChevronDownIcon className="h-4 aspect-square " />
+              ) : (
+                <ChevronUpIcon className="h-4 aspect-square" />
+              )}
+            </span>
+
+            {viewMsg && (
+              <p className="text-text text-xs mt-2">{alert.message}</p>
+            )}
+          </div>
         </div>
       </div>
     </Fragment>
@@ -144,19 +202,10 @@ export default function Alert({ alert }) {
 }
 
 function Apps({ apps, webhook }) {
-  function findTrade(id) {
-    let whTrade = null;
-
-    if (id && webhook?.trades?.length > 0)
-      whTrade = webhook.trades?.find((trade) => trade.tradeId === id);
-
-    return whTrade;
-  }
-
   return (
     <div className="">
       {apps.map((app, i) => {
-        let whTrade = findTrade(app.tradeId);
+        let whTrade = findTrade(app.tradeId, webhook);
 
         return (
           <div key={i} className="text-text text-xs my-1">
@@ -184,7 +233,7 @@ function Apps({ apps, webhook }) {
             ) : app.trades?.length > 0 ? (
               <ul className="text-text inline-block align-top">
                 {app.trades.map((tr, i) => {
-                  let trade = findTrade(tr.tradeId || tr.orderId);
+                  let trade = findTrade(tr.tradeId || tr.orderId, webhook);
 
                   return (
                     <li className="" key={i}>
@@ -219,29 +268,50 @@ function MessageWithTrade({ trade, children, className }) {
     <span className={`text-success capitalize ${className}`}>
       {children}{" "}
       {trade?.trade && (
-        <ModalWithHeader
-          title={
+        <Fragment>
+          <ModalWithHeader
+            title={
+              <Fragment>
+                Trade{" "}
+                {trade.live && (
+                  <span className="text-text text-xs bg-text/20 rounded px-1">
+                    Live
+                  </span>
+                )}
+              </Fragment>
+            }
+            trigger={
+              <button
+                className={`text-success px-1 border-success/50 border rounded ${className}`}
+              >
+                View trade
+              </button>
+            }
+          >
+            <section className="">
+              <TradeDetails data={trade?.trade} live={trade.live} />
+            </section>
+          </ModalWithHeader>
+          {trade.live && (
             <Fragment>
-              Trade{" "}
-              {trade.live && (
-                <span className="text-text text-xs bg-text/20 rounded px-1">
-                  Live
-                </span>
-              )}
+              <span className="text-success bg-success/20 rounded ml-1 px-1.5 text-xs">
+                Live
+              </span>
             </Fragment>
-          }
-          trigger={
-            <button
-              className={`text-success px-1 border-success/50 border rounded ${className}`}
+          )}
+          {trade.trade.profit && (
+            <span
+              className={` ${
+                trade.trade.profit >= 0
+                  ? "text-profit bg-profit/10"
+                  : "text-loss bg-loss/10"
+              }  rounded ml-1 px-1.5 text-xs`}
             >
-              View trade
-            </button>
-          }
-        >
-          <section className="">
-            <TradeDetails data={trade?.trade} live={trade.live} />
-          </section>
-        </ModalWithHeader>
+              {trade.live ? "Progress Profit" : "Closed Profit"}:{" "}
+              <span className="text-sm">{trade.trade.profit}</span>
+            </span>
+          )}
+        </Fragment>
       )}
     </span>
   );
@@ -347,7 +417,9 @@ function MatketOrderInfo({ messageData, className }) {
       <div className="flex flex-col items-start">
         <span className="text-text text-[0.7rem] font-normal">Volume</span>
         <span className="text-text text-xs font-bold 	">
-          {messageData.useFixedLotSize && messageData.positionValue}
+          {messageData.useFixedLotSize && messageData.positionValue
+            ? messageData.positionValue
+            : "NA"}
         </span>
       </div>
 
