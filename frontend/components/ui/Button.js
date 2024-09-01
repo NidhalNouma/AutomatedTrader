@@ -42,9 +42,14 @@ export const Button = ({
     <Button_
       onClick={async (e) => {
         if (typeof onClick !== "function") return;
-        setSpin(true);
-        await onClick(e);
-        setSpin(false);
+        try {
+          setSpin(true);
+          await onClick(e);
+          setSpin(false);
+        } catch (e) {
+          console.log(e);
+          setSpin(false);
+        }
       }}
       endIcon={icon}
       animation={true}

@@ -714,8 +714,8 @@ function CloseOrder({
           className="mt-1"
           name="Move to BE"
           helper="Move price to breakeven."
-          value={moveToBE}
-          setValue={() => setMoveToBE(!moveToBE)}
+          checked={moveToBE}
+          onChange={() => setMoveToBE(!moveToBE)}
         />
       )}
 

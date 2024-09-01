@@ -8,7 +8,7 @@ import { Info, Error } from "../ui/Alerts";
 import { Label } from "../ui/Text";
 import { NewPreset } from "../../hooksp/PresetHook";
 
-function PresetForm({ close }) {
+function PresetForm({ close, preset }) {
   const {
     presetType,
     setPresetType,
@@ -41,7 +41,8 @@ function PresetForm({ close }) {
     setPartialCloseValue,
     error,
     add,
-  } = NewPreset();
+    edit,
+  } = NewPreset(preset);
 
   return (
     <section className="w-full flex flex-col items-center">
@@ -151,7 +152,11 @@ function PresetForm({ close }) {
       <div className="w-full max-w-xs mt-5 ">
         <Button
           onClick={async () => {
-            let r = await add();
+            let r = null;
+            if (preset) r = await edit();
+            else r = await add();
+
+            if (r) close();
           }}
           className="w-full "
           icon={<CiSaveUp2 className="h-3.5 aspect-square stroke-2" />}
@@ -361,8 +366,8 @@ function CloseOrder({
           className="mt-1"
           name="Move to BE"
           helper="Move price to breakeven."
-          value={moveToBE}
-          setValue={() => setMoveToBE(!moveToBE)}
+          checked={moveToBE}
+          onChange={() => setMoveToBE(!moveToBE)}
         />
       )}
     </Fragment>

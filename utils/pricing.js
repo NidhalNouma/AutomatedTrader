@@ -139,7 +139,7 @@ export const pricingList = {
       more: true,
       alerts: 500,
       manualTrade: true,
-      presets: true,
+      presets: 10,
       standout: true,
     },
   },

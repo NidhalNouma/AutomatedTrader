@@ -4,8 +4,11 @@ import { withAuth } from "../contexts/UserContext";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, RoundedButton } from "../components/ui/Button";
+import { Label } from "../components/ui/Text";
 import { ModalWithHeader, UpgradeModal } from "../components/ui/Modal";
 import PresetForm from "../components/Forms/Preset";
+import { RectangleSkeleton } from "../components/ui/Skeleton";
+import PresetItem from "../components/parts/PresetItem";
 
 import { useUser } from "../contexts/UserContext";
 
@@ -17,6 +20,10 @@ function Presets() {
   const [newPresetModal, setNewPresetModal] = useState(false);
   const { fullUser } = useUser();
   const { presets } = usePreset();
+
+  let marketOrders = presets?.filter((preset) => preset.type == 0) || [];
+  let modifyOrders = presets?.filter((preset) => preset.type == 3) || [];
+  let closeOrders = presets?.filter((preset) => preset.type == 2) || [];
 
   return (
     <Fragment>
@@ -53,7 +60,58 @@ function Presets() {
             ></UpgradeModal>
           )
         }
-      ></MainLayoutWithHeader>
+      >
+        {presets?.length > 0 ? (
+          <Fragment>
+            {marketOrders.length > 0 && (
+              <Fragment>
+                <Label className="mt-4">Market Orders</Label>
+
+                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                  {marketOrders.map((p, i) => (
+                    <PresetItem key={i} preset={p} />
+                  ))}
+                </section>
+              </Fragment>
+            )}
+            {modifyOrders.length > 0 && (
+              <Fragment>
+                <Label className="mt-4">Modify Orders</Label>
+
+                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                  {modifyOrders.map((p, i) => (
+                    <PresetItem key={i} preset={p} />
+                  ))}
+                </section>
+              </Fragment>
+            )}
+            {closeOrders.length > 0 && (
+              <Fragment>
+                <Label className="mt-4">Close Orders</Label>
+
+                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                  {closeOrders.map((p, i) => (
+                    <PresetItem key={i} preset={p} />
+                  ))}
+                </section>
+              </Fragment>
+            )}
+          </Fragment>
+        ) : presets == null ? (
+          <section className="mt-10 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8">
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+            <RectangleSkeleton className="!h-44" />
+          </section>
+        ) : (
+          <Fragment></Fragment>
+        )}
+      </MainLayoutWithHeader>
     </Fragment>
   );
 }

@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { useUser } from "../contexts/UserContext";
 import { usePreset } from "../contexts/PresetsContext";
 
-import { addPreset } from "../lib/presets";
+import {
+  addPreset,
+  deletePreset as deletePresetFn,
+  updatePresetColor,
+  updatePresetData,
+} from "../lib/presets";
 
-export function NewPreset() {
+export function NewPreset(preset) {
   const { user } = useUser();
   const { getAllPresets } = usePreset();
 
@@ -36,6 +41,48 @@ export function NewPreset() {
   const [usePartialClose, setUsePartialClose] = useState(false);
   const [partialCloseValue, setPartialCloseValue] = useState(50);
 
+  useEffect(() => {
+    if (preset) {
+      setName(preset.name);
+      setPresetType(preset.type);
+
+      if (preset.positionValue) {
+        setUseFixedPosition(true);
+        setPositionValue(preset.positionValue);
+      } else {
+        setUseFixedPosition(false);
+      }
+      if (preset.positionValuePercentage) {
+        setUsePositionPercentage(true);
+        setPositionValue(preset.positionValuePercentage);
+      } else {
+        setUsePositionPercentage(false);
+      }
+
+      if (preset.stopLoss) {
+        setUseStopLoss(true);
+        setStopLoss(preset.stopLoss);
+      } else {
+        setUseStopLoss(false);
+      }
+      if (preset.takeProfit) {
+        setUseTakeProfit(true);
+        setTakeProfit(preset.takeProfit);
+      } else {
+        setUseTakeProfit(false);
+      }
+
+      if (preset.partialCloseValue) {
+        setUsePartialClose(true);
+        setPartialCloseValue(preset.partialCloseValue);
+      } else {
+        setUsePartialClose(false);
+      }
+
+      setMoveToBE(preset.moveToBE || false);
+    }
+  }, [preset]);
+
   function getData() {
     let data = {
       type,
@@ -61,8 +108,33 @@ export function NewPreset() {
       setError("Preset name must be provided!");
       return;
     }
-    if (!pair) {
-      setError("Pair must be provided!");
+
+    let data = getData();
+
+    setError("");
+
+    const r = await addPreset(name, presetType, data, user.uid);
+
+    if (r) {
+      await getAllPresets();
+    }
+
+    return r;
+  }
+
+  async function edit() {
+    if (!user?.uid) {
+      setError("User ID must be provided!");
+      return;
+    }
+
+    if (!name) {
+      setError("Preset name must be provided!");
+      return;
+    }
+
+    if (!preset) {
+      setError("Preset data must be provided!");
       return;
     }
 
@@ -70,7 +142,7 @@ export function NewPreset() {
 
     setError("");
 
-    const r = await addPreset(name, presetType, data, user.uid);
+    const r = await updatePresetData(preset.id, name, presetType, data);
 
     if (r) {
       await getAllPresets();
@@ -111,5 +183,44 @@ export function NewPreset() {
     setPartialCloseValue,
     error,
     add,
+    edit,
   };
+}
+
+export function EditPresetColor(preset) {
+  const { user } = useUser();
+  const { getAllPresets } = usePreset();
+  const [presetColor, setPresetColor] = useState(preset?.color || "");
+  const [error, setError] = useState("");
+
+  async function editPresetColor() {
+    if (!user || !preset) {
+      setError("Invalid data provided!");
+      return;
+    }
+    const r = await updatePresetColor(preset.id, presetColor);
+    await getAllPresets();
+
+    return r;
+  }
+
+  return { presetColor, setPresetColor, editPresetColor, error };
+}
+
+export function DeletePreset(preset) {
+  const { user } = useUser();
+  const { getAllPresets } = usePreset();
+  const [error, setError] = useState("");
+
+  async function deletePreset() {
+    if (!user || !preset) {
+      setError("Invalid data provided!");
+      return;
+    }
+    const r = await deletePresetFn(preset.id);
+    await getAllPresets(user.uid);
+    return r;
+  }
+
+  return { deletePreset, error };
 }
