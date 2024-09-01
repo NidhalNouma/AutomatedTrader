@@ -5,15 +5,18 @@ import { withAuth } from "../contexts/UserContext";
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, RoundedButton } from "../components/ui/Button";
 import { ModalWithHeader, UpgradeModal } from "../components/ui/Modal";
+import PresetForm from "../components/Forms/Preset";
 
 import { useUser } from "../contexts/UserContext";
 
 import { PlusIcon } from "@heroicons/react/outline";
 
+import { usePreset } from "../contexts/PresetsContext";
+
 function Presets() {
   const [newPresetModal, setNewPresetModal] = useState(false);
   const { fullUser } = useUser();
-  let presets = [];
+  const { presets } = usePreset();
 
   return (
     <Fragment>
@@ -35,7 +38,7 @@ function Presets() {
               }
               close={newPresetModal}
             >
-              {/* <WebhookForm close={() => setNewWebhookModal(true)}></WebhookForm> */}
+              <PresetForm close={() => setNewPresetModal(true)}></PresetForm>
             </ModalWithHeader>
           ) : (
             <UpgradeModal

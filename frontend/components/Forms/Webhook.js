@@ -256,7 +256,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
           }`}
           onClick={() => setMsgType(3)}
         >
-          Update SL
+          Modify Order
         </Button_>
         <Button_
           size="sm"
