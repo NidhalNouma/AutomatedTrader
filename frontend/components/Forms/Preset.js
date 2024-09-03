@@ -14,6 +14,8 @@ function PresetForm({ close, preset }) {
     setPresetType,
     name,
     setName,
+    pair,
+    setPair,
     orderTypes,
     type,
     setType,
@@ -99,6 +101,16 @@ function PresetForm({ close, preset }) {
         placeholder="First %"
         value={name}
         setValue={setName}
+      />
+
+      <InputInline
+        className=""
+        name={<Fragment>{"Symbol"}</Fragment>}
+        helper="Choose pair name"
+        type="text"
+        placeholder="US30"
+        value={pair}
+        setValue={setPair}
       />
 
       {presetType === 0 ? (

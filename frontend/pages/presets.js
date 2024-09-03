@@ -4,7 +4,7 @@ import { withAuth } from "../contexts/UserContext";
 
 import { MainLayoutWithHeader } from "../components/layout/MainLayout";
 import { Button, RoundedButton } from "../components/ui/Button";
-import { Label } from "../components/ui/Text";
+import { Label, SubTitle3 } from "../components/ui/Text";
 import { ModalWithHeader, UpgradeModal } from "../components/ui/Modal";
 import PresetForm from "../components/Forms/Preset";
 import { RectangleSkeleton } from "../components/ui/Skeleton";
@@ -65,9 +65,9 @@ function Presets() {
           <Fragment>
             {marketOrders.length > 0 && (
               <Fragment>
-                <Label className="mt-4">Market Orders</Label>
+                <SubTitle3 className="mt-4">Market Orders</SubTitle3>
 
-                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                <section className="mt-1.5 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-1">
                   {marketOrders.map((p, i) => (
                     <PresetItem key={i} preset={p} />
                   ))}
@@ -76,9 +76,9 @@ function Presets() {
             )}
             {modifyOrders.length > 0 && (
               <Fragment>
-                <Label className="mt-4">Modify Orders</Label>
+                <SubTitle3 className="mt-4">Modify Orders</SubTitle3>
 
-                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                <section className="mt-1.5 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-1">
                   {modifyOrders.map((p, i) => (
                     <PresetItem key={i} preset={p} />
                   ))}
@@ -87,9 +87,9 @@ function Presets() {
             )}
             {closeOrders.length > 0 && (
               <Fragment>
-                <Label className="mt-4">Close Orders</Label>
+                <SubTitle3 className="mt-4">Close Orders</SubTitle3>
 
-                <section className="mt-3 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-2">
+                <section className="mt-1.5 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8 mb-1">
                   {closeOrders.map((p, i) => (
                     <PresetItem key={i} preset={p} />
                   ))}

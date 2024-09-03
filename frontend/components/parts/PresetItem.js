@@ -70,10 +70,10 @@ export default function PresetItem({ preset }) {
 
       <article
         style={{
-          borderColor: addAlpha(preset.color, 0.8),
+          outlineColor: addAlpha(preset.color, 0.3),
           backgroundColor: addAlpha(preset.color, 0.06),
         }}
-        className="w-full rounded-lg border-t-[0.1px] p-2.5"
+        className="w-full rounded outline outline-offset-2 outline-dashed outline-1 p-2.5"
       >
         <div className="flex items-start justify-between">
           <div className="">
@@ -113,6 +113,12 @@ export default function PresetItem({ preset }) {
           </Dropdown>
         </div>
 
+        <h6 className="text-text/80 text-xs mt-2">
+          Symbol:{" "}
+          <span className={`${"text-text bg-text/10"} rounded px-1`}>
+            {preset.data?.pair || "NA"}
+          </span>
+        </h6>
         <div className="mt-2 flex items-center justify-between">
           <h6 className="text-text/80 text-xs">
             Type:{" "}

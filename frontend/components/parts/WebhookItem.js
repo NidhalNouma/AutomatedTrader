@@ -260,12 +260,12 @@ function Index({ webhook }) {
 
           <div
             style={{
-              borderColor: addAlpha(webhook.color, 0.8),
+              outlineColor: addAlpha(webhook.color, 0.3),
               backgroundColor: addAlpha(webhook.color, 0.06),
             }}
-            className="w-full rounded-lg border-t-[0.1px] "
+            className="w-full rounded outline outline-offset-2 outline-dashed outline-1 p-0"
           >
-            <div className="py-4 px-4">
+            <div className="py-2.5 px-2.5">
               <div className="flex items-start justify-between">
                 <div className="">
                   <Label className="">{webhook.name} </Label>

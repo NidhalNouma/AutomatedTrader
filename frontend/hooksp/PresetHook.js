@@ -24,6 +24,7 @@ export function NewPreset(preset) {
   const [presetType, setPresetType] = useState(0);
 
   const [name, setName] = useState("");
+  const [pair, setPair] = useState("");
   const [type, setType] = useState(orderTypes[0]);
 
   const [usePositionPercentage, setUsePositionPercentage] = useState(true);
@@ -45,47 +46,49 @@ export function NewPreset(preset) {
     if (preset) {
       setName(preset.name);
       setPresetType(preset.type);
+      setPair(preset.data?.pair);
 
-      if (preset.positionValue) {
+      if (preset.data?.positionValue) {
         setUseFixedPosition(true);
-        setPositionValue(preset.positionValue);
+        setPositionValue(preset.data.positionValue);
       } else {
         setUseFixedPosition(false);
       }
-      if (preset.positionValuePercentage) {
+      if (preset.data?.positionValuePercentage) {
         setUsePositionPercentage(true);
-        setPositionValue(preset.positionValuePercentage);
+        setPositionValue(preset.data?.positionValuePercentage);
       } else {
         setUsePositionPercentage(false);
       }
 
-      if (preset.stopLoss) {
+      if (preset.data?.stopLoss) {
         setUseStopLoss(true);
-        setStopLoss(preset.stopLoss);
+        setStopLoss(preset.data?.stopLoss);
       } else {
         setUseStopLoss(false);
       }
-      if (preset.takeProfit) {
+      if (preset.data?.takeProfit) {
         setUseTakeProfit(true);
-        setTakeProfit(preset.takeProfit);
+        setTakeProfit(preset.data.takeProfit);
       } else {
         setUseTakeProfit(false);
       }
 
-      if (preset.partialCloseValue) {
+      if (preset.data?.partialCloseValue) {
         setUsePartialClose(true);
-        setPartialCloseValue(preset.partialCloseValue);
+        setPartialCloseValue(preset.data?.partialCloseValue);
       } else {
         setUsePartialClose(false);
       }
 
-      setMoveToBE(preset.moveToBE || false);
+      setMoveToBE(preset.data?.moveToBE || false);
     }
   }, [preset]);
 
   function getData() {
     let data = {
       type,
+      pair,
       moveToBE,
     };
     if (useFixedPosition) data.positionValue = positionValue;
@@ -156,6 +159,8 @@ export function NewPreset(preset) {
     setPresetType,
     name,
     setName,
+    pair,
+    setPair,
     orderTypes,
     type,
     setType,

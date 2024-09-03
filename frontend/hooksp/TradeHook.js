@@ -4,6 +4,7 @@ import moment from "moment";
 import axios from "axios";
 
 import { useWebhook } from "../contexts/WebhookContext";
+import { usePreset } from "../contexts/PresetsContext";
 import { useMetatrader } from "../contexts/MetatraderContext";
 import { useBinance } from "../contexts/BinanceContext";
 
@@ -14,11 +15,59 @@ import { addAlpha } from "../utils/functions";
 
 export function OpenTrade() {
   const { webhooks } = useWebhook();
-  const { mtAccounts } = useMetatrader();
+  const { presets } = usePreset();
+  const { mtAccounts, mtAccountsData } = useMetatrader();
   const { binanceAccounts } = useBinance();
 
+  const [app, setApp] = useState(null);
   const [account, setAccount] = useState(null);
   const [accountOptions, setAccountOptions] = useState(null);
+
+  useEffect(() => {
+    if (app === "metatrader") {
+      if (mtAccountsData?.length > 0) {
+        // console.log(mtAccountsData);
+        let accounts = mtAccountsData.map((account) => {
+          return {
+            name: account.account.accountName,
+            color: account.account.color,
+            account: account.account,
+            accountInfo: account.information,
+            positions: account.positions,
+          };
+        });
+
+        setAccountOptions(accounts);
+      } else setAccountOptions([]);
+    }
+  }, [app, mtAccountsData]);
+
+  const [presetsActions, setPresetActions] = useState({
+    market: [],
+    modify: [],
+    close: [],
+  });
+  const [selectedPreset, setSelectedPreset] = useState(null);
+
+  useEffect(() => {
+    if (presets?.length > 0) {
+      let pr = {
+        market: [],
+        modify: [],
+        close: [],
+      };
+      for (let preset of presets) {
+        if (preset.type == 0) pr.market.push(preset);
+        if (preset.type == 2) pr.close.push(preset);
+        if (preset.type == 3) pr.modify.push(preset);
+      }
+
+      setPresetActions(pr);
+    }
+  }, [presets]);
+
+  // --
+
   const [webhook, setWebhook] = useState(null);
   const [webhookOptions, setWebhookOptions] = useState(null);
   const [message, setMessage] = useState(null);
@@ -26,69 +75,69 @@ export function OpenTrade() {
 
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    let groupOptions = [];
+  // useEffect(() => {
+  //   let groupOptions = [];
 
-    if (mtAccounts?.length > 0) {
-      let options = [];
-      for (let i = 0; i < mtAccounts.length; i++) {
-        const acc = mtAccounts[i];
+  //   if (mtAccounts?.length > 0) {
+  //     let options = [];
+  //     for (let i = 0; i < mtAccounts.length; i++) {
+  //       const acc = mtAccounts[i];
 
-        const option = { value: acc, label: acc.accountDisplayName };
-        options.push(option);
-      }
+  //       const option = { value: acc, label: acc.accountDisplayName };
+  //       options.push(option);
+  //     }
 
-      groupOptions.push({
-        label: "Metatrader",
-        options,
-      });
-    }
+  //     groupOptions.push({
+  //       label: "Metatrader",
+  //       options,
+  //     });
+  //   }
 
-    if (binanceAccounts?.length > 0) {
-      let options = [];
-      for (let i = 0; i < binanceAccounts.length; i++) {
-        const acc = binanceAccounts[i];
+  //   if (binanceAccounts?.length > 0) {
+  //     let options = [];
+  //     for (let i = 0; i < binanceAccounts.length; i++) {
+  //       const acc = binanceAccounts[i];
 
-        const option = { value: acc, label: acc.accountName };
-        options.push(option);
-      }
+  //       const option = { value: acc, label: acc.accountName };
+  //       options.push(option);
+  //     }
 
-      groupOptions.push({
-        label: "Binance",
-        options,
-      });
-    }
+  //     groupOptions.push({
+  //       label: "Binance",
+  //       options,
+  //     });
+  //   }
 
-    if (groupOptions.length > 0) {
-      setAccountOptions(groupOptions);
-      setAccount(groupOptions[0]);
-    }
-  }, [mtAccounts, binanceAccounts]);
+  //   if (groupOptions.length > 0) {
+  //     setAccountOptions(groupOptions);
+  //     setAccount(groupOptions[0]);
+  //   }
+  // }, [mtAccounts, binanceAccounts]);
 
-  useEffect(() => {
-    if (webhooks?.length > 0) {
-      const options = [];
-      for (let i = 0; i < webhooks.length; i++) {
-        const w = webhooks[i];
+  // useEffect(() => {
+  //   if (webhooks?.length > 0) {
+  //     const options = [];
+  //     for (let i = 0; i < webhooks.length; i++) {
+  //       const w = webhooks[i];
 
-        if (!w.advanced) {
-          const option = { value: w, label: w.name };
-          options.push(option);
-        }
-      }
-      if (options.length > 0) {
-        setWebhookOptions(options);
-        setWebhook(options[0]);
-      }
-    }
-  }, [webhooks]);
+  //       if (!w.advanced) {
+  //         const option = { value: w, label: w.name };
+  //         options.push(option);
+  //       }
+  //     }
+  //     if (options.length > 0) {
+  //       setWebhookOptions(options);
+  //       setWebhook(options[0]);
+  //     }
+  //   }
+  // }, [webhooks]);
 
-  useEffect(() => {
-    if (webhook?.value && webhook.value?.messages?.length > 0) {
-      setMessageOptions(webhook.value?.messages);
-      setMessage(webhook.value.messages[0]);
-    }
-  }, [webhook]);
+  // useEffect(() => {
+  //   if (webhook?.value && webhook.value?.messages?.length > 0) {
+  //     setMessageOptions(webhook.value?.messages);
+  //     setMessage(webhook.value.messages[0]);
+  //   }
+  // }, [webhook]);
 
   async function sendTrade() {
     setError("");
@@ -151,8 +200,13 @@ export function OpenTrade() {
   }
 
   return {
+    app,
+    setApp,
     account,
     setAccount,
+    presetsActions,
+    selectedPreset,
+    setSelectedPreset,
     accountOptions,
     webhook,
     setWebhook,
