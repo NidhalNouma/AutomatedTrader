@@ -2,7 +2,7 @@ import { useState, Fragment, useCallback } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-import { LeftDrawer } from "../ui/Drawer";
+import { LeftDrawer, RightDrawerWithHeader } from "../ui/Drawer";
 import { Button, RoundedButton } from "../ui/Button";
 import { Dropdown, DropdownButton } from "../ui/Dropdown";
 import { SearchModal } from "../ui/SearchInput";
@@ -10,13 +10,15 @@ import { ModalWithHeader, UpgradeModal } from "../ui/Modal";
 import { Label, Par, SubTitle3 } from "../ui/Text";
 
 import SideNav from "./SideNav";
-import NotificationHeader from "./NotificationButton";
+import NotificationsSection from "./NotificationsSection";
 
-import { Swap } from "react-daisyui";
+import { Swap, Indicator } from "react-daisyui";
 import { MenuIcon } from "@heroicons/react/outline";
+import { BellIcon } from "@heroicons/react/outline";
 
 import OpenTrade from "../Forms/OpenTrade";
 import { useUser } from "../../contexts/UserContext";
+import { useNotification } from "../../contexts/NotificationContext";
 import { SignOut } from "../../hooksp/AuthHook";
 
 import { SearchUsersByDisplayName } from "../../hooksp/UserHook";
@@ -26,6 +28,9 @@ import { addAlpha } from "../../utils/functions";
 
 export default function NavBar({ className, children, page }) {
   const router = useRouter();
+
+  const { notifications, unreadNotifications } = useNotification();
+
   const [closeSearch, setCloseSearch] = useState(false);
   const [openUpg, setOpenUpg] = useState(false);
 
@@ -169,7 +174,31 @@ export default function NavBar({ className, children, page }) {
                   )}
               </SearchModal>
               <div className="ml-4 flex items-center">
-                <NotificationHeader />
+                <RightDrawerWithHeader
+                  title="Notifications"
+                  trigger={
+                    <div className="cursor-pointer flex items-center justify-center">
+                      <Indicator
+                        vertical="top"
+                        horizontal=""
+                        className="relative"
+                      >
+                        {unreadNotifications > 0 && (
+                          <div className="right-0 top-0 -translate-y-1/6 translate-x-1/4 p-2 !absolute h-5 w-5  flex items-center justify-center rounded-full border-[0.5px] border-accent bg-bgt">
+                            <span className="text-accent text-xs">
+                              {unreadNotifications}
+                            </span>
+                          </div>
+                        )}
+                        <RoundedButton className="hover:bg-text/10">
+                          <BellIcon className="h-6 aspect-square stroke-text/80 hover:stroke-text stroke-1" />
+                        </RoundedButton>
+                      </Indicator>
+                    </div>
+                  }
+                >
+                  <NotificationsSection notifications={notifications} />
+                </RightDrawerWithHeader>
               </div>
 
               <div className="ml-2">

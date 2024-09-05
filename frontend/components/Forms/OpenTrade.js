@@ -428,7 +428,7 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
                 <div
                   key={i}
                   onClick={() => setSelectedPreset(preset)}
-                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1"
+                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1.5"
                 >
                   <div
                     style={{
@@ -451,7 +451,7 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
                 <div
                   key={i}
                   onClick={() => setSelectedPreset(preset)}
-                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1"
+                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1.5"
                 >
                   <div
                     style={{
@@ -474,7 +474,7 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
                 <div
                   key={i}
                   onClick={() => setSelectedPreset(preset)}
-                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1"
+                  className="relative px-2 py-2.5 max-w-xs mx-auto rounded-lg flex items-start justify-center cursor-pointer my-1.5"
                 >
                   <div
                     style={{

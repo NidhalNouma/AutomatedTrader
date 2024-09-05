@@ -62,8 +62,6 @@ export default function Alert({ alert }) {
     0
   );
 
-  // console.log(trades, alert);
-
   return (
     <Fragment>
       <div
@@ -407,8 +405,7 @@ function MatketOrderInfo({ messageData, className }) {
               : messageData.type?.search("sell") >= 0
               ? "text-short bg-short/10"
               : ""
-          }
-                    `}
+          }`}
         >
           {messageData.type}
         </span>

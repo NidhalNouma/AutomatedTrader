@@ -91,7 +91,7 @@ export function CloseButton({ className, onClick }) {
     <Button_
       size="xs"
       shape="circle"
-      className={`${className} bg-bg text-text/30 hover:text-text hover:bg-transparent border-text/30 hover:border-text/60`}
+      className={`${className} bg-transparent text-text/30 hover:text-text hover:bg-transparent border-text/30 hover:border-text/60`}
       onClick={onClick}
     >
       <XIcon className="h-3.5 aspect-square cursor-pointer" />
