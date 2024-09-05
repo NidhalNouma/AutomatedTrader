@@ -60,10 +60,10 @@ function PresetForm({ close, preset }) {
           a partial trade.
         </Info>
       </div> */}
-      <ButtonGroup className="mb-6">
+      <ButtonGroup className="mb-6 w-full max-w-xs grid grid-cols-3">
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             presetType === 0 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -73,7 +73,7 @@ function PresetForm({ close, preset }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             presetType === 3 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -83,7 +83,7 @@ function PresetForm({ close, preset }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             presetType === 2 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}

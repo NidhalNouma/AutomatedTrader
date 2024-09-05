@@ -1,4 +1,4 @@
-import { sendMessage } from "../../../../db/telegram";
+import { sendMessage } from "../../../lib/third/telegram";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {

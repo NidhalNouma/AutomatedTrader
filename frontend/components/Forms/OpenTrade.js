@@ -388,10 +388,10 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
   return (
     <Fragment>
       <div className="w-full flex flex-col mb-3">
-        <ButtonGroup className="mb-6 mx-auto mt-2">
+        <ButtonGroup className="mb-6 mx-auto mt-2 w-full grid grid-cols-3">
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 ${
+            className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 truncate ${
               actionType === 0 &&
               "text-text bg-text/20 hover:!bg-text/20 hover:text-btn"
             }`}
@@ -401,7 +401,7 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
           </Button_>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 ${
+            className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 truncate ${
               actionType === 3 &&
               "text-text bg-text/20 hover:!bg-text/20 hover:text-btn"
             }`}
@@ -411,7 +411,7 @@ function Actions({ presetsActions, selectedPreset, setSelectedPreset }) {
           </Button_>
           <Button_
             size="sm"
-            className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 ${
+            className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-text/60 truncate ${
               actionType === 2 &&
               "text-text bg-text/20 hover:!bg-text/20 hover:text-btn"
             }`}

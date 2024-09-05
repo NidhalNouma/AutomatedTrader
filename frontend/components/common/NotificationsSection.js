@@ -7,7 +7,7 @@ function NotificationsSection({ notifications }) {
   const [notType, setNotType] = useState(0);
   return (
     <div className="w-full  p-2 ">
-      <ButtonGroup className="mb-6 mx-auto rounded-none w-full grid grid-cols-4 items-center justify-between">
+      <ButtonGroup className="mb-6 mx-auto rounded-none w-full grid grid-cols-3 items-center justify-between">
         <Button_
           size="sm"
           className={`capitalize !text-sm rounded-t rounded-b-none py-1 bg-transparent hover:bg-transparent text-text/80 hover:text-text border-2 !border-x-0 !border-t-0 border-text/20 w-full truncate ${
@@ -16,7 +16,7 @@ function NotificationsSection({ notifications }) {
           }`}
           onClick={() => setNotType(0)}
         >
-          Mine
+          Notifications
         </Button_>
         <Button_
           size="sm"
@@ -26,7 +26,7 @@ function NotificationsSection({ notifications }) {
           }`}
           onClick={() => setNotType(1)}
         >
-          Follows
+          Announcement
         </Button_>
         <Button_
           size="sm"
@@ -35,16 +35,6 @@ function NotificationsSection({ notifications }) {
             "text-text border-text/80 hover:!border-text/80 hover:text-btn"
           }`}
           onClick={() => setNotType(2)}
-        >
-          Announcement
-        </Button_>
-        <Button_
-          size="sm"
-          className={`capitalize !text-sm rounded-t rounded-b-none py-1 bg-transparent hover:bg-transparent text-text/80 hover:text-text border-2 !border-x-0 !border-t-0 border-text/20 w-full truncate ${
-            notType === 3 &&
-            "text-text border-text/80 hover:!border-text/80 hover:text-btn"
-          }`}
-          onClick={() => setNotType(3)}
         >
           What's new
         </Button_>

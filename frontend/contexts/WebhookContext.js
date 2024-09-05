@@ -28,7 +28,7 @@ export function WebhookProvider({ children }) {
               const account = mtAccountsData.find(
                 (acc) => acc.account.id === trade.accountId
               );
-              if (!trade.trade)
+              if (!trade.trade || trade?.live)
                 if (account) {
                   let findLiveTrade = account?.positions?.find(
                     (t) => t.id === trade.tradeId

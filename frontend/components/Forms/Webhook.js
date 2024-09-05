@@ -237,10 +237,10 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
           // setValue={setType}
         ></Select>
       )} */}
-      <ButtonGroup className="mb-6">
+      <ButtonGroup className="mb-6 w-full grid grid-cols-3 max-w-xs">
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             msgType === 0 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -250,7 +250,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1  hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             msgType === 3 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}
@@ -260,7 +260,7 @@ export function BasicWebhookForm({ close, webhook, message, onDuplicate, to }) {
         </Button_>
         <Button_
           size="sm"
-          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary ${
+          className={`capitalize !text-sm rounded-lg bg-bg py-1 hover:!bg-bg text-text/80 hover:text-text border-none outline outline-1 outline-dashed outline-primary truncate ${
             msgType === 2 &&
             "text-btn bg-primary hover:!bg-primary hover:text-btn"
           }`}

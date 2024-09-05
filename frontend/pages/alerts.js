@@ -16,7 +16,7 @@ function AlertsPage() {
   const { daysAlerts } = SortAlertsByDays(alerts);
   const [open, setOpen] = useState(false);
 
-  console.log(alerts);
+  // console.log(alerts);
 
   return (
     <Fragment>

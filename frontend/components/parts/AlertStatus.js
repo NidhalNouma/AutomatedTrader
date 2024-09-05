@@ -24,12 +24,12 @@ function findTrade(id, webhook) {
 }
 
 export default function Alert({ alert }) {
-  const { webhooks } = useWebhook();
+  const { webhooks, webhooksWithTrades } = useWebhook();
   const { mtAccounts } = useMetatrader();
   const { binanceAccounts } = useBinance();
   const messageData = alert.messageData || getMessageData(alert.message);
 
-  const webhook = webhooks?.find((w) => w.id === alert.webhookId);
+  const webhook = webhooksWithTrades?.find((w) => w.id === alert.webhookId);
 
   const color = webhook?.color || "";
 
@@ -51,10 +51,18 @@ export default function Alert({ alert }) {
       return app;
     }) || [];
 
-  const trades =
-    alert.apps
-      ?.map((app) => findTrade(app.tradeId || app.orderId, webhook))
-      .filter((tr) => tr != null) || [];
+  let trades = [];
+  alert.apps?.forEach((app) => {
+    if (app.trades?.length > 0) {
+      const tr = app.trades
+        .map((trade) => findTrade(trade.tradeId || trade.orderId, webhook))
+        .filter((tr) => tr != null);
+      trades.push(...tr);
+    } else {
+      const tr = findTrade(app.tradeId || app.orderId, webhook);
+      if (tr) trades.push(tr);
+    }
+  });
 
   const liveTrades = trades.filter((tr) => tr.live);
   const totalProfit = trades.reduce(
@@ -244,7 +252,7 @@ function Apps({ apps, webhook }) {
                         </MessageWithTrade>
                       ) : (
                         <MessageWithTrade trade={trade}>
-                          {tr.errorMessage} ID: {tr.tradeId || tr.orderId}{" "}
+                          {tr.msg || tr.message} ID: {tr.tradeId || tr.orderId}{" "}
                         </MessageWithTrade>
                       )}
                     </li>
