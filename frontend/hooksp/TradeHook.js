@@ -286,7 +286,7 @@ export function TradesData() {
     if (trades?.length > 0) {
       let tr = processTrades(trades);
       setTradesData(tr);
-      let days = tr?.days?.reverse();
+      let days = tr?.days;
       setTradesDay(days);
     }
   }, [trades]);
@@ -563,6 +563,7 @@ export function TradesData() {
     trades,
     liveTrades,
     liveTradesData,
+    tradesData,
     tradesDay,
     nbTrades,
     nbProfits,

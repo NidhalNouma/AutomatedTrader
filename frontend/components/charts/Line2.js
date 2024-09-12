@@ -16,6 +16,7 @@ import moment from "moment";
 
 const RechartJSLine = ({
   data: entryData,
+  title,
   className,
   chartId,
   defaultColor,
@@ -146,7 +147,8 @@ const RechartJSLine = ({
   // console.log(cardinal);
 
   return (
-    <Fragment>
+    <article>
+      {title}
       {theme && (
         <Fragment>
           {/* <svg style={{ position: "absolute", width: 0, height: 0 }}>
@@ -278,7 +280,7 @@ const RechartJSLine = ({
           </div>
         </Fragment>
       )}
-    </Fragment>
+    </article>
   );
 };
 

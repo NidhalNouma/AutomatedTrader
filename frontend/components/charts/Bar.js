@@ -18,6 +18,7 @@ import moment from "moment";
 
 const RechartJSLine = ({
   data: entryData,
+  title,
   className,
   chartId,
   defaultColor,
@@ -150,7 +151,8 @@ const RechartJSLine = ({
   // console.log(cardinal);
 
   return (
-    <Fragment>
+    <article>
+      {title}
       {theme && (
         <Fragment>
           <div className={className}>
@@ -245,7 +247,7 @@ const RechartJSLine = ({
           </div>
         </Fragment>
       )}
-    </Fragment>
+    </article>
   );
 };
 

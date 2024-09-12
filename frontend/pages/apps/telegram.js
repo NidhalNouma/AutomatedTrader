@@ -90,11 +90,11 @@ function Telegram() {
             )}
           </section>
         ) : (
-          <section className="mt-10 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8">
-            <RectangleSkeleton />
-            <RectangleSkeleton />
-            <RectangleSkeleton />
-            <RectangleSkeleton />
+          <section className="mt-8 max-h-[80vh] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8">
+            <RectangleSkeleton className="!h-28" />
+            <RectangleSkeleton className="!h-28" />
+            <RectangleSkeleton className="!h-28" />
+            <RectangleSkeleton className="!h-28" />
           </section>
         )}
       </MainLayoutWithHeader>
@@ -185,12 +185,12 @@ function TelegramItem({ telegram }) {
 
       <div
         style={{
-          borderColor: addAlpha(telegram.color, 0.8),
+          outlineColor: addAlpha(telegram.color, 0.3),
           backgroundColor: addAlpha(telegram.color, 0.06),
         }}
-        className="w-full rounded-lg border-t-[0.1px] "
+        className="w-full rounded outline outline-offset-2 outline-dashed outline-1 p-0"
       >
-        <div className="py-4 px-4">
+        <div className="py-2.5 px-2.5">
           <div className="flex items-start justify-between">
             <div className="">
               <Label className="">{telegram.name} </Label>
