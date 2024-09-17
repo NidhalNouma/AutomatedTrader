@@ -31,20 +31,29 @@ app.use(cors());
 app.post("/metatrader", async (req, res) => {
   const accountSrc = "metatrader";
   try {
-    const { account, messageData, openOn, webhookId } = req.body;
+    const { account, messageData, openOn, webhookId, presetId } = req.body;
     if (!account || !account.id)
       return res.status(500).send("Account not available");
     if (!messageData) return res.status(500).send("Message data not available");
     // if (!openOn) return res.status(500).send("Apps not available");
-    if (!webhookId) return res.status(500).send("Webhook ID not available");
+    if (!webhookId && !presetId)
+      return res.status(500).send("ID not available");
 
     console.log("Metatrader: managing trade for ", account.id);
+
+    let mtId = webhookId
+      ? "N_N_" + webhookId
+      : presetId
+      ? "P_S_" + presetId
+      : "";
+
+    console.log(messageData);
 
     if (messageData.msgType == 0) {
       console.log("Metatrader: Opening trade ... ");
       const trade = await openMTTrade(
         account.accountApiId,
-        "N_N_" + webhookId,
+        mtId,
         messageData.type,
         messageData.pair,
         messageData.positionValue,
@@ -72,7 +81,7 @@ app.post("/metatrader", async (req, res) => {
       console.log("Metatrader: Closing orders ... ");
       const closedTrades = await closeMTTrade(
         account.accountApiId,
-        "N_N_" + webhookId,
+        mtId,
         messageData.pair,
         messageData.type,
         messageData.usePartialClose ? messageData.partialCloseValue : 0,
@@ -89,7 +98,7 @@ app.post("/metatrader", async (req, res) => {
       console.log("Metatrader: Modifying orders ... ");
       const modifyTrade = await modifyMTTrade(
         account.accountApiId,
-        webhookId,
+        mtId,
         messageData.pair,
         messageData.type,
         messageData.useStopLoss ? messageData.stopLoss : 0,

@@ -27,7 +27,7 @@ export default function PresetItem({ preset }) {
         withHeader={true}
         title={"Edit preset"}
       >
-        <PresetForm preset={preset} />
+        <PresetForm preset={preset} close={() => setOpenChangeData(false)} />
       </Modal>
       <EditModal
         open={openChangeColor}
@@ -116,7 +116,7 @@ export default function PresetItem({ preset }) {
         <h6 className="text-text/80 text-xs mt-2">
           Symbol:{" "}
           <span className={`${"text-text bg-text/10"} rounded px-1`}>
-            {preset.data?.pair || "NA"}
+            {preset.data?.pair || "All"}
           </span>
         </h6>
         <div className="mt-2 flex items-center justify-between">

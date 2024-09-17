@@ -9,7 +9,10 @@ import { useMetatrader } from "../contexts/MetatraderContext";
 import { useBinance } from "../contexts/BinanceContext";
 
 import { servicesURL } from "../utils/constant";
-import { getMessageData } from "../lib/third/webhookMessage.js";
+import {
+  getMessageData,
+  presetToMsgData,
+} from "../lib/third/webhookMessage.js";
 
 import { addAlpha } from "../utils/functions";
 
@@ -26,15 +29,20 @@ export function OpenTrade() {
   useEffect(() => {
     if (app === "metatrader") {
       if (mtAccountsData?.length > 0) {
-        // console.log(mtAccountsData);
-        let accounts = mtAccountsData.map((account) => {
-          return {
-            name: account.account.accountName,
-            color: account.account.color,
-            account: account.account,
-            accountInfo: account.information,
-            positions: account.positions,
+        console.log(mtAccountsData);
+        let accounts = mtAccountsData.map((acc) => {
+          let racc = {
+            name: acc.account.accountName,
+            color: acc.account.color,
+            account: acc.account,
+            accountInfo: acc.information,
+            positions: acc.positions,
           };
+
+          if (account && account.account?.id == acc.account?.id) {
+            setAccount(racc);
+          }
+          return racc;
         });
 
         setAccountOptions(accounts);
@@ -66,121 +74,35 @@ export function OpenTrade() {
     }
   }, [presets]);
 
-  // --
-
-  const [webhook, setWebhook] = useState(null);
-  const [webhookOptions, setWebhookOptions] = useState(null);
-  const [message, setMessage] = useState(null);
-  const [messageOptions, setMessageOptions] = useState(null);
-
   const [error, setError] = useState("");
-
-  // useEffect(() => {
-  //   let groupOptions = [];
-
-  //   if (mtAccounts?.length > 0) {
-  //     let options = [];
-  //     for (let i = 0; i < mtAccounts.length; i++) {
-  //       const acc = mtAccounts[i];
-
-  //       const option = { value: acc, label: acc.accountDisplayName };
-  //       options.push(option);
-  //     }
-
-  //     groupOptions.push({
-  //       label: "Metatrader",
-  //       options,
-  //     });
-  //   }
-
-  //   if (binanceAccounts?.length > 0) {
-  //     let options = [];
-  //     for (let i = 0; i < binanceAccounts.length; i++) {
-  //       const acc = binanceAccounts[i];
-
-  //       const option = { value: acc, label: acc.accountName };
-  //       options.push(option);
-  //     }
-
-  //     groupOptions.push({
-  //       label: "Binance",
-  //       options,
-  //     });
-  //   }
-
-  //   if (groupOptions.length > 0) {
-  //     setAccountOptions(groupOptions);
-  //     setAccount(groupOptions[0]);
-  //   }
-  // }, [mtAccounts, binanceAccounts]);
-
-  // useEffect(() => {
-  //   if (webhooks?.length > 0) {
-  //     const options = [];
-  //     for (let i = 0; i < webhooks.length; i++) {
-  //       const w = webhooks[i];
-
-  //       if (!w.advanced) {
-  //         const option = { value: w, label: w.name };
-  //         options.push(option);
-  //       }
-  //     }
-  //     if (options.length > 0) {
-  //       setWebhookOptions(options);
-  //       setWebhook(options[0]);
-  //     }
-  //   }
-  // }, [webhooks]);
-
-  // useEffect(() => {
-  //   if (webhook?.value && webhook.value?.messages?.length > 0) {
-  //     setMessageOptions(webhook.value?.messages);
-  //     setMessage(webhook.value.messages[0]);
-  //   }
-  // }, [webhook]);
 
   async function sendTrade() {
     setError("");
-    if (!account || !account.value) {
+    if (!account) {
       setError("Account is required!");
       return false;
     }
-    if (!webhook || !webhook.value) {
-      setError("Webhook is required!");
+    if (!app) {
+      setError("App is required!");
       return false;
     }
-    if (!message || !message.value) {
-      setError("Message is required!");
-      return false;
-    }
-
-    const accountId = account.value.id;
-    const webhookId = webhook.value.id;
-    const messageData = getMessageData(message.value);
-
-    // console.log("Sending trade", account, webhook, message);
-    console.log("Sending trade ... ", accountId, webhookId, messageData);
-
-    // let url = "http://localhost:4001";
-    let url = servicesURL.trade;
-
-    let accountSrc = accountOptions.find((o) => {
-      const r = o.options.find((v) => v.value.id === account.value.id);
-      return r;
-    });
-
-    if (!accountSrc) {
-      setError("Account source not availble!");
+    if (!selectedPreset) {
+      setError("Preset is required!");
       return false;
     }
 
-    let accountSrcName = accountSrc.label.toLowerCase();
+    console.log("Sending trade ... ", app, account, selectedPreset);
+
+    let url = "http://localhost:4001";
+    // let url = servicesURL.trade;
+
+    let messageData = presetToMsgData(selectedPreset);
 
     const r = await axios.post(
-      url + "/" + accountSrcName,
+      url + "/" + app,
       {
-        account: account.value,
-        webhookId,
+        account: account.account,
+        presetId: selectedPreset.id,
         messageData,
       },
       {
@@ -190,6 +112,8 @@ export function OpenTrade() {
         },
       }
     );
+
+    console.log(r);
 
     if (r?.data?.errorMessage) {
       setError(r.data.errorMessage);
@@ -208,12 +132,6 @@ export function OpenTrade() {
     selectedPreset,
     setSelectedPreset,
     accountOptions,
-    webhook,
-    setWebhook,
-    webhookOptions,
-    message,
-    setMessage,
-    messageOptions,
     error,
     sendTrade,
   };

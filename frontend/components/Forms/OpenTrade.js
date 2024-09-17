@@ -23,12 +23,6 @@ function OpenTrade({ close, children }) {
     selectedPreset,
     setSelectedPreset,
 
-    webhook,
-    setWebhook,
-    webhookOptions,
-    message,
-    setMessage,
-    messageOptions,
     error,
     sendTrade,
   } = OpenTradeHook();
@@ -41,6 +35,8 @@ function OpenTrade({ close, children }) {
         presetsActions={presetsActions}
         selectedPreset={selectedPreset}
         setSelectedPreset={setSelectedPreset}
+        error={error}
+        sendTrade={sendTrade}
       />
     </Fragment>
   ) : (
@@ -175,6 +171,8 @@ function MetaTraderTrade({
   presetsActions,
   selectedPreset,
   setSelectedPreset,
+  error,
+  sendTrade,
 }) {
   function TradesTable({ data }) {
     return (
@@ -312,9 +310,12 @@ function MetaTraderTrade({
               <div className="my-2">
                 <ActionDescription preset={selectedPreset} />
               </div>
+
+              {error && <Error className="my-2">{error}</Error>}
+
               <Button
                 onClick={async () => {
-                  // const r = await sendTrade();
+                  const r = await sendTrade();
                   // if (r && typeof close === "function") close();
                 }}
                 className="mt-3 w-full max-w-xs mx-auto"

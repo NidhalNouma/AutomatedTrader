@@ -193,7 +193,7 @@ function Home() {
                   `${getComputedStyle(
                     document.documentElement
                   ).getPropertyValue("--primary-color")}`,
-                  ,
+
                   `hsl(${getComputedStyle(
                     document.documentElement
                   ).getPropertyValue("--long-color")})`,
@@ -219,7 +219,7 @@ function Home() {
             />
           </section>
 
-          <SubTitle3 className="!text-base mt-2 text-text/80">
+          <SubTitle3 className="!text-base mt-4 text-text/80">
             My top webhooks{" "}
             <Link href="/webhook">
               <span className="text-text/80 text-xs rounded bg-text/10 px-1 cursor-pointer">

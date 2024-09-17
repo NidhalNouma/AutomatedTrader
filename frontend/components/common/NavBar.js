@@ -224,7 +224,7 @@ export default function NavBar({ className, children, page }) {
                 >
                   <RoundedButton className=" hover:bg-text/10 ml-1.5">
                     <img
-                      className=" aspect-square h-6"
+                      className=" aspect-square h-6 rounded-full"
                       src={user?.photoURL || "/Images/profile.png"}
                     />
                   </RoundedButton>
