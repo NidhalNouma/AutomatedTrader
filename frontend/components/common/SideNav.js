@@ -32,7 +32,7 @@ function Content({ children, fixed }) {
 function Linksn({ icon, children, isActive, className, href = "/" }) {
   return (
     <div
-      className={`${className} pr-0 border-r-0 my-[0.25rem] rounded ${
+      className={`${className} pr-0 border-r-0 my-[0.25rem] rounded relative ${
         isActive ? "border-r-secondary" : "border-r-0"
       }`}
     >
@@ -152,9 +152,16 @@ export default function SideNav({ page, fixed = true }) {
           <Linksn
             href="/alerts"
             isActive={page === "alerts"}
-            icon={<RiAlarmLine className="h-5 w-5" />}
+            icon={
+              <div className="relative">
+                {/* <div className="-right-1/4 -top-[12%] -z-10  p-1.5 !absolute h-2.5 w-2.5  flex items-center justify-center rounded-full border-[0.5px] border-accent bg-accent">
+                  <span className="text-bgt text-xs">7</span>
+                </div> */}
+                <RiAlarmLine className="h-5 w-5 " />
+              </div>
+            }
           >
-            <span className="capitalize ml-1 text-base">Alerts</span>
+            <span className="capitalize ml-1 text-base relative">Alerts</span>
           </Linksn>
         </div>
 

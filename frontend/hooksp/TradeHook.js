@@ -93,8 +93,8 @@ export function OpenTrade() {
 
     console.log("Sending trade ... ", app, account, selectedPreset);
 
-    let url = "http://localhost:4001";
-    // let url = servicesURL.trade;
+    // let url = "http://localhost:4001";
+    let url = servicesURL.trade;
 
     let messageData = presetToMsgData(selectedPreset);
 
