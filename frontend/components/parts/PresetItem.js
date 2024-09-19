@@ -196,12 +196,12 @@ export default function PresetItem({ preset }) {
               Partial Close:{" "}
               <span
                 className={`${
-                  preset.data?.partialClose
-                    ? "text-loss bg-loss/10"
+                  preset.data?.partialCloseValue
+                    ? "text-profit bg-profit/10"
                     : "text-text bg-text/10"
                 } rounded px-1`}
               >
-                {preset.data?.partialClose || "NA"}
+                {preset.data?.partialCloseValue + "%" || "NA"}
               </span>
             </h6>
 

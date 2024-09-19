@@ -109,7 +109,7 @@ function Webhook() {
               </Fragment>
             ) : (
               <div className="mt-3 w-full">
-                <Par className="mt-8">No Webhooks Availble. </Par>
+                <Par className="mt-8">No Webhooks available . </Par>
               </div>
             )}
           </section>

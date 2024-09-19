@@ -380,7 +380,7 @@ export function HistoryTradeTable({ data: entryData, className }) {
                           ${Number(v.profit).toFixed(2)}
                         </td>
                         <td className="">{v.openPrice || v.open}</td>
-                        <td className="">{v.closePrice || v.open}</td>
+                        <td className="">{v.closePrice || v.close}</td>
                         <td className="truncate px-1 ">
                           {/* {v.openTime} */}
                           {moment(v.openTime).format("yyyy MM DD HH:mm:ss")}
