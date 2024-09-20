@@ -191,10 +191,10 @@ function Settings() {
           <div className="mt-6 p-4 bg-bg/40 rounded-lg backdrop-blur-xl">
             <SubTitle2 className="mb-4">Membership</SubTitle2>
             <div className="mt-4">
-              {fullUser?.subObj ? (
-                <div className="bg-accent px-3 py-2 rounded-lg flex justify-between items-center">
+              {fullUser?.hasAccessTo ? (
+                <div className="bg-accent px-3 py-2 rounded-lg flex justify-between items-center max-w-xs mx-auto">
                   <Label className="!text-bg">
-                    {fullUser?.subObj.name}
+                    {fullUser?.hasAccessTo.name}
                     {fullUser.subscription?.status && (
                       <span className="text-text-h ml-2 text-sm font-normal px-2 py-1 bg-bg rounded-full">
                         {fullUser.subscription?.status}

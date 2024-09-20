@@ -24,6 +24,8 @@ export const UserProvider = ({ children }) => {
         user.hasAccessTo = getPlanById(sub.data, user.lifetimeAccess);
         // console.log(user, "access User ....");
         // user.hasAccessTo = null;
+      } else if (user.lifetimeAccess) {
+        user.hasAccessTo = getPlanById(null, user.lifetimeAccess);
       }
 
       // if (!user.hasAccessTo) {

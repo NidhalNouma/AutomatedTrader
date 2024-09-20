@@ -27,8 +27,8 @@ function Index({ title, value, t, setSuccess, i }) {
 
   function btnText() {
     let r = "Select";
-    if (fullUser?.subObj) {
-      const sub = fullUser.subObj;
+    if (fullUser?.hasAccessTo) {
+      const sub = fullUser.hasAccessTo;
       if (sub.no === i && sub.time === t) r = "Current";
       else if (sub.no === i && sub.time !== t) {
         if (t == "mo") r = "Downgrade";
