@@ -238,7 +238,7 @@ function Metatrader() {
                                 : ""
                             }
                           >
-                            % {Number(lineBarDataValues.all).toFixed(1)}
+                            {Number(lineBarDataValues.all).toFixed(1)} %
                           </SubTitle>
                           <div className="flex items-center">
                             <div className="flex flex-col items-center mr-2.5">
@@ -252,7 +252,7 @@ function Metatrader() {
                                     : "!text-text/80"
                                 } text-xs`}
                               >
-                                % {Number(lineBarDataValues.today).toFixed(2)}
+                                {Number(lineBarDataValues.today).toFixed(2)}%
                               </Label>
                             </div>
                             <div className="flex flex-col items-center mr-2.5">
@@ -266,7 +266,7 @@ function Metatrader() {
                                     : "!text-text/80"
                                 } text-xs`}
                               >
-                                % {Number(lineBarDataValues.week).toFixed(2)}
+                                {Number(lineBarDataValues.week).toFixed(2)}%
                               </Label>
                             </div>
                             <div className="flex flex-col items-center mr-2.5">
@@ -280,7 +280,7 @@ function Metatrader() {
                                     : "!text-text/80"
                                 } text-xs`}
                               >
-                                % {Number(lineBarDataValues.month).toFixed(2)}
+                                {Number(lineBarDataValues.month).toFixed(2)}%
                               </Label>
                             </div>
                             <div className="flex flex-col items-center ">
@@ -294,7 +294,7 @@ function Metatrader() {
                                     : "!text-text/80"
                                 } text-xs`}
                               >
-                                % {Number(lineBarDataValues.year).toFixed(2)}
+                                {Number(lineBarDataValues.year).toFixed(2)}%
                               </Label>
                             </div>
                           </div>
@@ -337,10 +337,10 @@ function Metatrader() {
                             Profit trades
                           </div>
                           <span className="text-xl font-semibold text-profit">
-                            %{" "}
                             {Number(halfDoughnutData.profitPercentage).toFixed(
                               2
-                            )}
+                            )}{" "}
+                            %
                           </span>
                         </div>
                       </HalfDoughnutChart>

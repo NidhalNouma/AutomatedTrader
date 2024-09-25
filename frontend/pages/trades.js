@@ -100,7 +100,7 @@ function TradesPage() {
                 {nbTrades?.length > 0 && (
                   <div className="bg-primary/[0.05] p-2 rounded-lg">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Trades{" "}
                         <span className="text-primary text-sm">
                           {nbTrades[0].data.reduce((v, p) => v + p, 0)}
@@ -134,7 +134,7 @@ function TradesPage() {
                 {nbProfits?.length > 0 && (
                   <div className="border-primary/30 rounded-lg border-none p-2 bg-profit/[0.05]">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Win trades{" "}
                         <span className="text-profit text-sm">
                           {nbProfits[0].data.reduce((v, p) => v + p, 0)}
@@ -168,7 +168,7 @@ function TradesPage() {
                 {nbLosses?.length > 0 && (
                   <div className=" rounded-lg  p-2 bg-loss/[0.05]">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Loss trades{" "}
                         <span className="text-loss text-sm">
                           {nbLosses[0].data.reduce((v, p) => v + p, 0)}
@@ -203,7 +203,7 @@ function TradesPage() {
                 {nbLots?.length > 0 && (
                   <div className="bg-primary/[0.05] p-2 rounded-lg">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Volume{" "}
                         <span className="text-primary text-sm">
                           {Number(
@@ -244,7 +244,7 @@ function TradesPage() {
                 {totalProfit?.length > 0 && (
                   <div className="bg-primary/[0.05] p-2 rounded-lg">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Total profit{" "}
                         <span className="text-primary text-sm">
                           {Number(
@@ -284,7 +284,7 @@ function TradesPage() {
                 {totalPositiveProfit?.length > 0 && (
                   <div className="border-primary/30 rounded-lg border-none p-2 bg-profit/[0.05]">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Profit trades{" "}
                         <span className="text-profit text-sm">
                           {Number(
@@ -332,7 +332,7 @@ function TradesPage() {
                 {totalNegativeProfit?.length > 0 && (
                   <div className=" rounded-lg  p-2 bg-loss/[0.05]">
                     <div className="text-xs text-text/80">
-                      <h6 className="">
+                      <h6 className="font-semibold text-text">
                         Loss trades{" "}
                         <span className="text-loss text-sm">
                           {Number(

@@ -43,8 +43,8 @@ export function MetatraderProvider({ children }) {
   }
 
   useEffect(() => {
-    if (metaapi && mtAccounts?.length > 0) {
-      const fetchAccountData = async () => {
+    const fetchAccountData = async () => {
+      if (metaapi && mtAccounts?.length > 0) {
         let data = [];
         for (let account of mtAccounts) {
           const accountData = await getAccountData(account);
@@ -67,10 +67,16 @@ export function MetatraderProvider({ children }) {
           }
         }
         setMTAccountsData(data);
-      };
-      fetchAccountData();
-    }
-  }, [mtAccounts, metaapi]);
+      }
+    };
+
+    fetchAccountData();
+
+    // Set up interval to fetch data every hour
+    const intervalId = setInterval(fetchAccountData, 3600000); // 3600000 ms = 1 hour
+
+    return () => clearInterval(intervalId);
+  }, [mtAccounts, metaapi]); // Add dependencies as needed
 
   async function getMTAccounts() {
     if (!user) return;
