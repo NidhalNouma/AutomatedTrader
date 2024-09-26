@@ -15,6 +15,8 @@ import { data } from "autoprefixer";
 export function AddMTAccount() {
   const { user } = useUser();
 
+  const { getMTAccounts } = useMetatrader();
+
   const [type, setType] = useState("mt4");
   const [accountName, setAccountName] = useState("");
   const [accountLogin, setAccountLogin] = useState("");
@@ -84,7 +86,10 @@ export function AddMTAccount() {
         setError(
           "An error occurred while adding the account, please try again."
         );
+      return;
     }
+
+    await getMTAccounts();
 
     return true;
   }
