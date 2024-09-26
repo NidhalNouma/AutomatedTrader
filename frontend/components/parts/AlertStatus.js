@@ -358,6 +358,15 @@ function TradeDetails({ data, live }) {
         </div>
 
         <div className="flex flex-col">
+          <span className="text-sm text-text/60">StopLoss</span>
+          <span className="text-sm text-title">{data?.stopLoss || "-"}</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-sm text-text/60">TakeProfit</span>
+          <span className="text-sm text-title">{data?.takeProfit || "-"}</span>
+        </div>
+
+        <div className="flex flex-col">
           <span className="text-sm text-text/60">Open Time</span>
           <span className="text-sm text-title">
             {moment(data?.openTime).format("yyyy MM DD HH:mm:ss")}
