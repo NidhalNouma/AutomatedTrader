@@ -73,11 +73,11 @@ function Webhook() {
         }
       >
         {webhooks !== null ? (
-          <section className="">
+          <section className="mt-4">
             {advanced.length > 0 && (
               <Fragment>
-                <SubTitle3 className="mt-4">Advanced webhooks</SubTitle3>
-                <div className="mt-1.5 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-6 gap-y-8">
+                <SubTitle3 className="">Advanced webhooks</SubTitle3>
+                <div className="mt-1.5 mb-6 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 gap-x-6 gap-y-8">
                   {advanced
                     .sort((a, b) => b.created_at - a.created_at)
                     .map((v, i) => (
@@ -92,7 +92,7 @@ function Webhook() {
             {webhooks?.length > 0 ? (
               <Fragment>
                 {advanced.length > 0 && webhooks.length > advanced.length && (
-                  <SubTitle3 className="mt-8">Basic webhooks</SubTitle3>
+                  <SubTitle3 className="">Basic webhooks</SubTitle3>
                 )}
                 <div className="mt-1.5 items-start grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 3xl:grid-cols-5 3xl:grid-cols-5 gap-x-6 gap-y-8">
                   {webhooks

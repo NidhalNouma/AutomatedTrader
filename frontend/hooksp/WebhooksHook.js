@@ -461,8 +461,12 @@ export function DeleteWebhook(webhook) {
       return;
     }
     const r = await deleteWH(webhook.id);
+    if (r?.error) {
+      setError(r.error);
+      return false;
+    }
     await getAllWebhooks(user.uid);
-    return r;
+    return true;
   }
 
   return { deleteWebhook, error };
@@ -521,17 +525,14 @@ export function WebhookApps(webhook) {
   const { binanceAccounts } = useBinance();
 
   const [error, setError] = useState("");
-  const [data, setData] = useState(() => {
-    const initialData = webhook.apps || { metatrader: [], binance: [] };
-    return initialData;
-  });
+  const [data, setData] = useState({ metatrader: [], binance: [] });
 
   useEffect(() => {
     let d = { ...data };
 
     // Update Metatrader accounts
     if (mtAccounts?.length > 0) {
-      let mt = data.metatrader || [];
+      let mt = webhook.apps?.metatrader || [];
       mtAccounts.forEach((account) => {
         const existingAccount = mt.find((a) => a.id === account.id);
         if (existingAccount) {
@@ -549,7 +550,7 @@ export function WebhookApps(webhook) {
 
     // Update Binance accounts
     if (binanceAccounts?.length > 0) {
-      let bin = data.binance || [];
+      let bin = webhook.apps?.binance || [];
       binanceAccounts.forEach((account) => {
         const existingAccount = bin.find((a) => a.id === account.id);
         if (existingAccount) {

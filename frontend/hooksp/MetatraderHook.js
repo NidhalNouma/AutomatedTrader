@@ -156,7 +156,7 @@ export function EditAccountColor(account) {
 
 export function DeleteAccount(account) {
   const { user } = useUser();
-  const { setMTAccounts } = useMetatrader();
+  const { getMTAccounts } = useMetatrader();
   const [error, setError] = useState("");
 
   async function deleteAccount() {
@@ -165,9 +165,13 @@ export function DeleteAccount(account) {
       return;
     }
     const r = await deleteMTAccount(user.uid, account.id, account.accountApiId);
-    if (r.length > 0) setMTAccounts(r);
 
-    return r;
+    if (r?.error) {
+      setError(r.error);
+      return false;
+    } else await getMTAccounts();
+
+    return true;
   }
 
   return { deleteAccount, error };
