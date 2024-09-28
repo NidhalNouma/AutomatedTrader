@@ -612,11 +612,15 @@ export function AccountData() {
             1
           );
 
-          data.profitPercentage += allValue[0].profitPercentage;
-          data.lossPercentage += allValue[0].lossPercentage;
+          data.profitPercentage += allValue[0].profitTrades;
+          data.lossPercentage += allValue[0].negativeTrades;
         }
 
-      data.lossPercentage = Math.abs(data.lossPercentage);
+      let totalTrades = data.lossPercentage + data.profitPercentage;
+      data.lossPercentage = Math.abs((data.lossPercentage / totalTrades) * 100);
+      data.profitPercentage = Math.abs(
+        (data.profitPercentage / totalTrades) * 100
+      );
 
       setHalfDoughnutData(data);
     }

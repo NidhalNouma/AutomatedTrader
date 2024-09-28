@@ -141,10 +141,13 @@ export default function Alert({ alert }) {
             </div>
           )}
 
-          <span className="text-text/80 text-xs ml-auto">
+          <span className="text-text/80 text-xs ml-auto hidden sm:inline-block">
             {moment(alert.created_at.toDate()).format(
               "MMMM Do YYYY, h:mm:ss a"
             )}
+          </span>
+          <span className="text-text/80 text-xs ml-auto inline-block sm:hidden">
+            {moment(alert.created_at.toDate()).format("h:mm:ss a")}
           </span>
         </div>
 

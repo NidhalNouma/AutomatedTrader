@@ -3,12 +3,12 @@ import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 
-// import { openTrade as openMTTrade } from "../lib/third/metaapi.js";
+import { openTrade as openMTTrade } from "../lib/third/metaapi.js";
 import { placeOrder as openBinanceTrade } from "../lib/third/binanace.js";
 import metaapiFunctions from "../lib/third/metaapiWS.cjs";
 
 const {
-  openTrade: openMTTrade,
+  // openTrade: openMTTrade,
   closeTradeByWHID: closeMTTrade,
   modifyTradeByWHID: modifyMTTrade,
 } = metaapiFunctions;
