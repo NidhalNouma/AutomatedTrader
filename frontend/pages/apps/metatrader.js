@@ -334,7 +334,7 @@ function Metatrader() {
                       >
                         <div className=" aspect-square rounded-full flex flex-col items-center justify-center">
                           <div className="text-lg font-bold text-text">
-                            Profit trades
+                            Win rate
                           </div>
                           <span className="text-xl font-semibold text-profit">
                             {Number(halfDoughnutData.profitPercentage).toFixed(

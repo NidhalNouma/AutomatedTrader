@@ -61,7 +61,9 @@ export function AddMTAccount() {
     console.log(rApi);
 
     if (rApi.error) {
-      if (typeof rApi?.error === "string") setError(r.error);
+      if (typeof rApi?.error === "string") setError(rApi.error);
+      if (typeof rApi?.error?.message === "string")
+        setError(rApi.error.message);
       else
         setError(
           "Account or server does not exist, please try again with a different account or contact us."

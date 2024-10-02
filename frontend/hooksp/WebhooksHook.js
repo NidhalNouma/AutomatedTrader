@@ -545,6 +545,10 @@ export function WebhookApps(webhook) {
           });
         }
       });
+      mt.forEach((account) => {
+        const notExist = mtAccounts.find((a) => a.id === account.id);
+        if (!notExist) mt = mt.filter((a) => a.id !== account.id);
+      });
       d["metatrader"] = mt;
     }
 
@@ -563,6 +567,12 @@ export function WebhookApps(webhook) {
           });
         }
       });
+
+      bin.forEach((account) => {
+        const notExist = binanceAccounts.find((a) => a.id === account.id);
+        if (!notExist) mt = bin.filter((a) => a.id !== account.id);
+      });
+
       d["binance"] = bin;
     }
 

@@ -14,6 +14,7 @@ export const UserProvider = ({ children }) => {
 
   const getFullUser = async (userId, onComplete) => {
     if (!userId) return;
+
     const user = await getUser(userId);
     if (user) {
       if (user.subscriptionId) {
@@ -52,7 +53,7 @@ export const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, fullUser, getFullUser, loading }}
+      value={{ user, setUser, fullUser, setFullUser, getFullUser, loading }}
     >
       {children}
     </UserContext.Provider>
