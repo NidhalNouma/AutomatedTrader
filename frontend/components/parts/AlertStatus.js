@@ -571,7 +571,9 @@ function CloseOrderInfo({ messageData, className }) {
           Partial close
         </span>
         <span className="text-text text-xs font-bold 	">
-          {messageData.partialClose ? messageData.partialClose : "NA"}
+          {messageData.partialCloseValue
+            ? messageData.partialCloseValue + "%"
+            : "NA"}
         </span>
       </div>
 
