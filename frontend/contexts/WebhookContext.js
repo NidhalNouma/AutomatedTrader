@@ -51,7 +51,7 @@ export function WebhookProvider({ children }) {
                     newTrade.trade = tr;
                   } else {
                     let findHistoryTrade = account?.account?.historyData?.find(
-                      (t) => t.id === trade.tradeId
+                      (t) => t.positionId === trade.tradeId
                     );
 
                     if (findHistoryTrade) {
