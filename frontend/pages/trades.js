@@ -135,7 +135,7 @@ function TradesPage() {
                   <div className="border-primary/30 rounded-lg border-none p-2 bg-profit/[0.05]">
                     <div className="text-xs text-text/80">
                       <h6 className="font-semibold text-text">
-                        Win trades{" "}
+                        Trades won{" "}
                         <span className="text-profit text-sm">
                           {nbProfits[0].data.reduce((v, p) => v + p, 0)}
                         </span>
@@ -169,7 +169,7 @@ function TradesPage() {
                   <div className=" rounded-lg  p-2 bg-loss/[0.05]">
                     <div className="text-xs text-text/80">
                       <h6 className="font-semibold text-text">
-                        Loss trades{" "}
+                        Trades loss{" "}
                         <span className="text-loss text-sm">
                           {nbLosses[0].data.reduce((v, p) => v + p, 0)}
                         </span>
@@ -379,7 +379,7 @@ function TradesPage() {
                 )}
               </section>
 
-              <SubTitle3 className="mt-4">History calander</SubTitle3>
+              <SubTitle3 className="mt-4">History calendar</SubTitle3>
               <section className="mt-2">
                 <TradeCalander data={tradesDay} className="w-7/12i" />
               </section>

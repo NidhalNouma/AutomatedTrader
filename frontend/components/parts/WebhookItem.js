@@ -26,6 +26,7 @@ import {
   SetPublicWebhook,
   SetActiveWebhook,
   getMessageData,
+  WebhookApps as WhAppsHook,
 } from "../../hooksp/WebhooksHook";
 
 import { addAlpha, copyTextToClipboard } from "../../utils/functions";
@@ -39,6 +40,8 @@ function Index({ webhook }) {
   const { active, activateWebhook } = SetActiveWebhook(webhook);
   const { isPublic, publicWebhook } = SetPublicWebhook(webhook);
   const { deleteWebhook } = DeleteWebhook(webhook);
+
+  const { isConnected } = WhAppsHook(webhook);
 
   const [openMsg, setOpenMsg] = useState(false);
   const [openDel, setOpenDel] = useState(false);
@@ -480,6 +483,43 @@ function Index({ webhook }) {
                   </div>
                 </Fragment>
               )}
+              <div className="mt-2 ">
+                {isConnected ? (
+                  <span className="text-xs text-success bg-transparent flex items-center py-0 ">
+                    <svg
+                      className="h-4 aspect-square "
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"></path>
+                    </svg>
+                    connected
+                  </span>
+                ) : (
+                  <span className="text-xs text-error bg-transparent flex items-center py-0 ">
+                    <svg
+                      className="h-4 aspect-square "
+                      stroke="currentColor"
+                      fill="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"></path>
+                    </svg>
+                    not connected
+                    <span
+                      onClick={() => setOpenApps(true)}
+                      className="font-semibold ml-1 text-text border border-text/50 rounded cursor-pointer px-1"
+                    >
+                      connect an app
+                    </span>
+                  </span>
+                )}
+              </div>
             </div>
           </div>
         </Fragment>

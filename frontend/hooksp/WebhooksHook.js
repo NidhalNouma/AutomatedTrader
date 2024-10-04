@@ -524,6 +524,8 @@ export function WebhookApps(webhook) {
   const { mtAccounts } = useMetatrader();
   const { binanceAccounts } = useBinance();
 
+  const [isConnected, setIsConnected] = useState(false);
+
   const [error, setError] = useState("");
   const [data, setData] = useState({ metatrader: [], binance: [] });
 
@@ -579,6 +581,22 @@ export function WebhookApps(webhook) {
     setData(d);
   }, [mtAccounts, binanceAccounts]);
 
+  useEffect(() => {
+    let connect = false;
+
+    data?.metatrader?.forEach((account) => {
+      if (account.value === true) connect = true;
+    });
+
+    data?.binance?.forEach((account) => {
+      if (account.value?.spot === true) connect = true;
+      if (account.value?.usdm === true) connect = true;
+      if (account.value?.coinm === true) connect = true;
+    });
+
+    setIsConnected(connect);
+  }, [data]);
+
   const toggleAccountValue = (type, accountId, option) => {
     setData((prevData) => {
       const updatedData = { ...prevData };
@@ -606,7 +624,7 @@ export function WebhookApps(webhook) {
     return r;
   }
 
-  return { data, setData, onSave, error, toggleAccountValue };
+  return { data, setData, onSave, error, toggleAccountValue, isConnected };
 }
 
 export const SearchWebhooksByName = () => {
