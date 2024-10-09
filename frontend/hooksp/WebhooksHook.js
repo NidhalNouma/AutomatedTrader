@@ -579,7 +579,7 @@ export function WebhookApps(webhook) {
     }
 
     setData(d);
-  }, [mtAccounts, binanceAccounts]);
+  }, [mtAccounts, binanceAccounts, webhook]);
 
   useEffect(() => {
     let connect = false;

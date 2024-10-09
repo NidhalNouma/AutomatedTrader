@@ -128,8 +128,8 @@ export const pricingList = {
     "Lifetime access": {
       chargeBeeId: "Life-Time-Membership",
       advancedWebhook: true,
-      price: 1999,
-      save: 60.02,
+      price: 3750,
+      save: 25,
       metatrader: 1,
       binance: 3,
       webhooks: 100,

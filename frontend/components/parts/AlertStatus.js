@@ -383,8 +383,10 @@ function TradeDetails({ data, live }) {
         </div>
 
         <div className="flex flex-col">
-          {/* <span className="text-sm text-text/60">Pips</span>
-            <span className="text-sm text-title">{data?.pips}</span> */}
+          <span className="text-sm text-text/60">Volume</span>
+          <span className="text-sm text-title">
+            {data?.lot || data?.volume}
+          </span>
         </div>
         <div className="flex flex-col">
           <span className="text-sm text-text/60">Profit</span>
