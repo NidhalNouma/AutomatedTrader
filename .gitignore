@@ -33,3 +33,5 @@ yarn-error.log*
 .vercel
 .env
 .env.live
+
+.metaapi/

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "../ui/Button";
 
 import { UpdateUserSubscription } from "../../hooksp/UserHook";
@@ -20,7 +20,7 @@ import { MdOutlineScreenShare } from "react-icons/md";
 import { BiSupport } from "react-icons/bi";
 
 function Index({ title, value, t, setSuccess, i }) {
-  const { fullUser } = useUser();
+  const { fullUser, user } = useUser();
   const { updateSubscription } = UpdateUserSubscription();
   // const [openPM, setOpenPm] = useState(false);
   // const { openCheckout } = GetChargeBeeContext();
@@ -54,6 +54,29 @@ function Index({ title, value, t, setSuccess, i }) {
 
   const [expend, setExpend] = useState(true);
 
+  // useEffect(() => {
+
+  //   const handleMessage = (messageEvent) => {
+  //     console.log(messageEvent);
+
+  //     if (messageEvent.data === "payment-success") {
+  //       console.log("Payment was successful!");
+  //       // Add your success handling logic here
+  //     }
+
+  //     if (messageEvent.data === "payment-error") {
+  //       console.error("Payment failed!");
+  //       // Add your error handling logic here
+  //     }
+  //   };
+
+  //   window.addEventListener("message", handleMessage, false);
+
+  //   return () => {
+  //     window.removeEventListener("message", handleMessage);
+  //   };
+  // }, []);
+
   return (
     <div
       className={`w-full px-2 h-full bg-bg  rounded-lg ${
@@ -84,9 +107,12 @@ function Index({ title, value, t, setSuccess, i }) {
         )}{" "}
         {fullUser && btnText() !== "Current" ? (
           <Button
+            data-sellix-product={value.sellixId}
+            data-sellix-email={user.email}
+            type="submit"
             className="w-full max-w-xs mt-8  mx-auto"
             onClick={() => {
-              OpenCheckout(value.chargeBeeId, onSuccess);
+              // OpenCheckout(value.chargeBeeId, onSuccess);
               // setOpenPm(true);
               // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
               // Paddle.Checkout.open({

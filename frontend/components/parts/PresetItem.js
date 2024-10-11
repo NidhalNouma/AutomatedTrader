@@ -138,8 +138,9 @@ export default function PresetItem({ preset }) {
             <h6 className="text-text/80 text-xs ">
               Risk:{" "}
               <span className={`${"text-text bg-text/10"} rounded px-1`}>
-                {preset.data?.positionValuePercentage + "%" ||
+                {preset.data?.positionValuePercentage ||
                   preset.data?.positionValue}
+                {preset.data?.positionValuePercentage && "%"}
               </span>
             </h6>
           )}
