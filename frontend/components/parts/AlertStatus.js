@@ -232,8 +232,10 @@ function Apps({ apps, webhook }) {
               </span>
             )}{" "}
             &rarr;{" "}
-            {app.errorMessage ? (
-              <span className="text-error capitalize">{app.errorMessage}</span>
+            {app.errorMessage || app.trades?.errorMessage ? (
+              <span className="text-error capitalize">
+                {app.errorMessage || app.trades?.errorMessage}
+              </span>
             ) : app.tradeId ? (
               <MessageWithTrade trade={whTrade}>
                 {" "}

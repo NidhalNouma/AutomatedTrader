@@ -36,7 +36,7 @@ function NotificationsSection({ notifications }) {
           }`}
           onClick={() => setNotType(2)}
         >
-          What's new
+          What&apos;s new
         </Button_>
       </ButtonGroup>{" "}
       {notifications?.length > 0 ? (

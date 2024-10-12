@@ -526,7 +526,7 @@ function ActionDescription({ preset }) {
             </span>
           </Label2>
           <Label2 className="mt-3">
-            You're risking{" "}
+            You&apos;re risking{" "}
             <span className={`${"text-text bg-text/10"} rounded px-1`}>
               {preset.data?.positionValuePercentage + "%" ||
                 preset.data?.positionValue}

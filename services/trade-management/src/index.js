@@ -3,15 +3,20 @@ import bodyParser from "body-parser";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
 
-import { openTrade as openMTTrade } from "../lib/third/metaapi.js";
+import {
+  openTrade as openMTTrade,
+  closeTradeByWHID as closeMTTrade,
+  modifyTradeByWHID as modifyMTTrade,
+} from "../lib/third/metaapi.js";
 import { placeOrder as openBinanceTrade } from "../lib/third/binanace.js";
-import metaapiFunctions from "../lib/third/metaapiWS.cjs";
 
-const {
-  // openTrade: openMTTrade,
-  closeTradeByWHID: closeMTTrade,
-  modifyTradeByWHID: modifyMTTrade,
-} = metaapiFunctions;
+// import metaapiFunctions from "../lib/third/metaapiWS.cjs";
+
+// const {
+//   // openTrade: openMTTrade,
+//   // closeTradeByWHID: closeMTTrade,
+//   modifyTradeByWHID: modifyMTTrade,
+// } = metaapiFunctions;
 
 const app = express();
 app.use(express.json({ limit: "50mb" }));
@@ -27,6 +32,26 @@ app.use(cors());
 // });
 
 // app.use(limiter);
+
+// Middleware to calculate request duration
+app.use((req, res, next) => {
+  const start = process.hrtime();
+
+  res.on("finish", () => {
+    const end = process.hrtime(start);
+    const durationInMilliseconds = end[0] * 1e3 + end[1] / 1e6; // Convert to milliseconds
+    const seconds = Math.floor(durationInMilliseconds / 1000);
+    const milliseconds = durationInMilliseconds % 1000;
+
+    console.log(
+      `Trade Request to ${req.method} ${
+        req.url
+      } took ${seconds} sec and ${milliseconds.toFixed(3)} ms`
+    );
+  });
+
+  next();
+});
 
 app.post("/metatrader", async (req, res) => {
   const accountSrc = "metatrader";
@@ -47,7 +72,7 @@ app.post("/metatrader", async (req, res) => {
       ? "P_S_" + presetId
       : "";
 
-    console.log(messageData);
+    // console.log(messageData);
 
     if (messageData.msgType == 0) {
       console.log("Metatrader: Opening trade ... ");

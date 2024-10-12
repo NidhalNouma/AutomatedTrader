@@ -1,9 +1,15 @@
 {
-  "presets": ["@babel/preset-env"],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "node": "current"
+        }
+      }
+    ]
+  ],
   "plugins": [
-    ["module-resolver", {
-      "root": ["./"],
-      "extensions": [".js", ".jsx"]
-    }]
+    "./babel-plugin-rewrite-imports.cjs"
   ]
 }

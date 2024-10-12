@@ -54,7 +54,7 @@ jobs:
       - name: Build and push webhook-receiver
         run: |
           docker build -t gcr.io/${{ secrets.GCP_ID }}/webhook-receiver \
-            --build-arg NODE_ENV=development \
+            --build-arg NODE_ENV=production \
             --file ./services/webhook-receiver/Dockerfile \
             .
           docker push gcr.io/${{ secrets.GCP_ID }}/webhook-receiver
@@ -71,7 +71,7 @@ jobs:
       - name: Build and push trade-management
         run: |
           docker build -t gcr.io/${{ secrets.GCP_ID }}/trade-management \
-            --build-arg NODE_ENV=development \
+            --build-arg NODE_ENV=production \
             --file ./services/trade-management/Dockerfile \
             .
           docker push gcr.io/${{ secrets.GCP_ID }}/trade-management

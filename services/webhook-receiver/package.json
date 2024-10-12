@@ -5,8 +5,8 @@
   "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "build": "babel src lib utils -d dist",
-    "start": "node dist/index.js",
+    "build": "rm -rf ./dist && babel src -d dist --extensions \".js,.jsx\" && babel lib -d dist/lib --extensions \".js,.jsx\" && babel utils -d dist/utils --extensions \".js,.jsx\" && npx renamer --find \".js\" --replace \".cjs\" \"dist/**/*.js\"",
+    "start": "node dist/index.cjs",
     "dev": "nodemon --watch src --watch lib --watch utils --exec babel-node src/index.js"
   },
   "keywords": [],
@@ -29,6 +29,7 @@
     "nodemon": "^3.1.4"
   },
   "devDependencies": {
-    "babel-plugin-module-resolver": "^5.0.2"
+    "babel-plugin-module-resolver": "^5.0.2",
+    "renamer": "^5.0.2"
   }
 }

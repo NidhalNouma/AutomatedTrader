@@ -59,7 +59,7 @@ function Home() {
       <MainLayout page="home">
         <div className="">
           <SubTitle2>
-            <span className="">Welcome back</span> {fullUser.displayName}
+            <span className="">Welcome back</span> {fullUser?.displayName}
           </SubTitle2>
 
           <SubTitle3 className="!text-base mt-2 text-text/80">

@@ -110,9 +110,11 @@ export const SignOut = () => {
 
 export const ContinueWithGoogle = () => {
   const [error, setError] = useState("");
+  const router = useRouter();
 
   async function continueWithGoogleClick() {
     const r = await continueWithGoogle();
+
     if (r.user) {
       router.push("/home");
       return true;

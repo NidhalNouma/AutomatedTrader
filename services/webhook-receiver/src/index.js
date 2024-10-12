@@ -25,6 +25,26 @@ app.use(bodyParser.text({ limit: "50mb" }));
 
 // app.use(limiter);
 
+// Middleware to calculate request duration
+app.use((req, res, next) => {
+  const start = process.hrtime();
+
+  res.on("finish", () => {
+    const end = process.hrtime(start);
+    const durationInMilliseconds = end[0] * 1e3 + end[1] / 1e6; // Convert to milliseconds
+    const seconds = Math.floor(durationInMilliseconds / 1000);
+    const milliseconds = durationInMilliseconds % 1000;
+
+    console.log(
+      `Webhook Request to ${req.method} ${
+        req.url
+      } took ${seconds} sec and ${milliseconds.toFixed(3)} ms`
+    );
+  });
+
+  next();
+});
+
 async function getAccountById(accountType, id) {
   if (accountType === "metatrader") return await getMTAccount(id);
   if (accountType === "binance") return await getBinanceAccount(id);
