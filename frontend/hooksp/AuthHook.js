@@ -34,7 +34,7 @@ export const SignInHook = () => {
       return;
     }
 
-    router.push("/membership");
+    router.push("/home");
     return true;
   };
 
@@ -114,6 +114,7 @@ export const ContinueWithGoogle = () => {
   async function continueWithGoogleClick() {
     const r = await continueWithGoogle();
     if (r.user) {
+      router.push("/home");
       return true;
     }
     return false;

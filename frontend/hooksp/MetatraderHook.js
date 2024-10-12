@@ -28,8 +28,13 @@ export function AddMTAccount() {
   async function add() {
     setError("");
 
-    if (!user) {
+    if (!user?.uid) {
       setError("User is required");
+      return;
+    }
+
+    if (!type) {
+      setError("Type is required");
       return;
     }
 
