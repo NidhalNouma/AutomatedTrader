@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       // invalid webhook
     }
   } catch (e) {
-    console.error(e.message);
+    // console.error(e.message);
     return res.status(400).json({ error: e.message, headers: req.headers });
   }
 
