@@ -9,7 +9,7 @@ module.exports = function () {
         let source = path.node.source.value;
 
         // Apply the ../lib -> ./lib and ../utils -> ./utils transformation only in 'src' files
-        if (currentFile.includes("/src/")) {
+        if (currentFile.includes("/src/app/src")) {
           if (source.startsWith("../lib/")) {
             source = source.replace("../lib/", "./lib/");
           }
@@ -37,7 +37,7 @@ module.exports = function () {
           let source = path.node.arguments[0].value;
 
           // Apply the ../lib -> ./lib and ../utils -> ./utils transformation only in 'src' files
-          if (currentFile.includes("/src/")) {
+          if (currentFile.includes("/src/app/src")) {
             if (source.startsWith("../lib/")) {
               source = source.replace("../lib/", "./lib/");
             }

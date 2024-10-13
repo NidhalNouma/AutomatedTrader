@@ -41,4 +41,4 @@ RUN npm run build
 EXPOSE 4000
 
 # Define the command to run your app
-CMD [ "sh", "-c", "if [ \"$NODE_ENV\" = \"development\" ]; then npm run dev; else npm start; fi" ]
+CMD [ "sh", "-c", "if [ \"$NODE_ENV\" = \"development\" ]; then npm run dev; else npm run build && npm start; fi" ]
