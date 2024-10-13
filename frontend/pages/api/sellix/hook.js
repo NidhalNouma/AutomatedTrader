@@ -30,7 +30,7 @@ export default async function handler(req, res) {
     }
   } catch (e) {
     console.error(e.message);
-    res.status(400).json({ error: e.message, headers: req.headers });
+    return res.status(400).json({ error: e.message, headers: req.headers });
   }
 
   return res.status(200).json({ done: false });
