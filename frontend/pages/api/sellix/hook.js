@@ -6,19 +6,14 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     const payload = req.body;
 
-    const headerSignature =
-      req.headers["X-Sellix-Unescaped-Signature"] || payload?.data?.secret;
-    const event = req.headers["X-Sellix-Event"] || payload?.event;
+    const headerSignature = req.headers["x-sellix-unescaped-signature"];
+    const event = req.headers["x-aellix-event"] || payload?.event;
 
     try {
       const signature = crypto
         .createHmac("sha512", sellixSecret)
-        .update(payload?.data)
+        .update(JSON.stringify(payload))
         .digest("hex");
-
-      console.log(req.headers);
-      console.log(headerSignature);
-      console.log(event);
 
       if (
         crypto.timingSafeEqual(
@@ -27,6 +22,7 @@ export default async function handler(req, res) {
         )
       ) {
         // handle valid webhook
+        return res.status(200).json({ event });
       } else {
         // invalid webhook
       }
