@@ -24,6 +24,8 @@ export const firebaseConfig = {
   measurementId: "G-N59NRR3N6T",
 };
 
+export const sellixSecret = process.env.NEXT_PUBLIC_SELLIX_WEBHOOK_SECRET;
+
 export const landingUrl = "/"; //process.env.NEXT_PUBLIC_LANDING_URL || "/";
 
 export const telegramWebhookAPI = `https://api.telegram.org/bot${process.env.NEXT_PUBLIC_TELEGRAM_API_TOKEN}`;

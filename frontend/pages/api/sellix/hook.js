@@ -1,36 +1,41 @@
 import { updateUserData, getUserByEmail } from "../../../lib/users";
+import { sellixSecret } from "../../../utils/constant";
 import crypto from "crypto";
 
-const secret = process.env.NEXT_PUBLIC_SELLIX_WEBHOOK_SECRET;
-
 export default async function handler(req, res) {
-  const headerSignature = req.headers["X-Sellix-Unescaped-Signature"];
-  const payload = req.body;
-  const event = req.headers["X-Sellix-Event"] || payload?.event;
+  if (req.method === "POST") {
+    const payload = req.body;
 
-  const signature = crypto
-    .createHmac("sha512", secret)
-    .update(payload)
-    .digest("hex");
+    const headerSignature =
+      req.headers["X-Sellix-Unescaped-Signature"] || payload?.data?.secret;
+    const event = req.headers["X-Sellix-Event"] || payload?.event;
 
-  console.log(req.headers);
-  console.log(headerSignature);
-  console.log(event);
+    try {
+      const signature = crypto
+        .createHmac("sha512", sellixSecret)
+        .update(payload?.data)
+        .digest("hex");
 
-  try {
-    if (
-      crypto.timingSafeEqual(
-        Buffer.from(signature),
-        Buffer.from(headerSignature, "utf-8")
-      )
-    ) {
-      // handle valid webhook
-    } else {
-      // invalid webhook
+      console.log(req.headers);
+      console.log(headerSignature);
+      console.log(event);
+
+      if (
+        crypto.timingSafeEqual(
+          Buffer.from(signature),
+          Buffer.from(headerSignature, "utf-8")
+        )
+      ) {
+        // handle valid webhook
+      } else {
+        // invalid webhook
+      }
+    } catch (e) {
+      // console.error(e.message);
+      return res
+        .status(400)
+        .json({ error: e.message, headers: req.headers, data: payload });
     }
-  } catch (e) {
-    // console.error(e.message);
-    return res.status(400).json({ error: e.message, headers: req.headers });
   }
 
   return res.status(200).json({ done: false });
