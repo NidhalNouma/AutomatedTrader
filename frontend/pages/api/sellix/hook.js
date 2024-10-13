@@ -5,8 +5,8 @@ const secret = process.env.NEXT_PUBLIC_SELLIX_WEBHOOK_SECRET;
 
 export default async function handler(req, res) {
   const headerSignature = req.headers["X-Sellix-Unescaped-Signature"];
-  const event = req.headers["X-Sellix-Event"];
   const payload = req.body;
+  const event = req.headers["X-Sellix-Event"] || payload?.event;
 
   const signature = crypto
     .createHmac("sha512", secret)
