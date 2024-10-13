@@ -528,8 +528,9 @@ function ActionDescription({ preset }) {
           <Label2 className="mt-3">
             You&apos;re risking{" "}
             <span className={`${"text-text bg-text/10"} rounded px-1`}>
-              {preset.data?.positionValuePercentage + "%" ||
+              {preset.data?.positionValuePercentage ||
                 preset.data?.positionValue}
+              {preset.data?.positionValuePercentage && "%"}
             </span>
           </Label2>
           <div className="mt-2 flex items-center justify-between">

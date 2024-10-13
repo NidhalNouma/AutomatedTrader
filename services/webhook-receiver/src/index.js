@@ -57,9 +57,9 @@ app.post("/:id", async (req, res) => {
   let message = req.body;
   // console.log(message);
   if (!id) {
-    return res.status(500).send("Invalid id");
+    return res.status(400).send("Invalid id");
   }
-  if (!message) return res.status(500).send("Invalid message");
+  if (!message) return res.status(400).send("Invalid message");
 
   try {
     const webhook = await getWebhook(id);
@@ -158,7 +158,8 @@ app.post("/:id", async (req, res) => {
       return res.status(200).json(apiResponseData);
     }
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error);
+    return res.status(400).send(error.message);
   }
 });
 

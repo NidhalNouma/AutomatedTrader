@@ -58,11 +58,11 @@ app.post("/metatrader", async (req, res) => {
   try {
     const { account, messageData, openOn, webhookId, presetId } = req.body;
     if (!account || !account.id)
-      return res.status(500).send("Account not available");
-    if (!messageData) return res.status(500).send("Message data not available");
+      return res.status(400).send("Account not available");
+    if (!messageData) return res.status(400).send("Message data not available");
     // if (!openOn) return res.status(500).send("Apps not available");
     if (!webhookId && !presetId)
-      return res.status(500).send("ID not available");
+      return res.status(400).send("ID not available");
 
     console.log("Metatrader: managing trade for ", account.id);
 
@@ -140,7 +140,8 @@ app.post("/metatrader", async (req, res) => {
 
     return res.send({ res: req.body });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error);
+    return res.status(400).send(error.message);
   }
 });
 
@@ -148,10 +149,10 @@ app.post("/binance", async (req, res) => {
   const accountSrc = "binance";
   try {
     const { account, messageData, openOn, webhookId } = req.body;
-    if (!account) return res.status(500).send("Account not available");
-    if (!messageData) return res.status(500).send("Message data not available");
+    if (!account) return res.status(400).send("Account not available");
+    if (!messageData) return res.status(400).send("Message data not available");
     // if (!openOn) return res.status(500).send("Apps not available");
-    if (!webhookId) return res.status(500).send("Webhook ID not available");
+    if (!webhookId) return res.status(400).send("Webhook ID not available");
 
     console.log("Binance: managing trade for ", account.id);
 
@@ -196,7 +197,8 @@ app.post("/binance", async (req, res) => {
     }
     return res.send({ res: req.body });
   } catch (error) {
-    return res.status(500).send(error.message);
+    console.error(error);
+    return res.status(400).send(error.message);
   }
 });
 

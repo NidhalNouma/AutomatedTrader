@@ -572,7 +572,7 @@ export function WebhookApps(webhook) {
 
       bin.forEach((account) => {
         const notExist = binanceAccounts.find((a) => a.id === account.id);
-        if (!notExist) mt = bin.filter((a) => a.id !== account.id);
+        if (!notExist) bin = bin.filter((a) => a.id !== account.id);
       });
 
       d["binance"] = bin;
