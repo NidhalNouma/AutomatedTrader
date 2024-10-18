@@ -38,7 +38,7 @@ app.use((req, res, next) => {
     console.log(
       `Webhook Request to ${req.method} ${
         req.url
-      } took ${seconds} sec and ${milliseconds.toFixed(3)} ms`
+      } took ${seconds} sec and ${milliseconds.toFixed(3)} ms  (${req.body})`
     );
   });
 

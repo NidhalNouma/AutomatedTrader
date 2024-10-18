@@ -11,7 +11,7 @@ import { Player, Controls } from "@lottiefiles/react-lottie-player";
 import PricingItem from "../components/parts/PriceingItem";
 import { pricingList } from "../utils/pricing";
 
-import MegaSale1 from "../Features/Banners/MegaSale1";
+// import MegaSale1 from "../Features/Banners/MegaSale1";
 
 function Membership() {
   const router = useRouter();
@@ -38,8 +38,8 @@ function Membership() {
   return (
     <Fragment>
       <MainLayoutWithHeader title="Membership" page="membership">
-        {fullUser?.subObj?.chargeBeeId !==
-          pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale1 />}
+        {/* {fullUser?.subObj?.chargeBeeId !==
+          pricingList.lifetime["Lifetime access"].chargeBeeId && <MegaSale1 />} */}
 
         <div className="w-full flex flex-col mb-8 bg-bgt mt-8">
           <div className="flex items-center justify-between w-full max-w-md mb-6 p-3 mx-auto rounded-lg outline outline-1 outline-dashed outline-primary/40 outline-offset-4">

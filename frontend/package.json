@@ -38,6 +38,7 @@
     "recharts": "^2.12.7",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
+    "typewriter-effect": "^2.21.0",
     "video-react": "^0.16.0",
     "websocket": "^1.0.35"
   },

@@ -132,9 +132,12 @@ export function UpdatePublicProfileSettings() {
   const submit = async () => {
     setError("");
     const data = {
-      userName: userName.toLowerCase() || "",
       public: publicUser || "",
     };
+
+    if (userName && userName !== fullUser.userName)
+      data.userName = userName.toLowerCase();
+
     const r = await updateUserData(fullUser.id, data, false);
     if (r?.error) setError(r.error);
     else if (r) getFullUser(fullUser.id);

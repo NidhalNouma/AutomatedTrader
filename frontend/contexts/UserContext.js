@@ -17,12 +17,15 @@ export const UserProvider = ({ children }) => {
 
     const user = await getUser(userId);
     if (user) {
-      if (user.subscriptionId) {
-        const sub = await axios.get(
-          `/api/chargebee/get?id=${user.subscriptionId}`
+      if (user.subscriptionActive) {
+        // const sub = await axios.get(
+        //   `/api/chargebee/get?id=${user.subscriptionId}`
+        // );
+        // user.subscription = sub.data;
+        user.hasAccessTo = getPlanById(
+          user.subscriptionPID,
+          user.lifetimeAccess
         );
-        user.subscription = sub.data;
-        user.hasAccessTo = getPlanById(sub.data, user.lifetimeAccess);
         // console.log(user, "access User ....");
         // user.hasAccessTo = null;
       } else if (user.lifetimeAccess) {
@@ -36,6 +39,8 @@ export const UserProvider = ({ children }) => {
       //   }
       // }
     }
+
+    console.log(user);
 
     setFullUser(user);
     if (onComplete) onComplete();

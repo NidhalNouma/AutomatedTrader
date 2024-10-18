@@ -1,17 +1,15 @@
 import { useState, useEffect, Fragment, useRef } from "react";
-import Sidenav from "../../Features/SideNav";
-import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
-import Index, { Step } from "../../Features/Docs/index";
-import Side from "../../Features/Docs/Side";
+
+import DocsLayout from "../../components/layout/DocsLayout";
 
 import { H1, H5, H4 } from "../../components/H";
 
 function Roadmap() {
   return (
-    <>
-      <Sidenav cpath="help" />
-      <MainWithHeader mainClassName="!overflow-x-clip">
-        <H1>Documentation</H1>
+    <Fragment>
+      <DocsLayout title="Road map" docPage="roadmap"></DocsLayout>
+
+      {/* <H1>Documentation</H1>
         <div className="mt-6 flex">
           <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
             <Side ty={3} />
@@ -136,9 +134,8 @@ function Roadmap() {
               </p>
             </Index>
           </div>
-        </div>
-      </MainWithHeader>
-    </>
+        </div> */}
+    </Fragment>
   );
 }
 

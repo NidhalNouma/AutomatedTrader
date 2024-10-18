@@ -7,15 +7,15 @@ function Section5() {
   return (
     <section className="flex-col items-center justify-center">
       <div className="max-w-5xl mt-[15vh] pb-10 mx-auto flex-col flex">
-        <h1 className="text-80 text-center font-bold text-text-h mb-3 ">
+        <h1 className="text-80 text-center font-bold text-title mb-3 ">
           Copy & Share Trader
         </h1>
-        <h2 className="text-xl font-semibold pb-0 text-text-p text-center">
+        <h2 className="text-xl font-semibold pb-0 text-text text-center">
           Passive investing handsfree, just find a profitable trading solution
           that works for you. We show you all the users public data so you can
           know exactly what to expect when following a signal provider!
         </h2>
-        <spam className="mx-auto text-lg mt-6 font-semibold text-text-h px-6 bg-secondary rounded-full ">
+        <spam className="mx-auto text-lg mt-6 font-semibold text-title px-6 bg-secondary rounded-full ">
           Coming soon
         </spam>
       </div>

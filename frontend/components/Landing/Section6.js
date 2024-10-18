@@ -6,10 +6,10 @@ function Section6() {
   return (
     <section className="flex flex-col items-center justify-center">
       <div className="max-w-5xl mt-[20vh] pb-10 mx-auto flex-col flex">
-        <h1 className="text-80 text-center font-bold text-text-h mb-3 ">
+        <h1 className="text-80 text-center font-bold text-title mb-3 ">
           Hear from them
         </h1>
-        <h2 className="text-xl font-semibold pb-0 text-text-p text-center">
+        <h2 className="text-xl font-semibold pb-0 text-text text-center">
           As a leading trading software company, we engage with our clients
           beyond the conventional relationship,
           <br /> becoming a partner to the people and companies we work with.
@@ -51,7 +51,7 @@ export default Section6;
 
 function Part({ className, name, children, img }) {
   return (
-    <div className={`${className} rounded-xl bg-bga shadow-lg p-4`}>
+    <div className={`${className} rounded-xl bg-bg shadow-lg p-4`}>
       <div className="">
         <div className="flex items-center mb-4">
           <img
@@ -59,9 +59,9 @@ function Part({ className, name, children, img }) {
             src={img}
             alt="Picture of the author"
           />
-          <h3 className="text-text-h font-semibold">{name}</h3>
+          <h3 className="text-title/80 font-semibold">{name}</h3>
         </div>
-        <p className="text-text-p">{children}</p>
+        <p className="text-text/80">{children}</p>
       </div>
     </div>
   );

@@ -1,24 +1,21 @@
 import { Fragment, useState } from "react";
 import { useRouter } from "next/router";
-import Sidenav from "../Features/SideNav";
-import MainWithHeader from "../Features/mainLayout/MainWithHeader";
 
 import { Player, Controls } from "@lottiefiles/react-lottie-player";
 
-import Pricing from "../Features/Pricing";
 import { H1, Hi4 } from "../components/H";
 import { ButtonGroup, Button } from "react-daisyui";
 
-// import PaddleLoader from "../Features/Paddle";
-import { GetFullUserContext } from "../hooks/UserHook";
-
 import { GiPrimitiveTorch } from "react-icons/gi";
+
 import { AiTwotoneFire } from "react-icons/ai";
 import { pricingList } from "../utils/pricing";
 
-import { SignOut } from "../hooks/SignHook";
+// import { SignOut } from "../hooks/SignHook";
+// import { GetFullUserContext } from "../hooks/UserHook";
+// import PaddleLoader from "../Features/Paddle";
 
-import MegaSale1 from "../Features/Banners/MegaSale1";
+// import MegaSale1 from "../Features/Banners/MegaSale1";
 
 export default function Membership() {
   const router = useRouter();
@@ -43,8 +40,8 @@ export default function Membership() {
   const { fullUser } = GetFullUserContext();
 
   return (
-    <>
-      {success && <Sidenav cpath="membership" />}
+    <Fragment>
+      {/* {success && <Sidenav cpath="membership" />}
       <MainWithHeader withBanners={false} header={success}>
         <div className="mt-4 max-w-6xl mx-auto">
           {success ? (
@@ -166,8 +163,8 @@ export default function Membership() {
         </div>
       </MainWithHeader>
 
-      {/* <PaddleLoader /> */}
-    </>
+    */}
+    </Fragment>
   );
 }
 

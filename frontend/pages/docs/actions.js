@@ -1,16 +1,14 @@
-import Sidenav from "../../Features/SideNav";
-import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
+import { Fragment } from "react";
 
-import { H1, Hi6, H4 } from "../../components/H";
+import DocsLayout from "../../components/layout/DocsLayout";
+import { Par, SubTitle3 } from "../../components/ui/Text";
 
 export default function Actions() {
   return (
-    <>
-      <Sidenav cpath="actions" />
-      <MainWithHeader>
-        <H1>Actions</H1>
+    <Fragment>
+      <DocsLayout title="Actions" docPage="actions">
         <div className="mt-6">
-          <Hi6>
+          <h2>
             There are many variations of passages of Lorem Ipsum available, but
             the majority have suffered alteration in some form, by injected
             humour, or randomised words which dont look even slightly
@@ -22,7 +20,7 @@ export default function Actions() {
             which dont look even slightly believable. If you are going to use a
             passage of Lorem Ipsum, you need to be sure there isnt anything
             embarrassing hidden in the middle of text. All the Lorem Ipsum{" "}
-          </Hi6>
+          </h2>
         </div>
         <div className="px-6 py-3 bg-bga mt-4 rounded-xl">
           <Index index="-P" text="" />
@@ -47,21 +45,21 @@ export default function Actions() {
           <Index index="-MXp" text="" />
           <Index index="-MXl" text="" />
         </div>
-      </MainWithHeader>
-    </>
+      </DocsLayout>
+    </Fragment>
   );
 }
 
 const Index = ({ index, text }) => {
   return (
     <div className="my-2">
-      <H4 className="inline">{index} :</H4>
+      <h3 className="inline">{index} :</h3>
 
-      <Hi6 className="ml-2 inline">
+      <p className="ml-2 inline">
         {text}
         There are many variations of passages of Lorem Ipsum available, but the
         majority have suffered alteration in some form,
-      </Hi6>
+      </p>
     </div>
   );
 };

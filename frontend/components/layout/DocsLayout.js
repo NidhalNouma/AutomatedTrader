@@ -36,15 +36,60 @@ export default function DocsLayout({
         >
           Webhooks
         </ButtonText>
-        <ButtonText className={linkCss("trades")}>Trades</ButtonText>
-        <ButtonText className={linkCss("alerts")}>Alerts</ButtonText>
-        <ButtonText className={linkCss("metatrader")}>Metatrader</ButtonText>
-        <ButtonText className={linkCss("binance")}>Binance</ButtonText>
-        <ButtonText className={linkCss("bitget")}>Bitget</ButtonText>
-        <ButtonText className={linkCss("telegram")}>Telegram</ButtonText>
-        <ButtonText className={linkCss("actions")}>Actions</ButtonText>
-        <ButtonText className={linkCss("f&q")}>F&Q</ButtonText>
-        <ButtonText className={linkCss("contact")}>Contact us</ButtonText>
+        <ButtonText
+          className={linkCss("trades")}
+          onClick={() => router.push("/docs/trades")}
+        >
+          Trades
+        </ButtonText>
+        <ButtonText
+          className={linkCss("alerts")}
+          onClick={() => router.push("/docs/alerts")}
+        >
+          Alerts
+        </ButtonText>
+        <ButtonText
+          className={linkCss("metatrader")}
+          onClick={() => router.push("/docs/metatrader")}
+        >
+          Metatrader
+        </ButtonText>
+        <ButtonText
+          className={linkCss("binance")}
+          onClick={() => router.push("/docs/binance")}
+        >
+          Binance
+        </ButtonText>
+        <ButtonText
+          className={linkCss("bitget")}
+          onClick={() => router.push("/docs/bitget")}
+        >
+          Bitget
+        </ButtonText>
+        <ButtonText
+          className={linkCss("telegram")}
+          onClick={() => router.push("/docs/telegram")}
+        >
+          Telegram
+        </ButtonText>
+        <ButtonText
+          className={linkCss("actions")}
+          onClick={() => router.push("/docs/actions")}
+        >
+          Actions
+        </ButtonText>
+        <ButtonText
+          className={linkCss("f&q")}
+          onClick={() => router.push("/docs/f&q")}
+        >
+          F&Q
+        </ButtonText>
+        <ButtonText
+          className={linkCss("contact")}
+          onClick={() => router.push("/docs/contact")}
+        >
+          Contact us
+        </ButtonText>
       </ScrollableButtons>
 
       <section className="mt-4 flex items-start justify-center gap-8">

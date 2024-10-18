@@ -51,7 +51,7 @@ function Profile() {
           </div>
         }
       >
-        <ProfilePage fullUser={fullUser} webhooks={webhooks} />
+        <ProfilePage fullUser={fullUser} webhooks={webhooks} mine={true} />
       </MainLayoutWithHeader>
     </Fragment>
   );
@@ -59,12 +59,12 @@ function Profile() {
 
 export default withAuth(Profile);
 
-export function ProfilePage({ fullUser, webhooks }) {
+export function ProfilePage({ fullUser, webhooks, mine }) {
   return fullUser === null ? (
     <Fragment>
       <Error className="max-w-sm mx-auto mt-6">User not availble!</Error>
     </Fragment>
-  ) : typeof fullUser === "object" && !fullUser.public ? (
+  ) : typeof fullUser === "object" && !fullUser.public && !mine ? (
     <Fragment>
       <Error className="max-w-sm mx-auto mt-6">User is not public!</Error>
     </Fragment>

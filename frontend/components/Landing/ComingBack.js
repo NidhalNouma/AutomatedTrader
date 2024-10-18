@@ -19,7 +19,7 @@ function ComingBack() {
   useEffect(() => {
     const interval = setInterval(() => {
       setChangeText((v) => (v > 3 ? 0 : v + 1));
-    }, 1500);
+    }, 2500);
     return () => {
       clearInterval(interval);
     };
@@ -27,15 +27,34 @@ function ComingBack() {
 
   return (
     <section className="flex-col items-center justify-center max-h-[120vh] overflow-hidden">
-      <div className="max-w-5xl mt-[20vh] pb-16 mx-auto">
+      <div className="max-w-5xl mt-[16vh] pb-16 mx-auto">
         <h1
           data-aos="fade-up"
           data-aos-duration="1000"
           data-aos-delay="200"
-          className="text-8xl text-center font-bold text-title mb-6"
+          className="text-8xl text-center font-bold text-title mb-2"
         >
-          We are coming back soon
+          Automate your
+          {changeText === 0 ? (
+            <FlippingText text={"Trades"} />
+          ) : changeText === 1 ? (
+            <FlippingText text={"Alerts"} />
+          ) : changeText === 2 ? (
+            <FlippingText text={"TradingView"} />
+          ) : changeText === 3 ? (
+            <FlippingText text={"Indicators"} />
+          ) : (
+            <FlippingText text={"Strategies"} />
+          )}
         </h1>
+        <h2
+          data-aos="fade-up"
+          data-aos-duration="1000"
+          data-aos-delay="200"
+          className="text-lg font-4 font-semibold pb-6 text-text text-center"
+        >
+          The easiest way to automate your ALL your trades even the manual ones!
+        </h2>
         <div
           data-aos="fade-up"
           data-aos-duration="1000"
@@ -47,7 +66,7 @@ function ComingBack() {
               <div className="absolute inset-0 -z-10 w-full h-full rounded-lg  bg-gradient-to-tr from-primary to-secondary aspect-square  scale-110 blur-sm"></div>
               <div className="flex text-lg">
                 <span className="flex justify-center items-center">
-                  Get Notified
+                  Get Started
                   <ArrowSmRightIcon className="ml-[0.5rem] h-6 w-7" />
                 </span>
               </div>
@@ -85,3 +104,11 @@ function ComingBack() {
 }
 
 export default ComingBack;
+
+function FlippingText({ text }) {
+  return (
+    <h1 className="py-0 font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent">
+      {text}
+    </h1>
+  );
+}

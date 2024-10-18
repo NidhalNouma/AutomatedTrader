@@ -1,8 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from "react";
-import Sidenav from "../../Features/SideNav";
-import MainWithHeader from "../../Features/mainLayout/MainWithHeader";
-import Index, { Step } from "../../Features/Docs/index";
-import Side from "../../Features/Docs/Side";
+
+import DocsLayout from "../../components/layout/DocsLayout";
 
 import { H1, H5, H4 } from "../../components/H";
 
@@ -19,9 +17,10 @@ function Metatrader() {
   }, []);
 
   return (
-    <>
-      <Sidenav cpath="help" />
-      <MainWithHeader mainClassName="!overflow-x-clip">
+    <Fragment>
+      <DocsLayout title="Metatrader" docPage="metatrader"></DocsLayout>
+
+      {/* <MainWithHeader mainClassName="!overflow-x-clip">
         <H1>Documentation</H1>
         <div className="mt-6 flex">
           <div className="sticky top-20 sm:top-[5.5rem] h-[50vh]">
@@ -163,61 +162,61 @@ function Metatrader() {
             </Index>
           </div>
         </div>
-      </MainWithHeader>
-    </>
+      </MainWithHeader> */}
+    </Fragment>
   );
 }
 
 export default Metatrader;
 
-function AddingWebhookToMT4() {
-  return (
-    <Fragment>
-      <div className="flex items-center mt-6 mb-3">
-        <H4 className="font-bold ">Adding webhook to MT4 </H4>
-        <PlayVideoPopup src={videosUrls.metatraderAddWebhooks} pulse={true} />
-      </div>
+// function AddingWebhookToMT4() {
+//   return (
+//     <Fragment>
+//       <div className="flex items-center mt-6 mb-3">
+//         <H4 className="font-bold ">Adding webhook to MT4 </H4>
+//         <PlayVideoPopup src={videosUrls.metatraderAddWebhooks} pulse={true} />
+//       </div>
 
-      <p className="mt-3 text-text-p text-sm">
-        If you have already set up webhooks on your Automated Trader and
-        TradingView platforms, adding them to your MT4 account is a
-        straightforward process. Here&apos;s a step-by-step guide to help you
-        get started:
-        <br />
-        <br />
-        <Step
-          num={1}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover.jpg?alt=media&token=f605d4ff-515f-4101-aca5-d640946260c7"
-        >
-          Access the MT4 apps menu and select the account you want to attach the
-          webhooks to. This can be done by clicking on the three dots beside the
-          account name.
-        </Step>
-        <Step
-          num={2}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(2).jpg?alt=media&token=0cc7d047-13b9-490b-9804-c9fda666fb11"
-        >
-          Next, select &quot;Webhooks&quot; from the available options. This
-          will bring up a list of available webhooks that you can use to execute
-          trades on your MT4 account.
-        </Step>
-        <Step
-          num={3}
-          imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(3).jpg?alt=media&token=ac04e6a3-3069-482e-a54a-d5d5775ff5ae"
-        >
-          Toggle on the webhooks that you want to use on your trading account.
-          Make sure to select only the webhooks that you trust and that are
-          compatible with your trading strategy.
-        </Step>
-        <Step num={4} imgSrc="">
-          Once you have selected the webhooks you want to use, you&apos;re all
-          set! You will now start receiving trades on your MT4 account through
-          the webhooks you have enabled.
-        </Step>
-        By following these simple steps, you can easily integrate your webhooks
-        from Automated Trader and TradingView to your MT4 account, allowing you
-        to receive trades and stay on top of your trading strategy with ease.
-      </p>
-    </Fragment>
-  );
-}
+//       <p className="mt-3 text-text-p text-sm">
+//         If you have already set up webhooks on your Automated Trader and
+//         TradingView platforms, adding them to your MT4 account is a
+//         straightforward process. Here&apos;s a step-by-step guide to help you
+//         get started:
+//         <br />
+//         <br />
+//         <Step
+//           num={1}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover.jpg?alt=media&token=f605d4ff-515f-4101-aca5-d640946260c7"
+//         >
+//           Access the MT4 apps menu and select the account you want to attach the
+//           webhooks to. This can be done by clicking on the three dots beside the
+//           account name.
+//         </Step>
+//         <Step
+//           num={2}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(2).jpg?alt=media&token=0cc7d047-13b9-490b-9804-c9fda666fb11"
+//         >
+//           Next, select &quot;Webhooks&quot; from the available options. This
+//           will bring up a list of available webhooks that you can use to execute
+//           trades on your MT4 account.
+//         </Step>
+//         <Step
+//           num={3}
+//           imgSrc="https://firebasestorage.googleapis.com/v0/b/automated-trader-fd733.appspot.com/o/Docs%2FMetatrader%2FwebhookInMt%2FCover%20(3).jpg?alt=media&token=ac04e6a3-3069-482e-a54a-d5d5775ff5ae"
+//         >
+//           Toggle on the webhooks that you want to use on your trading account.
+//           Make sure to select only the webhooks that you trust and that are
+//           compatible with your trading strategy.
+//         </Step>
+//         <Step num={4} imgSrc="">
+//           Once you have selected the webhooks you want to use, you&apos;re all
+//           set! You will now start receiving trades on your MT4 account through
+//           the webhooks you have enabled.
+//         </Step>
+//         By following these simple steps, you can easily integrate your webhooks
+//         from Automated Trader and TradingView to your MT4 account, allowing you
+//         to receive trades and stay on top of your trading strategy with ease.
+//       </p>
+//     </Fragment>
+//   );
+// }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { Button } from "../ui/Button";
 
 import { UpdateUserSubscription } from "../../hooksp/UserHook";
@@ -22,6 +23,7 @@ import { BiSupport } from "react-icons/bi";
 function Index({ title, value, t, setSuccess, i }) {
   const { fullUser, user } = useUser();
   const { updateSubscription } = UpdateUserSubscription();
+  const router = useRouter();
   // const [openPM, setOpenPm] = useState(false);
   // const { openCheckout } = GetChargeBeeContext();
 
@@ -107,18 +109,13 @@ function Index({ title, value, t, setSuccess, i }) {
         )}{" "}
         {fullUser && btnText() !== "Current" ? (
           <Button
-            data-sellix-product={value.sellixId}
-            data-sellix-email={user.email}
-            type="submit"
+            // data-sellix-product={value.sellixId}
+            // data-sellix-email={user.email}
             className="w-full max-w-xs mt-8  mx-auto"
             onClick={() => {
-              // OpenCheckout(value.chargeBeeId, onSuccess);
-              // setOpenPm(true);
-              // console.log(Number(process.env.NEXT_PUBLIC_PADDLE_VENDOR));
-              // Paddle.Checkout.open({
-              //   product: value.paddleId,
-              //   email: user?.email,
-              // });
+              const btn = document.getElementById("sellix" + value.sellixId);
+              btn.setAttribute("data-sellix-email", user.email);
+              btn.click();
             }}
           >
             {btnText()}
@@ -128,9 +125,17 @@ function Index({ title, value, t, setSuccess, i }) {
             Current Membership
           </span>
         ) : (
-          <span className="mt-8 w-full text-text font-bold text-center">
-            One sec
-          </span>
+          <Button
+            className="w-full max-w-xs mt-8  mx-auto"
+            onClick={() => {
+              router.push("/signup");
+              // const btn = document.getElementById("sellix" + value.sellixId);
+              // btn.setAttribute("data-sellix-email", "");
+              // btn.click();
+            }}
+          >
+            Select
+          </Button>
         )}
         <div className="mx-0 my-4 bg-bga pt-1 rounded-full" />
         {expend && (

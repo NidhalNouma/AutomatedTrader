@@ -15,18 +15,9 @@ import { MetatraderProvider } from "../contexts/MetatraderContext";
 import { BinanceProvider } from "../contexts/BinanceContext";
 import { TelegramProvider } from "../contexts/TelegramContext";
 
-import { landingUrl } from "../utils/constant";
-
-import { AlertsCC, GetAlerts } from "../hooks/AlertsHook";
-import { ToastCC, ToastHook } from "../hooks/ToastHook";
-import NewAlertPopUp from "../Features/AlertsCom/NewAlertModal";
-import IntercomSupport from "../Features/IntercomSupporrt";
+import { pricingList } from "../utils/pricing";
 
 function MyApp({ Component, pageProps }) {
-  const { getAllAlertsHook, alertsHook, newAlerts, setNewAlert } = GetAlerts();
-
-  const { alerts, setAlerts, newAlert } = ToastHook();
-
   return (
     <Fragment>
       {/* <Chargebee> */}
@@ -55,15 +46,15 @@ function MyApp({ Component, pageProps }) {
         <ThemeProvider>
           <UserProvider>
             <Main>
-              <ToastCC value={{ newAlert }}>
-                <AlertsCC value={{ alertsHook }}>
-                  <Component {...pageProps} />
-                  <NewAlertPopUp
+              {/* <ToastCC value={{ newAlert }}>
+                <AlertsCC value={{ alertsHook }}> */}
+              <Component {...pageProps} />
+              {/* <NewAlertPopUp
                     newAlert={newAlerts}
                     setNewAlert={setNewAlert}
-                  />
-                </AlertsCC>
-              </ToastCC>
+                  /> */}
+              {/* </AlertsCC>
+              </ToastCC> */}
             </Main>
           </UserProvider>
         </ThemeProvider>
@@ -158,7 +149,27 @@ function Chargebee({ children }) {
 
 function Sellix({ children }) {
   const [load, setLoad] = useState(false);
-  // const { setChargeBee } = GetChargeBeeContext();
+
+  const renderButtons = (pricingList) => {
+    // Loop over each period (monthly, annual, lifetime)
+    Object.entries(pricingList).forEach(([period, plans]) => {
+      // Loop over each plan
+      Object.entries(plans).forEach(([planName, details]) => {
+        // Create a new button element
+        const button = document.createElement("button");
+
+        // Set button attributes and properties
+        button.id = "sellix" + details.sellixId;
+        button.setAttribute("data-sellix-product", details.sellixId);
+        button.className = "hidden";
+        button.type = "submit";
+        button.innerText = `${planName} (${period} - $${details.price})`;
+
+        // Append the button to the body
+        document.body.appendChild(button);
+      });
+    });
+  };
 
   return (
     <Fragment>
@@ -167,6 +178,7 @@ function Sellix({ children }) {
         onLoad={() => {
           window?.initializeSellixEmbed();
           setLoad(true);
+          renderButtons(pricingList);
         }}
         onError={(e) => {
           console.log("Error getting sellix instance ...", e);
@@ -174,6 +186,119 @@ function Sellix({ children }) {
         }}
       ></Script>
       {load && children}
+    </Fragment>
+  );
+}
+
+function IntercomSupport({ user }) {
+  useEffect(() => {
+    if (user) {
+      window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "erbaop8g",
+        name: user?.displayName, // Full name
+        email: user?.email, // Email address
+        // created_at: user?.created_at?.seconds, // Signup date as a Unix timestamp
+
+        user_id: user.id,
+      };
+
+      (function () {
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+          ic("reattach_activator");
+          ic("update", w.intercomSettings);
+        } else {
+          var d = document;
+          var i = function () {
+            i.c(arguments);
+          };
+          i.q = [];
+          i.c = function (args) {
+            i.q.push(args);
+          };
+          w.Intercom = i;
+          var l = function () {
+            var s = d.createElement("script");
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = "https://widget.intercom.io/widget/erbaop8g";
+            var x = d.getElementsByTagName("script")[0];
+            x.parentNode.insertBefore(s, x);
+          };
+          if (document.readyState === "complete") {
+            l();
+          } else if (w.attachEvent) {
+            w.attachEvent("onload", l);
+          } else {
+            w.addEventListener("load", l, false);
+          }
+        }
+      })();
+    }
+    // console.log("Intercom ", user, window.intercom);
+  }, [user]);
+
+  return (
+    <Fragment>
+      {/* {!user ? (
+        <Fragment>
+          <Script
+            onLoad={() => {
+              window.intercomSettings = {
+                api_base: "https://api-iam.intercom.io",
+                app_id: "erbaop8g",
+                name: user.displayName, // Full name
+                email: user.email, // Email address
+                created_at: user.created_at?.seconds, // Signup date as a Unix timestamp
+              };
+
+              console.log("Intercome: ", window.intercomSettings);
+            }}
+          />
+
+          <Script
+            onLoad={() => {
+              (function () {
+                var w = window;
+                var ic = w.Intercom;
+                if (typeof ic === "function") {
+                  ic("reattach_activator");
+                  ic("update", w.intercomSettings);
+                } else {
+                  var d = document;
+                  var i = function () {
+                    i.c(arguments);
+                  };
+                  i.q = [];
+                  i.c = function (args) {
+                    i.q.push(args);
+                  };
+                  w.Intercom = i;
+                  var l = function () {
+                    var s = d.createElement("script");
+                    s.type = "text/javascript";
+                    s.async = true;
+                    s.src = "https://widget.intercom.io/widget/erbaop8g";
+                    var x = d.getElementsByTagName("script")[0];
+                    x.parentNode.insertBefore(s, x);
+                  };
+                  if (document.readyState === "complete") {
+                    l();
+                  } else if (w.attachEvent) {
+                    w.attachEvent("onload", l);
+                  } else {
+                    w.addEventListener("load", l, false);
+                  }
+                }
+              })();
+            }}
+          />
+        </Fragment>
+      ) : (
+        <Fragment></Fragment>
+      )} */}
     </Fragment>
   );
 }

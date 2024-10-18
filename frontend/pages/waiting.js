@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { withAuth } from "../contexts/UserContext";
 import { useRouter } from "next/router";
-import { SignOut } from "../hooks/SignHook";
+// import { SignOut } from "../hooks/SignHook";
 
 function Waiting() {
   const router = useRouter();
@@ -24,7 +24,7 @@ function Waiting() {
           <button
             className="text-text underline hover:text-text-h"
             onClick={async () => {
-              await SignOut();
+              // await SignOut();
               router.push("/");
             }}
           >

@@ -1,5 +1,5 @@
 import { updateUserData, getUserByEmail } from "../../../lib/users";
-import { pricingList, getPriceBySellixId } from "../../../utils/pricing";
+import { getPlanById } from "../../../utils/pricing";
 import { sellixSecret } from "../../../utils/constant";
 import crypto from "crypto";
 
@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const payload = req.body;
 
     const headerSignature = req.headers["x-sellix-unescaped-signature"];
-    const event = req.headers["x-aellix-event"] || payload?.event;
+    const event = req.headers["x-sellix-event"] || payload?.event;
 
     try {
       const signature = crypto
@@ -25,7 +25,9 @@ export default async function handler(req, res) {
         let data = payload.data;
         // handle valid webhook
 
-        const price = getPriceBySellixId(data.product_id);
+        const price = getPlanById(data.product_id);
+
+        console.log("Handeling request payload: ", price.planName);
 
         if (event === "order:paid") {
           if (price && price.planName === "Lifetime access")
@@ -49,6 +51,7 @@ export default async function handler(req, res) {
                   {
                     subscriptionName: price.planName,
                     subscriptionActive: true,
+                    subscriptionPID: data.product_id,
                   },
                   false
                 );
@@ -80,6 +83,12 @@ export default async function handler(req, res) {
         return res.status(200).json({ event });
       } else {
         // invalid webhook
+
+        return res.status(400).json({
+          error: "invalid webook",
+          headers: req.headers,
+          data: payload,
+        });
       }
     } catch (e) {
       // console.error(e.message);
@@ -89,5 +98,7 @@ export default async function handler(req, res) {
     }
   }
 
-  return res.status(200).json({ done: false });
+  return res
+    .status(200)
+    .json({ done: false, method: req.method, headers: req.headers });
 }

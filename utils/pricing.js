@@ -169,12 +169,14 @@ export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
 
   if (!subscription) return r;
 
-  if (subscription.subscription_items?.length > 0) {
-    id = subscription?.subscription_items[0].item_price_id;
-  }
+  id = subscription;
 
-  if (!id) return r;
-  if (subscription.status !== "active") return r;
+  // if (subscription.subscription_items?.length > 0) {
+  //   id = subscription?.subscription_items[0].item_price_id;
+  // }
+
+  // if (!id) return r;
+  // if (subscription.status !== "active") return r;
 
   // console.log(subscription, id);
 
@@ -183,8 +185,8 @@ export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
   const keys = Object.keys(m);
   for (let i = 0; i < keys.length; i++) {
     const data = m[keys[i]];
-    if (id === data.chargeBeeId) {
-      r = { ...data, name: keys[i], no: i, time: "mo" };
+    if (id === data.chargeBeeId || id === data.sellixId) {
+      r = { ...data, planName: keys[i], name: keys[i], no: i, time: "mo" };
     }
   }
 
@@ -193,14 +195,19 @@ export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
   const keyy = Object.keys(y);
   for (let i = 0; i < keyy.length; i++) {
     const data = y[keyy[i]];
-    if (id === data.chargeBeeId) {
-      r = { ...data, name: keyy[i], no: i, time: "yearly" };
+    if (id === data.chargeBeeId || id === data.sellixId) {
+      r = { ...data, planName: keyy[i], name: keyy[i], no: i, time: "yearly" };
     }
   }
 
-  if (id === pricingList.lifetime["Lifetime access"].chargeBeeId) {
+  if (
+    id === pricingList.lifetime["Lifetime access"].chargeBeeId ||
+    id === pricingList.lifetime["Lifetime access"].sellixId
+  ) {
     r = {
       ...pricingList.lifetime["Lifetime access"],
+
+      planName: "Lifetime access",
       name: "Lifetime",
       no: 0,
       time: "lifetime",
@@ -208,20 +215,4 @@ export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
   }
 
   return r;
-}
-
-export function getPriceBySellixId(id) {
-  for (const period in pricingList) {
-    const plans = pricingList[period];
-
-    // Iterate over each plan inside that period
-    for (const plan in plans) {
-      if (plans[plan].sellixId === sellixId) {
-        // Return the matching price object along with the plan name
-        return { planName: plan, ...plans[plan] };
-      }
-    }
-  }
-
-  return null;
 }
