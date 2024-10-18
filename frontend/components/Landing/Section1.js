@@ -21,7 +21,7 @@ function Section1() {
   const { theme } = useTheme();
 
   return (
-    <section className="flex-col items-center justify-center max-h-[120vh] ">
+    <section className="flex-col items-center justify-center max-h-[120vh] z-10">
       <div className="max-w-5xl mt-[16vh] pb-12 mx-auto px-3">
         <h1
           data-aos="fade-up"
@@ -83,10 +83,10 @@ function Section1() {
         data-aos-delay="300"
         className="hidden sm:flex relative container flex-col mt-16 items-center justify-center mx-auto max-h-[40rem]"
       >
-        <div className="absolute top-[0%] left-[55%] rounded-full  bg-gradient-to-tr from-primary/60 to-secondary/50 w-[32%] aspect-square rotate-90 scale-150 blur-[80px] "></div>
-        <div className="absolute top-[0%] right-[55%] rounded-full  bg-gradient-to-tr from-primary/60 to-secondary/50 w-[32%] aspect-square rotate-90 scale-150 blur-[80px]"></div>
+        <div className="absolute top-[0%] left-[55%] rounded-full  bg-gradient-to-tr from-primary/60 to-secondary/50 w-[32%] aspect-square rotate-90 -z-10 scale-150 blur-[80px] "></div>
+        <div className="absolute top-[0%] right-[55%] rounded-full  bg-gradient-to-tr from-primary/60 to-secondary/50 w-[32%] aspect-square rotate-90 -z-10 scale-150 blur-[80px]"></div>
         <img
-          className="object-cover aspect-auto w-full mb-10 mt-12 2xl:mt-36 rounded-lg border-0 z-0 overflow-hiddeni"
+          className="object-cover aspect-auto w-full mb-10 mt-12 2xl:mt-36 rounded-lg border-0 -z-[1] overflow-hiddeni"
           alt="Placeholder Image"
           src={
             theme === "light"

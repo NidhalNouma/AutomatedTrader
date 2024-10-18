@@ -7,10 +7,10 @@ function Section4() {
   return (
     <section className="flex-col items-center justify-center">
       <div className="max-w-[90%] mt-[16vh] pb-32 mx-auto">
-        <h1 className="text-4xl text-center font-bold text-title mb-0">
+        <h1 className="text-4xl text-center font-bold text-title mb-2">
           Compatible With Your Favorite
         </h1>
-        <h1 className="text-80 text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent mb-6">
+        <h1 className="md:text-7xl text-5xl text-center font-bold text-transparent bg-clip-text bg-gradient-to-tr from-primary to-accent mb-6">
           Brokers And Prop Firms
         </h1>
         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-8 gap-0 mt-16 items-start justify-between w-full">

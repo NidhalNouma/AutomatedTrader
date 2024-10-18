@@ -6,7 +6,7 @@ function Section6() {
   return (
     <section className="flex flex-col items-center justify-center">
       <div className="max-w-5xl mt-[20vh] pb-10 mx-auto flex-col flex">
-        <h1 className="text-80 text-center font-bold text-title mb-3 ">
+        <h1 className="md:text-7xl text-5xl text-center font-bold text-title mb-3 ">
           Hear from them
         </h1>
         <h2 className="text-xl font-semibold pb-0 text-text text-center">

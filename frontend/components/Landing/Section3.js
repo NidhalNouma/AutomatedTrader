@@ -4,9 +4,9 @@ import React from "react";
 
 function Section3() {
   return (
-    <section className="flex-col items-center justify-center">
+    <section className="flex-col items-center justify-center bg-bgt pt-1">
       <div className="max-w-[90%] mt-[16vh] pb-32 mx-auto">
-        <h1 className="text-80 text-center font-4 lh-6 ld-04 font-bold text-title mb-6">
+        <h1 className="md:text-7xl text-5xl text-center font-bold text-title mb-6">
           How it works
         </h1>
         <h2 className="text-xl font-4 font-semibold lh-6 ld-04 pb-11 text-text text-center">
