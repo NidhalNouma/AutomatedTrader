@@ -73,7 +73,7 @@ app.post("/:id", async (req, res) => {
         webhook.advanced && webhook.fixedLotSize ? webhook.fixedLotSize : null
       );
 
-      if (!messageData.isValid)
+      if (!messageData?.isValid)
         return res.status(200).send("Message is not valid");
 
       const apps = webhook.apps;

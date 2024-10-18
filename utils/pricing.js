@@ -209,3 +209,19 @@ export function getPlanById(subscription, isLifetime, isTSlifetime = false) {
 
   return r;
 }
+
+export function getPriceBySellixId(id) {
+  for (const period in pricingList) {
+    const plans = pricingList[period];
+
+    // Iterate over each plan inside that period
+    for (const plan in plans) {
+      if (plans[plan].sellixId === sellixId) {
+        // Return the matching price object along with the plan name
+        return { planName: plan, ...plans[plan] };
+      }
+    }
+  }
+
+  return null;
+}

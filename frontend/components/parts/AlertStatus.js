@@ -55,7 +55,7 @@ export default function Alert({ alert }) {
   alert.apps?.forEach((app) => {
     if (app.trades?.length > 0) {
       const tr = app.trades
-        .map((trade) => findTrade(trade.tradeId || trade.orderId, webhook))
+        .map((trade) => findTrade(trade?.tradeId || trade?.orderId, webhook))
         .filter((tr) => tr != null);
       trades.push(...tr);
     } else {
@@ -244,11 +244,11 @@ function Apps({ apps, webhook }) {
             ) : app.trades?.length > 0 ? (
               <ul className="text-text inline-block align-top">
                 {app.trades.map((tr, i) => {
-                  let trade = findTrade(tr.tradeId || tr.orderId, webhook);
+                  let trade = findTrade(tr?.tradeId || tr?.orderId, webhook);
 
                   return (
                     <li className="" key={i}>
-                      {tr.errorMessage ? (
+                      {tr?.errorMessage ? (
                         <MessageWithTrade
                           trade={trade}
                           className="!text-error !border-error/50"
@@ -257,7 +257,8 @@ function Apps({ apps, webhook }) {
                         </MessageWithTrade>
                       ) : (
                         <MessageWithTrade trade={trade}>
-                          {tr.msg || tr.message} ID: {tr.tradeId || tr.orderId}{" "}
+                          {tr?.msg || tr?.message} ID:{" "}
+                          {tr?.tradeId || tr?.orderId}{" "}
                         </MessageWithTrade>
                       )}
                     </li>
