@@ -55,6 +55,24 @@
   .modal {
     @apply !bg-bgt/60 !backdrop-blur-sm
   }
+
+
+  body {
+    /* @apply bg-gradient-to-b from-bg to-bg/10 text-gray-100 min-h-screen;
+    background-attachment: fixed; */
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-bg/20;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-bg/40 rounded-full hover:bg-bg/50 transition-colors;
+  }
 }
 
 
@@ -228,4 +246,83 @@ input[type="number"] {
   border-radius: 100% !important;
   height: 1.5em !important;
   width: 1.5em !important;
+}
+
+
+@layer components {
+  .glass-panel {
+    @apply bg-glass backdrop-blur-xl border border-bg/30 shadow-glass;
+  }
+
+  .glass-panel-hover {
+    @apply hover:bg-glass-hover hover:shadow-glass-hover transition-all duration-300;
+  }
+
+  .premium-button {
+    @apply bg-accent text-white px-4 py-2 rounded-lg 
+           shadow-inner-light backdrop-blur-sm
+           hover:bg-accent transition-all duration-300
+           disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .premium-button-outline {
+    @apply border border-accent/30 text-accent px-4 py-2 rounded-lg
+           hover:bg-accent/10 transition-all duration-300;
+  }
+}
+
+/* Animations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes gradient-x {
+  0%, 100% { background-size: 200% 100%; background-position: left center; }
+  50% { background-size: 200% 100%; background-position: right center; }
+}
+
+@keyframes fade-in-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 5s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float-fast 4s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+  animation: gradient-x 15s ease infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+.animate-on-scroll {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0, 1);
+  transform: translateY(20px);
+}
+
+.animate-on-scroll.animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }

@@ -4,6 +4,16 @@ import Link from "next/link";
 import { withAuth } from "../contexts/UserContext";
 import Header from "../components/Landing/Header";
 // import Main from "../Features/Landing/Main";
+import HeroSection from "../components/Landing/HeroSection";
+import LiveProfitsSection from "../components/Landing/LiveProfitsSection";
+import WebhookStatsSection from "../components/Landing/WebhookStatsSection";
+import LeaderboardSection from "../components/Landing/LeaderboardSection";
+import TestimonialsSection from "../components/Landing/TestimonialsSection";
+import FeaturesSection from "../components/Landing/FeaturesSection";
+import PricingSectionB from "../components/Landing/PricingSectionB";
+import FaqSection from "../components/Landing/FaqSection";
+import FinalCTA from "../components/Landing/FinalCTA";
+
 import Section1 from "../components/Landing/Section1";
 import Section2 from "../components/Landing/Section2";
 import Section3 from "../components/Landing/Section3";
@@ -21,6 +31,84 @@ import { useTheme } from "../contexts/ThemeContext";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
+const liveStats = [
+  {
+    id: 1,
+    trader: "Chrisp Trading",
+    avatar:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=80&h=80",
+    profit: 1250.5,
+    symbol: "EURUSD",
+    type: "buy",
+    time: "2 minutes ago",
+  },
+  {
+    id: 2,
+    trader: "Pro Signals",
+    avatar:
+      "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=80&h=80",
+    profit: 3450.75,
+    symbol: "XAUUSD",
+    type: "sell",
+    time: "5 minutes ago",
+  },
+  {
+    id: 3,
+    trader: "Master Trader",
+    avatar:
+      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?auto=format&fit=crop&w=80&h=80",
+    profit: 890.25,
+    symbol: "BTCUSD",
+    type: "buy",
+    time: "8 minutes ago",
+  },
+];
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Michael Chen",
+    role: "Professional Trader",
+    image:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150",
+    content:
+      "AutomatedTrader transformed my trading strategy. The webhook integration is flawless, and I've seen a 45% increase in my win rate since using it.",
+    stats: {
+      profit: "+62.5%",
+      trades: "1,234",
+      period: "3 months",
+    },
+  },
+  {
+    id: 2,
+    name: "Sarah Williams",
+    role: "Crypto Analyst",
+    image:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150",
+    content:
+      "The risk management features are outstanding. I can trade with confidence knowing my positions are protected by advanced automation.",
+    stats: {
+      profit: "+89.3%",
+      trades: "2,156",
+      period: "6 months",
+    },
+  },
+  {
+    id: 3,
+    name: "David Park",
+    role: "Fund Manager",
+    image:
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&h=150",
+    content:
+      "As a fund manager, reliability is crucial. AutomatedTrader's 99.9% uptime and lightning-fast execution give me peace of mind.",
+    stats: {
+      profit: "+127.8%",
+      trades: "5,678",
+      period: "12 months",
+    },
+  },
+];
+
 function Index() {
   const { theme } = useTheme();
 
@@ -37,7 +125,16 @@ function Index() {
       // }}
     >
       <Header />
-      <Section1 />
+      <HeroSection />
+      <LiveProfitsSection stats={liveStats} />
+      <WebhookStatsSection />
+      <LeaderboardSection />
+      <TestimonialsSection testimonials={testimonials} />
+      <FeaturesSection />
+      <PricingSectionB />
+      <FaqSection />
+      <FinalCTA />
+      {/* <Section1 />
       <Section3 />
       <Section4 />
       <Section5 />
@@ -45,11 +142,6 @@ function Index() {
       <PricingSection />
       <div className="flex justify-center items-center mt-0 h-screen">
         <div className="text-center relative mx-auto">
-          {/* <div className="flex justify-center">
-            <h5 className="bg-gray-700 px-5 mt-4 rounded-full text-lg font-bold text-text-h">
-              Beta is now open
-            </h5>
-          </div> */}
           <div className="container flex flex-col items-center justify-center mx-auto">
             <img
               className="object-cover object-center w-4/6 b-8 m-4"
@@ -79,8 +171,7 @@ function Index() {
             </Link>
           </div>
         </div>
-      </div>{" "}
-      *
+      </div> */}
     </div>
   );
 }

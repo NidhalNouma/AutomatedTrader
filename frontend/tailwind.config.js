@@ -29,32 +29,48 @@ module.exports = {
           },
         },
       },
+
+      colors: {
+        white: colors.white,
+        gray: colors.gray,
+        green: colors.green,
+        red: colors.red,
+        blue: colors.blue,
+        bg: "hsl(var(--bg-color) / <alpha-value>)",
+        bgt: "hsl(var(--bg-2-color) / <alpha-value>)",
+
+        title: "hsl(var(--title-color) / <alpha-value>)",
+        text: "hsl(var(--text-color) / <alpha-value>)",
+
+        light: "hsl(var(--text-light-color) / <alpha-value>)",
+        dark: "hsl(var(--text-dark-color) / <alpha-value>)",
+
+        long: "hsl(var(--long-color) / <alpha-value>)",
+        short: "hsl(var(--short-color) / <alpha-value>)",
+        profit: "hsl(var(--profit-color) / <alpha-value>)",
+        loss: "hsl(var(--loss-color) / <alpha-value>)",
+      },
+
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        glass:
+          "linear-gradient(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))",
+        "glass-hover":
+          "linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))",
+      },
+      boxShadow: {
+        glass: "0 4px 24px -1px rgba(0, 0, 0, 0.2)",
+        "glass-hover": "0 8px 32px -1px rgba(0, 0, 0, 0.3)",
+        "inner-light": "inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
+      },
       animation: {
+        "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-medium": "float-medium 5s ease-in-out infinite",
+        "float-fast": "float-fast 4s ease-in-out infinite",
+        "gradient-x": "gradient-x 15s ease infinite",
+
         "pulse-1": "pulsei 2s infinite",
       },
-      backgroundImage: {
-        // "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
-      },
-    },
-    colors: {
-      white: colors.white,
-      gray: colors.gray,
-      green: colors.green,
-      red: colors.red,
-      blue: colors.blue,
-      bg: "hsl(var(--bg-color) / <alpha-value>)",
-      bgt: "hsl(var(--bg-2-color) / <alpha-value>)",
-
-      title: "hsl(var(--title-color) / <alpha-value>)",
-      text: "hsl(var(--text-color) / <alpha-value>)",
-
-      light: "hsl(var(--text-light-color) / <alpha-value>)",
-      dark: "hsl(var(--text-dark-color) / <alpha-value>)",
-
-      long: "hsl(var(--long-color) / <alpha-value>)",
-      short: "hsl(var(--short-color) / <alpha-value>)",
-      profit: "hsl(var(--profit-color) / <alpha-value>)",
-      loss: "hsl(var(--loss-color) / <alpha-value>)",
     },
   },
   plugins: [
